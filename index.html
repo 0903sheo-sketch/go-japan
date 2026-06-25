@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Kana - Pemandangan Animasi Sakura</title>
+    <style>
+        /* TEMA PEMANDANGAN JEPANG & FULL ANIMASI */
+        body {
+            /* Latar Belakang Gambar Pemandangan Jepang */
+            background: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff0f5; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            min-height: 100vh;
+            overflow-x: hidden; /* Mencegah scroll samping akibat animasi sakura */
+        }
+        
+        /* Animasi Bunga Gugur */
+        .sakura-petal {
+            position: fixed;
+            top: -10px;
+            background-color: #ffb7c5;
+            border-radius: 15px 0px 15px 0px;
+            width: 12px;
+            height: 16px;
+            opacity: 0.8;
+            pointer-events: none; /* Agar tidak mengganggu klik mouse */
+            z-index: 9999;
+            box-shadow: 0 0 5px rgba(255, 183, 197, 0.5);
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg) translateX(50px); opacity: 0; }
+        }
+
+        h1 {
+            color: #ffb7c5; 
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 183, 197, 0.5);
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        h2 {
+            color: #ffb7c5;
+            font-weight: normal;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        /* Glassmorphism Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: rgba(26, 8, 15, 0.65); /* Transparan gelap */
+            backdrop-filter: blur(10px); /* Efek blur ala kaca */
+            -webkit-backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 183, 197, 0.2);
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Keyframes untuk Muncul */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            50% { transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        /* Navigasi & Tombol */
+        .nav-buttons {
+            margin-bottom: 30px;
+        }
+        button {
+            background-color: rgba(0,0,0,0.5);
+            color: #ffb7c5;
+            border: 1px solid #ffb7c5;
+            border-radius: 25px;
+            padding: 12px 25px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        button:hover {
+            background-color: #ffb7c5;
+            color: #12040a;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 7px 15px rgba(255, 183, 197, 0.5);
+        }
+        button.active {
+            background-color: #ffb7c5;
+            color: #12040a;
+            box-shadow: 0 0 15px rgba(255, 183, 197, 0.6);
+        }
+
+        .radio-group {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+        .radio-group input[type="radio"] {
+            accent-color: #ffb7c5;
+            transform: scale(1.2);
+            margin-right: 8px;
+        }
+
+        .mode-section {
+            display: none;
+            padding: 20px 0;
+        }
+        .active-section {
+            display: block;
+            animation: popIn 0.5s ease-out;
+        }
+        
+        /* Mode 1: Tebak Huruf */
+        .kana-display {
+            font-size: 120px;
+            margin: 20px 0;
+            color: #ffffff;
+            text-shadow: 0 0 30px rgba(255, 183, 197, 0.8), 2px 2px 10px rgba(0,0,0,0.9);
+            animation: popIn 0.6s ease-out;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .options button {
+            font-size: 24px;
+            padding: 15px;
+            border-radius: 12px;
+        }
+        .feedback {
+            font-size: 22px;
+            margin-top: 20px;
+            height: 30px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            transition: all 0.3s ease;
+        }
+
+        /* Mode 2: Tulis Manual (Canvas) */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 20px;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 2px;
+            min-width: 750px; 
+        }
+        th {
+            background-color: rgba(74, 28, 42, 0.8);
+            color: #ffb7c5;
+            padding: 12px;
+            border-radius: 5px;
+        }
+        td {
+            background-color: rgba(30, 10, 15, 0.7);
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        td:hover {
+            background-color: rgba(74, 28, 42, 0.5);
+        }
+        .kana-cell {
+            font-size: 45px;
+            width: 100px;
+            color: #ffffff;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+        }
+        .romaji-text {
+            font-size: 18px;
+            color: #ffb7c5;
+            display: block;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        .btn-urutan {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #a8ffb2;
+            text-decoration: none;
+            border: 1px solid #a8ffb2;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: rgba(0,0,0,0.5);
+            transition: all 0.2s;
+        }
+        .btn-urutan:hover {
+            background-color: #a8ffb2;
+            color: #000;
+            transform: scale(1.1);
+        }
+        .draw-canvas {
+            background-color: rgba(10, 2, 5, 0.8);
+            border: 2px dashed #6b2d41;
+            border-radius: 10px;
+            cursor: crosshair;
+            touch-action: none;
+            transition: border-color 0.3s;
+        }
+        .draw-canvas:active {
+            border-color: #ffb7c5;
+        }
+        .btn-clear {
+            font-size: 13px;
+            padding: 8px 12px;
+            border-color: #ff4444;
+            color: #ff4444;
+            border-radius: 5px;
+            background: transparent;
+        }
+        .btn-clear:hover {
+            background-color: #ff4444;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* Scrollbar kustom */
+        .table-responsive::-webkit-scrollbar {
+            height: 10px;
+        }
+        .table-responsive::-webkit-scrollbar-track {
+            background: rgba(26, 8, 15, 0.5); 
+            border-radius: 5px;
+        }
+        .table-responsive::-webkit-scrollbar-thumb {
+            background: #6b2d41; 
+            border-radius: 5px;
+        }
+        .table-responsive::-webkit-scrollbar-thumb:hover {
+            background: #ffb7c5; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🌸 Belajar Kana 🌸</h1>
+    
+    <div class="nav-buttons">
+        <button onclick="switchMode('tebak')" id="btn-tebak" class="active">1. Tebak Huruf</button>
+        <button onclick="switchMode('tulis')" id="btn-tulis">2. Tulis Manual</button>
+    </div>
+
+    <div class="radio-group">
+        <label><input type="radio" name="kanaType" value="hiragana" checked onchange="initApp()"> Hiragana</label>
+        <label style="margin-left: 20px;"><input type="radio" name="kanaType" value="katakana" onchange="initApp()"> Katakana</label>
+    </div>
+
+    <div id="mode-tebak" class="mode-section active-section">
+        <h2>Mode Kuis Pilihan Ganda</h2>
+        <p style="color: #eee; text-shadow: 1px 1px 3px #000;">Pilih romaji yang tepat untuk huruf di bawah ini:</p>
+        <div class="kana-display" id="question-kana">-</div>
+        <div class="options" id="options-container"></div>
+        <div class="feedback" id="tebak-feedback"></div>
+        <button onclick="generateQuestion()" style="margin-top: 30px; width: 220px; font-size: 18px;">Soal Berikutnya ➔</button>
+    </div>
+
+    <div id="mode-tulis" class="mode-section">
+        <h2>Mode Tulis & Jiplak</h2>
+        <p style="color: #eee; text-shadow: 1px 1px 3px #000;">Kolom 1 adalah panduan (jiplak). Klik tombol "Cek Urutan 🎬" jika ingin melihat animasi cara menulisnya.</p>
+        
+        <div class="table-responsive">
+            <div id="tulis-container">
+                <!-- Tabel akan di-generate JS -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- EFEK ANIMASI SAKURA GUGUR ---
+    function createSakura() {
+        const petal = document.createElement('div');
+        petal.classList.add('sakura-petal');
+        // Posisi horizontal acak
+        petal.style.left = Math.random() * 100 + 'vw';
+        // Durasi jatuh acak antara 3 sampai 7 detik
+        petal.style.animationDuration = Math.random() * 4 + 3 + 's'; 
+        // Ukuran acak sedikit
+        const size = Math.random() * 0.5 + 0.8;
+        petal.style.transform = `scale(${size})`;
+        
+        document.body.appendChild(petal);
+
+        // Hapus elemen setelah selesai jatuh agar tidak memenuhi memori
+        setTimeout(() => {
+            petal.remove();
+        }, 7000);
+    }
+    // Buat kelopak sakura setiap 400 milidetik
+    setInterval(createSakura, 400);
+
+
+    // Data Lengkap Kana
+    const kanaData = [
+        { r: 'a', h: 'あ', k: 'ア' }, { r: 'i', h: 'い', k: 'イ' }, { r: 'u', h: 'う', k: 'ウ' }, { r: 'e', h: 'え', k: 'エ' }, { r: 'o', h: 'お', k: 'オ' },
+        { r: 'ka', h: 'か', k: 'カ' }, { r: 'ki', h: 'き', k: 'キ' }, { r: 'ku', h: 'く', k: 'ク' }, { r: 'ke', h: 'け', k: 'ケ' }, { r: 'ko', h: 'こ', k: 'コ' },
+        { r: 'sa', h: 'さ', k: 'サ' }, { r: 'shi', h: 'し', k: 'シ' }, { r: 'su', h: 'す', k: 'ス' }, { r: 'se', h: 'せ', k: 'セ' }, { r: 'so', h: 'そ', k: 'ソ' },
+        { r: 'ta', h: 'た', k: 'タ' }, { r: 'chi', h: 'ち', k: 'チ' }, { r: 'tsu', h: 'つ', k: 'ツ' }, { r: 'te', h: 'て', k: 'テ' }, { r: 'to', h: 'と', k: 'ト' },
+        { r: 'na', h: 'な', k: 'ナ' }, { r: 'ni', h: 'に', k: 'ニ' }, { r: 'nu', h: 'ぬ', k: 'ヌ' }, { r: 'ne', h: 'ね', k: 'ネ' }, { r: 'no', h: 'の', k: 'ノ' },
+        { r: 'ha', h: 'は', k: 'ハ' }, { r: 'hi', h: 'ひ', k: 'ヒ' }, { r: 'fu', h: 'ふ', k: 'フ' }, { r: 'he', h: 'へ', k: 'ヘ' }, { r: 'ho', h: 'ほ', k: 'ホ' },
+        { r: 'ma', h: 'ま', k: 'マ' }, { r: 'mi', h: 'み', k: 'ミ' }, { r: 'mu', h: 'む', k: 'ム' }, { r: 'me', h: 'め', k: 'メ' }, { r: 'mo', h: 'も', k: 'モ' },
+        { r: 'ya', h: 'や', k: 'ヤ' }, { r: 'yu', h: 'ゆ', k: 'ユ' }, { r: 'yo', h: 'よ', k: 'ヨ' },
+        { r: 'ra', h: 'ら', k: 'ラ' }, { r: 'ri', h: 'り', k: 'リ' }, { r: 'ru', h: 'る', k: 'ル' }, { r: 're', h: 'れ', k: 'レ' }, { r: 'ro', h: 'ろ', k: 'ロ' },
+        { r: 'wa', h: 'わ', k: 'ワ' }, { r: 'wo', h: 'を', k: 'ヲ' }, { r: 'n', h: 'ん', k: 'ン' }
+    ];
+
+    let currentKanaObj = null;
+
+    function switchMode(mode) {
+        document.getElementById('mode-tebak').classList.remove('active-section');
+        document.getElementById('mode-tulis').classList.remove('active-section');
+        document.getElementById('btn-tebak').classList.remove('active');
+        document.getElementById('btn-tulis').classList.remove('active');
+
+        // Memicu ulang animasi popIn
+        const section = document.getElementById(`mode-${mode}`);
+        section.classList.remove('active-section');
+        void section.offsetWidth; // trigger reflow untuk mereset animasi CSS
+        section.classList.add('active-section');
+        
+        document.getElementById(`btn-${mode}`).classList.add('active');
+        initApp();
+    }
+
+    function getType() {
+        return document.querySelector('input[name="kanaType"]:checked').value;
+    }
+
+    function initApp() {
+        generateQuestion();
+        generateTulisTable();
+    }
+
+    // --- TEBAK HURUF ---
+    function generateQuestion() {
+        const type = getType();
+        const prop = type === 'hiragana' ? 'h' : 'k';
+        const correctIndex = Math.floor(Math.random() * kanaData.length);
+        currentKanaObj = kanaData[correctIndex];
+        
+        const displayKana = document.getElementById('question-kana');
+        displayKana.innerText = currentKanaObj[prop];
+        
+        // Animasi pop saat soal berubah
+        displayKana.classList.remove('active-section');
+        void displayKana.offsetWidth;
+        displayKana.style.animation = 'popIn 0.4s ease-out';
+        
+        document.getElementById('tebak-feedback').innerText = '';
+
+        let options = [currentKanaObj.r];
+        while (options.length < 4) {
+            let randomKana = kanaData[Math.floor(Math.random() * kanaData.length)].r;
+            if (!options.includes(randomKana)) options.push(randomKana);
+        }
+        options.sort(() => Math.random() - 0.5);
+
+        const container = document.getElementById('options-container');
+        container.innerHTML = '';
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(opt, currentKanaObj.r);
+            container.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selected, correct) {
+        const feedback = document.getElementById('tebak-feedback');
+        // Reset animasi feedback
+        feedback.style.animation = 'none';
+        void feedback.offsetWidth;
+        feedback.style.animation = 'popIn 0.3s ease-out';
+
+        if (selected === correct) {
+            feedback.innerText = "🌸 Benar! Hebat! 🌸";
+            feedback.style.color = "#a8ffb2"; 
+            setTimeout(generateQuestion, 1200);
+        } else {
+            feedback.innerText = `❌ Ops, yang benar adalah "${correct}"`;
+            feedback.style.color = "#ff8da1";
+        }
+    }
+
+    // --- TULIS MANUAL ---
+    function generateTulisTable() {
+        const type = getType();
+        const prop = type === 'hiragana' ? 'h' : 'k';
+        const container = document.getElementById('tulis-container');
+        
+        let html = '<table>';
+        html += '<tr><th>Huruf</th><th>1 (Jiplak)</th><th>2</th><th>3</th><th>4</th><th>5</th><th>Aksi</th></tr>';
+        
+        kanaData.forEach((item, index) => {
+            const searchType = type === 'hiragana' ? 'hiragana' : 'katakana';
+            const searchUrl = `https://www.google.com/search?q=${searchType}+${item.r}+stroke+order+gif&tbm=isch`;
+
+            html += `<tr id="row-${index}">`;
+            html += `<td class="kana-cell">
+                        ${item[prop]}
+                        <span class="romaji-text">${item.r}</span>
+                        <a href="${searchUrl}" target="_blank" class="btn-urutan" title="Lihat langkah demi langkah di Google">Cek Urutan 🎬</a>
+                     </td>`;
+            
+            for (let i = 0; i < 5; i++) {
+                html += `<td><canvas class="draw-canvas" width="90" height="90" data-row="${index}" data-col="${i}" data-char="${item[prop]}"></canvas></td>`;
+            }
+            html += `<td><button class="btn-clear" onclick="clearCanvases(${index})">Hapus</button></td>`;
+            html += `</tr>`;
+        });
+        
+        html += '</table>';
+        container.innerHTML = html;
+        setupDrawing();
+    }
+
+    function drawGuide(canvas, char) {
+        const ctx = canvas.getContext('2d');
+        ctx.font = "60px sans-serif";
+        ctx.fillStyle = "rgba(255, 183, 197, 0.2)"; // Warna pink sangat tipis
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(char, canvas.width / 2, canvas.height / 2 + 5);
+    }
+
+    function clearCanvases(rowIndex) {
+        const canvases = document.querySelectorAll(`canvas[data-row="${rowIndex}"]`);
+        canvases.forEach(canvas => {
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if(canvas.getAttribute('data-col') === "0") {
+                drawGuide(canvas, canvas.getAttribute('data-char'));
+            }
+        });
+    }
+
+    function setupDrawing() {
+        const canvases = document.querySelectorAll('.draw-canvas');
+        
+        canvases.forEach(canvas => {
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+
+            if(canvas.getAttribute('data-col') === "0") {
+                drawGuide(canvas, canvas.getAttribute('data-char'));
+            }
+
+            canvas.addEventListener('mousedown', startPosition);
+            canvas.addEventListener('mouseup', endPosition);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseout', endPosition);
+
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault(); 
+                startPosition(e.touches[0]);
+            }, { passive: false });
+            
+            canvas.addEventListener('touchend', endPosition);
+            
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                draw(e.touches[0]);
+            }, { passive: false });
+
+            function startPosition(e) {
+                isDrawing = true;
+                draw(e);
+            }
+
+            function endPosition() {
+                isDrawing = false;
+                ctx.beginPath(); 
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                ctx.lineWidth = 4; // Sedikit ditebalkan
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#ffb7c5'; // Warna sakura
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = '#ffb7c5'; // Efek glowing ringan saat dicoret
+
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+            }
+        });
+    }
+
+    window.onload = initApp;
+</script>
+
+</body>
+</html>
