@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Kanji N5 & N4 Lengkap - Animasi Sakura</title>
+    <style>
+        /* TEMA PEMANDANGAN JEPANG & FULL ANIMASI */
+        body {
+            background: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff0f5; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Animasi Bunga Gugur */
+        .sakura-petal {
+            position: fixed;
+            top: -10px;
+            background-color: #ffb7c5;
+            border-radius: 15px 0px 15px 0px;
+            width: 12px;
+            height: 16px;
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 5px rgba(255, 183, 197, 0.5);
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg) translateX(50px); opacity: 0; }
+        }
+
+        h1 {
+            color: #ffb7c5; 
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 183, 197, 0.5);
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        h2 {
+            color: #ffb7c5;
+            font-weight: normal;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        /* Glassmorphism Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background-color: rgba(26, 8, 15, 0.75); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 183, 197, 0.2);
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            50% { transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        /* Navigasi & Tombol */
+        .nav-buttons { margin-bottom: 30px; }
+        button {
+            background-color: rgba(0,0,0,0.5);
+            color: #ffb7c5;
+            border: 1px solid #ffb7c5;
+            border-radius: 25px;
+            padding: 12px 25px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        button:hover {
+            background-color: #ffb7c5;
+            color: #12040a;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 7px 15px rgba(255, 183, 197, 0.5);
+        }
+        button.active {
+            background-color: #ffb7c5;
+            color: #12040a;
+            box-shadow: 0 0 15px rgba(255, 183, 197, 0.6);
+        }
+
+        .radio-group {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.3);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 30px;
+        }
+        .radio-group input[type="radio"] {
+            accent-color: #ffb7c5;
+            transform: scale(1.2);
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .mode-section {
+            display: none;
+            padding: 20px 0;
+        }
+        .active-section {
+            display: block;
+            animation: popIn 0.5s ease-out;
+        }
+        
+        /* Mode 1: Tebak Huruf */
+        .kanji-display {
+            font-size: 140px;
+            margin: 10px 0;
+            color: #ffffff;
+            text-shadow: 0 0 30px rgba(255, 183, 197, 0.8), 2px 2px 10px rgba(0,0,0,0.9);
+            animation: popIn 0.6s ease-out;
+            line-height: 1.2;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .options button {
+            font-size: 18px;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .opt-arti { font-size: 20px; font-weight: bold; color: #fff; }
+        .opt-romaji { font-size: 14px; color: #ddd; margin-top: 5px; }
+        
+        .feedback {
+            font-size: 22px;
+            margin-top: 20px;
+            height: 30px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        /* Mode 2: Tulis Manual (Canvas) */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 20px;
+            padding-bottom: 10px;
+            /* Membatasi tinggi tabel agar website tidak kepanjangan */
+            max-height: 70vh; 
+            overflow-y: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 2px;
+            min-width: 900px; 
+        }
+        th {
+            background-color: rgba(74, 28, 42, 0.9);
+            color: #ffb7c5;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 18px;
+            position: sticky; /* Agar header tabel tetap terlihat saat di-scroll */
+            top: 0;
+            z-index: 5;
+        }
+        td {
+            background-color: rgba(30, 10, 15, 0.8);
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 5px;
+        }
+        .kanji-cell {
+            font-size: 50px;
+            width: 180px;
+            color: #ffffff;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+            line-height: 1;
+        }
+        .arti-text {
+            font-size: 18px;
+            color: #a8ffb2;
+            display: block;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+        .romaji-text {
+            font-size: 14px;
+            color: #ffb7c5;
+            display: block;
+            margin-top: 3px;
+        }
+        .btn-urutan {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #a8ffb2;
+            text-decoration: none;
+            border: 1px solid #a8ffb2;
+            padding: 5px 10px;
+            border-radius: 6px;
+            background: rgba(0,0,0,0.5);
+            transition: all 0.2s;
+        }
+        .btn-urutan:hover {
+            background-color: #a8ffb2;
+            color: #000;
+            transform: scale(1.05);
+        }
+        .draw-canvas {
+            background-color: rgba(10, 2, 5, 0.9);
+            border: 2px dashed #6b2d41;
+            border-radius: 10px;
+            cursor: crosshair;
+            touch-action: none;
+        }
+        .btn-clear {
+            font-size: 13px;
+            padding: 8px 12px;
+            border-color: #ff4444;
+            color: #ff4444;
+            border-radius: 5px;
+            background: transparent;
+        }
+        .btn-clear:hover {
+            background-color: #ff4444;
+            color: #fff;
+        }
+
+        .table-responsive::-webkit-scrollbar { height: 10px; width: 10px; }
+        .table-responsive::-webkit-scrollbar-track { background: rgba(26, 8, 15, 0.5); border-radius: 5px; }
+        .table-responsive::-webkit-scrollbar-thumb { background: #6b2d41; border-radius: 5px; }
+        .table-responsive::-webkit-scrollbar-thumb:hover { background: #ffb7c5; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🌸 Belajar Kanji JLPT (Super Lengkap) 🌸</h1>
+    
+    <div class="nav-buttons">
+        <button onclick="switchMode('tebak')" id="btn-tebak" class="active">1. Kuis Tebak Kanji</button>
+        <button onclick="switchMode('tulis')" id="btn-tulis">2. Latihan Tulis Manual</button>
+    </div>
+
+    <!-- Pilihan Level JLPT -->
+    <div class="radio-group">
+        <label><input type="radio" name="kanjiLevel" value="N5" checked onchange="initApp()"> JLPT N5 (Dasar)</label>
+        <label style="margin-left: 20px;"><input type="radio" name="kanjiLevel" value="N4" onchange="initApp()"> JLPT N4 (Menengah)</label>
+    </div>
+
+    <div id="mode-tebak" class="mode-section active-section">
+        <h2>Mode Kuis Pilihan Ganda</h2>
+        <p style="color: #eee; text-shadow: 1px 1px 3px #000;">Pilih arti dan cara baca yang tepat untuk Kanji di bawah ini:</p>
+        <div class="kanji-display" id="question-kanji">-</div>
+        <div class="options" id="options-container"></div>
+        <div class="feedback" id="tebak-feedback"></div>
+        <button onclick="generateQuestion()" style="margin-top: 30px; width: 220px; font-size: 18px;">Soal Berikutnya ➔</button>
+    </div>
+
+    <div id="mode-tulis" class="mode-section">
+        <h2>Mode Tulis & Jiplak</h2>
+        <p style="color: #eee; text-shadow: 1px 1px 3px #000;">Kolom 1 adalah panduan. Silakan di-scroll ke bawah untuk melihat ratusan kanji lainnya.</p>
+        
+        <div class="table-responsive">
+            <div id="tulis-container">
+                <!-- Tabel akan di-generate JS -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- EFEK ANIMASI SAKURA GUGUR ---
+    function createSakura() {
+        const petal = document.createElement('div');
+        petal.classList.add('sakura-petal');
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.animationDuration = Math.random() * 4 + 3 + 's'; 
+        const size = Math.random() * 0.5 + 0.8;
+        petal.style.transform = `scale(${size})`;
+        document.body.appendChild(petal);
+        setTimeout(() => { petal.remove(); }, 7000);
+    }
+    setInterval(createSakura, 400);
+
+    // --- DATABASE KANJI SUPER LENGKAP N5 & N4 ---
+    // Format: k (Kanji), m (Meaning/Arti), r (Romaji/Cara Baca), lvl (Level)
+    const dbKanji = [
+        // ======================= KANJI N5 (80+ Karakter) =======================
+        { k: '一', m: 'Satu', r: 'ichi / hito(tsu)', lvl: 'N5' },
+        { k: '二', m: 'Dua', r: 'ni / futa(tsu)', lvl: 'N5' },
+        { k: '三', m: 'Tiga', r: 'san / mit(tsu)', lvl: 'N5' },
+        { k: '四', m: 'Empat', r: 'shi, yon / yot(tsu)', lvl: 'N5' },
+        { k: '五', m: 'Lima', r: 'go / itsu(tsu)', lvl: 'N5' },
+        { k: '六', m: 'Enam', r: 'roku / mut(tsu)', lvl: 'N5' },
+        { k: '七', m: 'Tujuh', r: 'shichi / nana(tsu)', lvl: 'N5' },
+        { k: '八', m: 'Delapan', r: 'hachi / yat(tsu)', lvl: 'N5' },
+        { k: '九', m: 'Sembilan', r: 'kyuu, ku / kokono(tsu)', lvl: 'N5' },
+        { k: '十', m: 'Sepuluh', r: 'juu / tou', lvl: 'N5' },
+        { k: '百', m: 'Seratus', r: 'hyaku', lvl: 'N5' },
+        { k: '千', m: 'Seribu', r: 'sen / chi', lvl: 'N5' },
+        { k: '万', m: 'Sepuluh Ribu', r: 'man, ban', lvl: 'N5' },
+        { k: '父', m: 'Ayah', r: 'fu / chichi', lvl: 'N5' },
+        { k: '母', m: 'Ibu', r: 'bo / haha', lvl: 'N5' },
+        { k: '友', m: 'Teman', r: 'yuu / tomo', lvl: 'N5' },
+        { k: '女', m: 'Perempuan', r: 'jo, nyo / onna', lvl: 'N5' },
+        { k: '男', m: 'Laki-laki', r: 'dan, nan / otoko', lvl: 'N5' },
+        { k: '人', m: 'Orang', r: 'jin, nin / hito', lvl: 'N5' },
+        { k: '子', m: 'Anak', r: 'shi, su / ko', lvl: 'N5' },
+        { k: '日', m: 'Matahari / Hari', r: 'nichi, jitsu / hi, ka', lvl: 'N5' },
+        { k: '月', m: 'Bulan', r: 'getsu, gatsu / tsuki', lvl: 'N5' },
+        { k: '火', m: 'Api', r: 'ka / hi', lvl: 'N5' },
+        { k: '水', m: 'Air', r: 'sui / mizu', lvl: 'N5' },
+        { k: '木', m: 'Pohon / Kayu', r: 'moku, boku / ki', lvl: 'N5' },
+        { k: '金', m: 'Emas / Uang', r: 'kin, kon / kane', lvl: 'N5' },
+        { k: '土', m: 'Tanah', r: 'do, to / tsuchi', lvl: 'N5' },
+        { k: '本', m: 'Buku / Asal', r: 'hon / moto', lvl: 'N5' },
+        { k: '休', m: 'Istirahat', r: 'kyuu / yasu(mu)', lvl: 'N5' },
+        { k: '語', m: 'Bahasa', r: 'go / kata(ru)', lvl: 'N5' },
+        { k: '学', m: 'Belajar', r: 'gaku / mana(bu)', lvl: 'N5' },
+        { k: '校', m: 'Sekolah', r: 'kou', lvl: 'N5' },
+        { k: '生', m: 'Hidup / Lahir', r: 'sei, shou / i(kiru), u(mu)', lvl: 'N5' },
+        { k: '先', m: 'Sebelum / Depan', r: 'sen / saki', lvl: 'N5' },
+        { k: '何', m: 'Apa', r: 'ka / nan, nani', lvl: 'N5' },
+        { k: '年', m: 'Tahun', r: 'nen / toshi', lvl: 'N5' },
+        { k: '行', m: 'Pergi', r: 'kou, gyou / i(ku), okona(u)', lvl: 'N5' },
+        { k: '来', m: 'Datang', r: 'rai / ku(ru)', lvl: 'N5' },
+        { k: '食', m: 'Makan', r: 'shoku / ta(beru)', lvl: 'N5' },
+        { k: '見', m: 'Melihat', r: 'ken / mi(ru)', lvl: 'N5' },
+        { k: '飲', m: 'Minum', r: 'in / no(mu)', lvl: 'N5' },
+        { k: '言', m: 'Berkata', r: 'gen, gon / i(u)', lvl: 'N5' },
+        { k: '読', m: 'Membaca', r: 'doku / yo(mu)', lvl: 'N5' },
+        { k: '書', m: 'Menulis', r: 'sho / ka(ku)', lvl: 'N5' },
+        { k: '買', m: 'Membeli', r: 'bai / ka(u)', lvl: 'N5' },
+        { k: '立', m: 'Berdiri', r: 'ritsu / ta(tsu)', lvl: 'N5' },
+        { k: '入', m: 'Masuk', r: 'nyuu / hai(ru), i(reru)', lvl: 'N5' },
+        { k: '出', m: 'Keluar', r: 'shutsu / de(ru), da(su)', lvl: 'N5' },
+        { k: '上', m: 'Atas', r: 'jou / ue, a(geru)', lvl: 'N5' },
+        { k: '下', m: 'Bawah', r: 'ka, ge / shita, sa(geru)', lvl: 'N5' },
+        { k: '左', m: 'Kiri', r: 'sa / hidari', lvl: 'N5' },
+        { k: '右', m: 'Kanan', r: 'uu, yuu / migi', lvl: 'N5' },
+        { k: '中', m: 'Tengah / Dalam', r: 'chuu / naka', lvl: 'N5' },
+        { k: '大', m: 'Besar', r: 'dai, tai / oo(kii)', lvl: 'N5' },
+        { k: '小', m: 'Kecil', r: 'shou / chii(sai)', lvl: 'N5' },
+        { k: '高', m: 'Tinggi / Mahal', r: 'kou / taka(i)', lvl: 'N5' },
+        { k: '安', m: 'Murah / Aman', r: 'an / yasu(i)', lvl: 'N5' },
+        { k: '新', m: 'Baru', r: 'shin / atara(shii)', lvl: 'N5' },
+        { k: '古', m: 'Lama / Kuno', r: 'ko / furu(i)', lvl: 'N5' },
+        { k: '長', m: 'Panjang / Ketua', r: 'chou / naga(i)', lvl: 'N5' },
+        { k: '多', m: 'Banyak', r: 'ta / oo(i)', lvl: 'N5' },
+        { k: '少', m: 'Sedikit', r: 'shou / suku(nai), suko(shi)', lvl: 'N5' },
+        { k: '早', m: 'Cepat / Awal', r: 'sou / haya(i)', lvl: 'N5' },
+        { k: '白', m: 'Putih', r: 'haku / shiro(i)', lvl: 'N5' },
+        { k: '気', m: 'Jiwa / Udara', r: 'ki, ke', lvl: 'N5' },
+        { k: '天', m: 'Surga / Langit', r: 'ten / ame', lvl: 'N5' },
+        { k: '雨', m: 'Hujan', r: 'u / ame', lvl: 'N5' },
+        { k: '山', m: 'Gunung', r: 'san / yama', lvl: 'N5' },
+        { k: '川', m: 'Sungai', r: 'sen / kawa', lvl: 'N5' },
+        { k: '東', m: 'Timur', r: 'tou / higashi', lvl: 'N5' },
+        { k: '西', m: 'Barat', r: 'sei, sai / nishi', lvl: 'N5' },
+        { k: '南', m: 'Selatan', r: 'nan / minami', lvl: 'N5' },
+        { k: '北', m: 'Utara', r: 'hoku / kita', lvl: 'N5' },
+        { k: '名', m: 'Nama', r: 'mei, myou / na', lvl: 'N5' },
+        { k: '車', m: 'Mobil / Kereta', r: 'sha / kuruma', lvl: 'N5' },
+        { k: '電', m: 'Listrik', r: 'den', lvl: 'N5' },
+        { k: '駅', m: 'Stasiun', r: 'eki', lvl: 'N5' },
+        { k: '半', m: 'Setengah', r: 'han / naka(ba)', lvl: 'N5' },
+        { k: '時', m: 'Waktu / Jam', r: 'ji / toki', lvl: 'N5' },
+        { k: '分', m: 'Menit / Membagi', r: 'fun, bun / wa(keru)', lvl: 'N5' },
+        { k: '前', m: 'Depan / Sebelum', r: 'zen / mae', lvl: 'N5' },
+        { k: '後', m: 'Belakang / Setelah', r: 'go, kou / ushiro, ato', lvl: 'N5' },
+        { k: '午', m: 'Siang', r: 'go', lvl: 'N5' },
+        { k: '今', m: 'Sekarang', r: 'kon, kin / ima', lvl: 'N5' },
+        { k: '外', m: 'Luar', r: 'gai, ge / soto, hoka', lvl: 'N5' },
+        { k: '国', m: 'Negara', r: 'koku / kuni', lvl: 'N5' },
+        { k: '話', m: 'Berbicara / Cerita', r: 'wa / hanashi, hana(su)', lvl: 'N5' },
+        { k: '間', m: 'Antara / Ruang', r: 'kan, ken / aida, ma', lvl: 'N5' },
+        { k: '目', m: 'Mata', r: 'moku, boku / me', lvl: 'N5' },
+        { k: '耳', m: 'Telinga', r: 'ji / mimi', lvl: 'N5' },
+        { k: '口', m: 'Mulut', r: 'kou, ku / kuchi', lvl: 'N5' },
+        { k: '手', m: 'Tangan', r: 'shu / te', lvl: 'N5' },
+        { k: '足', m: 'Kaki / Cukup', r: 'soku / ashi, ta(riru)', lvl: 'N5' },
+
+        // ======================= KANJI N4 (160+ Karakter) =======================
+        { k: '悪', m: 'Buruk / Jahat', r: 'aku / waru(i)', lvl: 'N4' },
+        { k: '暗', m: 'Gelap', r: 'an / kura(i)', lvl: 'N4' },
+        { k: '医', m: 'Dokter / Medis', r: 'i', lvl: 'N4' },
+        { k: '意', m: 'Pikiran / Arti', r: 'i', lvl: 'N4' },
+        { k: '引', m: 'Menarik', r: 'in / hi(ku)', lvl: 'N4' },
+        { k: '院', m: 'Institusi / RS', r: 'in', lvl: 'N4' },
+        { k: '員', m: 'Pegawai / Anggota', r: 'in', lvl: 'N4' },
+        { k: '運', m: 'Membawa / Nasib', r: 'un / hako(bu)', lvl: 'N4' },
+        { k: '英', m: 'Inggris / Hebat', r: 'ei', lvl: 'N4' },
+        { k: '映', m: 'Memantulkan', r: 'ei / utsu(su)', lvl: 'N4' },
+        { k: '遠', m: 'Jauh', r: 'en / too(i)', lvl: 'N4' },
+        { k: '屋', m: 'Toko / Atap', r: 'oku / ya', lvl: 'N4' },
+        { k: '音', m: 'Suara', r: 'on / oto, ne', lvl: 'N4' },
+        { k: '歌', m: 'Lagu / Menyanyi', r: 'ka / uta(u)', lvl: 'N4' },
+        { k: '夏', m: 'Musim Panas', r: 'ka / natsu', lvl: 'N4' },
+        { k: '家', m: 'Rumah / Keluarga', r: 'ka, ke / ie, uchi', lvl: 'N4' },
+        { k: '画', m: 'Gambar / Goresan', r: 'ga, kaku', lvl: 'N4' },
+        { k: '海', m: 'Laut', r: 'kai / umi', lvl: 'N4' },
+        { k: '回', m: 'Berputar / Kali', r: 'kai / mawa(ru)', lvl: 'N4' },
+        { k: '開', m: 'Membuka', r: 'kai / a(keru), hira(ku)', lvl: 'N4' },
+        { k: '界', m: 'Dunia / Batas', r: 'kai', lvl: 'N4' },
+        { k: '楽', m: 'Musik / Menyenangkan', r: 'gaku, raku / tano(shii)', lvl: 'N4' },
+        { k: '館', m: 'Gedung / Aula', r: 'kan', lvl: 'N4' },
+        { k: '漢', m: 'Dinasti Han (China)', r: 'kan', lvl: 'N4' },
+        { k: '寒', m: 'Dingin', r: 'kan / samu(i)', lvl: 'N4' },
+        { k: '顔', m: 'Wajah', r: 'gan / kao', lvl: 'N4' },
+        { k: '帰', m: 'Pulang', r: 'ki / kae(ru)', lvl: 'N4' },
+        { k: '起', m: 'Bangun', r: 'ki / o(kiru)', lvl: 'N4' },
+        { k: '急', m: 'Darurat / Cepat', r: 'kyuu / iso(gu)', lvl: 'N4' },
+        { k: '牛', m: 'Sapi', r: 'gyuu / ushi', lvl: 'N4' },
+        { k: '去', m: 'Pergi / Lalu', r: 'kyo, ko / sa(ru)', lvl: 'N4' },
+        { k: '魚', m: 'Ikan', r: 'gyo / sakana', lvl: 'N4' },
+        { k: '京', m: 'Ibukota', r: 'kyou, kei / miyako', lvl: 'N4' },
+        { k: '強', m: 'Kuat', r: 'kyou / tsuyo(i)', lvl: 'N4' },
+        { k: '教', m: 'Mengajar', r: 'kyou / oshi(eru)', lvl: 'N4' },
+        { k: '業', m: 'Bisnis / Tugas', r: 'gyou / waza', lvl: 'N4' },
+        { k: '近', m: 'Dekat', r: 'kin / chika(i)', lvl: 'N4' },
+        { k: '銀', m: 'Perak', r: 'gin', lvl: 'N4' },
+        { k: '兄', m: 'Kakak Laki-laki', r: 'kyou / ani', lvl: 'N4' },
+        { k: '軽', m: 'Ringan', r: 'kei / karu(i)', lvl: 'N4' },
+        { k: '犬', m: 'Anjing', r: 'ken / inu', lvl: 'N4' },
+        { k: '建', m: 'Membangun', r: 'ken / ta(teru)', lvl: 'N4' },
+        { k: '元', m: 'Asal / Dasar', r: 'gen, gan / moto', lvl: 'N4' },
+        { k: '工', m: 'Pabrik / Konstruksi', r: 'kou, ku', lvl: 'N4' },
+        { k: '広', m: 'Luas', r: 'kou / hiro(i)', lvl: 'N4' },
+        { k: '考', m: 'Berpikir', r: 'kou / kanga(eru)', lvl: 'N4' },
+        { k: '黒', m: 'Hitam', r: 'koku / kuro(i)', lvl: 'N4' },
+        { k: '作', m: 'Membuat', r: 'saku / tsuku(ru)', lvl: 'N4' },
+        { k: '思', m: 'Berpikir / Mengingat', r: 'shi / omo(u)', lvl: 'N4' },
+        { k: '姉', m: 'Kakak Perempuan', r: 'shi / ane', lvl: 'N4' },
+        { k: '止', m: 'Berhenti', r: 'shi / to(maru)', lvl: 'N4' },
+        { k: '市', m: 'Kota / Pasar', r: 'shi / ichi', lvl: 'N4' },
+        { k: '死', m: 'Mati', r: 'shi / shi(nu)', lvl: 'N4' },
+        { k: '私', m: 'Saya', r: 'shi / watashi', lvl: 'N4' },
+        { k: '始', m: 'Mulai', r: 'shi / haji(meru)', lvl: 'N4' },
+        { k: '字', m: 'Huruf', r: 'ji', lvl: 'N4' },
+        { k: '自', m: 'Diri Sendiri', r: 'ji, shi / mizuka(ra)', lvl: 'N4' },
+        { k: '事', m: 'Hal / Urusan', r: 'ji / koto', lvl: 'N4' },
+        { k: '持', m: 'Membawa / Memiliki', r: 'ji / mo(tsu)', lvl: 'N4' },
+        { k: '室', m: 'Ruangan', r: 'shitsu / muro', lvl: 'N4' },
+        { k: '者', m: 'Orang / Ahli', r: 'sha / mono', lvl: 'N4' },
+        { k: '借', m: 'Meminjam', r: 'shaku / ka(riru)', lvl: 'N4' },
+        { k: '弱', m: 'Lemah', r: 'jaku / yowa(i)', lvl: 'N4' },
+        { k: '秋', m: 'Musim Gugur', r: 'shuu / aki', lvl: 'N4' },
+        { k: '週', m: 'Pekan / Minggu', r: 'shuu', lvl: 'N4' },
+        { k: '春', m: 'Musim Semi', r: 'shun / haru', lvl: 'N4' },
+        { k: '色', m: 'Warna', r: 'shoku, shiki / iro', lvl: 'N4' },
+        { k: '場', m: 'Tempat', r: 'jou / ba', lvl: 'N4' },
+        { k: '乗', m: 'Naik (Kendaraan)', r: 'jou / no(ru)', lvl: 'N4' },
+        { k: '心', m: 'Hati / Perasaan', r: 'shin / kokoro', lvl: 'N4' },
+        { k: '親', m: 'Orang Tua / Akrab', r: 'shin / oya, shita(shii)', lvl: 'N4' },
+        { k: '世', m: 'Dunia / Generasi', r: 'sei, se / yo', lvl: 'N4' },
+        { k: '正', m: 'Benar / Tepat', r: 'sei, shou / tada(shii)', lvl: 'N4' },
+        { k: '声', m: 'Suara (Makhluk)', r: 'sei / koe', lvl: 'N4' },
+        { k: '夕', m: 'Sore', r: 'yuu', lvl: 'N4' },
+        { k: '赤', m: 'Merah', r: 'seki / aka(i)', lvl: 'N4' },
+        { k: '切', m: 'Memotong', r: 'setsu / ki(ru)', lvl: 'N4' },
+        { k: '雪', m: 'Salju', r: 'setsu / yuki', lvl: 'N4' },
+        { k: '洗', m: 'Mencuci', r: 'sen / ara(u)', lvl: 'N4' },
+        { k: '走', m: 'Berlari', r: 'sou / hashi(ru)', lvl: 'N4' },
+        { k: '送', m: 'Mengirim', r: 'sou / oku(ru)', lvl: 'N4' },
+        { k: '体', m: 'Tubuh', r: 'tai / karada', lvl: 'N4' },
+        { k: '待', m: 'Menunggu', r: 'tai / ma(tsu)', lvl: 'N4' },
+        { k: '知', m: 'Tahu', r: 'chi / shi(ru)', lvl: 'N4' },
+        { k: '茶', m: 'Teh', r: 'cha, sa', lvl: 'N4' },
+        { k: '昼', m: 'Siang', r: 'chuu / hiru', lvl: 'N4' },
+        { k: '町', m: 'Kota (Kecil)', r: 'chou / machi', lvl: 'N4' },
+        { k: '鳥', m: 'Burung', r: 'chou / tori', lvl: 'N4' },
+        { k: '朝', m: 'Pagi', r: 'chou / asa', lvl: 'N4' },
+        { k: '通', m: 'Melewati', r: 'tsuu / too(ru), kayo(u)', lvl: 'N4' },
+        { k: '弟', m: 'Adik Laki-laki', r: 'tei, dai / otouto', lvl: 'N4' },
+        { k: '店', m: 'Toko', r: 'ten / mise', lvl: 'N4' },
+        { k: '転', m: 'Berguling', r: 'ten / koro(bu)', lvl: 'N4' },
+        { k: '冬', m: 'Musim Dingin', r: 'tou / fuyu', lvl: 'N4' },
+        { k: '肉', m: 'Daging', r: 'niku', lvl: 'N4' },
+        { k: '勉', m: 'Berusaha (Belajar)', r: 'ben', lvl: 'N4' },
+        { k: '歩', m: 'Berjalan', r: 'ho, bu / aru(ku)', lvl: 'N4' },
+        { k: '妹', m: 'Adik Perempuan', r: 'mai / imouto', lvl: 'N4' },
+        { k: '味', m: 'Rasa', r: 'mi / aji', lvl: 'N4' },
+        { k: '夜', m: 'Malam', r: 'ya / yoru', lvl: 'N4' },
+        { k: '理', m: 'Logika / Alasan', r: 'ri', lvl: 'N4' },
+        { k: '答', m: 'Menjawab', r: 'tou / kota(eru)', lvl: 'N4' },
+        { k: '動', m: 'Bergerak', r: 'dou / ugo(ku)', lvl: 'N4' },
+        { k: '同', m: 'Sama', r: 'dou / ona(ji)', lvl: 'N4' },
+        { k: '道', m: 'Jalan', r: 'dou / michi', lvl: 'N4' },
+        { k: '特', m: 'Spesial', r: 'toku', lvl: 'N4' },
+        { k: '発', m: 'Berangkat / Memulai', r: 'hatsu, hotsu', lvl: 'N4' },
+        { k: '飯', m: 'Nasi / Makanan', r: 'han / meshi', lvl: 'N4' },
+        { k: '病', m: 'Sakit', r: 'byou / yamai', lvl: 'N4' },
+        { k: '品', m: 'Barang / Kualitas', r: 'hin / shina', lvl: 'N4' },
+        { k: '不', m: 'Tidak (Prefiks)', r: 'fu, bu', lvl: 'N4' },
+        { k: '物', m: 'Barang / Benda', r: 'butsu, motsu / mono', lvl: 'N4' },
+        { k: '文', m: 'Kalimat / Sastra', r: 'bun, mon', lvl: 'N4' },
+        { k: '別', m: 'Berbeda / Berpisah', r: 'betsu / waka(reru)', lvl: 'N4' },
+        { k: '便', m: 'Praktis / Surat', r: 'ben, bin / tayo(ri)', lvl: 'N4' },
+        { k: '方', m: 'Arah / Cara', r: 'hou / kata', lvl: 'N4' },
+        { k: '風', m: 'Angin', r: 'fuu / kaze', lvl: 'N4' },
+        { k: '服', m: 'Pakaian', r: 'fuku', lvl: 'N4' },
+        { k: '代', m: 'Menggantikan / Era', r: 'dai, tai / ka(waru)', lvl: 'N4' },
+        { k: '台', m: 'Pijakan / Meja', r: 'dai, tai', lvl: 'N4' },
+        { k: '題', m: 'Topik / Judul', r: 'dai', lvl: 'N4' },
+        { k: '短', m: 'Pendek', r: 'tan / mijika(i)', lvl: 'N4' },
+        { k: '地', m: 'Tanah / Bumi', r: 'chi, ji', lvl: 'N4' },
+        { k: '池', m: 'Kolam', r: 'chi / ike', lvl: 'N4' },
+        { k: '低', m: 'Rendah', r: 'tei / hiku(i)', lvl: 'N4' },
+        { k: '都', m: 'Ibukota', r: 'to, tsu / miyako', lvl: 'N4' },
+        { k: '度', m: 'Derajat / Kali', r: 'do, to, taku / tabi', lvl: 'N4' },
+        { k: '頭', m: 'Kepala', r: 'tou, zu / atama', lvl: 'N4' },
+        { k: '堂', m: 'Aula Terbuka', r: 'dou', lvl: 'N4' },
+        { k: '売', m: 'Menjual', r: 'bai / u(ru)', lvl: 'N4' },
+        { k: '番', m: 'Nomor / Giliran', r: 'ban', lvl: 'N4' },
+        { k: '付', m: 'Menempelkan', r: 'fu / tsu(ku)', lvl: 'N4' },
+        { k: '夫', m: 'Suami', r: 'fu, fuu / otto', lvl: 'N4' },
+        { k: '婦', m: 'Wanita / Istri', r: 'fu', lvl: 'N4' },
+        { k: '部', m: 'Bagian / Klub', r: 'bu', lvl: 'N4' },
+        { k: '払', m: 'Membayar', r: 'futsu / hara(u)', lvl: 'N4' },
+        { k: '平', m: 'Datar / Damai', r: 'hei, byou / tai(ra), hira', lvl: 'N4' },
+        { k: '返', m: 'Mengembalikan', r: 'hen / kae(su)', lvl: 'N4' },
+        { k: '毎', m: 'Setiap', r: 'mai', lvl: 'N4' },
+        { k: '明', m: 'Terang / Cerah', r: 'mei, myou / aka(rui)', lvl: 'N4' },
+        { k: '鳴', m: 'Mengerang / Berbunyi', r: 'mei / na(ku)', lvl: 'N4' },
+        { k: '問', m: 'Bertanya / Masalah', r: 'mon / to(i)', lvl: 'N4' },
+        { k: '門', m: 'Gerbang', r: 'mon / kado', lvl: 'N4' },
+        { k: '野', m: 'Padang / Lapangan', r: 'ya / no', lvl: 'N4' },
+        { k: '薬', m: 'Obat', r: 'yaku / kusuri', lvl: 'N4' },
+        { k: '有', m: 'Ada / Memiliki', r: 'yuu, u / a(ru)', lvl: 'N4' },
+        { k: '由', m: 'Alasan / Karena', r: 'yuu, yu', lvl: 'N4' },
+        { k: '遊', m: 'Bermain', r: 'yuu / aso(bu)', lvl: 'N4' },
+        { k: '予', m: 'Sebelumnya (Prefiks)', r: 'yo / arakaji(me)', lvl: 'N4' },
+        { k: '用', m: 'Urusan / Memakai', r: 'you / mochi(iru)', lvl: 'N4' },
+        { k: '洋', m: 'Samudra / Barat', r: 'you', lvl: 'N4' },
+        { k: '葉', m: 'Daun', r: 'you / ha', lvl: 'N4' },
+        { k: '要', m: 'Perlu / Penting', r: 'you / i(ru)', lvl: 'N4' },
+        { k: '絡', m: 'Terhubung', r: 'raku / kara(mu)', lvl: 'N4' },
+        { k: '留', m: 'Tinggal / Berhenti', r: 'ryuu, ru / to(maru)', lvl: 'N4' },
+        { k: '旅', m: 'Perjalanan', r: 'ryo / tabi', lvl: 'N4' },
+        { k: '両', m: 'Keduanya', r: 'ryou', lvl: 'N4' },
+        { k: '料', m: 'Biaya / Bahan', r: 'ryou', lvl: 'N4' },
+        { k: '力', m: 'Kekuatan', r: 'ryoku, riki / chikara', lvl: 'N4' },
+        { k: '林', m: 'Hutan Kecil', r: 'rin / hayashi', lvl: 'N4' },
+        { k: '冷', m: 'Dingin (Benda)', r: 'rei / tsume(tai)', lvl: 'N4' },
+        { k: '礼', m: 'Sopan Santun', r: 'rei, rai', lvl: 'N4' },
+        { k: '練', m: 'Berlatih', r: 'ren / ne(ru)', lvl: 'N4' },
+        { k: '和', m: 'Jepang / Harmoni', r: 'wa, o / nago(mu)', lvl: 'N4' }
+    ];
+
+    let currentKanjiList = [];
+    let currentQuestionObj = null;
+
+    function switchMode(mode) {
+        document.getElementById('mode-tebak').classList.remove('active-section');
+        document.getElementById('mode-tulis').classList.remove('active-section');
+        document.getElementById('btn-tebak').classList.remove('active');
+        document.getElementById('btn-tulis').classList.remove('active');
+
+        const section = document.getElementById(`mode-${mode}`);
+        section.classList.remove('active-section');
+        void section.offsetWidth; 
+        section.classList.add('active-section');
+        
+        document.getElementById(`btn-${mode}`).classList.add('active');
+        initApp();
+    }
+
+    function getSelectedLevel() {
+        return document.querySelector('input[name="kanjiLevel"]:checked').value;
+    }
+
+    function initApp() {
+        const level = getSelectedLevel();
+        currentKanjiList = dbKanji.filter(item => item.lvl === level);
+        generateQuestion();
+        generateTulisTable();
+    }
+
+    // --- TEBAK KANJI ---
+    function generateQuestion() {
+        const correctIndex = Math.floor(Math.random() * currentKanjiList.length);
+        currentQuestionObj = currentKanjiList[correctIndex];
+        
+        const displayKanji = document.getElementById('question-kanji');
+        displayKanji.innerText = currentQuestionObj.k;
+        
+        displayKanji.classList.remove('active-section');
+        void displayKanji.offsetWidth;
+        displayKanji.style.animation = 'popIn 0.4s ease-out';
+        
+        document.getElementById('tebak-feedback').innerText = '';
+
+        let options = [currentQuestionObj];
+        while (options.length < 4) {
+            let randomObj = currentKanjiList[Math.floor(Math.random() * currentKanjiList.length)];
+            if (!options.some(opt => opt.k === randomObj.k)) {
+                options.push(randomObj);
+            }
+        }
+        options.sort(() => Math.random() - 0.5);
+
+        const container = document.getElementById('options-container');
+        container.innerHTML = '';
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.innerHTML = `<span class="opt-arti">${opt.m}</span><span class="opt-romaji">${opt.r}</span>`;
+            btn.onclick = () => checkAnswer(opt.k, currentQuestionObj.k);
+            container.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selectedKanji, correctKanji) {
+        const feedback = document.getElementById('tebak-feedback');
+        feedback.style.animation = 'none';
+        void feedback.offsetWidth;
+        feedback.style.animation = 'popIn 0.3s ease-out';
+
+        if (selectedKanji === correctKanji) {
+            feedback.innerText = "🌸 Benar! Hebat! 🌸";
+            feedback.style.color = "#a8ffb2"; 
+            setTimeout(generateQuestion, 1200);
+        } else {
+            feedback.innerText = `❌ Salah. Arti yang benar adalah "${currentQuestionObj.m}"`;
+            feedback.style.color = "#ff8da1";
+        }
+    }
+
+    // --- TULIS MANUAL ---
+    function generateTulisTable() {
+        const container = document.getElementById('tulis-container');
+        
+        let html = '<table>';
+        html += '<tr><th>Kanji & Arti</th><th>1 (Jiplak)</th><th>2</th><th>3</th><th>4</th><th>5</th><th>Aksi</th></tr>';
+        
+        currentKanjiList.forEach((item, index) => {
+            const searchUrl = `https://www.google.com/search?q=${item.k}+kanji+stroke+order+gif&tbm=isch`;
+
+            html += `<tr id="row-${index}">`;
+            html += `<td class="kanji-cell">
+                        ${item.k}
+                        <span class="arti-text">${item.m}</span>
+                        <span class="romaji-text">${item.r}</span>
+                        <a href="${searchUrl}" target="_blank" class="btn-urutan" title="Lihat langkah demi langkah di Google">Cek Urutan 🎬</a>
+                     </td>`;
+            
+            for (let i = 0; i < 5; i++) {
+                html += `<td><canvas class="draw-canvas" width="100" height="100" data-row="${index}" data-col="${i}" data-char="${item.k}"></canvas></td>`;
+            }
+            html += `<td><button class="btn-clear" onclick="clearCanvases(${index})">Hapus</button></td>`;
+            html += `</tr>`;
+        });
+        
+        html += '</table>';
+        container.innerHTML = html;
+        setupDrawing();
+    }
+
+    function drawGuide(canvas, char) {
+        const ctx = canvas.getContext('2d');
+        ctx.font = "70px sans-serif";
+        ctx.fillStyle = "rgba(255, 183, 197, 0.25)"; 
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(char, canvas.width / 2, canvas.height / 2 + 5);
+    }
+
+    function clearCanvases(rowIndex) {
+        const canvases = document.querySelectorAll(`canvas[data-row="${rowIndex}"]`);
+        canvases.forEach(canvas => {
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if(canvas.getAttribute('data-col') === "0") {
+                drawGuide(canvas, canvas.getAttribute('data-char'));
+            }
+        });
+    }
+
+    function setupDrawing() {
+        const canvases = document.querySelectorAll('.draw-canvas');
+        
+        canvases.forEach(canvas => {
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+
+            if(canvas.getAttribute('data-col') === "0") {
+                drawGuide(canvas, canvas.getAttribute('data-char'));
+            }
+
+            canvas.addEventListener('mousedown', startPosition);
+            canvas.addEventListener('mouseup', endPosition);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseout', endPosition);
+
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault(); 
+                startPosition(e.touches[0]);
+            }, { passive: false });
+            
+            canvas.addEventListener('touchend', endPosition);
+            
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                draw(e.touches[0]);
+            }, { passive: false });
+
+            function startPosition(e) {
+                isDrawing = true;
+                draw(e);
+            }
+
+            function endPosition() {
+                isDrawing = false;
+                ctx.beginPath(); 
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                ctx.lineWidth = 4;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#ffb7c5'; 
+                ctx.shadowBlur = 4;
+                ctx.shadowColor = '#ffb7c5'; 
+
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+            }
+        });
+    }
+
+    window.onload = initApp;
+</script>
+
+</body>
+</html>
