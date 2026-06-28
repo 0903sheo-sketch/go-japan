@@ -76,6 +76,7 @@
         .options button { font-size: 24px; padding: 15px; border-radius: 12px; background: rgba(30,10,15,0.8); color:#fff; border:1px solid #ffb7c5; cursor:pointer; transition:0.3s;}
         .options button:hover { background: #ffb7c5; color: #000; transform: scale(1.05); }
         .feedback { font-size: 22px; margin-top: 20px; height: 30px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
+        .stats-box { display: inline-block; background: rgba(0,0,0,0.6); border: 1px solid #ffb7c5; padding: 10px 20px; border-radius: 15px; margin-bottom: 15px; font-size: 18px; color: #ffb7c5; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
 
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 20px; padding-bottom: 10px; max-height: 65vh; overflow-y: auto; }
         table { width: 100%; border-collapse: separate; border-spacing: 2px; min-width: 800px; }
@@ -88,10 +89,43 @@
         .draw-canvas { background-color: rgba(10, 2, 5, 0.9); border: 2px dashed #6b2d41; border-radius: 10px; cursor: crosshair; touch-action: none; }
         .btn-clear { font-size: 13px; padding: 8px 12px; border-color: #ff4444; color: #ff4444; border-radius: 5px; background: transparent; cursor: pointer;}
         .btn-clear:hover { background-color: #ff4444; color: #fff; }
+        
         ::-webkit-scrollbar { width: 10px; height: 10px; }
         ::-webkit-scrollbar-track { background: rgba(26, 8, 15, 0.5); border-radius: 5px; }
         ::-webkit-scrollbar-thumb { background: #6b2d41; border-radius: 5px; }
         ::-webkit-scrollbar-thumb:hover { background: #ffb7c5; }
+
+        /* CUSTOM MODAL POPUP STYLES */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center; z-index: 10000;
+        }
+        .modal-content {
+            background: rgba(43, 15, 25, 0.95); border: 2px solid #ffb7c5; border-radius: 20px;
+            padding: 40px; text-align: center; max-width: 400px; width: 90%;
+            box-shadow: 0 15px 40px rgba(255, 183, 197, 0.5), inset 0 0 20px rgba(255, 183, 197, 0.2);
+            position: relative; overflow: hidden;
+        }
+        .modal-content::before {
+            content: "🌸"; font-size: 150px; position: absolute; top: -40px; right: -30px;
+            opacity: 0.1; z-index: -1; transform: rotate(15deg);
+        }
+        .modal-content h2 { margin-top: 0; font-size: 32px; color: #fff; text-shadow: 0 0 15px rgba(255,183,197,0.8); }
+        .modal-content h3 { color: #ddd; font-weight: normal; margin-bottom: 25px; font-size: 18px;}
+        .modal-stats { 
+            background: rgba(0,0,0,0.6); padding: 25px; border-radius: 15px; 
+            margin-bottom: 30px; font-size: 22px; font-weight: bold; line-height: 2; 
+            text-align: left; border: 1px solid rgba(255,183,197,0.3); 
+        }
+        .modal-stats p { margin: 0; display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.2); padding-bottom: 10px; margin-bottom: 10px; }
+        .modal-stats p:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+        .btn-modal {
+            background: #ffb7c5; color: #12040a; font-size: 20px; font-weight: bold;
+            padding: 15px 40px; border: none; border-radius: 30px; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 0 15px rgba(255, 183, 197, 0.6); width: 100%;
+        }
+        .btn-modal:hover { background: #fff; transform: scale(1.05); box-shadow: 0 0 25px rgba(255, 255, 255, 0.8); }
     </style>
 </head>
 <body>
@@ -131,11 +165,18 @@
 
     <div id="mode-tebak" class="mode-section active-section">
         <h2>Mode Kuis Pilihan Ganda</h2>
+        
+        <div class="stats-box">
+            ⏱️ Waktu: <span id="timer" style="font-weight: bold; color: #fff;">02:00</span> &nbsp;|&nbsp; 
+            ✅ Benar: <span id="score" style="font-weight: bold; color: #a8ffb2;">0</span> &nbsp;|&nbsp; 
+            ❌ Salah: <span id="wrong-score" style="font-weight: bold; color: #ff8da1;">0</span>
+        </div>
+        
         <p style="color: #eee;">Pilih Romaji yang tepat untuk huruf di bawah ini:</p>
         <div class="char-display" id="question-display">-</div>
         <div class="options" id="options-container"></div>
         <div class="feedback" id="tebak-feedback"></div>
-        <button onclick="generateQuestion()" style="margin-top: 30px; width: 220px; font-size: 18px; border-radius: 25px; background: rgba(0,0,0,0.5); border: 1px solid #ffb7c5; color: #ffb7c5; padding: 10px; cursor:pointer;">Soal Berikutnya ➔</button>
+        <button onclick="skipQuestion()" style="margin-top: 30px; width: 220px; font-size: 18px; border-radius: 25px; background: rgba(0,0,0,0.5); border: 1px solid #ffb7c5; color: #ffb7c5; padding: 10px; cursor:pointer;">Lewati Soal ➔</button>
     </div>
 
     <div id="mode-tulis" class="mode-section">
@@ -144,6 +185,19 @@
         <div class="table-responsive">
             <div id="tulis-container"></div>
         </div>
+    </div>
+</div>
+
+<div id="result-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content fade-in">
+        <h2>Waktu Habis! 🌸</h2>
+        <h3>Berikut adalah hasil akhir pencapaianmu:</h3>
+        <div class="modal-stats">
+            <p><span style="color: #ddd;">📝 Total Dijawab:</span> <span id="modal-total">0</span></p>
+            <p><span style="color: #a8ffb2;">✅ Jawaban Benar:</span> <span id="modal-benar" style="color: #a8ffb2;">0</span></p>
+            <p><span style="color: #ff8da1;">❌ Jawaban Salah:</span> <span id="modal-salah" style="color: #ff8da1;">0</span></p>
+        </div>
+        <button onclick="closeModalAndRestart()" class="btn-modal">Main Lagi ➔</button>
     </div>
 </div>
 
@@ -173,6 +227,14 @@
     ];
 
     let currentQuestionObj = null;
+    
+    // VARIABEL TIMER & SKOR
+    let timeLeft = 120;
+    let score = 0;           // Jawaban Benar
+    let wrongAnswers = 0;    // Jawaban Salah
+    let totalAnswered = 0;   // Total Soal Terjawab
+    let timerInterval = null;
+    let isProcessing = false; // Mencegah double click
 
     function openModule(moduleName) {
         const gate = document.getElementById('gatekeeper');
@@ -181,7 +243,6 @@
         
         setTimeout(() => {
             if(moduleName === 'kanji') {
-                // Redirect ke file kanji.html jika memilih Kanji
                 window.location.href = 'kanji.html';
             } else {
                 gate.style.display = 'none';
@@ -195,6 +256,9 @@
     }
 
     function goHome() {
+        clearInterval(timerInterval);
+        timerInterval = null;
+
         const gate = document.getElementById('gatekeeper');
         const app = document.getElementById('main-app');
         app.classList.remove('fade-in');
@@ -212,20 +276,82 @@
         document.getElementById('mode-tulis').classList.remove('active-section');
         document.getElementById('btn-tebak').classList.remove('active');
         document.getElementById('btn-tulis').classList.remove('active');
+        
         const section = document.getElementById(`mode-${mode}`);
         section.classList.remove('active-section');
         void section.offsetWidth; 
         section.classList.add('active-section');
         document.getElementById(`btn-${mode}`).classList.add('active');
-        initApp();
+        
+        if (mode === 'tulis') {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        } else if (mode === 'tebak') {
+            initApp();
+        }
     }
 
     function initApp() {
+        resetQuiz();
         generateQuestion();
         generateTulisTable();
     }
 
+    function resetQuiz() {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        score = 0;
+        wrongAnswers = 0;
+        totalAnswered = 0;
+        isProcessing = false;
+        
+        document.getElementById('score').innerText = score;
+        document.getElementById('wrong-score').innerText = wrongAnswers;
+        document.getElementById('timer').innerText = "02:00";
+    }
+
+    function startTimer() {
+        clearInterval(timerInterval);
+        timeLeft = 120;
+        document.getElementById('timer').innerText = "02:00";
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById('timer').innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                
+                // Isi data hasil ke dalam custom modal
+                document.getElementById('modal-total').innerText = totalAnswered;
+                document.getElementById('modal-benar').innerText = score;
+                document.getElementById('modal-salah').innerText = wrongAnswers;
+                
+                // Tampilkan Custom Modal Pop-Up
+                document.getElementById('result-modal').style.display = 'flex';
+            }
+        }, 1000);
+    }
+
+    // Fungsi untuk tombol pada pop-up modal
+    function closeModalAndRestart() {
+        document.getElementById('result-modal').style.display = 'none';
+        resetQuiz();
+        generateQuestion();
+    }
+
+    function skipQuestion() {
+        if(isProcessing) return;
+        generateQuestion();
+    }
+
     function generateQuestion() {
+        if (!timerInterval) {
+            startTimer();
+        }
+
         const type = document.querySelector('input[name="kanaType"]:checked').value;
         const correctIndex = Math.floor(Math.random() * kanaData.length);
         currentQuestionObj = kanaData[correctIndex];
@@ -256,19 +382,34 @@
     }
 
     function checkAnswer(selectedKey, correctKey) {
+        if (isProcessing) return; 
+        isProcessing = true;
+
         const feedback = document.getElementById('tebak-feedback');
         feedback.style.animation = 'none';
         void feedback.offsetWidth;
         feedback.style.animation = 'popIn 0.3s ease-out';
 
+        totalAnswered++; 
+
         if (selectedKey === correctKey) {
+            score++; 
+            document.getElementById('score').innerText = score;
+            
             feedback.innerText = "🌸 Benar! Hebat! 🌸";
             feedback.style.color = "#a8ffb2"; 
-            setTimeout(generateQuestion, 1200);
         } else {
+            wrongAnswers++;
+            document.getElementById('wrong-score').innerText = wrongAnswers;
+            
             feedback.innerText = `❌ Ops, yang benar adalah "${currentQuestionObj.r}"`;
             feedback.style.color = "#ff8da1";
         }
+
+        setTimeout(() => {
+            isProcessing = false;
+            generateQuestion();
+        }, 1200);
     }
 
     function generateTulisTable() {
@@ -329,8 +470,8 @@
             function draw(e) {
                 if (!isDrawing) return;
                 const rect = canvas.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+                const x = (e.clientX || e.touches[0].clientX) - rect.left;
+                const y = (e.clientY || e.touches[0].clientY) - rect.top;
                 ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.strokeStyle = '#ffb7c5'; 
                 ctx.shadowBlur = 4; ctx.shadowColor = '#ffb7c5'; 
                 ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
