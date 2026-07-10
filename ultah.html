@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ada Sesuatu Buat Kamu...</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Tambahan font Caveat untuk gaya tulisan tangan pada surat -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
     <style>
         /* Pengaturan Dasar */
         :root {
-            --primary-color: #ff007f;
-            --secondary-color: #00e5ff;
+            --primary-color: #ff007f; /* Neon Pink */
+            --secondary-color: #00e5ff; /* Cyan */
             --confetti-1: #ffb7c5;
             --confetti-2: #c5f1ff;
             --confetti-3: #fff7c5;
@@ -22,7 +23,7 @@
             background-color: #000000;
             color: #ffffff;
             font-family: 'Poppins', sans-serif;
-            overflow: hidden;
+            overflow: hidden; /* Mencegah scroll di awal */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -47,17 +48,18 @@
             font-size: 1.2rem;
             font-family: 'Poppins', sans-serif;
             font-weight: 700;
-            color: #000;
-            background-color: #fff;
+            color: #fff;
+            background: linear-gradient(45deg, #ff007f, #7000ff);
             border: none;
             border-radius: 30px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255,255,255,0.2);
-            transition: transform 0.2s;
+            box-shadow: 0 5px 20px rgba(255, 0, 127, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         #start-btn:active {
             transform: scale(0.95);
+            box-shadow: 0 2px 10px rgba(255, 0, 127, 0.4);
         }
 
         /* Layar Prank (Hitam Solid - Bersih) */
@@ -74,38 +76,41 @@
         }
 
         #timer-text {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             color: #ffffff;
-            margin-bottom: 15px;
-            font-weight: 700;
+            margin-bottom: 20px;
+            font-weight: 900;
             letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--primary-color);
         }
 
         #prank-img {
             max-width: 90%;
             max-height: 65vh;
             object-fit: contain;
-            border: 4px solid #ffffff;
+            border: 4px solid #333; /* Lebih gelap agar lebih elegan */
             border-radius: 10px;
         }
 
-        /* Layar Ulang Tahun (Background Image dengan Overlay Gelap) */
+        /* Layar Ulang Tahun */
         #bday-screen {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             display: none;
             flex-direction: column;
-            justify-content: center;
+            justify-content: center; /* Diganti agar bisa di-scroll jika konten panjang */
             align-items: center;
-            /* GANTI URL DI BAWAH DENGAN BACKGROUND IMAGE KAMU */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)), url('URL_BACKGROUND_KAMU.jpg');
+            /* URL Background Aesthetic Dark Pink Abstract dari Unsplash */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=1920&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             z-index: 10;
             text-align: center;
             user-select: none;
-            padding: 20px;
+            padding: 40px 20px;
             box-sizing: border-box;
+            overflow-y: auto; /* Memungkinkan scroll jika layar kecil */
         }
 
         .show {
@@ -119,7 +124,7 @@
             font-weight: 900;
             letter-spacing: -1px;
             text-transform: uppercase;
-            margin: 0 0 15px 0;
+            margin: 0 0 30px 0;
             background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             background-clip: text;
@@ -129,24 +134,50 @@
             z-index: 2;
         }
 
-        .message {
-            font-size: 1.2rem;
-            max-width: 800px;
-            line-height: 1.6;
-            margin: 0;
-            color: #ffffff;
-            animation: fadeInMessage 1s ease-out 1.5s forwards;
+        /* DESAIN SURAT VIRTUAL (GLASSMORPHISM) */
+        .letter-box {
+            position: relative;
+            background: rgba(20, 20, 20, 0.5); /* Hitam transparan */
+            backdrop-filter: blur(12px); /* Efek Kaca */
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 0, 127, 0.3);
+            border-radius: 20px;
+            padding: 40px 30px 30px 30px;
+            max-width: 650px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 127, 0.05);
+            animation: slideUp 1.2s cubic-bezier(0.25, 1, 0.5, 1) 1s forwards;
             opacity: 0;
             z-index: 2;
         }
 
-        /* Bingkai Foto */
+        /* Ikon Surat di Atas */
+        .letter-box::before {
+            content: '💌';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 127, 0.6));
+        }
+
+        .message {
+            font-family: 'Caveat', cursive; /* Font tulisan tangan */
+            font-size: 1.8rem;
+            line-height: 1.5;
+            color: #ffffff;
+            margin: 0;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        }
+
+        /* Bingkai Foto (Diperbesar) */
         .photo-container {
             position: relative;
-            margin-top: 30px;
+            margin-top: 40px;
             z-index: 2;
-            animation: popIn 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) 2.5s forwards, 
-                       floating 3s ease-in-out infinite 3.5s;
+            animation: popIn 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) 2s forwards, 
+                       floating 3s ease-in-out infinite 3s;
             opacity: 0;
             transform: scale(0);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -159,25 +190,26 @@
         }
 
         .photo-frame {
-            width: 200px;
-            height: 200px;
+            width: 250px; /* Ukuran diperbesar */
+            height: 250px; /* Ukuran diperbesar */
             object-fit: cover;
             border-radius: 50%;
-            border: 5px solid #fff;
-            background-color: #fff;
+            border: 5px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.5); /* Cahaya tipis di sekitar foto */
+            background-color: #000;
         }
 
         .photo-container::before {
             content: '✨';
             position: absolute;
-            top: -10px; right: 10px; font-size: 2rem;
+            top: -10px; right: 20px; font-size: 2.5rem;
             animation: twinkle 1.5s infinite alternate;
         }
         
         .photo-container::after {
             content: '🎉';
             position: absolute;
-            bottom: -5px; left: 5px; font-size: 2rem;
+            bottom: -5px; left: 20px; font-size: 2.5rem;
             animation: twinkle 1.5s infinite alternate-reverse;
         }
 
@@ -193,25 +225,26 @@
            PENGATURAN KHUSUS HP (MOBILE RESPONSIVE) 
            ========================================= */
         @media (max-width: 768px) {
+            #bday-screen {
+                justify-content: flex-start; /* Agar bisa scroll ke bawah di HP */
+                padding: 30px 15px;
+            }
             .title {
                 font-size: 2.2rem;
-                margin-bottom: 10px;
+                margin-top: 20px;
+            }
+            .letter-box {
+                padding: 30px 20px 20px 20px;
             }
             .message {
-                font-size: 0.95rem; /* Teks lebih kecil agar pas di HP */
-                max-width: 100%;
-                line-height: 1.5;
+                font-size: 1.4rem; /* Ukuran font tulisan tangan disesuaikan */
+            }
+            .photo-container {
+                margin-bottom: 40px; /* Memberi ruang di bagian bawah saat di-scroll */
             }
             .photo-frame {
-                width: 160px; /* Foto sedikit dikecilkan */
-                height: 160px;
-            }
-            #timer-text {
-                font-size: 1rem;
-            }
-            #start-btn {
-                padding: 12px 25px;
-                font-size: 1rem;
+                width: 200px; /* Foto tetap besar di HP */
+                height: 200px;
             }
         }
 
@@ -220,8 +253,8 @@
             from { transform: translateY(-50px) scale(0.9); opacity: 0; }
             to { transform: translateY(0) scale(1); opacity: 1; }
         }
-        @keyframes fadeInMessage {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeInWithScale {
@@ -242,7 +275,7 @@
             to { transform: scale(1.2) rotate(10deg); opacity: 1; }
         }
         @keyframes fallWithRotate {
-            to { transform: translateY(110vh) rotate(var(--rotate-to)); }
+            to { transform: translateY(200vh) rotate(var(--rotate-to)); }
         }
         @keyframes burst {
             0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
@@ -257,12 +290,12 @@
 
     <!-- Layar Intro (Penting agar musik bisa jalan di HP) -->
     <div id="intro-screen">
-        <button id="start-btn">PAKET ! > 🎁</button>
+        <button id="start-btn">PAKET ! 🎁</button>
     </div>
 
     <!-- Bagian Prank -->
     <div id="prank-screen">
-        <div id="timer-text"> <span id="countdown">30</span> </div>
+        <div id="timer-text"> TUNGGU <span id="countdown">30 </span> JAM </div>
         <img src="SUCIPTO.jpeg" alt="Foto Kejutan" id="prank-img">
     </div>
 
@@ -270,14 +303,15 @@
     <div id="bday-screen">
         <h1 class="title">Selamat Menua !</h1>
         
-        <!-- Teks Ucapan Menyentuh -->
-        <p class="message">
-           "Selamat ulang tahun untuk sosok yang paling spesial. Di hari kamu bertambah usia ini, aku cuma mau kamu tahu kalau keberadaanmu adalah salah satu hal terbaik yang pernah terjadi di hidupku. Terima kasih sudah bertahan melewati semua hal berat, dan terima kasih sudah selalu berusaha menjadi versi terbaik dari dirimu.
-
-Doaku hari ini sederhana: semoga sedihmu berkurang, bahagiamu bertambah, dan semoga pundakmu selalu kuat menghadapi apapun di depan nanti. Tetaplah jadi dirimu yang hangat. Aku akan selalu ada di sini, menemani setiap langkahmu. Selamat bertambah usia, berbahagialah selalu ayang ."
-        </p>
+        <!-- SURAT VIRTUAL (Glassmorphism) -->
+        <div class="letter-box">
+            <p class="message">
+                "Selamat ulang tahun untuk sosok yang paling spesial. Di hari kamu bertambah usia ini, aku cuma mau kamu tahu kalau keberadaanmu adalah salah satu hal terbaik yang pernah terjadi di hidupku. Terima kasih sudah bertahan melewati semua hal berat, dan terima kasih sudah selalu berusaha menjadi versi terbaik dari dirimu.<br><br>
+                Doaku hari ini sederhana: semoga sedihmu berkurang, bahagiamu bertambah, dan semoga pundakmu selalu kuat menghadapi apapun di depan nanti. Tetaplah jadi dirimu yang hangat. Aku akan selalu ada di sini, menemani setiap langkahmu. Selamat bertambah usia, berbahagialah selalu ayang."
+            </p>
+        </div>
         
-        <!-- Foto Asli -->
+        <!-- Foto Asli (Diperbesar) -->
         <div class="photo-container">
             <img src="ULTAH.jpeg" alt="Foto Bday" class="photo-frame">
         </div>
@@ -291,7 +325,7 @@ Doaku hari ini sederhana: semoga sedihmu berkurang, bahagiamu bertambah, dan sem
         const bgMusic = document.getElementById('bg-music');
         const countdownEl = document.getElementById('countdown');
         
-        let timeLeft = 10; 
+        let timeLeft = 30; 
 
         // Fungsi Tombol Buka
         startBtn.addEventListener('click', () => {
@@ -319,6 +353,8 @@ Doaku hari ini sederhana: semoga sedihmu berkurang, bahagiamu bertambah, dan sem
             setTimeout(() => {
                 prankScreen.style.display = 'none';
                 bdayScreen.classList.add('show');
+                // Beri efek overflow auto pada body agar bisa di-scroll (karena surat + foto cukup panjang)
+                document.body.style.overflow = 'auto'; 
                 mulaiConfetti();
             }, 1000);
         }
@@ -328,15 +364,18 @@ Doaku hari ini sederhana: semoga sedihmu berkurang, bahagiamu bertambah, dan sem
         const shapes = ['circle', 'square', 'triangle'];
 
         function mulaiConfetti() {
-            for (let i = 0; i < 70; i++) { // Disesuaikan agar ringan di HP
+            for (let i = 0; i < 70; i++) { 
                 buatPartikelConfetti(Math.random() * 100 + 'vw', '-20px', true);
             }
         }
 
-        // Menggunakan pointerdown agar responsif baik di HP (tap) maupun Laptop (klik)
+        // Interaksi kembang api (klik dimana saja)
         bdayScreen.addEventListener('pointerdown', function(e) {
+            // Hindari meledak kembang api saat scroll
+            if (e.target.closest('.letter-box')) return; 
+            
             for (let i = 0; i < 25; i++) {
-                buatPartikelBurst(e.clientX, e.clientY);
+                buatPartikelBurst(e.clientX, e.clientY + window.scrollY);
             }
         });
 
@@ -383,7 +422,7 @@ Doaku hari ini sederhana: semoga sedihmu berkurang, bahagiamu bertambah, dan sem
             const partikel = buatPartikelConfetti(x + 'px', y + 'px', false);
             
             const angle = Math.random() * Math.PI * 2;
-            const velocity = 40 + Math.random() * 120; // Disesuaikan untuk layar HP
+            const velocity = 40 + Math.random() * 120; 
             const tx = Math.cos(angle) * velocity;
             const ty = Math.sin(angle) * velocity - 40; 
             
