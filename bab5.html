@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minna no Nihongo | Dashboard Pembelajaran Bab 5</title>
+    <style>
+        /* Desain Minimalis & Hitam Solid */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #0a0a0a;
+            --border-color: #222222;
+            --text-main: #f0f0f0;
+            --text-muted: #888888;
+            --accent-japan: #c91f37;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-solid);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Dashboard */
+        .sidebar {
+            width: 280px;
+            background-color: var(--panel-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            border-bottom: 2px solid var(--accent-japan);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .jp-text {
+            font-size: 0.9rem;
+            color: var(--accent-japan);
+            margin-top: 5px;
+            letter-spacing: 4px;
+        }
+
+        .nav-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: var(--bg-solid);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-item.active {
+            border-left: 4px solid var(--accent-japan);
+            font-weight: bold;
+        }
+
+        .nav-item:hover {
+            background-color: #111;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            z-index: 1;
+        }
+
+        .header-title {
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .header-title h2 {
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        .badge {
+            background-color: var(--bg-solid);
+            border: 1px solid var(--accent-japan);
+            color: var(--accent-japan);
+            padding: 5px 15px;
+            font-size: 0.8rem;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+
+        /* Section Styling */
+        .section-heading {
+            font-size: 1.3rem;
+            color: var(--accent-japan);
+            margin-bottom: 20px;
+            margin-top: 40px;
+            display: inline-block;
+            border-bottom: 1px dashed var(--accent-japan);
+            padding-bottom: 5px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .panel-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            position: relative;
+        }
+
+        .panel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-japan);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .panel-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .panel-number {
+            font-size: 2rem;
+            color: #1a1a1a;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-weight: bold;
+            z-index: 0;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--border-color);
+            position: relative;
+            z-index: 1;
+        }
+
+        .panel-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .panel-content p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .example-box {
+            background-color: var(--bg-solid);
+            padding: 15px;
+            border-left: 2px solid var(--accent-japan);
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            color: var(--accent-japan);
+            font-weight: bold;
+        }
+
+        /* Kosakata Table */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .vocab-group {
+            margin-bottom: 20px;
+        }
+        
+        .vocab-group h4 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .vocab-item {
+            background: var(--bg-solid);
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        /* Kuis Dashboard */
+        .quiz-section {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        .quiz-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .timer-container {
+            width: 200px;
+            height: 6px;
+            background-color: var(--bg-solid);
+            border: 1px solid var(--border-color);
+        }
+
+        #timer-progress {
+            height: 100%;
+            background-color: var(--accent-japan);
+            width: 100%;
+            transition: width 1s linear;
+        }
+
+        .btn {
+            background-color: var(--bg-solid);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 12px 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn:hover { border-color: var(--text-main); }
+        .btn-primary {
+            background-color: var(--accent-japan);
+            border-color: var(--accent-japan);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background-color: #a0172b;
+            border-color: #a0172b;
+        }
+        .option-btn {
+            display: block;
+            width: 100%;
+            background-color: var(--bg-solid);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 15px;
+            margin-bottom: 10px;
+            text-align: left;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .option-btn:hover { border-color: var(--accent-japan); }
+        
+        #result-screen { text-align: center; padding: 40px 0; }
+        .score-display {
+            font-size: 5rem;
+            font-weight: 300;
+            color: var(--accent-japan);
+            margin: 20px 0;
+        }
+         /* === MULAI KODE CSS TOMBOL KEMBALI === */
+        /* Tombol sekarang dibuat menyesuaikan lebar sidebar dan warnanya diserasikan dengan tema */
+        .btn-home { 
+            background: transparent; 
+            border: 1px solid var(--accent-japan); 
+            color: var(--accent-japan); 
+            padding: 12px 15px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s; 
+            width: 100%;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-home:hover { 
+            background: var(--accent-japan); 
+            color: #fff; 
+            box-shadow: 0 0 15px rgba(201, 31, 55, 0.4);
+        }
+        /* === AKHIR KODE CSS TOMBOL KEMBALI === */
+    </style>
+</head>
+<body>
+
+   <aside class="sidebar">
+        <!-- === MULAI KODE HTML TOMBOL KEMBALI === -->
+        <!-- Tombol dipindah ke dalam sidebar agar lebih rapi dan intuitif -->
+        <button class="btn-home" onclick="window.location.href='index.html'">
+            <span>🏠</span> Kembali ke Utama
+        </button>
+        <!-- === AKHIR KODE HTML TOMBOL KEMBALI === -->
+        <div class="sidebar-header">
+            <h1>Nihongo</h1>
+            <div class="jp-text">みんなの日本語</div>
+        </div>
+        <div class="nav-item active" onclick="location.href='bab1.html'">Bab 1 : Perkenalan (Identitas)</div>
+        <div class="nav-item" onclick="location.href='bab2.html'">Bab 2 : Penunjuk Benda (Kore)</div>
+        <div class="nav-item" onclick="location.href='bab3.html'">Bab 3 : Penunjuk Tempat (Koko)</div>
+        <div class="nav-item" onclick="location.href='bab4.html'">Bab 4 : Waktu & Kata Kerja</div>
+        <div class="nav-item" onclick="location.href='bab5.html'">Bab 5 : Perpindahan (Ikimasu)</div>
+        <div class="nav-item" onclick="location.href='bab6.html'">Bab 6 : Aktivitas & Objek</div>
+        <div class="nav-item" onclick="location.href='bab7.html'">Bab 7 : Alat & Pemberian</div>
+        <div class="nav-item" onclick="location.href='bab8.html'">Bab 8 : Kata Sifat (Keiyoushi)</div>
+        <div class="nav-item" onclick="location.href='bab9.html'">Bab 9 : Mahir/Suka (Ga Dekimasu)</div>
+        <div class="nav-item" onclick="location.href='bab10.html'">Bab 10 : Keberadaan Benda (Arimasu)</div>
+        <div class="nav-item" onclick="location.href='bab11.html'">Bab 11 : Menghitung & Jumlah</div>
+        <div class="nav-item" onclick="location.href='bab12.html'">Bab 12 : Waktu Lampau & Perbandingan</div>
+        <div class="nav-item" onclick="location.href='bab13.html'">Bab 13 : Ingin & Keinginan (Tai)</div>
+        <div class="nav-item" onclick="location.href='bab14.html'">Bab 14 : Kata Kerja Bentuk TE</div>
+        <div class="nav-item" onclick="location.href='bab15.html'">Bab 15 : Izin & Larangan (~temo ii desu)</div>
+        <div class="nav-item" onclick="location.href='bab16.html'">Bab 16 : Menyambung Kalimat (~te, ~te)</div>
+        <div class="nav-item" onclick="location.href='bab17.html'">Bab 17 : Bentuk Negatif (~nakereba narimasen)</div>
+        <div class="nav-item" onclick="location.href='bab18.html'">Bab 18 : Kemampuan (Bentuk Kamus)</div>
+        <div class="nav-item" onclick="location.href='bab19.html'">Bab 19 : Pengalaman (~ta koto ga arimasu)</div>
+        <div class="nav-item" onclick="location.href='bab20.html'">Bab 20 : Percakapan Biasa (Futsukei)</div>
+        <div class="nav-item" onclick="location.href='bab21.html'">Bab 21 : Berpendapat (~to omoimasu)</div>
+        <div class="nav-item" onclick="location.href='bab22.html'">Bab 22 : Kalimat Penjelas Benda</div>
+        <div class="nav-item" onclick="location.href='bab23.html'">Bab 23 : Ketika / Apabila (~toki)</div>
+        <div class="nav-item" onclick="location.href='bab24.html'">Bab 24 : Memberi & Menerima (Ageru/Kureru)</div>
+        <div class="nav-item" onclick="location.href='bab25.html'">Bab 25 : Pengandaian (~tara)</div>
+    </aside>
+
+    <main class="main-content">
+        <div class="header-title">
+            <h2>Materi Lengkap - Bab 5</h2>
+            <span class="badge">JLPT N5 LEVEL</span>
+        </div>
+
+        <!-- Bagian 1: Kosakata -->
+        <h3 class="section-heading">KOSAKATA (言葉 - Kotoba)</h3>
+        <div class="grid-container">
+            <div class="panel-card" style="grid-column: 1 / -1;">
+                <div class="panel-title">Kosakata Wajib Hafal Bab 5</div>
+                <div class="panel-content">
+                    <div class="vocab-grid">
+                        
+                        <!-- Grup Kata Kerja -->
+                        <div class="vocab-group">
+                            <h4>Kata Kerja Arah (Verba)</h4>
+                            <div class="vocab-item"><span>いきます (Ikimasu)</span><span>Pergi</span></div>
+                            <div class="vocab-item"><span>きます (Kimasu)</span><span>Datang</span></div>
+                            <div class="vocab-item"><span>かえります (Kaerimasu)</span><span>Pulang</span></div>
+                        </div>
+
+                        <!-- Grup Kendaraan -->
+                        <div class="vocab-group">
+                            <h4>Transportasi</h4>
+                            <div class="vocab-item"><span>でんしゃ (Densha)</span><span>Kereta Listrik</span></div>
+                            <div class="vocab-item"><span>ちかてつ (Chikatetsu)</span><span>Kereta Bawah Tanah</span></div>
+                            <div class="vocab-item"><span>ひこうき (Hikouki)</span><span>Pesawat Terbang</span></div>
+                            <div class="vocab-item"><span>ふね (Fune)</span><span>Kapal Laut</span></div>
+                            <div class="vocab-item"><span>じてんしゃ (Jitensha)</span><span>Sepeda</span></div>
+                            <div class="vocab-item"><span>あるいて (Aruite)</span><span>Berjalan Kaki</span></div>
+                        </div>
+
+                        <!-- Grup Waktu Tingkat Lanjut -->
+                        <div class="vocab-group">
+                            <h4>Keterangan Waktu Skala Besar</h4>
+                            <div class="vocab-item"><span>せんしゅう (Senshuu)</span><span>Minggu Lalu</span></div>
+                            <div class="vocab-item"><span>こんしゅう (Konshuu)</span><span>Minggu Ini</span></div>
+                            <div class="vocab-item"><span>らいしゅう (Raishuu)</span><span>Minggu Depan</span></div>
+                            <div class="vocab-item"><span>せんげつ (Sengetsu)</span><span>Bulan Lalu</span></div>
+                            <div class="vocab-item"><span>きょねん (Kyonen)</span><span>Tahun Lalu</span></div>
+                            <div class="vocab-item"><span>いつ (Itsu)</span><span>Kapan</span></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bagian 2: Tata Bahasa -->
+        <h3 class="section-heading">TATA BAHASA (文法 - Bunpou)</h3>
+        <div class="grid-container">
+            <div class="panel-card">
+                <div class="panel-number">01</div>
+                <div class="panel-title">Tujuan / Arah (～へ 行きます)</div>
+                <div class="panel-content">
+                    <p>Digunakan untuk menunjukkan arah pergerakan. Partikel <strong>へ</strong> ditulis menggunakan huruf Hiragana "he", tetapi <strong>dibaca "e"</strong>.</p>
+                    <div class="example-box">
+                        わたし は きょうと <span class="highlight">へ</span> いきます。<br>
+                        <em>(Watashi wa Kyouto e ikimasu.)</em><br>
+                        Saya pergi <span class="highlight">ke</span> Kyoto.
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div class="panel-number">02</div>
+                <div class="panel-title">Penyangkalan Total (どこへも ～ません)</div>
+                <div class="panel-content">
+                    <p>Jika Anda tidak pergi ke mana-mana, gunakan kata tanya <strong>どこ (Doko)</strong> ditambah partikel <strong>へ (e)</strong> dan <strong>も (mo)</strong>, diikuti kata kerja bentuk negatif.</p>
+                    <div class="example-box">
+                        にちようび <span class="highlight">どこへも 行きません</span>。<br>
+                        <em>(Nichiyoubi doko e mo ikimasen.)</em><br>
+                        Hari Minggu saya tidak pergi ke mana pun.
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div class="panel-number">03</div>
+                <div class="panel-title">Alat Transportasi (～で)</div>
+                <div class="panel-content">
+                    <p>Partikel <strong>で (de)</strong> digunakan setelah nama kendaraan yang berarti "dengan / menggunakan". Pengecualian: <strong>あるいて (Berjalan kaki)</strong> tidak menggunakan partikel de.</p>
+                    <div class="example-box">
+                        でんしゃ <span class="highlight">で</span> いきます。<br>
+                        <em>(Densha de ikimasu.)</em><br>
+                        Pergi <span class="highlight">dengan</span> kereta.<br><br>
+                        <span class="highlight">あるいて</span> かえります。<br>
+                        <em>(Aruite kaerimasu.)</em><br>
+                        Pulang dengan berjalan kaki.
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div class="panel-number">04</div>
+                <div class="panel-title">Menyatakan Teman / Pasangan (～と)</div>
+                <div class="panel-content">
+                    <p>Partikel <strong>と (to)</strong> berarti "bersama dengan". Jika Anda pergi sendirian, gunakan <strong>ひとりで (Hitori de)</strong> tanpa partikel to.</p>
+                    <div class="example-box">
+                        かぞく <span class="highlight">と</span> にほんへ きました。<br>
+                        <em>(Kazoku to Nihon e kimashita.)</em><br>
+                        Saya telah datang ke Jepang <span class="highlight">bersama dengan</span> keluarga.<br><br>
+                        <span class="highlight">ひとりで</span> かえります。<br>
+                        <em>(Hitori de kaerimasu.)</em><br>
+                        Saya pulang sendirian.
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div class="panel-number">05</div>
+                <div class="panel-title">Menanyakan Waktu Tanpa Partikel (いつ)</div>
+                <div class="panel-content">
+                    <p>Berbeda dengan kata tanya waktu presisi (Nan-ji / Nan-gatsu) yang butuh partikel "ni", kata tanya <strong>いつ (Itsu - Kapan)</strong> <strong>TIDAK</strong> membutuhkan partikel "ni" setelahnya.</p>
+                    <div class="example-box">
+                        Q: <span class="highlight">いつ</span> にほんへ きましたか。<br>
+                        A: 3がつ 24かに きました。<br>
+                        <em>(Q: Kapan (Anda) datang ke Jepang? A: Saya datang pada tanggal 24 bulan 3.)</em>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Panel Kuis -->
+        <div class="quiz-section">
+            <div id="start-screen">
+                <div class="header-title" style="margin-bottom: 15px;">
+                    <h2>Sistem Evaluasi Bab 5</h2>
+                </div>
+                <p style="color: #888; margin-bottom: 25px;">Uji pemahaman Anda tentang partikel arah (e), transportasi (de), dan rekan (to). Waktu: 60 detik.</p>
+                <button class="btn btn-primary" onclick="startQuiz()">Inisiasi Kuis</button>
+            </div>
+
+            <div id="question-screen" style="display: none;">
+                <div class="quiz-top">
+                    <span id="question-count" style="font-weight: bold; letter-spacing: 1px;">MODUL 1/5</span>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span id="time-left" style="font-size: 0.9rem; color: #888;">60s</span>
+                        <div class="timer-container">
+                            <div id="timer-progress"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 id="question-text" style="font-size: 1.2rem; margin-bottom: 25px; font-weight: 400;">Memuat data...</h3>
+                
+                <div id="options-container">
+                    <!-- Tombol opsi dari JS -->
+                </div>
+            </div>
+
+            <div id="result-screen" style="display: none;">
+                <h2>Evaluasi Selesai</h2>
+                <div class="score-display" id="final-score">0</div>
+                <p id="score-message" style="color: #888; margin-bottom: 30px;">Memproses hasil...</p>
+                <button class="btn" onclick="location.reload()">Muat Ulang Modul</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const questions = [
+            { question: "Partikel yang digunakan untuk menunjukkan tujuan (Ke Jepang = Nihon ___ ikimasu) ditulis dengan huruf apa dan dibaca apa?", options: ["Ditulis へ (he), dibaca he", "Ditulis は (ha), dibaca wa", "Ditulis へ (he), dibaca e", "Ditulis え (e), dibaca e"], answer: 2 },
+            { question: "Bahasa Jepang dari 'Pulang dengan berjalan kaki' yang paling tepat adalah?", options: ["Aruite de kaerimasu.", "Aruite kaerimasu.", "Aruimasu de kaerimasu.", "Ashi de kaerimasu."], answer: 1 },
+            { question: "Lengkapi kalimat: Watashi wa tomodachi [ ___ ] gakkou e ikimasu. (Saya pergi ke sekolah BERSAMA teman).", options: ["to", "de", "mo", "ni"], answer: 0 },
+            { question: "Bagaimana cara mengatakan 'Saya tidak pergi ke mana-mana'?", options: ["Doko mo ikimasen.", "Doko e mo ikimasu.", "Doko ka ikimasen.", "Doko e mo ikimasen."], answer: 3 },
+            { question: "Kata tanya 'Kapan' (Itsu) di kalimat 'Itsu Nihon e kimashita ka' apakah memerlukan partikel 'ni' setelahnya?", options: ["Ya, menjadi Itsu ni", "Tidak, langsung Itsu", "Tergantung konteks kalimat", "Bisa menggunakan partikel wa"], answer: 1 }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timeLeft = 60;
+        let timerInterval;
+
+        const screens = {
+            start: document.getElementById('start-screen'),
+            question: document.getElementById('question-screen'),
+            result: document.getElementById('result-screen')
+        };
+        const els = {
+            qText: document.getElementById('question-text'),
+            optContainer: document.getElementById('options-container'),
+            qCount: document.getElementById('question-count'),
+            timeDisplay: document.getElementById('time-left'),
+            timerProgress: document.getElementById('timer-progress'),
+            finalScore: document.getElementById('final-score'),
+            scoreMsg: document.getElementById('score-message')
+        };
+
+        function startQuiz() {
+            screens.start.style.display = 'none';
+            screens.question.style.display = 'block';
+            currentQuestionIndex = score = 0;
+            timeLeft = 60;
+            startTimer();
+            loadQuestion();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                els.timeDisplay.textContent = `${timeLeft}s`;
+                els.timerProgress.style.width = `${(timeLeft / 60) * 100}%`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endQuiz();
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestionIndex];
+            els.qText.textContent = q.question;
+            els.qCount.textContent = `MODUL ${currentQuestionIndex + 1}/${questions.length}`;
+            els.optContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt;
+                btn.onclick = () => checkAnswer(idx);
+                els.optContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(idx) {
+            if (idx === questions[currentQuestionIndex].answer) score += 20;
+            currentQuestionIndex++;
+            currentQuestionIndex < questions.length ? loadQuestion() : endQuiz();
+        }
+
+        function endQuiz() {
+            clearInterval(timerInterval);
+            screens.question.style.display = 'none';
+            screens.result.style.display = 'block';
+            
+            els.finalScore.textContent = score;
+            if (score === 100) els.scoreMsg.textContent = "Sempurna. Penguasaan tata bahasa arah dan perpindahan sangat baik.";
+            else if (score >= 60) els.scoreMsg.textContent = "Cukup baik. Perhatikan kembali pengecualian partikel 'de' dan 'ni'.";
+            else els.scoreMsg.textContent = "Di bawah standar. Harap pelajari kembali modul materi di atas.";
+        }
+    </script>
+</body>
+</html>
