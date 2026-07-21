@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Belajar Bahasa Jepang - Animasi Sakura</title>
+    <title>Dashboard Belajar Bahasa Jepang - Animasi Sakura</title>
     <style>
         /* TEMA & ANIMASI DASAR */
         body {
@@ -47,21 +47,36 @@
             border: 1px solid rgba(255, 183, 197, 0.2); position: relative; z-index: 10;
         }
 
-        /* GATEKEEPER */
-        #gatekeeper { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; }
-        .menu-cards { display: flex; gap: 30px; margin-top: 40px; flex-wrap: wrap; justify-content: center; }
+        /* GATEKEEPER / DASHBOARD STYLE */
+        #gatekeeper { 
+            display: flex; flex-direction: column; align-items: center; 
+            justify-content: flex-start; min-height: 85vh; max-width: 1200px; 
+            padding-top: 40px;
+        }
+        .dashboard-header { margin-bottom: 40px; }
+        
+        .menu-cards { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; 
+            width: 100%; 
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        
         .card {
             background: rgba(43, 15, 25, 0.6); border: 2px solid #ffb7c5; border-radius: 20px;
-            padding: 40px 30px; width: 280px; cursor: pointer; transition: all 0.4s; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            padding: 35px 25px; cursor: pointer; transition: all 0.4s; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-        .card:hover { transform: translateY(-10px) scale(1.05); background: rgba(74, 28, 42, 0.8); box-shadow: 0 15px 30px rgba(255, 183, 197, 0.4); border-color: #fff; }
-        .card-icon { font-size: 70px; margin-bottom: 20px; text-shadow: 0 0 20px rgba(255,255,255,0.5); }
-        .card-title { font-size: 26px; font-weight: bold; color: #ffb7c5; margin-bottom: 10px; }
-        .card-desc { font-size: 16px; color: #ddd; line-height: 1.5; }
+        .card:hover { transform: translateY(-8px) scale(1.03); background: rgba(74, 28, 42, 0.8); box-shadow: 0 15px 30px rgba(255, 183, 197, 0.4); border-color: #fff; }
+        .card-icon { font-size: 60px; margin-bottom: 15px; text-shadow: 0 0 20px rgba(255,255,255,0.5); }
+        .card-title { font-size: 24px; font-weight: bold; color: #ffb7c5; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .card-desc { font-size: 15px; color: #ddd; line-height: 1.5; }
 
         /* AREA RUANG BELAJAR (KANA) */
         #main-app { display: none; }
-        .btn-home { position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.5); border: 1px solid #ffb7c5; color: #ffb7c5; padding: 8px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s; }
+        .btn-home { position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.5); border: 1px solid #ffb7c5; color: #ffb7c5; padding: 8px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s; z-index: 15; }
         .btn-home:hover { background: #ffb7c5; color: #000; }
         .nav-buttons { margin: 20px 0; }
         .nav-buttons button { background-color: rgba(0,0,0,0.5); color: #ffb7c5; border: 1px solid #ffb7c5; border-radius: 25px; padding: 12px 25px; margin: 5px; cursor: pointer; font-size: 16px; font-weight: bold; transition: all 0.3s; }
@@ -130,9 +145,12 @@
 </head>
 <body>
 
+<!-- TAMPILAN DASHBOARD -->
 <div id="gatekeeper" class="container fade-in">
-    <h1 style="font-size: 40px; margin-bottom: 5px;">🌸 Selamat Datang 🌸</h1>
-    <p style="font-size: 18px; color: #ddd;">Silakan pilih materi yang ingin Anda pelajari hari ini</p>
+    <div class="dashboard-header">
+        <h1 style="font-size: 42px; margin-bottom: 5px;">🌸 Nihongo Dashboard 🌸</h1>
+        <p style="font-size: 18px; color: #ddd;">Silakan pilih modul pembelajaran Anda hari ini</p>
+    </div>
     
     <div class="menu-cards">
         <div class="card" onclick="openModule('kana')">
@@ -146,11 +164,42 @@
             <div class="card-title">KANJI</div>
             <div class="card-desc">Pelajari karakter lanjutan:<br><b>JLPT N5 & N4 Lengkap</b></div>
         </div>
+
+        <div class="card" onclick="openModule('kosakata')">
+            <div class="card-icon">📝</div>
+            <div class="card-title">KOSAKATA</div>
+            <div class="card-desc">Hafalan Kata Baru<br><b>Level N5 - N4</b></div>
+        </div>
+
+        <div class="card" onclick="openModule('minna1')">
+            <div class="card-icon">📚</div>
+            <div class="card-title">MINNA 1</div>
+            <div class="card-desc">Kosakata & Tata Bahasa<br><b>Bab 1 - 25</b></div>
+        </div>
+
+        <div class="card" onclick="openModule('minna2')">
+            <div class="card-icon">📖</div>
+            <div class="card-title">MINNA 2</div>
+            <div class="card-desc">Kosakata & Tata Bahasa<br><b>Bab 26 - 50</b></div>
+        </div>
+
+        <div class="card" onclick="openModule('simulasi')">
+            <div class="card-icon">🎓</div>
+            <div class="card-title">SIMULASI JLPT</div>
+            <div class="card-desc">Latihan Soal Ujian<br><b>Level N5 - N1</b></div>
+        </div>
+
+        <div class="card" onclick="openModule('game')">
+            <div class="card-icon">🎮</div>
+            <div class="card-title">GAME</div>
+            <div class="card-desc">Bermain sambil<br><b>Mengingat Kosakata</b></div>
+        </div>
     </div>
 </div>
 
-<div id="main-app" class="container" style="display: none;">
-    <button class="btn-home" onclick="goHome()">🏠 Kembali ke Menu Utama</button>
+<!-- RUANG BELAJAR KANA (Tetap Dipertahankan Dalam 1 Halaman) -->
+<div id="main-app" class="container" style="display: none; margin-top: 30px;">
+    <button class="btn-home" onclick="goHome()">🏠 Kembali ke Dashboard</button>
     <h1>🌸 Belajar Kana 🌸</h1>
     
     <div class="nav-buttons">
@@ -236,21 +285,42 @@
     let timerInterval = null;
     let isProcessing = false; // Mencegah double click
 
+    // FUNGSI NAVIGASI MODULE / PINDAH HALAMAN
     function openModule(moduleName) {
         const gate = document.getElementById('gatekeeper');
+        
+        // Mulai animasi fade-out
         gate.classList.remove('fade-in');
         gate.classList.add('fade-out');
         
+        // Tunggu animasi fade-out selesai (400ms), baru pindah halaman
         setTimeout(() => {
-            if(moduleName === 'kanji') {
-                window.location.href = 'kanji.html';
-            } else {
+            if (moduleName === 'kana') {
+                // Khusus Kana, tidak pindah HTML, tapi buka div yang disembunyikan
                 gate.style.display = 'none';
                 const app = document.getElementById('main-app');
                 app.style.display = 'block';
                 app.classList.remove('fade-out');
                 app.classList.add('fade-in');
                 initApp();
+            } 
+            else if (moduleName === 'kanji') {
+                window.location.href = 'kanji.html';
+            } 
+            else if (moduleName === 'kosakata') {
+                window.location.href = 'kosakata.html';
+            } 
+            else if (moduleName === 'minna1') {
+                window.location.href = 'bab1.html';
+            } 
+            else if (moduleName === 'minna2') {
+                window.location.href = 'minna2.html';
+            } 
+            else if (moduleName === 'simulasi') {
+                window.location.href = 'simulasi.html';
+            } 
+            else if (moduleName === 'game') {
+                window.location.href = 'game.html';
             }
         }, 400);
     }
