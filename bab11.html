@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 11</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.9); 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 850px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.6rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Kosakata */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 4px 4px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #111; padding: 10px; text-align: center; font-family: monospace; font-size: 1.1rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #333; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; position: relative; z-index: 10; transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .btn-back:active { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第11課 (Bab 11)</span>
+        <h1 class="main-title">Kata Bantu Bilangan & Durasi Waktu</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Di bab ini, kita belajar cara menghitung barang berdasarkan bentuknya.</p>
+            
+            <h3>1. Hitungan Umum (Benda Abstrak/Buah/Barang Kecil)</h3>
+            <table style="font-size: 0.95rem;">
+                <tr>
+                    <td>1: ひとつ (Hitotsu)</td>
+                    <td>2: ふたつ (Futatsu)</td>
+                    <td>3: みっつ (Mittsu)</td>
+                </tr>
+                <tr>
+                    <td>4: よっつ (Yottsu)</td>
+                    <td>5: いつつ (Itsutsu)</td>
+                    <td>6: むっつ (Muttsu)</td>
+                </tr>
+                <tr>
+                    <td>7: ななつ (Nanatsu)</td>
+                    <td>8: やっつ (Yattsu)</td>
+                    <td>9: ここのつ (Kokonotsu)</td>
+                </tr>
+                <tr>
+                    <td>10: とお (Too)</td>
+                    <td colspan="2" style="color: var(--accent-japan); font-weight: bold;">Berapa buah: いくつ (Ikutsu)</td>
+                </tr>
+            </table>
+
+            <h3>2. Satuan Hitung Lainnya</h3>
+            <table>
+                <tr><th>Satuan</th><th>Penggunaan</th><th>Tanya (Berapa)</th></tr>
+                <tr><td class="kana">～にん (～人)</td><td>Menghitung Orang <br><small><i>1 org: ひとり, 2 org: ふたり</i></small></td><td>なんにん (何人)</td></tr>
+                <tr><td class="kana">～だい (～台)</td><td>Menghitung Mesin/Kendaraan (Mobil, TV, Laptop)</td><td>なんだい (何台)</td></tr>
+                <tr><td class="kana">～まい (～枚)</td><td>Menghitung benda tipis (Kertas, Baju, Kaset, Piring)</td><td>なんまい (何枚)</td></tr>
+                <tr><td class="kana">～かい (～回)</td><td>Menghitung frekuensi / Berapa kali</td><td>なんかい (何回)</td></tr>
+            </table>
+
+            <h3>3. Satuan Durasi Waktu</h3>
+            <table>
+                <tr><th>Satuan</th><th>Arti (Durasi)</th><th>Tanya</th></tr>
+                <tr><td class="kana">～じかん (時間)</td><td>~ Jam</td><td>なんじかん (何時間)</td></tr>
+                <tr><td class="kana">～にち (日)</td><td>~ Hari (Durasi)</td><td>なんにち (何日)</td></tr>
+                <tr><td class="kana">～しゅうかん (週間)</td><td>~ Minggu</td><td>なんしゅうかん (何週間)</td></tr>
+                <tr><td class="kana">～かげつ (か月)</td><td>~ Bulan (Durasi)</td><td>なんかげつ (何か月)</td></tr>
+                <tr><td class="kana">～ねん (年)</td><td>~ Tahun</td><td>なんねん (何年)</td></tr>
+            </table>
+
+            <h3>4. Kata Kerja & Kosakata Benda</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">かかります</td><td>Kakarimasu</td><td>Memakan waktu / Memakan biaya</td></tr>
+                <tr><td class="kana">やすみます</td><td>Yasumimasu</td><td>Beristirahat / Libur / Absen</td></tr>
+                <tr><td class="kana">りんご</td><td>Ringo</td><td>Apel</td></tr>
+                <tr><td class="kana">みかん</td><td>Mikan</td><td>Jeruk Mandarin</td></tr>
+                <tr><td class="kana">きって (切手)</td><td>Kitte</td><td>Prangko</td></tr>
+                <tr><td class="kana">はがき</td><td>Hagaki</td><td>Kartu Pos</td></tr>
+                <tr><td class="kana">きょうだい (兄弟)</td><td>Kyoudai</td><td>Saudara</td></tr>
+                <tr><td class="kana">どのくらい</td><td>Dono kurai</td><td>Berapa lama / Berapa banyak</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box">
+                <h3>1. Posisi Kata Bantu Bilangan (Kuantitas)</h3>
+                <p>Dalam bahasa Jepang, jumlah barang biasanya diletakkan <strong>setelah partikel dan tepat sebelum kata kerja</strong>. Jangan menaruh angka sebelum kata benda seperti di bahasa Indonesia.</p>
+                <div class="pattern">[Kata Benda] + Partikel + [Jumlah / Kuantitas] + [Kata Kerja]</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">りんご<strong>を</strong> みっつ 買いました。</div><div class="id-text">Saya telah membeli tiga buah apel.</div></li>
+                    <li><div class="jp-text">外<strong>に</strong> 車<strong>が</strong> ２台 あります。</div><div class="id-text">Di luar ada 2 unit mobil.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>2. Menanyakan Jumlah (Berapa...)</h3>
+                <p>Gunakan kata tanya yang sesuai dengan satuan bendanya (いくつ、何枚、何台、何人).</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">みかんを <strong>いくつ</strong> 買いましたか。</div><div class="id-text">Membeli <strong>berapa buah</strong> jeruk?</div></li>
+                    <li><div class="jp-text">家族は <strong>何人</strong> ですか。</div><div class="id-text">Keluarganya <strong>berapa orang</strong>?</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>3. [Periode] に [Frekuensi] ～かい (回)</h3>
+                <p>Pola ini digunakan untuk menyatakan frekuensi melakukan sesuatu dalam satu periode waktu tertentu. Partikel <strong>に (ni)</strong> di sini berarti "dalam/per".</p>
+                <div class="pattern">[Periode Waktu] に [Berapa Kali] [Kata Kerja]</div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><strong>１か月に ２回</strong> 映画を 見ます。</div><div class="id-text">Saya menonton film <strong>dua kali dalam satu bulan</strong>.</div></li>
+                    <li><div class="jp-text"><strong>１週間に １回</strong> テニスを します。</div><div class="id-text">Saya bermain tenis <strong>satu kali dalam seminggu</strong>.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. どのくらい (Berapa lama / Berapa banyak)</h3>
+                <p><strong>どのくらい (Dono kurai)</strong> digunakan untuk menanyakan durasi waktu yang dihabiskan. <strong>Khusus untuk durasi waktu, kita tidak menggunakan partikel setelahnya.</strong></p>
+                <ul class="example-list">
+                    <li><div class="jp-text"><strong>どのくらい</strong> 日本語を 勉強しましたか。</div><div class="id-text"><strong>Berapa lama</strong> kamu telah belajar bahasa Jepang?</div></li>
+                    <li><div class="jp-text">３年 勉強しました。</div><div class="id-text">Belajar (selama) 3 tahun. (TIDAK PAKAI partikel "ni" atau "o")</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>5. ～ぐらい (Kira-kira) dan ～だけ (Hanya)</h3>
+                <p><strong>ぐらい (gurai)</strong> diletakkan setelah angka untuk menyatakan "kira-kira/sekitar". <strong>だけ (dake)</strong> diletakkan setelah angka/kata benda untuk menyatakan batas "hanya".</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">15分<strong>ぐらい</strong> かかります。</div><div class="id-text">Memakan waktu <strong>kira-kira</strong> 15 menit.</div></li>
+                    <li><div class="jp-text">休みは 日曜日<strong>だけ</strong> です。</div><div class="id-text">Liburnya <strong>hanya</strong> hari Minggu.</div></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 11.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: すみません、80円の 切手を 5枚と はがきを 2枚 ください。</div>
+                    <div class="id-text">A: Permisi, tolong prangko 80 yen-nya 5 lembar dan kartu posnya 2 lembar.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: はい。全部で 500円です。</div>
+                    <div class="id-text">B: Baik. Semuanya 500 yen.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 会議室に テーブルが いくつ ありますか。</div>
+                    <div class="id-text">A: Di ruang rapat ada berapa buah meja?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: ななつ あります。</div>
+                    <div class="id-text">B: Ada tujuh buah.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 兄弟は 何人ですか。</div>
+                    <div class="id-text">A: Saudara ada berapa orang?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: ４人です。姉が ２人と 兄が １人 います。</div>
+                    <div class="id-text">B: Empat orang. Ada 2 kakak perempuan dan 1 kakak laki-laki. (Ditambah pembicara jadi 4 orang)</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 大阪から 東京まで 新幹線で どのくらい かかりますか。</div>
+                    <div class="id-text">A: Dari Osaka sampai Tokyo dengan kereta Shinkansen memakan waktu berapa lama?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 2時間半 かかります。</div>
+                    <div class="id-text">B: Memakan waktu 2 setengah jam.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 1日に 何回 ご飯を 食べますか。</div>
+                    <div class="id-text">A: Dalam sehari makan nasi berapa kali?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 3回 食べます。</div>
+                    <div class="id-text">B: Makan 3 kali.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

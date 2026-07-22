@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 8</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.9); 
+            --border-color: #2a2a2a;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 850px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 2rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Kosakata */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 4px 4px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #111; padding: 10px; text-align: center; font-family: monospace; font-size: 1.1rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #333; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; position: relative; z-index: 10; transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .btn-back:active { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第8課 (Bab 8)</span>
+        <h1 class="main-title">Materi Kata Sifat (形容詞)</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Di bahasa Jepang, kata sifat dibagi menjadi dua kelompok besar: <strong>Kata Sifat-Na (な形容詞)</strong> dan <strong>Kata Sifat-I (い形容詞)</strong>.</p>
+            
+            <h3>1. Kata Sifat - Na (な形容詞)</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">ハンサム（な）</td><td>Hansamu (na)</td><td>Tampan / Gagah</td></tr>
+                <tr><td class="kana">きれい（な）</td><td>Kirei (na)</td><td>Cantik / Bersih</td></tr>
+                <tr><td class="kana">しずか（な）</td><td>Shizuka (na)</td><td>Tenang / Sunyi</td></tr>
+                <tr><td class="kana">にぎやか（な）</td><td>Nigiyaka (na)</td><td>Ramai (suasana)</td></tr>
+                <tr><td class="kana">ゆうめい（な）</td><td>Yuumei (na)</td><td>Terkenal</td></tr>
+                <tr><td class="kana">しんせつ（な）</td><td>Shinsetsu (na)</td><td>Ramah / Baik hati</td></tr>
+                <tr><td class="kana">げんき（な）</td><td>Genki (na)</td><td>Sehat / Energik</td></tr>
+                <tr><td class="kana">ひま（な）</td><td>Hima (na)</td><td>Senggang / Luang</td></tr>
+                <tr><td class="kana">べんり（な）</td><td>Benri (na)</td><td>Praktis / Praktis</td></tr>
+            </table>
+
+            <h3>2. Kata Sifat - I (い形容詞)</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">おおきい (大きい)</td><td>Ookii</td><td>Besar</td></tr>
+                <tr><td class="kana">ちいさい (小さい)</td><td>Chiisai</td><td>Kecil</td></tr>
+                <tr><td class="kana">あたらしい (新しい)</td><td>Atarashii</td><td>Baru</td></tr>
+                <tr><td class="kana">ふるい (古い)</td><td>Furui</td><td>Kuno / Lama</td></tr>
+                <tr><td class="kana">いい / よい (良い)</td><td>Ii / Yoi</td><td>Bagus / Baik</td></tr>
+                <tr><td class="kana">わるい (悪い)</td><td>Warui</td><td>Buruk / Jelek</td></tr>
+                <tr><td class="kana">あつい (暑い / 熱い)</td><td>Atsui</td><td>Panas (Cuaca / Benda)</td></tr>
+                <tr><td class="kana">さむい (寒い)</td><td>Samui</td><td>Dingin (Hanya untuk cuaca)</td></tr>
+                <tr><td class="kana">つめたい (冷たい)</td><td>Tsumetai</td><td>Dingin (Hanya untuk benda)</td></tr>
+                <tr><td class="kana">むずかしい (難しい)</td><td>Muzukashii</td><td>Sulit / Susah</td></tr>
+                <tr><td class="kana">やさしい (易しい)</td><td>Yasashii</td><td>Mudah / Gampang</td></tr>
+                <tr><td class="kana">たかい (高い)</td><td>Takai</td><td>Tinggi / Mahal</td></tr>
+                <tr><td class="kana">やすい (安い)</td><td>Yasui</td><td>Murah</td></tr>
+                <tr><td class="kana">ひくい (低い)</td><td>Hikui</td><td>Rendah</td></tr>
+                <tr><td class="kana">おもしろい (面白い)</td><td>Omoshiroi</td><td>Menarik / Lucu</td></tr>
+                <tr><td class="kana">おいしい (美味しい)</td><td>Oishii</td><td>Enak / Lezat</td></tr>
+                <tr><td class="kana">いそがしい (忙しい)</td><td>Isogashii</td><td>Sibuk</td></tr>
+                <tr><td class="kana">たのしい (楽しい)</td><td>Tanoshii</td><td>Menyenangkan</td></tr>
+            </table>
+
+            <h3>3. Kosakata Tambahan</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">やま (山)</td><td>Yama</td><td>Gunung</td></tr>
+                <tr><td class="kana">まち (町)</td><td>Machi</td><td>Kota</td></tr>
+                <tr><td class="kana">たべもの (食べ物)</td><td>Tabemono</td><td>Makanan</td></tr>
+                <tr><td class="kana">くるま (車)</td><td>Kuruma</td><td>Mobil</td></tr>
+                <tr><td class="kana">ところ (所)</td><td>Tokoro</td><td>Tempat</td></tr>
+                <tr><td class="kana">どう</td><td>Dou</td><td>Bagaimana</td></tr>
+                <tr><td class="kana">どんな～</td><td>Donna~</td><td>Yang bagaimana / Macam apa</td></tr>
+                <tr><td class="kana">どれ</td><td>Dore</td><td>Yang mana</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box">
+                <h3>1. Kalimat Positif Kata Sifat</h3>
+                <p>Dalam kalimat bentuk sopan (masu-kei), kata sifat diakhiri dengan <strong>です (desu)</strong>. Saat berada di akhir kalimat, akhiran "na" pada Kata Sifat-Na harus <strong>dihilangkan</strong>.</p>
+                <div class="pattern">[Kata Benda] は [Kata Sifat] です。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">ワット先生は しんせつです。</div><div class="id-text">Pak Watt ramah. (しんせつな ➔ しんせつ)</div></li>
+                    <li><div class="jp-text">富士山は たかいです。</div><div class="id-text">Gunung Fuji tinggi.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>2. Kalimat Negatif Kata Sifat</h3>
+                <p>Cara merubah kata sifat menjadi negatif (Tidak...) berbeda antara Sifat-Na dan Sifat-I.</p>
+                <div class="pattern">Sifat-Na ➔ [Na] dihilangkan + じゃありません<br>Sifat-I ➔ Akhiran [i] diganti + くないです</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">あそこは しずかじゃありません。</div><div class="id-text">Di sana tidak tenang. (Sifat-Na)</div></li>
+                    <li><div class="jp-text">この 本は おもしろくないです。</div><div class="id-text">Buku ini tidak menarik. (おもしろい ➔ おもしろくない)</div></li>
+                    <li><div class="jp-text" style="color: var(--accent-japan);">【Pengecualian】 いいです ➔ よくないです</div><div class="id-text">Khusus kata "ii" (bagus/baik), bentuk negatifnya berubah menjadi "yokunai desu".</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>3. Menerangkan Kata Benda</h3>
+                <p>Jika kata sifat diletakkan tepat di depan kata benda, akhiran <strong>~な (na)</strong> pada Kata Sifat-Na <strong>TIDAK BOLEH</strong> dihilangkan.</p>
+                <div class="pattern">[Sifat-Na] + な + [Kata Benda]<br>[Sifat-I] + い + [Kata Benda]</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">ミラーさんは <strong>ハンサムな</strong> 人です。</div><div class="id-text">Sdr. Miller adalah orang <strong>yang tampan</strong>.</div></li>
+                    <li><div class="jp-text">京都は <strong>ふるい</strong> 町です。</div><div class="id-text">Kyoto adalah kota <strong>yang kuno/lama</strong>.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. とても (Sangat) dan あまり (Tidak begitu)</h3>
+                <p>Ini adalah kata keterangan tingkat. <strong>とても (Totemo)</strong> diikuti kalimat positif. <strong>あまり (Amari)</strong> selalu diikuti kalimat negatif.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">北京は <strong>とても</strong> 寒いです。</div><div class="id-text">Beijing <strong>sangat</strong> dingin.</div></li>
+                    <li><div class="jp-text">この パソコンは <strong>あまり</strong> 便利じゃありません。</div><div class="id-text">Laptop ini <strong>tidak begitu</strong> praktis.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>5. ～はどうですか (Bagaimana...) & どんな～ (Yang bagaimana)</h3>
+                <p><strong>どうですか</strong> digunakan untuk menanyakan kesan/pendapat tentang suatu hal. <strong>どんな</strong> digunakan untuk menanyakan keadaan/sifat spesifik dari suatu benda atau orang.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">日本の 生活は <strong>どうですか。</strong></div><div class="id-text"><strong>Bagaimana</strong> kehidupan di Jepang?</div></li>
+                    <li><div class="jp-text">ジャカルタは <strong>どんな</strong> 町ですか。</div><div class="id-text">Jakarta itu kota <strong>yang bagaimana</strong>?</div></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 8.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: 大阪の 食べ物は どうですか。</div>
+                    <div class="id-text">A: Makanan Osaka bagaimana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: おいしいです。</div>
+                    <div class="id-text">B: Enak.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: サクラ大学は どんな 大学ですか。</div>
+                    <div class="id-text">A: Universitas Sakura itu universitas yang bagaimana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 新しい 大学です。</div>
+                    <div class="id-text">B: Universitas yang baru.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 日本の 会社は どうですか。</div>
+                    <div class="id-text">A: Perusahaan Jepang bagaimana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 忙しいですが、おもしろいです。</div>
+                    <div class="id-text">B: Sibuk, tetapi menarik. (Partikel が di sini berarti "tetapi")</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: あの 車は 誰の ですか。</div>
+                    <div class="id-text">A: Mobil itu milik siapa?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: どれですか。あの 赤い 車ですか。</div>
+                    <div class="id-text">B: Yang mana? Apakah mobil yang merah itu?</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        // Logika sederhana untuk berpindah Tab
+        function openTab(tabName) {
+            // Sembunyikan semua konten tab
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Hapus status active dari semua tombol
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Tampilkan tab yang dipilih
+            document.getElementById(tabName).classList.add('active');
+            
+            // Tambahkan status active pada tombol yang diklik
+            // Mencari elemen tombol berdasarkan atribut onclick-nya
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

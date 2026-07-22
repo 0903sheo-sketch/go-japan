@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 13</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.9); 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 850px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.6rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Kosakata */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 4px 4px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #111; padding: 10px; text-align: center; font-family: monospace; font-size: 1.1rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #333; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; position: relative; z-index: 10; transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .btn-back:active { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第13課 (Bab 13)</span>
+        <h1 class="main-title">Keinginan & Tujuan Pergi</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <h3>1. Kata Kerja Baru</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">あそびます (遊びます)</td><td>Asobimasu</td><td>Bermain</td></tr>
+                <tr><td class="kana">およぎます (泳ぎます)</td><td>Oyogimasu</td><td>Berenang</td></tr>
+                <tr><td class="kana">むかえます (迎えます)</td><td>Mukaemasu</td><td>Menjemput</td></tr>
+                <tr><td class="kana">つかれます (疲れます)</td><td>Tsukaremasu</td><td>Lelah / Capek</td></tr>
+                <tr><td class="kana">だします (出します)</td><td>Dashimasu</td><td>Mengirim (surat) / Mengeluarkan</td></tr>
+                <tr><td class="kana">はいります (入ります)</td><td>Hairimasu</td><td>Masuk (ke tempat) <i>[Partikel: に]</i></td></tr>
+                <tr><td class="kana">でます (出ます)</td><td>Demasu</td><td>Keluar (dari tempat) <i>[Partikel: を]</i></td></tr>
+                <tr><td class="kana">けっこんします (結婚します)</td><td>Kekkon shimasu</td><td>Menikah</td></tr>
+                <tr><td class="kana">かいものします (買い物します)</td><td>Kaimono shimasu</td><td>Berbelanja</td></tr>
+                <tr><td class="kana">しょくじします (食事します)</td><td>Shokuji shimasu</td><td>Makan (makan besar/jamuan)</td></tr>
+                <tr><td class="kana">さんぽします (散歩します)</td><td>Sanpo shimasu</td><td>Jalan-jalan (di taman) <i>[Partikel: を]</i></td></tr>
+            </table>
+
+            <h3>2. Kata Sifat & Keterangan Khusus</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">ほしい (欲しい)</td><td>Hoshii</td><td>Ingin / Mau (untuk BENDA)</td></tr>
+                <tr><td class="kana">さびしい (寂しい)</td><td>Sabishii</td><td>Kesepian</td></tr>
+                <tr><td class="kana">ひろい (広い)</td><td>Hiroi</td><td>Luas / Lebar</td></tr>
+                <tr><td class="kana">せまい (狭い)</td><td>Semai</td><td>Sempit</td></tr>
+                <tr><td class="kana">なにか (何か)</td><td>Nanika</td><td>Sesuatu</td></tr>
+                <tr><td class="kana">どこか</td><td>Dokoka</td><td>Suatu tempat</td></tr>
+            </table>
+
+            <h3>3. Kata Benda</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">しやくしょ (市役所)</td><td>Shiyakusho</td><td>Kantor Walikota</td></tr>
+                <tr><td class="kana">プール</td><td>Puuru</td><td>Kolam renang</td></tr>
+                <tr><td class="kana">けいざい (経済)</td><td>Keizai</td><td>Ekonomi</td></tr>
+                <tr><td class="kana">びじゅつ (美術)</td><td>Bijutsu</td><td>Seni Rupa</td></tr>
+                <tr><td class="kana">つり (釣り)</td><td>Tsuri</td><td>Memancing</td></tr>
+                <tr><td class="kana">スキー</td><td>Sukii</td><td>Bermain Ski</td></tr>
+                <tr><td class="kana">しゅうまつ (週末)</td><td>Shuumatsu</td><td>Akhir Pekan</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box">
+                <h3>1. Ingin Benda (N が ほしいです)</h3>
+                <p><strong>ほしい (Hoshii)</strong> adalah Kata Sifat-I. Digunakan HANYA untuk menyatakan keinginan terhadap sebuah BENDA/BARANG, bukan kegiatan. Benda yang diinginkan ditandai dengan partikel <strong>が (ga)</strong>.</p>
+                <div class="pattern">[Benda] が ほしいです。<br>Negatif: [Benda] は ほしくないです。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">わたしは パソコン<strong>が ほしいです</strong>。</div><div class="id-text">Saya ingin/mau laptop.</div></li>
+                    <li><div class="jp-text">今は 車<strong>は ほしくないです</strong>。</div><div class="id-text">Sekarang saya tidak ingin mobil.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>2. Ingin Melakukan Sesuatu (V-たいです)</h3>
+                <p>Untuk menyatakan keinginan melakukan suatu aksi, ubah kata kerja <strong>~ます (masu)</strong> menjadi <strong>~たい (tai)</strong>. Ingat, coret "masu"-nya lalu ganti dengan "tai". Partikel を (wo) sering kali diubah menjadi が (ga).</p>
+                <div class="pattern">[Kata Kerja coret MASU] + たいです。<br>Negatif: ～たくないです。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">沖縄へ 行き<strong>たいです</strong>。</div><div class="id-text">Saya ingin pergi ke Okinawa. (行きます ➔ 行きたい)</div></li>
+                    <li><div class="jp-text">すし<strong>が</strong> 食べ<strong>たいです</strong>。</div><div class="id-text">Saya ingin makan sushi. (Partikel を berubah jadi が)</div></li>
+                    <li><div class="jp-text">何も 食べ<strong>たくないです</strong>。</div><div class="id-text">Saya tidak ingin makan apa-apa.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>3. Pergi/Datang/Pulang UNTUK (Tujuan)</h3>
+                <p>Pola ini sangat penting untuk menyatakan "Pergi ke [Tempat] <strong>untuk</strong> [Melakukan sesuatu]". Coret "masu" dari kata kerja, lalu tambahkan partikel <strong>に (ni)</strong> sebelum kata 行きます / 来ます / 帰ります.</p>
+                <div class="pattern">[Tempat] へ [V-masu coret MASU / Kata Benda] に 行きます。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">スーパーへ パンを <strong>買いに 行きます</strong>。</div><div class="id-text">Pergi ke supermarket <strong>untuk membeli</strong> roti. (買います ➔ 買いに)</div></li>
+                    <li><div class="jp-text">京都へ <strong>遊びに 来ました</strong>。</div><div class="id-text">Telah datang ke Kyoto <strong>untuk bermain/jalan-jalan</strong>.</div></li>
+                    <li><div class="jp-text" style="color: var(--accent-japan);">【Khusus Kata Benda】</div><div class="id-text">デパートへ <strong>買い物に 行きます</strong>。 (Pergi ke mal <strong>untuk berbelanja</strong>).</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. どこか (Suatu Tempat) & なにか (Sesuatu)</h3>
+                <p>Kata tanya yang ditambahkan <strong>か (ka)</strong> berubah artinya menjadi "sesuatu" atau "suatu tempat". Partikel (seperti へ atau を) di belakang kata ini biasanya boleh dihilangkan.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">冬休みは <strong>どこか（へ）</strong> 行きましたか。</div><div class="id-text">Apakah saat libur musim dingin pergi ke <strong>suatu tempat</strong>?</div></li>
+                    <li><div class="jp-text">のどが 渇きましたね。<strong>何か</strong> 飲みたいです。</div><div class="id-text">Haus ya. Saya ingin minum <strong>sesuatu</strong>.</div></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 13.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: 今 何が いちばん ほしいですか。</div>
+                    <div class="id-text">A: Sekarang, apa yang paling kamu inginkan?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 車が ほしいです。</div>
+                    <div class="id-text">B: Saya ingin mobil.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 夏休みは どこへ 行きたいですか。</div>
+                    <div class="id-text">A: Liburan musim panas ingin pergi ke mana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 沖縄へ 行きたいです。</div>
+                    <div class="id-text">B: Ingin pergi ke Okinawa.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 今日は 疲れましたから、何も したくないです。</div>
+                    <div class="id-text">A: Karena hari ini lelah, saya tidak ingin melakukan apa-apa.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: そうですね。今日の 会議は 大変でしたね。</div>
+                    <div class="id-text">B: Begitu ya. Rapat hari ini berat/melelahkan ya.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 週末は 何を しますか。</div>
+                    <div class="id-text">A: Akhir pekan akan melakukan apa?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 子どもと 神戸へ 船を 見に 行きます。</div>
+                    <div class="id-text">B: Pergi ke Kobe bersama anak untuk melihat kapal.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: おなかが すきましたね。何か 食べたいですね。</div>
+                    <div class="id-text">A: Perut kita sudah lapar ya. Ingin makan sesuatu ya.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: ええ。あそこの レストランへ 入りましょう。</div>
+                    <div class="id-text">B: Iya. Mari masuk ke restoran di sebelah sana.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

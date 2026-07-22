@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 10</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.9); 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 850px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.8rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Kosakata */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 4px 4px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #111; padding: 10px; text-align: center; font-family: monospace; font-size: 1.1rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #333; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; position: relative; z-index: 10; transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .btn-back:active { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第10課 (Bab 10)</span>
+        <h1 class="main-title">Keberadaan & Posisi Letak</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Bab ini memperkenalkan kosakata letak ruang dan kata kerja eksistensi.</p>
+            
+            <h3>1. Kata Kerja Eksistensi (Ada)</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">あります</td><td>Arimasu</td><td>Ada (untuk benda mati & tumbuhan)</td></tr>
+                <tr><td class="kana">います</td><td>Imasu</td><td>Ada (untuk manusia & hewan)</td></tr>
+            </table>
+
+            <h3>2. Penunjuk Posisi / Letak</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">うえ (上)</td><td>Ue</td><td>Atas</td></tr>
+                <tr><td class="kana">した (下)</td><td>Shita</td><td>Bawah</td></tr>
+                <tr><td class="kana">まえ (前)</td><td>Mae</td><td>Depan</td></tr>
+                <tr><td class="kana">うしろ (後ろ)</td><td>Ushiro</td><td>Belakang</td></tr>
+                <tr><td class="kana">みぎ (右)</td><td>Migi</td><td>Kanan</td></tr>
+                <tr><td class="kana">ひだり (左)</td><td>Hidari</td><td>Kiri</td></tr>
+                <tr><td class="kana">なか (中)</td><td>Naka</td><td>Dalam</td></tr>
+                <tr><td class="kana">そと (外)</td><td>Soto</td><td>Luar</td></tr>
+                <tr><td class="kana">となり (隣)</td><td>Tonari</td><td>Sebelah / Samping (yang sejenis)</td></tr>
+                <tr><td class="kana">ちかく (近く)</td><td>Chikaku</td><td>Dekat / Sekitar</td></tr>
+                <tr><td class="kana">あいだ (間)</td><td>Aida</td><td>Antara</td></tr>
+            </table>
+
+            <h3>3. Kata Benda Tambahan</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">いろいろ（な）</td><td>Iroiro (na)</td><td>Bermacam-macam</td></tr>
+                <tr><td class="kana">おとこのこ (男の子)</td><td>Otoko no ko</td><td>Anak laki-laki</td></tr>
+                <tr><td class="kana">おんなのこ (女の子)</td><td>Onna no ko</td><td>Anak perempuan</td></tr>
+                <tr><td class="kana">いぬ (犬)</td><td>Inu</td><td>Anjing</td></tr>
+                <tr><td class="kana">ねこ (猫)</td><td>Neko</td><td>Kucing</td></tr>
+                <tr><td class="kana">き (木)</td><td>Ki</td><td>Pohon</td></tr>
+                <tr><td class="kana">はこ (箱)</td><td>Hako</td><td>Kotak / Dus</td></tr>
+                <tr><td class="kana">れいぞうこ (冷蔵庫)</td><td>Reizouko</td><td>Kulkas</td></tr>
+                <tr><td class="kana">たな (棚)</td><td>Tana</td><td>Rak</td></tr>
+                <tr><td class="kana">のりば (乗り場)</td><td>Noriba</td><td>Tempat naik (kendaraan umum)</td></tr>
+                <tr><td class="kana">けん (県)</td><td>Ken</td><td>Prefektur / Provinsi</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box">
+                <h3>1. あります vs います (Ada)</h3>
+                <p>Dalam bahasa Jepang, kata "ada" dibedakan berdasarkan sifat bendanya.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text"><strong>あります (Arimasu)</strong></div><div class="id-text">Digunakan untuk benda mati (meja, buku, gedung) dan tumbuh-tumbuhan (pohon, bunga).</div></li>
+                    <li><div class="jp-text"><strong>います (Imasu)</strong></div><div class="id-text">Digunakan untuk makhluk hidup yang bisa bergerak sendiri (manusia, hewan).</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>2. Menyatakan Keberadaan Sesuatu di Suatu Tempat</h3>
+                <p>Pola ini digunakan untuk menyatakan <strong>apa/siapa yang ada di suatu tempat</strong>. Tempat ditandai dengan partikel <strong>に (ni)</strong>, dan subjek yang ada ditandai dengan partikel <strong>が (ga)</strong>.</p>
+                <div class="pattern">[Tempat] に [Benda/Orang] が あります／います。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">ロビー<strong>に</strong> 佐藤さん<strong>が</strong> います。</div><div class="id-text">Di lobi ada Sdr. Sato.</div></li>
+                    <li><div class="jp-text">部屋<strong>に</strong> 机<strong>が</strong> あります。</div><div class="id-text">Di kamar ada meja.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>3. Menyatakan Letak Suatu Benda/Orang</h3>
+                <p>Pola ini dibalik dari pola nomor 2. Digunakan untuk menjelaskan <strong>di mana letak/posisi suatu benda atau orang</strong> berada. Subjek dijadikan topik dengan partikel <strong>は (wa)</strong>.</p>
+                <div class="pattern">[Benda/Orang] は [Tempat] に あります／います。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">佐藤さん<strong>は</strong> ロビー<strong>に</strong> います。</div><div class="id-text">Sdr. Sato ada di lobi.</div></li>
+                    <li><div class="jp-text">東京ディズニーランド<strong>は</strong> 千葉県<strong>に</strong> あります。</div><div class="id-text">Tokyo Disneyland ada di Prefektur Chiba.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. N1 (Benda/Tempat) の N2 (Posisi)</h3>
+                <p>Kosakata posisi (atas, dalam, depan, dll) diperlakukan sebagai kata benda. Untuk menggabungkannya, gunakan partikel <strong>の (no)</strong>.</p>
+                <div class="pattern">[Benda Utama] の [Posisi Letak]</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">机<strong>の 上</strong> (Tsukue no ue)</div><div class="id-text">Atas meja</div></li>
+                    <li><div class="jp-text">箱<strong>の 中</strong> (Hako no naka)</div><div class="id-text">Dalam kotak</div></li>
+                    <li><div class="jp-text">机の 上に 本が あります。</div><div class="id-text">Di atas meja ada buku.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>5. Partikel や (ya) dan など (nado)</h3>
+                <p>Partikel <strong>や</strong> digunakan untuk merangkai kata benda secara parsial (tidak menyebutkan semuanya, hanya perwakilan). Berbeda dengan と (to) yang menyebutkan semuanya secara lengkap. <strong>など</strong> berarti "dan lain-lain".</p>
+                <div class="pattern">N1 や N2（など）</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">箱の中に 手紙<strong>や</strong> 写真<strong>など</strong>が あります。</div><div class="id-text">Di dalam kotak ada surat, foto, <strong>dan lain-lain</strong>.</div></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 10.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: あそこに 男の人が いますね。あの人は 誰ですか。</div>
+                    <div class="id-text">A: Di sana ada laki-laki ya. Orang itu siapa?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: ＩＭＣの 松本さんです。</div>
+                    <div class="id-text">B: Sdr. Matsumoto dari IMC.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 近くに 郵便局が ありますか。</div>
+                    <div class="id-text">A: Apakah di dekat sini ada kantor pos?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: はい、あそこに あります。銀行の 隣です。</div>
+                    <div class="id-text">B: Ya, ada di sebelah sana. Di sebelah bank.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: ミラーさんは どこに いますか。</div>
+                    <div class="id-text">A: Sdr. Miller ada di mana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 会議室に います。</div>
+                    <div class="id-text">B: Ada di ruang rapat.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: カバンの中に 何が ありますか。</div>
+                    <div class="id-text">A: Di dalam tas ada apa saja?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 本や 辞書などが あります。</div>
+                    <div class="id-text">B: Ada buku, kamus, dan lain-lain.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 本屋は どこですか。</div>
+                    <div class="id-text">A: Toko buku ada di mana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: パン屋と 肉屋の 間です。</div>
+                    <div class="id-text">B: Di antara toko roti dan toko daging.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 12</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.9); 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 850px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.6rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Kosakata */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 4px 4px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #111; padding: 10px; text-align: center; font-family: monospace; font-size: 1.1rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #333; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; position: relative; z-index: 10; transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .btn-back:active { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第12課 (Bab 12)</span>
+        <h1 class="main-title">Waktu Lampau & Perbandingan</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Kosakata bab ini didominasi oleh kata sifat, musim, dan cuaca.</p>
+            
+            <h3>1. Kata Sifat Baru</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">かんたん（な）</td><td>Kantan (na)</td><td>Mudah / Gampang</td></tr>
+                <tr><td class="kana">ちかい (近い)</td><td>Chikai</td><td>Dekat</td></tr>
+                <tr><td class="kana">とおい (遠い)</td><td>Tooi</td><td>Jauh</td></tr>
+                <tr><td class="kana">はやい (早い/速い)</td><td>Hayai</td><td>Cepat / Awal</td></tr>
+                <tr><td class="kana">おそい (遅い)</td><td>Osoi</td><td>Lambat / Terlambat</td></tr>
+                <tr><td class="kana">おおい (多い)</td><td>Ooi</td><td>Banyak (orang/barang)</td></tr>
+                <tr><td class="kana">すくない (少ない)</td><td>Sukunai</td><td>Sedikit (orang/barang)</td></tr>
+                <tr><td class="kana">あたたかい (暖かい)</td><td>Atatakai</td><td>Hangat</td></tr>
+                <tr><td class="kana">すずしい (涼しい)</td><td>Suzushii</td><td>Sejuk</td></tr>
+                <tr><td class="kana">あまい (甘い)</td><td>Amai</td><td>Manis</td></tr>
+                <tr><td class="kana">からい (辛い)</td><td>Karai</td><td>Pedas</td></tr>
+                <tr><td class="kana">おもい (重い)</td><td>Omoi</td><td>Berat</td></tr>
+                <tr><td class="kana">かるい (軽い)</td><td>Karui</td><td>Ringan</td></tr>
+            </table>
+
+            <h3>2. Musim & Cuaca</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">きせつ (季節)</td><td>Kisetsu</td><td>Musim</td></tr>
+                <tr><td class="kana">はる (春)</td><td>Haru</td><td>Musim Semi</td></tr>
+                <tr><td class="kana">なつ (夏)</td><td>Natsu</td><td>Musim Panas</td></tr>
+                <tr><td class="kana">あき (秋)</td><td>Aki</td><td>Musim Gugur</td></tr>
+                <tr><td class="kana">ふゆ (冬)</td><td>Fuyu</td><td>Musim Dingin</td></tr>
+                <tr><td class="kana">てんき (天気)</td><td>Tenki</td><td>Cuaca</td></tr>
+                <tr><td class="kana">あめ (雨)</td><td>Ame</td><td>Hujan</td></tr>
+                <tr><td class="kana">ゆき (雪)</td><td>Yuki</td><td>Salju</td></tr>
+                <tr><td class="kana">くもり (曇り)</td><td>Kumori</td><td>Mendung / Berawan</td></tr>
+            </table>
+
+            <h3>3. Kata Benda Tambahan</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">せかい (世界)</td><td>Sekai</td><td>Dunia</td></tr>
+                <tr><td class="kana">まつり (祭り)</td><td>Matsuri</td><td>Festival</td></tr>
+                <tr><td class="kana">ぶたにく (豚肉)</td><td>Butaniku</td><td>Daging Babi</td></tr>
+                <tr><td class="kana">とりにく (鶏肉)</td><td>Toriniku</td><td>Daging Ayam</td></tr>
+                <tr><td class="kana">ぎゅうにく (牛肉)</td><td>Gyuuniku</td><td>Daging Sapi</td></tr>
+                <tr><td class="kana">どちら</td><td>Dochira</td><td>Yang mana (dari dua pilihan)</td></tr>
+                <tr><td class="kana">ずっと</td><td>Zutto</td><td>Jauh lebih...</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box">
+                <h3>1. Bentuk Lampau: Kata Benda & Kata Sifat-Na</h3>
+                <p>Untuk menceritakan keadaan di masa lalu, akhiran "desu" harus diubah menjadi <strong>でした (deshita)</strong> untuk positif, dan <strong>じゃありませんでした (ja arimasen deshita)</strong> untuk negatif.</p>
+                <div class="pattern">[Positif]: ～でした<br>[Negatif]: ～じゃありませんでした</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">きのうは 雨<strong>でした</strong>。</div><div class="id-text">Kemarin hujan.</div></li>
+                    <li><div class="jp-text">きのうの 試験は かんたん<strong>じゃありませんでした</strong>。</div><div class="id-text">Ujian kemarin tidak mudah.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>2. Bentuk Lampau: Kata Sifat-I</h3>
+                <p>Untuk Kata Sifat-I, hilangkan akhiran "i", lalu tambahkan <strong>かった (katta)</strong> untuk positif, atau <strong>くなかった (kunakatta)</strong> untuk negatif.</p>
+                <div class="pattern">[Positif]: ～い ➔ ～かったです<br>[Negatif]: ～い ➔ ～くなかったです</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">きのうは 寒<strong>かったです</strong>。</div><div class="id-text">Kemarin dingin. (さむい ➔ さむかった)</div></li>
+                    <li><div class="jp-text">パーティーは 楽し<strong>くなかったです</strong>。</div><div class="id-text">Pestanya tidak menyenangkan. (たのしい ➔ たのしくなかった)</div></li>
+                    <li><div class="jp-text" style="color: var(--accent-japan);">【Pengecualian】 いいです ➔ よかったです (Bagus/Syukurlah)</div><div class="id-text">Bentuk lampau dari "ii" (bagus) adalah "yokatta desu".</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>3. N1 は N2 より [Kata Sifat] です</h3>
+                <p>Ini adalah pola kalimat perbandingan. Digunakan untuk menyatakan "N1 lebih (sifat) daripada N2". Kata <strong>より (yori)</strong> berarti "daripada".</p>
+                <div class="pattern">N1 は N2 より ～です。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">北海道は 九州<strong>より</strong> 大きいです。</div><div class="id-text">Hokkaido lebih besar <strong>daripada</strong> Kyushu.</div></li>
+                    <li><div class="jp-text">この 車は あの 車<strong>より</strong> 速いです。</div><div class="id-text">Mobil ini lebih cepat <strong>daripada</strong> mobil itu.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. N1 と N2 と どちらが ～ですか</h3>
+                <p>Digunakan untuk menanyakan pilihan antara DUA hal. "Antara N1 dan N2, mana yang lebih...?". Jawabannya menggunakan <strong>～の ほうが (no hou ga)</strong>.</p>
+                <div class="pattern">[Tanya]: N1 と N2 と どちらが ～ですか。<br>[Jawab]: N1/N2 の ほうが ～です。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">サッカー<strong>と</strong> 野球<strong>と どちらが</strong> おもしろいですか。</div><div class="id-text">Antara sepak bola dan bisbol, mana yang lebih menarik?</div></li>
+                    <li><div class="jp-text">サッカー<strong>の ほうが</strong> おもしろいです。</div><div class="id-text">Sepak bola yang lebih menarik.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>5. [Grup] で [Kata Tanya] が いちばん ～ですか</h3>
+                <p>Ini adalah pola superlatif (paling/ter-). Digunakan untuk menanyakan hal yang "paling..." di dalam sebuah kategori yang luas (terdiri dari 3 hal atau lebih). Kata tanya disesuaikan: 何 (apa), どこ (mana), だれ (siapa), いつ (kapan).</p>
+                <div class="pattern">[Kategori/Grup] で [Kata Tanya] が いちばん ～ですか。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">1年<strong>で いつが いちばん</strong> 寒いですか。</div><div class="id-text">Dalam 1 tahun, <strong>kapan yang paling</strong> dingin?</div></li>
+                    <li><div class="jp-text">2月<strong>が いちばん</strong> 寒いです。</div><div class="id-text">Bulan Februari <strong>yang paling</strong> dingin.</div></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 12.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: 京都の 旅行は どうでしたか。</div>
+                    <div class="id-text">A: Bagaimana perjalanan ke Kyoto-nya? (Lampau)</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: とても 楽しかったです。でも、人は 多かったです。</div>
+                    <div class="id-text">B: Sangat menyenangkan. Tapi, orangnya banyak.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 天気は よかったですか。</div>
+                    <div class="id-text">A: Apakah cuacanya cerah/bagus?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、あまり よくなかったです。</div>
+                    <div class="id-text">B: Tidak, tidak begitu bagus.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 日本語と 英語と どちらが 難しいですか。</div>
+                    <div class="id-text">A: Antara bahasa Jepang dan bahasa Inggris, mana yang lebih sulit?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 日本語の ほうが 難しいです。</div>
+                    <div class="id-text">B: Bahasa Jepang yang lebih sulit.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: コーヒーと 紅茶と どちらが いいですか。</div>
+                    <div class="id-text">A: Kopi dan teh, lebih pilih yang mana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 紅茶の ほうが いいです。</div>
+                    <div class="id-text">B: Lebih pilih teh. (Teh lebih baik)</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 家族で だれが いちばん 背が 高いですか。</div>
+                    <div class="id-text">A: Di dalam keluarga, siapa yang tubuhnya paling tinggi?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 弟が いちばん 背が 高いです。</div>
+                    <div class="id-text">B: Adik laki-laki yang paling tinggi.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

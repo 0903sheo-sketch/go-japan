@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 9</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.9); 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 850px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.8rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Kosakata */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 4px 4px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #111; padding: 10px; text-align: center; font-family: monospace; font-size: 1.1rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #333; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; position: relative; z-index: 10; transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .btn-back:active { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第9課 (Bab 9)</span>
+        <h1 class="main-title">Kemampuan, Kesukaan & Alasan</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <h3>1. Kata Kerja & Kata Sifat Khusus</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">わかります</td><td>Wakarimasu</td><td>Mengerti / Paham</td></tr>
+                <tr><td class="kana">あります</td><td>Arimasu</td><td>Ada / Punya (benda mati)</td></tr>
+                <tr><td class="kana">すき（な）</td><td>Suki (na)</td><td>Suka</td></tr>
+                <tr><td class="kana">きらい（な）</td><td>Kirai (na)</td><td>Benci / Tidak suka</td></tr>
+                <tr><td class="kana">じょうず（な）</td><td>Jouzu (na)</td><td>Pintar / Mahir (untuk orang lain)</td></tr>
+                <tr><td class="kana">へた（な）</td><td>Heta (na)</td><td>Bodoh / Payah / Kurang mahir</td></tr>
+            </table>
+
+            <h3>2. Kata Benda</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">りょうり (料理)</td><td>Ryouri</td><td>Masakan</td></tr>
+                <tr><td class="kana">スポーツ</td><td>Supootsu</td><td>Olahraga (～を します)</td></tr>
+                <tr><td class="kana">おんがく (音楽)</td><td>Ongaku</td><td>Musik</td></tr>
+                <tr><td class="kana">うた (歌)</td><td>Uta</td><td>Lagu</td></tr>
+                <tr><td class="kana">え (絵)</td><td>E</td><td>Gambar / Lukisan</td></tr>
+                <tr><td class="kana">じ (字)</td><td>Ji</td><td>Huruf / Karakter</td></tr>
+                <tr><td class="kana">チケット</td><td>Chiketto</td><td>Tiket (konser, bioskop)</td></tr>
+                <tr><td class="kana">じかん (時間)</td><td>Jikan</td><td>Waktu</td></tr>
+                <tr><td class="kana">ようじ (用事)</td><td>Youji</td><td>Urusan</td></tr>
+                <tr><td class="kana">やくそく (約束)</td><td>Yakusoku</td><td>Janji</td></tr>
+            </table>
+
+            <h3>3. Kata Keterangan (Tingkat/Frekuensi)</h3>
+            <table>
+                <tr><th>Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">よく</td><td>Yoku</td><td>Dengan baik / Sering</td></tr>
+                <tr><td class="kana">だいたい</td><td>Daitai</td><td>Kira-kira / Sebagian besar</td></tr>
+                <tr><td class="kana">たくさん</td><td>Takusan</td><td>Banyak</td></tr>
+                <tr><td class="kana">すこし</td><td>Sukoshi</td><td>Sedikit</td></tr>
+                <tr><td class="kana">ぜんぜん</td><td>Zenzen</td><td>Tidak sama sekali (+ kalimat negatif)</td></tr>
+                <tr><td class="kana">どうして</td><td>Doushite</td><td>Kenapa / Mengapa</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box">
+                <h3>1. Partikel が (ga) untuk Kesukaan & Kemampuan</h3>
+                <p>Objek dari kata sifat seperti <strong>すき (suka), きらい (benci), じょうず (pintar), dan へた (payah)</strong> tidak ditandai dengan partikel を (wo), melainkan dengan partikel <strong>が (ga)</strong>.</p>
+                <div class="pattern">[Subjek] は [Objek] が すき／じょうず です。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">わたしは イタリアりょうりが すきです。</div><div class="id-text">Saya suka masakan Italia.</div></li>
+                    <li><div class="jp-text">マリアさんは ダンスが じょうずです。</div><div class="id-text">Sdr. Maria pintar menari.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>2. Partikel が (ga) untuk Kepemilikan & Pemahaman</h3>
+                <p>Kata kerja <strong>わかります (mengerti)</strong> dan <strong>あります (ada/punya)</strong> juga menggunakan partikel <strong>が</strong>, bukan を.</p>
+                <div class="pattern">[Subjek] は [Objek] が あります／わかります。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">わたしは 日本語が わかります。</div><div class="id-text">Saya mengerti bahasa Jepang.</div></li>
+                    <li><div class="jp-text">わたしは 車が あります。</div><div class="id-text">Saya punya mobil. (Bisa juga berarti "Ada mobil")</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>3. Kata Keterangan Tingkat/Kualitas</h3>
+                <p>Digunakan untuk menjelaskan seberapa paham atau seberapa banyak barang yang dimiliki. Letaknya tepat di depan kata kerja/kata sifat.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">英語が <strong>よく</strong> わかります。</div><div class="id-text">Saya <strong>sangat/dengan baik</strong> mengerti bahasa Inggris.</div></li>
+                    <li><div class="jp-text">お金が <strong>ぜんぜん</strong> ありません。</div><div class="id-text">Saya <strong>sama sekali tidak</strong> punya uang. (ぜんぜん harus diikuti negatif)</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. Kalimat 1 から、Kalimat 2 (Karena...)</h3>
+                <p>Partikel <strong>から (kara)</strong> di akhir kalimat pertama digunakan untuk menyatakan <strong>alasan</strong> dari kalimat kedua.</p>
+                <div class="pattern">[Alasan] から、[Hasil/Kesimpulan]。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">時間が ありません<strong>から</strong>、新聞を 読みません。</div><div class="id-text"><strong>Karena</strong> tidak punya waktu, saya tidak membaca koran.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>5. どうして (Kenapa / Mengapa)</h3>
+                <p>Kata tanya untuk menanyakan alasan. Jawabannya harus selalu diakhiri dengan <strong>～から</strong>.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text"><strong>どうして</strong> 朝ごはんを 食べませんか。</div><div class="id-text"><strong>Kenapa</strong> tidak makan pagi?</div></li>
+                    <li><div class="jp-text">時間が ありません<strong>から</strong>。</div><div class="id-text"><strong>Karena</strong> tidak punya waktu.</div></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 9.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: どんな スポーツが すきですか。</div>
+                    <div class="id-text">A: Kamu suka olahraga yang seperti apa?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: サッカーが すきです。</div>
+                    <div class="id-text">B: Saya suka sepak bola.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: カリナさんは 絵が 上手ですか。</div>
+                    <div class="id-text">A: Apakah Sdr. Karina pintar menggambar?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: はい、とても 上手です。</div>
+                    <div class="id-text">B: Ya, sangat pintar.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 漢字が わかりますか。</div>
+                    <div class="id-text">A: Apakah kamu mengerti Kanji?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、ぜんぜん わかりません。</div>
+                    <div class="id-text">B: Tidak, tidak mengerti sama sekali.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 細かい お金が ありますか。</div>
+                    <div class="id-text">A: Apakah kamu punya uang receh?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、ありません。</div>
+                    <div class="id-text">B: Tidak, tidak punya.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: どうして 昨日 早く 帰りましたか。</div>
+                    <div class="id-text">A: Kenapa kemarin kamu pulang cepat?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 用事が ありましたから。</div>
+                    <div class="id-text">B: Karena ada urusan.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        // Logika sederhana untuk berpindah Tab
+        function openTab(tabName) {
+            // Sembunyikan semua konten tab
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Hapus status active dari semua tombol
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Tampilkan tab yang dipilih
+            document.getElementById(tabName).classList.add('active');
+            
+            // Tambahkan status active pada tombol yang diklik
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
