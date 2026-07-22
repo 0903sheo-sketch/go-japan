@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Portal Utama</title>
+    <style>
+        /* =========================================
+           TEMA & DESAIN PROFESIONAL
+           ========================================= */
+        :root {
+            --bg-color: #050505;
+            --panel-bg: rgba(15, 15, 15, 0.85); 
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37; 
+            --accent-japan-hover: #a0172b;
+            --wa-color: #25D366;
+            --wa-hover: #1ebd5a;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-color);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* --- ANIMASI --- */
+        .fade-in { animation: fadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .fade-out { animation: fadeOut 0.4s ease forwards; }
+        .slide-up { animation: slideUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.95); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- WADAH UTAMA KOTAK KACA (GLASSMORPHISM) --- */
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 800px;
+            border-top: 4px solid var(--accent-japan);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 12px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+            display: none; /* Disembunyikan, diatur oleh JS */
+        }
+
+        h1, h2 { font-weight: 300; text-align: center; letter-spacing: 1px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 5px; display: block; text-align: center; letter-spacing: 3px; font-weight: bold;}
+
+        /* =========================================
+           HALAMAN LOGIN
+           ========================================= */
+        .login-header { margin-bottom: 35px; }
+        
+        .input-group { margin-bottom: 20px; }
+        .input-group input { 
+            width: 100%; padding: 16px; border: 1px solid var(--border-color); 
+            background: rgba(0,0,0,0.5); color: white; border-radius: 8px; 
+            outline: none; transition: 0.3s; font-size: 1.05rem;
+        }
+        .input-group input:focus { border-color: var(--accent-japan); box-shadow: 0 0 12px rgba(201, 31, 55, 0.4); }
+        
+        .btn-full {
+            width: 100%; padding: 16px; background: var(--accent-japan); color: white;
+            border: none; border-radius: 8px; cursor: pointer; font-size: 1.1rem;
+            font-weight: bold; transition: 0.3s; margin-top: 10px; letter-spacing: 2px;
+        }
+        .btn-full:hover { background: var(--accent-japan-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(201, 31, 55, 0.3); }
+
+        .btn-wa {
+            width: 100%; padding: 16px; background: var(--wa-color); color: white; text-decoration: none;
+            border: none; border-radius: 8px; cursor: pointer; font-size: 1.05rem; display: flex;
+            align-items: center; justify-content: center; gap: 10px; font-weight: bold; transition: 0.3s;
+            margin-top: 15px;
+        }
+        .btn-wa:hover { background: var(--wa-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); }
+
+        .divider { display: flex; align-items: center; text-align: center; margin: 30px 0; color: var(--text-muted); font-size: 0.9rem; }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border-color); }
+        .divider:not(:empty)::before { margin-right: .5em; }
+        .divider:not(:empty)::after { margin-left: .5em; }
+
+        .loader {
+            display: none; text-align: center; color: var(--accent-japan); font-weight: bold; margin-bottom: 20px; font-size: 1.1rem;
+        }
+
+        /* =========================================
+           HALAMAN GATEKEEPER / MENU DASHBOARD
+           ========================================= */
+        .user-greeting { text-align: center; margin-bottom: 30px; font-size: 1.1rem; color: var(--text-muted); }
+        .user-greeting span { color: var(--text-main); font-weight: bold; font-size: 1.3rem; }
+
+        .menu-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .menu-card {
+            background: rgba(0,0,0,0.5); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 35px 20px; text-align: center;
+            cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .menu-card:hover { 
+            border-color: var(--accent-japan); 
+            transform: translateY(-8px); 
+            background: rgba(20,20,20,0.9); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+        }
+        .menu-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--accent-japan); transform: scaleX(0); transition: 0.3s;
+        }
+        .menu-card:hover::before { transform: scaleX(1); }
+        
+        .menu-icon { font-size: 45px; margin-bottom: 15px; display: block; text-shadow: 0 0 15px rgba(255,255,255,0.2); }
+        .menu-title { font-size: 1.25rem; font-weight: bold; margin-bottom: 8px; color: #fff; text-transform: uppercase; letter-spacing: 1px;}
+        .menu-desc { font-size: 0.9rem; color: var(--text-muted); }
+
+        .btn-logout {
+            margin-top: 40px; width: 100%; padding: 15px; background: transparent; color: var(--text-muted);
+            border: 1px solid var(--border-color); cursor: pointer; text-transform: uppercase;
+            letter-spacing: 1px; transition: 0.3s; font-weight: bold; border-radius: 8px;
+        }
+        .btn-logout:hover { background: rgba(201, 31, 55, 0.1); color: var(--accent-japan); border-color: var(--accent-japan); }
+        /* ========================================= */
+        /* 👇 CSS TOMBOL BACK POJOK KIRI ATAS 👇 */
+        /* ========================================= */
+        .btn-back-pojok {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--accent-japan);
+            color: var(--accent-japan);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 9999; /* Pastikan selalu berada di lapisan paling atas */
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-back-pojok:hover {
+            background: var(--accent-japan);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(201, 31, 55, 0.5);
+        }
+        /* ========================================= */
+
+    </style>
+</head>
+<body>
+        <!-- 👇 HTML TOMBOL BACK POJOK KIRI ATAS 👇 -->
+    <button class="btn-back-pojok" onclick="window.history.back()">
+        ⬅ Kembali
+    </button>
+    <!-- 👆 HTML TOMBOL BACK POJOK KIRI ATAS 👆 -->
+
+
+    <!-- =========================================
+         1. PANEL LOGIN
+         ========================================= -->
+    <div class="panel fade-in" id="login-container" style="display: block;">
+        <div class="login-header">
+            <span class="jp-title">日本語マスター</span>
+            <h2 style="font-size: 2rem; font-weight: bold;">Login Portal</h2>
+        </div>
+        
+        <div id="loader" class="loader">🔄 Mengautentikasi data...</div>
+
+        <form onsubmit="handleLogin(event)">
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Username" required autocomplete="off">
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn-full">MASUK SYSTEM</button>
+        </form>
+
+        <div class="divider">Belum memiliki akses?</div>
+        
+        <!-- Tombol WhatsApp untuk Registrasi -->
+        <a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20ingin%20mendaftar%20pembuatan%20akun%20baru%20di%20Nihongo%20Master." target="_blank" class="btn-wa">
+            📱 Hubungi Admin via WhatsApp
+        </a>
+    </div>
+
+    <!-- =========================================
+         2. PANEL GATEKEEPER (MENU UTAMA)
+         ========================================= -->
+    <div class="panel" id="gatekeeper-container">
+        <span class="jp-title">メインメニュー</span>
+        <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 10px;">Dashboard JLPT N4</h2>
+        
+        <div class="user-greeting">
+            Selamat datang kembali, <br><span id="user-display">User</span>-san! 🌸
+        </div>
+        
+        <!-- GRID MENU (Semua diarahkan ke HTML lain) -->
+        <div class="menu-grid">
+            <div class="menu-card" onclick="window.location.href='choukai.html'">
+                <span class="menu-icon">🎧</span>
+                <div class="menu-title">Choukai</div>
+                <div class="menu-desc">Simulasi Mendengarkan</div>
+            </div>
+            
+            <div class="menu-card" onclick="window.location.href='dokai.html'">
+                <span class="menu-icon">📖</span>
+                <div class="menu-title">Dokkai</div>
+                <div class="menu-desc">Simulasi Membaca</div>
+            </div>
+            
+            <div class="menu-card" onclick="window.location.href='kanji.html'">
+                <span class="menu-icon">⛩️</span>
+                <div class="menu-title">Kanji</div>
+                <div class="menu-desc">Kosakata & Huruf</div>
+            </div>
+
+            <!-- Anda bisa menambah menu lain di sini jika diperlukan -->
+            <div class="menu-card" onclick="window.location.href='minna2.html'">
+                <span class="menu-icon">📚</span>
+                <div class="menu-title">Minna 2</div>
+                <div class="menu-desc">Materi Bab 25 - 50</div>
+            </div>
+        </div>
+
+        <button class="btn-logout" onclick="logout()">🚪 Keluar / Logout</button>
+    </div>
+
+    <!-- =========================================
+         SCRIPT LOGIKA LOGIN & ANIMASI
+         ========================================= -->
+    <script>
+        // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
+        const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbz8U5dElDMv8Mz98s6mczdEC_4ErtQRBJUv0j2nWCVP07z19hNJRHucTCGvLO1J_qLaFw/exec"; 
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
+            const loader = document.getElementById('loader');
+            
+            // Tampilkan animasi loading
+            loader.style.display = "block";
+
+            // LOGIKA PENGAMANAN SEMENTARA (Simulasi jika API URL belum diatur)
+            if(GOOGLE_SHEET_API_URL === "URL_GOOGLE_APPS_SCRIPT_ANDA_DISINI") {
+                // Simulasi delay jaringan 1 detik, lalu anggap sukses
+                setTimeout(() => {
+                    loader.style.display = "none";
+                    loginSuccess(user);
+                }, 1000);
+                return;
+            }
+
+            // KODE ASLI UNTUK MENGIRIM DATA KE GOOGLE SHEETS
+            fetch(GOOGLE_SHEET_API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `action=login&username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                loader.style.display = "none";
+                if (data.status === 'success') {
+                    loginSuccess(user);
+                } else {
+                    alert("Gagal Login: " + data.message);
+                }
+            })
+            .catch(error => {
+                loader.style.display = "none";
+                alert("Terjadi kesalahan jaringan. Coba lagi.");
+            });
+        }
+
+        // FUNGSI JIKA LOGIN BERHASIL (Membuka Gatekeeper)
+        function loginSuccess(username) {
+            const loginBox = document.getElementById('login-container');
+            const gatekeeperBox = document.getElementById('gatekeeper-container');
+            
+            // Set nama user di Gatekeeper
+            document.getElementById('user-display').innerText = username;
+
+            // Animasi Transisi (Fade Out Login -> Slide Up Gatekeeper)
+            loginBox.classList.remove('fade-in');
+            loginBox.classList.add('fade-out');
+            
+            setTimeout(() => {
+                loginBox.style.display = 'none';
+                loginBox.classList.remove('fade-out');
+                
+                gatekeeperBox.style.display = 'block';
+                gatekeeperBox.classList.add('slide-up');
+            }, 400); // Waktu harus sama dengan durasi animasi CSS
+        }
+
+        // FUNGSI LOGOUT
+        function logout() {
+            const loginBox = document.getElementById('login-container');
+            const gatekeeperBox = document.getElementById('gatekeeper-container');
+            
+            // Bersihkan input
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+
+            // Animasi Transisi
+            gatekeeperBox.classList.remove('slide-up');
+            gatekeeperBox.classList.add('fade-out');
+            
+            setTimeout(() => {
+                gatekeeperBox.style.display = 'none';
+                gatekeeperBox.classList.remove('fade-out');
+                
+                loginBox.style.display = 'block';
+                loginBox.classList.add('fade-in');
+            }, 400);
+        }
+    </script>
+</body>
+</html>

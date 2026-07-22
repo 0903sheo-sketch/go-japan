@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Simulasi Bunpou N4</title>
+    <style>
+        /* Desain Minimalis & Profesional */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.85); 
+            --border-color: #222222;
+            --text-main: #f0f0f0;
+            --text-muted: #888888;
+            --accent-japan: #c91f37; 
+            --accent-success: #2e7d32;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            /* Menggunakan gambar baru yang lebih stabil */
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+            padding: 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 750px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(5px);
+        }
+
+        h1, h2 { font-weight: 300; margin-bottom: 20px; text-align: center; letter-spacing: 1px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+
+        .dash-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 30px; }
+        .points-badge { border: 1px solid var(--accent-japan); color: var(--accent-japan); padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; }
+
+        .question-text { font-size: 1.2rem; margin-bottom: 30px; text-align: left; color: #fff; line-height: 1.6; }
+        .question-text span.blank { display: inline-block; width: 60px; border-bottom: 2px solid var(--accent-japan); }
+        
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 25px; }
+        .btn-option {
+            background: rgba(0, 0, 0, 0.7); color: var(--text-main); border: 1px solid var(--border-color);
+            padding: 18px; cursor: pointer; text-align: left; font-size: 1.05rem; border-radius: 2px;
+            transition: 0.2s;
+        }
+        .btn-option:hover { border-color: var(--text-main); background: rgba(20, 20, 20, 0.9); padding-left: 22px;}
+        .btn-option.correct { background: rgba(46, 125, 50, 0.4); border-color: var(--accent-success); color: #fff; }
+        .btn-option.wrong { background: rgba(201, 31, 55, 0.4); border-color: var(--accent-japan); color: #fff; }
+
+        .btn {
+            width: 100%; padding: 15px; background: #111; color: var(--text-main);
+            border: 1px solid var(--border-color); cursor: pointer; text-transform: uppercase;
+            letter-spacing: 2px; transition: 0.2s; font-weight: bold;
+        }
+        .btn:hover { background: #222; border-color: #555; }
+        
+        .btn-next { display: none; margin-bottom: 10px; }
+
+        .result-box { text-align: center; display: none; }
+        .final-score { font-size: 5rem; color: var(--accent-japan); font-weight: 300; margin: 20px 0; }
+        .score-desc { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 40px;}
+
+                /* ========================================= */
+        /* 👇 CSS TOMBOL BACK POJOK KIRI ATAS 👇 */
+        /* ========================================= */
+        .btn-back-pojok {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--accent-japan);
+            color: var(--accent-japan);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 9999; /* Pastikan selalu berada di lapisan paling atas */
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-back-pojok:hover {
+            background: var(--accent-japan);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(201, 31, 55, 0.5);
+        }
+        /* ========================================= */
+    </style>
+</head>
+<body>
+        <!-- 👇 HTML TOMBOL BACK POJOK KIRI ATAS 👇 -->
+    <button class="btn-back-pojok" onclick="window.history.back()">
+        ⬅ Kembali
+    </button>
+    <!-- 👆 HTML TOMBOL BACK POJOK KIRI ATAS 👆 -->
+
+    <div class="panel fade-in" id="quiz-container">
+        <div class="dash-header">
+            <div>
+                <span class="jp-title" style="text-align: left; margin:0; font-size: 1rem;">文法テスト</span>
+                <div style="font-size: 0.9rem; color: var(--text-muted);">Simulasi Tata Bahasa (N4)</div>
+            </div>
+            <div class="points-badge">SOAL: <span id="progress-text">1/50</span></div>
+        </div>
+
+        <div id="quiz-screen">
+            <div class="question-text" id="question-text">Memuat pertanyaan...</div>
+            <div class="options-grid" id="options-container"></div>
+
+            <button class="btn btn-next" id="btn-next" onclick="nextQuestion()">Lanjut ke Soal Berikutnya ➔</button>
+            
+            <!-- TOMBOL KEMBALI -->
+            <button class="btn" style="background: transparent; border-color: var(--border-color); color: var(--text-muted);" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+        </div>
+
+        <div id="result-screen" class="result-box">
+            <h2>Evaluasi Selesai</h2>
+            <div class="final-score" id="final-score">0</div>
+            <div class="score-desc">Total Skor Maksimal: 100 Poin</div>
+            <p id="feedback-message" style="color: var(--text-main); margin-bottom: 30px; font-weight: bold;"></p>
+            <button class="btn" style="background: var(--accent-japan); border-color: var(--accent-japan); margin-bottom: 10px;" onclick="location.reload()">Ulangi Simulasi</button>
+            
+            <!-- TOMBOL KEMBALI DI HALAMAN HASIL -->
+            <button class="btn" style="background: transparent; border-color: var(--border-color); color: var(--text-muted);" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+        </div>
+    </div>
+
+    <script>
+        const bunpouDB = [
+            { q: "わたしは 明日 早く（   ）なりません。", options: ["起きなけれ", "起きなくて", "起きて", "起きないで"], answer: 0 },
+            { q: "この ケーキは 甘（   ）そうです。", options: ["い", "く", "か", "なさ"], answer: 3 },
+            { q: "雨が（   ）そうです。", options: ["降る", "降り", "降って", "降らない"], answer: 1 },
+            { q: "先生は 学生に 漢字を（   ）ました。", options: ["書かれ", "書かせ", "書いて", "書き"], answer: 1 },
+            { q: "窓が（   ）あります。", options: ["開いて", "開けて", "開く", "開ける"], answer: 1 },
+            { q: "電車が（   ）います。", options: ["遅れて", "遅らせて", "遅れ", "遅れていて"], answer: 0 },
+            { q: "パスポートを なくして（   ）ました。", options: ["おき", "み", "しまい", "あり"], answer: 2 },
+            { q: "私は 先生に（   ）。", options: ["ほめました", "ほめさせました", "ほめられました", "ほめていました"], answer: 2 },
+            { q: "山田さんが 私の 荷物を 持って（   ）。", options: ["あげました", "くれました", "もらいました", "やりました"], answer: 1 },
+            { q: "休みの 日は 本を 読ん（   ）、映画を 見（   ）します。", options: ["たり / たり", "て / て", "たら / たら", "なら / なら"], answer: 0 },
+            
+            { q: "私は ピアノを 弾く（   ）が できます。", options: ["の", "こと", "もの", "ところ"], answer: 1 },
+            { q: "富士山に 登った（   ）が ありますか。", options: ["こと", "の", "とき", "もの"], answer: 0 },
+            { q: "日本へ 来る（   ）、日本語を 勉強しました。", options: ["あとで", "まえに", "ときに", "から"], answer: 1 },
+            { q: "手を 洗って（   ）、ご飯を 食べます。", options: ["まえに", "から", "あとで", "うちに"], answer: 1 },
+            { q: "道に 迷った（   ）、交番で 聞いてください。", options: ["とき", "から", "と", "なら"], answer: 0 },
+            { q: "この ボタンを（   ）、水が 出ます。", options: ["押すなら", "押せば", "押すと", "押したら"], answer: 2 },
+            { q: "雨が（   ）、ピクニックに 行きません。", options: ["降るなら", "降ったら", "降ると", "降れば"], answer: 1 },
+            { q: "安けれ（   ）、買います。", options: ["と", "ば", "たら", "なら"], answer: 1 },
+            { q: "東京へ（   ）、新幹線が 便利ですよ。", options: ["行くなら", "行けば", "行くと", "行ったら"], answer: 0 },
+            { q: "デパートへ 靴を 買い（   ）行きます。", options: ["に", "で", "を", "へ"], answer: 0 },
+            
+            { q: "きのう お酒を 飲み（   ）ました。", options: ["すぎ", "やすい", "にくい", "たい"], answer: 0 },
+            { q: "この ペンは とても 書き（   ）です。", options: ["すぎ", "やすい", "にくい", "たい"], answer: 1 },
+            { q: "危ないですから、ここへ 入ら（   ）で ください。", options: ["ない", "なく", "な", "ず"], answer: 0 },
+            { q: "あの 人が 誰（   ） 知って いますか。", options: ["か", "が", "を", "は"], answer: 0 },
+            { q: "荷物が 多い（   ）、雨が 降っている（   ）、タクシーで 帰ります。", options: ["し / し", "から / から", "と / と", "たり / たり"], answer: 0 },
+            { q: "どうして 遅れた（   ）。", options: ["ですか", "んですか", "ますか", "だか"], answer: 1 },
+            { q: "来年 日本へ 行く（   ）です。", options: ["つもり", "はず", "べき", "みたい"], answer: 0 },
+            { q: "熱が あるから、早く 寝た（   ）いいですよ。", options: ["と", "なら", "ほうが", "から"], answer: 2 },
+            { q: "来月から 給料が 高く（   ）ます。", options: ["し", "あり", "なり", "でき"], answer: 2 },
+            { q: "部屋を きれいに（   ）ました。", options: ["なり", "し", "あり", "いり"], answer: 1 },
+            
+            { q: "タバコを やめる（   ）に しました。", options: ["もの", "こと", "の", "ところ"], answer: 1 },
+            { q: "来月 アメリカへ 出張する（   ）に なりました。", options: ["こと", "もの", "の", "ため"], answer: 0 },
+            { q: "薬を 飲んだ（   ）、熱が 下がりません。", options: ["から", "ので", "のに", "ても"], answer: 2 },
+            { q: "車を 買う（   ）、お金を 貯めています。", options: ["ために", "ように", "から", "ので"], answer: 0 },
+            { q: "よく 見える（   ）、前の 席に 座ります。", options: ["ために", "ように", "から", "ので"], answer: 1 },
+            { q: "いくら 探し（   ）、時計が 見つかりません。", options: ["ても", "たら", "と", "ば"], answer: 0 },
+            { q: "先生は 明日 アメリカへ（   ）ます。", options: ["行かれ", "行かせ", "お行きになり", "お行きし"], answer: 0 },
+            { q: "社長が（   ）ました。", options: ["お帰りし", "お帰りになり", "帰られ", "お帰りられ"], answer: 1 },
+            { q: "私が カバンを お持ち（   ）。", options: ["します", "になります", "されます", "あられます"], answer: 0 },
+            { q: "音楽を 聞き（   ） 勉強します。", options: ["ながら", "つつ", "あいだ", "うちに"], answer: 0 },
+            
+            { q: "さっき ご飯を 食べた（   ）です。", options: ["ところ", "ばかり", "はず", "だけ"], answer: 1 },
+            { q: "今から 会議が 始まる（   ）です。", options: ["ところ", "ばかり", "はず", "だけ"], answer: 0 },
+            { q: "山田さんは 今日 休むと 言っていましたから、来ない（   ）です。", options: ["はず", "つもり", "こと", "ため"], answer: 0 },
+            { q: "明日は 雪が 降る（   ）しれません。", options: ["かも", "はず", "にちがい", "ことか"], answer: 0 },
+            { q: "週末は 海へ 行こうと（   ）います。", options: ["思って", "考えて", "言って", "見て"], answer: 0 },
+            { q: "あの 人は 田中さんの お兄さん（   ） はずです。", options: ["の", "な", "だ", "に"], answer: 0 },
+            { q: "テストが 終わってから、遊びに 行って（   ） いいですよ。", options: ["は", "も", "が", "と"], answer: 1 },
+            { q: "ここに 自転車を 止めては（   ）。", options: ["いけません", "なりません", "だめです", "かまいません"], answer: 0 },
+            { q: "日本語が 話せる（   ）に なりました。", options: ["ため", "よう", "こと", "もの"], answer: 1 },
+            { q: "私は 弟に 部屋を 掃除（   ）。", options: ["しました", "させました", "されました", "してくれました"], answer: 1 }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let isAnswered = false;
+
+        const optionsContainer = document.getElementById('options-container');
+        const btnNext = document.getElementById('btn-next');
+        const progressText = document.getElementById('progress-text');
+        const questionText = document.getElementById('question-text');
+
+        function loadQuestion() {
+            isAnswered = false;
+            btnNext.style.display = "none";
+            progressText.textContent = `${currentQuestionIndex + 1}/${bunpouDB.length}`;
+            
+            const currentQ = bunpouDB[currentQuestionIndex];
+            questionText.innerHTML = currentQ.q.replace("（   ）", "<span class='blank'></span>");
+            optionsContainer.innerHTML = "";
+
+            currentQ.options.forEach((option, index) => {
+                const btn = document.createElement("button");
+                btn.className = "btn-option";
+                btn.textContent = `${index + 1}. ${option}`;
+                btn.onclick = () => checkAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            if (isAnswered) return; 
+            isAnswered = true;
+
+            const currentQ = bunpouDB[currentQuestionIndex];
+            const allButtons = optionsContainer.querySelectorAll('.btn-option');
+
+            if (selectedIndex === currentQ.answer) {
+                btnElement.classList.add('correct');
+                score += 2; 
+            } else {
+                btnElement.classList.add('wrong');
+                allButtons[currentQ.answer].classList.add('correct');
+            }
+
+            allButtons.forEach(b => b.style.cursor = "default");
+            questionText.innerHTML = currentQ.q.replace("（   ）", `<span style="color: var(--accent-japan); font-weight: bold;"> ${currentQ.options[currentQ.answer]} </span>`);
+            btnNext.style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < bunpouDB.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-screen').style.display = "none";
+            const resultScreen = document.getElementById('result-screen');
+            resultScreen.style.display = "block";
+            
+            document.getElementById('final-score').textContent = score;
+            
+            const feedback = document.getElementById('feedback-message');
+            if (score >= 90) {
+                feedback.textContent = "Luar Biasa! Tata bahasa N4 Anda sudah sangat matang.";
+                document.getElementById('final-score').style.color = "var(--accent-success)";
+            } else if (score >= 60) {
+                feedback.textContent = "Bagus! Anda sudah menguasai sebagian besar pola kalimat N4.";
+            } else {
+                feedback.textContent = "Terus semangat belajar! Evaluasi lagi partikel dan perubahan bentuk kata kerja.";
+            }
+        }
+
+        window.onload = loadQuestion;
+    </script>
+</body>
+</html>

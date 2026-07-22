@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Simulasi JLPT N4</title>
+    <style>
+        /* Desain Minimalis & Profesional */
+        :root {
+            --panel-bg: rgba(10, 10, 10, 0.85); 
+            --border-color: #2a2a2a;
+            --text-main: #ffffff;
+            --text-muted: #999999;
+            --accent-japan: #c91f37; 
+            --accent-success: #2e7d32;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #000000;
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+            padding: 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 700px;
+            border-top: 3px solid var(--accent-japan);
+            backdrop-filter: blur(8px);
+            border-radius: 4px;
+        }
+
+        h1, h2 { font-weight: 300; margin-bottom: 20px; text-align: center; letter-spacing: 1px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+
+        /* Header Info */
+        .dash-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 30px; }
+        .points-badge { border: 1px solid var(--accent-japan); color: var(--accent-japan); padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; }
+
+        /* Audio Controls */
+        .audio-box { text-align: center; margin-bottom: 30px; padding: 20px; border: 1px dashed var(--border-color); background: rgba(0, 0, 0, 0.4); border-radius: 4px;}
+        .btn-play {
+            background: var(--accent-japan); color: #fff; border: none; padding: 15px 30px; 
+            font-size: 1.1rem; cursor: pointer; border-radius: 50px; font-weight: bold;
+            display: inline-flex; align-items: center; gap: 10px; transition: 0.2s;
+        }
+        .btn-play:hover { background: #a0172b; transform: scale(1.05); }
+        .btn-play:disabled { background: #555; cursor: not-allowed; transform: none; }
+        
+        .speed-control { margin-top: 15px; font-size: 0.9rem; color: var(--text-muted); }
+        .speed-control select { background: #111; color: #fff; border: 1px solid var(--border-color); padding: 5px; border-radius: 4px; outline: none;}
+
+        /* Quiz Options */
+        .question-text { font-size: 1.1rem; margin-bottom: 20px; text-align: center; color: #ddd; }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
+        .btn-option {
+            background: rgba(0, 0, 0, 0.6); color: var(--text-main); border: 1px solid var(--border-color);
+            padding: 15px; cursor: pointer; text-align: left; font-size: 1rem; border-radius: 2px;
+            transition: 0.2s;
+        }
+        .btn-option:hover { border-color: var(--accent-japan); background: rgba(20, 20, 20, 0.9); padding-left: 20px;}
+        .btn-option.correct { background: rgba(46, 125, 50, 0.3); border-color: var(--accent-success); color: #fff; }
+        .btn-option.wrong { background: rgba(201, 31, 55, 0.3); border-color: var(--accent-japan); color: #fff; }
+
+        .btn-next {
+            width: 100%; padding: 15px; background: #111; color: var(--text-main);
+            border: 1px solid var(--border-color); cursor: pointer; text-transform: uppercase;
+            letter-spacing: 2px; transition: 0.2s; font-weight: bold; display: none;
+        }
+        .btn-next:hover { background: #222; border-color: #555; }
+
+        /* Result Screen */
+        .result-box { text-align: center; display: none; }
+        .final-score { font-size: 4rem; color: var(--accent-japan); font-weight: bold; margin: 20px 0; }
+
+                /* ========================================= */
+        /* 👇 CSS TOMBOL BACK POJOK KIRI ATAS 👇 */
+        /* ========================================= */
+        .btn-back-pojok {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--accent-japan);
+            color: var(--accent-japan);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 9999; /* Pastikan selalu berada di lapisan paling atas */
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-back-pojok:hover {
+            background: var(--accent-japan);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(201, 31, 55, 0.5);
+        }
+        /* ========================================= */
+    </style>
+</head>
+<body>
+
+        <!-- 👇 HTML TOMBOL BACK POJOK KIRI ATAS 👇 -->
+    <button class="btn-back-pojok" onclick="window.history.back()">
+        ⬅ Kembali
+    </button>
+    <!-- 👆 HTML TOMBOL BACK POJOK KIRI ATAS 👆 -->
+
+
+    <div class="panel fade-in" id="quiz-container">
+        <div class="dash-header">
+            <div>
+                <span class="jp-title" style="text-align: left; margin:0; font-size: 1rem;">聴解テスト</span>
+                <div style="font-size: 0.9rem; color: var(--text-muted);">Simulasi Choukai N4</div>
+            </div>
+            <div class="points-badge">SOAL: <span id="progress-text">1/5</span></div>
+        </div>
+
+        <div id="quiz-screen">
+            <div class="audio-box">
+                <button class="btn-play" id="btn-play" onclick="playAudio()">🔊 Putar Audio Soal</button>
+                <div class="speed-control">
+                    <label for="speed">Kecepatan Suara: </label>
+                    <select id="speed">
+                        <option value="1">Normal (1.0x)</option>
+                        <option value="0.8">Lambat (0.8x)</option>
+                        <option value="0.6">Sangat Lambat (0.6x)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="question-text" id="question-text">Dengarkan audio dan pilih jawaban yang paling tepat.</div>
+
+            <div class="options-grid" id="options-container">
+                <!-- Pilihan jawaban dirender melalui JS -->
+            </div>
+
+            <button class="btn-next" id="btn-next" onclick="nextQuestion()">Lanjut ke Soal Berikutnya ➔</button>
+            <button class="btn" style="background: transparent; border-color: var(--border-color); color: var(--text-muted);" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+        </div>
+
+        <div id="result-screen" class="result-box">
+            <h2>Evaluasi Selesai</h2>
+            <p>Skor Akhir Anda:</p>
+            <div class="final-score" id="final-score">0</div>
+            <p id="feedback-message" style="color: var(--text-muted); margin-bottom: 30px;"></p>
+            <button class="btn-next" style="display: block; background: var(--accent-japan); border-color: var(--accent-japan);" onclick="location.reload()">Ulangi Simulasi</button>
+            <button class="btn" style="background: transparent; border-color: var(--border-color); color: var(--text-muted);" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+        </div>
+    </div>
+
+    <script>
+        // Database Soal Simulasi Choukai JLPT N4
+      const questionsDB = [
+            // 1-5: Topik Jadwal & Alasan
+            {
+                audio: "男の人と女の人が話しています。男の人は明日、何をしますか？。。。明日は日曜日ですね。どこかへ行きますか。ええ、友達と映画を見に行きます。山田さんは？私は家でゆっくり休みます。",
+                options: ["友達と映画を見ます", "家で休みます", "会社へ行きます", "買い物をします"],
+                answer: 0
+            },
+            {
+                audio: "先生が学生に話しています。学生は明日、何時に学校へ来ますか？。。。明日はテストがありますから、遅れないでください。テストは9時からですが、8時半までに教室に入ってください。",
+                options: ["8時", "8時半", "9時", "9時半"],
+                answer: 1
+            },
+            {
+                audio: "女の人が店で話しています。女の人はどのカバンを買いますか？。。。すみません、その黒いカバンを見せてください。これですか？いいえ、その小さいのです。はい、これですね。じゃあ、これを買います。",
+                options: ["黒くて大きいカバン", "白くて大きいカバン", "黒くて小さいカバン", "白くて小さいカバン"],
+                answer: 2
+            },
+            {
+                audio: "天気予報を聞いています。明日の午後の天気はどうなりますか？。。。明日は一日中曇りでしょう。午前中は雨が降るかもしれませんが、午後にはやむでしょう。風が強くなります。",
+                options: ["晴れ", "雨", "雪", "曇り"],
+                answer: 3
+            },
+            {
+                audio: "男の人と女の人が話しています。女の人はどうして昨日パーティーに行きませんでしたか？。。。昨日、どうしてパーティーに来なかったんですか？すみません。頭が痛かったんですか？いいえ、仕事がたくさんあったんです。",
+                options: ["頭が痛かったから", "仕事がたくさんあったから", "パーティーが好きじゃないから", "時間がわからなかったから"],
+                answer: 1
+            },
+            
+            // 6-10: Stasiun, Restoran, & Fasilitas Umum
+            {
+                audio: "駅で男の人と駅員が話しています。男の人はどの電車に乗りますか？。。。すみません、東京へ行きたいんですが、次の電車は何時ですか？東京行きは3時10分と3時40分があります。10分の電車は急行です。じゃあ、早い方に乗ります。",
+                options: ["3時10分の急行", "3時10分の普通", "3時40分の急行", "3時40分の普通"],
+                answer: 0
+            },
+            {
+                audio: "レストランで男の人と店員が話しています。男の人は何を注文しますか？。。。ご注文はお決まりですか？カレーとコーヒーをお願いします。あ、やっぱりコーヒーは後でいいです。紅茶にしてください。はい、カレーと紅茶ですね。",
+                options: ["カレーとコーヒー", "カレーと紅茶", "カレーだけ", "コーヒーと紅茶"],
+                answer: 1
+            },
+            {
+                audio: "郵便局で女の人が話しています。女の人はいくら払いますか？。。。この荷物をアメリカまでお願いします。船便ですか、航空便ですか？航空便でお願いします。航空便は5000円、船便は3000円です。じゃあ、航空便で。",
+                options: ["3000円", "5000円", "8000円", "2000円"],
+                answer: 1
+            },
+            {
+                audio: "病院で医者と女の人が話しています。女の人はいつ薬を飲みますか？。。。この薬は1日3回、朝、昼、晩のご飯の後に飲んでください。はい。それから、熱がある時だけ、この白い薬も飲んでください。わかりました。",
+                options: ["ご飯の前", "ご飯の後", "寝る前", "朝起きた時"],
+                answer: 1
+            },
+            {
+                audio: "図書館で男の人が話しています。男の人は何冊本を借りますか？。。。すみません、本を借りたいんですが、何冊までですか？一人5冊までです。じゃあ、この3冊をお願いします。あ、やっぱりこの辞書も借ります。",
+                options: ["3冊", "4冊", "5冊", "1冊"],
+                answer: 1
+            },
+
+            // 11-15: Janji Temu, Belanja, & Barang Hilang
+            {
+                audio: "電話で男の人と女の人が話しています。二人はどこで会いますか？。。。もしもし、今駅に着きました。私も今着きました。改札口の前にいますか？いいえ、駅の前の本屋にいます。じゃあ、すぐ行きます。",
+                options: ["駅の改札口", "駅の前の本屋", "駅の前の喫茶店", "電車のホーム"],
+                answer: 1
+            },
+            {
+                audio: "服の店で女の人が話しています。女の人はどのシャツを買いますか？。。。このシャツ、いいですね。サイズはMとLがあります。Lサイズをお願いします。色は白と青がありますが。じゃあ、青いのにします。",
+                options: ["Mサイズの白", "Mサイズの青", "Lサイズの白", "Lサイズの青"],
+                answer: 3
+            },
+            {
+                audio: "男の人が自分の趣味について話しています。男の人の趣味は何ですか？。。。私の趣味はスポーツです。テニスも好きですが、一番好きなのは泳ぐことです。週末はいつもプールへ行きます。",
+                options: ["テニス", "水泳（泳ぐこと）", "サッカー", "走ること"],
+                answer: 1
+            },
+            {
+                audio: "旅行会社で女の人が話しています。女の人はどのホテルを予約しますか？。。。海が見えるホテルがいいんですが。AホテルとBホテルが海に近いです。Aホテルは温泉があります。Bホテルは新しいですが、温泉はありません。じゃあ、温泉がある方をお願いします。",
+                options: ["Aホテル", "Bホテル", "海が見えないホテル", "安いホテル"],
+                answer: 0
+            },
+            {
+                audio: "駅で女の人が話しています。女の人は何を忘れましたか？。。。すみません、電車の中に忘れ物をしたんですが。何ですか？黒い傘です。カバンは持っていますが、傘を忘れてしまいました。",
+                options: ["黒いカバン", "白いカバン", "黒い傘", "白い傘"],
+                answer: 2
+            },
+
+            // 16-20: Pekerjaan & Kegiatan Akhir Pekan
+            {
+                audio: "会社で男の人と女の人が話しています。会議は何時からですか？。。。明日の会議は10時からですね。いいえ、部長が忙しいので、1時間遅くなりました。そうですか。わかりました。",
+                options: ["9時", "10時", "11時", "12時"],
+                answer: 2
+            },
+            {
+                audio: "男の人と女の人が話しています。女の人はスーパーで何を買いますか？。。。今からスーパーへ買い物に行くけど、何か要る？あ、牛乳と卵をお願い。パンもある？パンはあるわ。わかった。",
+                options: ["牛乳とパン", "卵とパン", "牛乳と卵", "牛乳と卵とパン"],
+                answer: 2
+            },
+            {
+                audio: "道で男の人が女の人に聞いています。銀行はどこですか？。。。すみません、この近くに銀行はありますか？ええ、この道をまっすぐ行って、二つ目の角を右に曲がってください。郵便局の隣にあります。",
+                options: ["一つ目の角を右", "一つ目の角を左", "二つ目の角を右", "二つ目の角を左"],
+                answer: 2
+            },
+            {
+                audio: "女の人が週末の予定について話しています。女の人は土曜日の朝、何をしますか？。。。週末は忙しいです。土曜日の朝は部屋の掃除をして、午後は買い物に行きます。日曜日は友達と遊びます。",
+                options: ["部屋の掃除", "買い物", "友達と遊ぶ", "ゆっくり休む"],
+                answer: 0
+            },
+            {
+                audio: "教室で男の学生と女の学生が話しています。男の学生は何を借りますか？。。。消しゴム、貸してくれない？ごめん、今使っているの。ペンならあるけど。あ、消しゴムはあった。じゃあ、赤いペンを貸して。",
+                options: ["消しゴム", "青いペン", "赤いペン", "ノート"],
+                answer: 2
+            },
+
+            // 21-25: Hadiah, Aturan, & Hewan Peliharaan
+            {
+                audio: "デパートで男の人が話しています。男の人は母の誕生日に何をあげますか？。。。母の誕生日に花とケーキを買うつもりでした。でも、母は最近時計が欲しいと言っていましたから、時計を買うことにしました。",
+                options: ["花", "ケーキ", "時計", "カバン"],
+                answer: 2
+            },
+            {
+                audio: "マンションの管理人が話しています。ゴミはどうやって捨てますか？。。。ゴミは火曜日と金曜日の朝に出してください。夜は出さないでください。缶や瓶は水曜日に出してください。",
+                options: ["火曜日と金曜日の夜", "火曜日と金曜日の朝", "水曜日の朝", "毎日"],
+                answer: 1
+            },
+            {
+                audio: "男の人と女の人が犬について話しています。犬のご飯はいつあげますか？。。。旅行に行っている間、犬の世話をお願いね。ご飯は1日2回？うん、朝と夕方にお願い。昼はあげなくていいよ。",
+                options: ["朝と昼", "昼と夕方", "朝と夕方", "夜だけ"],
+                answer: 2
+            },
+            {
+                audio: "図書館で女の人が話しています。女の人はいつ本を返しますか？。。。この本は2週間借りることができます。今日は5日ですから、19日までに返してください。はい、わかりました。",
+                options: ["5日", "12日", "14日", "19日"],
+                answer: 3
+            },
+            {
+                audio: "引越しの準備をしています。男の人は何を箱に入れますか？。。。お皿やコップはこの箱に入れてね。本は？本は重いから、あの小さい箱に入れて。わかった。服はベッドの上でいいよ。",
+                options: ["お皿やコップ", "本", "服", "ベッド"],
+                answer: 1
+            },
+
+            // 26-30: Klub, Pemesanan, & Pesan Telepon
+            {
+                audio: "学校で先生が話しています。明日の遠足に何を持っていきますか？。。。明日は山へ行きます。お弁当と飲み物は学校が用意しますから、皆さんはタオルと雨の時に使う傘を持ってきてください。",
+                options: ["お弁当と飲み物", "お弁当とタオル", "タオルと傘", "飲み物と傘"],
+                answer: 2
+            },
+            {
+                audio: "レストランに電話しています。男の人は何人で予約しますか？。。。明日の夜、予約したいんですが。はい、何名様ですか。大人3人と、子供2人です。はい、5名様ですね。お待ちしております。",
+                options: ["2人", "3人", "4人", "5人"],
+                answer: 3
+            },
+            {
+                audio: "会社で男の人と女の人が話しています。誰が書類をコピーしますか？。。。この書類、会議までにコピーしておいて。すみません、これからお客さんに会うんです。じゃあ、田中さんに頼むよ。はい、私が伝えます。",
+                options: ["男の人", "女の人", "田中さん", "お客さん"],
+                answer: 2
+            },
+            {
+                audio: "アルバイトの店長が話しています。学生は来週、何曜日に入りますか？。。。来週のシフトだけど、月曜日と水曜日は休みたいと言っていたね。はい。じゃあ、火曜日と木曜日に来てくれる？金曜日は私がいるからいいよ。わかりました。",
+                options: ["月曜日と水曜日", "火曜日と木曜日", "木曜日と金曜日", "火曜日と金曜日"],
+                answer: 1
+            },
+            {
+                audio: "留守番電話のメッセージを聞いています。男の人はこの後、どうしますか？。。。もしもし、佐藤ですが。今日お借りした本を返したいんですが、今晩はいらっしゃいますか？また後で電話します。",
+                options: ["すぐ本を返しに行く", "後でもう一度電話する", "明日本を返しに行く", "電話を待つ"],
+                answer: 1
+            }
+        ];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let isAnswered = false;
+
+        const optionsContainer = document.getElementById('options-container');
+        const btnNext = document.getElementById('btn-next');
+        const btnPlay = document.getElementById('btn-play');
+        const progressText = document.getElementById('progress-text');
+
+        function loadQuestion() {
+            isAnswered = false;
+            btnNext.style.display = "none";
+            btnPlay.disabled = false;
+            btnPlay.textContent = "🔊 Putar Audio Soal";
+            progressText.textContent = `${currentQuestionIndex + 1}/${questionsDB.length}`;
+            
+            // Hentikan suara jika masih ada yang berjalan
+            window.speechSynthesis.cancel();
+
+            const currentQ = questionsDB[currentQuestionIndex];
+            optionsContainer.innerHTML = "";
+
+            currentQ.options.forEach((option, index) => {
+                const btn = document.createElement("button");
+                btn.className = "btn-option";
+                btn.textContent = `${index + 1}. ${option}`;
+                btn.onclick = () => checkAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function playAudio() {
+            if (!window.speechSynthesis) {
+                alert("Browser Anda tidak mendukung fitur Text-to-Speech.");
+                return;
+            }
+
+            // Hentikan suara sebelumnya
+            window.speechSynthesis.cancel();
+
+            const text = questionsDB[currentQuestionIndex].audio;
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // Atur bahasa ke Jepang
+            utterance.lang = 'ja-JP';
+            
+            // Atur kecepatan berdasarkan pilihan user
+            const speed = parseFloat(document.getElementById('speed').value);
+            utterance.rate = speed;
+
+            // Event saat suara mulai dan selesai
+            utterance.onstart = () => {
+                btnPlay.textContent = "Sedang Memutar... 🎧";
+                btnPlay.disabled = true;
+            };
+            utterance.onend = () => {
+                btnPlay.textContent = "🔄 Putar Ulang Audio";
+                btnPlay.disabled = false;
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            if (isAnswered) return; // Mencegah klik dua kali
+            isAnswered = true;
+            
+            // Hentikan audio secara otomatis saat pengguna menjawab
+            window.speechSynthesis.cancel();
+
+            const currentQ = questionsDB[currentQuestionIndex];
+            const allButtons = optionsContainer.querySelectorAll('.btn-option');
+
+            if (selectedIndex === currentQ.answer) {
+                btnElement.classList.add('correct');
+                score += 20; // 20 Poin per soal
+            } else {
+                btnElement.classList.add('wrong');
+                // Tunjukkan jawaban yang benar
+                allButtons[currentQ.answer].classList.add('correct');
+            }
+
+            // Matikan semua tombol
+            allButtons.forEach(b => b.style.cursor = "default");
+            
+            btnNext.style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questionsDB.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-screen').style.display = "none";
+            const resultScreen = document.getElementById('result-screen');
+            resultScreen.style.display = "block";
+            
+            document.getElementById('final-score').textContent = score;
+            
+            const feedback = document.getElementById('feedback-message');
+            if (score === 100) {
+                feedback.textContent = "Sempurna! Kemampuan mendengarkan Anda sudah siap untuk JLPT N4.";
+                document.getElementById('final-score').style.color = "var(--accent-success)";
+            } else if (score >= 60) {
+                feedback.textContent = "Kerja bagus! Terus biasakan telinga Anda dengan percakapan bahasa Jepang.";
+            } else {
+                feedback.textContent = "Jangan menyerah! Coba turunkan kecepatan audio dan berlatih lagi.";
+            }
+        }
+
+        // Inisialisasi Kuis Pertama Kali
+        window.onload = loadQuestion;
+    </script>
+</body>
+</html>
