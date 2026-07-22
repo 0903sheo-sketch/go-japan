@@ -81,7 +81,7 @@
         .btn-next {
             width: 100%; padding: 15px; background: #111; color: var(--text-main);
             border: 1px solid var(--border-color); cursor: pointer; text-transform: uppercase;
-            letter-spacing: 2px; transition: 0.2s; font-weight: bold; display: none;
+            letter-spacing: 2px; transition: 0.2s; font-weight: bold; display: none; margin-bottom: 10px;
         }
         .btn-next:hover { background: #222; border-color: #555; }
 
@@ -89,39 +89,57 @@
         .result-box { text-align: center; display: none; }
         .final-score { font-size: 4rem; color: var(--accent-japan); font-weight: bold; margin: 20px 0; }
 
-                /* ========================================= */
+        /* ========================================= */
         /* 👇 CSS TOMBOL BACK POJOK KIRI ATAS 👇 */
         /* ========================================= */
         .btn-back-pojok {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--accent-japan);
-            color: var(--accent-japan);
-            padding: 10px 20px;
-            border-radius: 30px;
+            top: 25px;
+            left: 25px;
+            background: rgba(15, 15, 15, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #e0e0e0;
+            padding: 12px 25px;
+            border-radius: 40px;
             cursor: pointer;
             font-size: 14px;
             font-weight: bold;
-            transition: 0.3s;
-            z-index: 9999; /* Pastikan selalu berada di lapisan paling atas */
-            backdrop-filter: blur(5px);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 9999; 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
         .btn-back-pojok:hover {
             background: var(--accent-japan);
-            color: #fff;
-            box-shadow: 0 0 15px rgba(201, 31, 55, 0.5);
+            color: #ffffff;
+            border-color: var(--accent-japan);
+            box-shadow: 0 8px 25px rgba(201, 31, 55, 0.5);
+            transform: translateY(-3px) scale(1.02);
+        }
+        
+        .btn-back-pojok span {
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .btn-back-pojok:hover span {
+            transform: translateX(-4px);
         }
         /* ========================================= */
     </style>
 </head>
 <body>
 
-        <!-- 👇 HTML TOMBOL BACK POJOK KIRI ATAS 👇 -->
-    <button class="btn-back-pojok" onclick="window.history.back()">
-        ⬅ Kembali
+    <!-- 👇 HTML TOMBOL BACK POJOK KIRI ATAS 👇 -->
+    <button class="btn-back-pojok" onclick="window.location.href='index.html'">
+        <span>🏠</span> Kembali ke Beranda
     </button>
     <!-- 👆 HTML TOMBOL BACK POJOK KIRI ATAS 👆 -->
 
@@ -155,7 +173,9 @@
             </div>
 
             <button class="btn-next" id="btn-next" onclick="nextQuestion()">Lanjut ke Soal Berikutnya ➔</button>
-            <button class="btn" style="background: transparent; border-color: var(--border-color); color: var(--text-muted);" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+            
+            <!-- Tombol Kembali di bawah soal (Diperbaiki) -->
+            <button class="btn" style="background: transparent; border-color: var(--border-color); color: var(--text-muted); width: 100%; padding: 15px; font-weight: bold; cursor: pointer; transition: 0.2s;" onmouseover="this.style.borderColor='#555'; this.style.color='#fff'" onmouseout="this.style.borderColor='var(--border-color)'; this.style.color='var(--text-muted)'" onclick="window.location.href='index.html'">⬅ Kembali ke Menu Utama</button>
         </div>
 
         <div id="result-screen" class="result-box">
@@ -164,13 +184,15 @@
             <div class="final-score" id="final-score">0</div>
             <p id="feedback-message" style="color: var(--text-muted); margin-bottom: 30px;"></p>
             <button class="btn-next" style="display: block; background: var(--accent-japan); border-color: var(--accent-japan);" onclick="location.reload()">Ulangi Simulasi</button>
-            <button class="btn" style="background: transparent; border-color: var(--border-color); color: var(--text-muted);" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+            
+            <!-- Tombol Kembali di layar hasil (Diperbaiki) -->
+            <button class="btn" style="background: transparent; border-color: var(--border-color); color: var(--text-muted); width: 100%; padding: 15px; font-weight: bold; cursor: pointer; transition: 0.2s;" onmouseover="this.style.borderColor='#555'; this.style.color='#fff'" onmouseout="this.style.borderColor='var(--border-color)'; this.style.color='var(--text-muted)'" onclick="window.location.href='index.html'">⬅ Kembali ke Menu Utama</button>
         </div>
     </div>
 
     <script>
         // Database Soal Simulasi Choukai JLPT N4
-      const questionsDB = [
+  const questionsDB = [
             // 1-5: Topik Jadwal & Alasan
             {
                 audio: "男の人と女の人が話しています。男の人は明日、何をしますか？。。。明日は日曜日ですね。どこかへ行きますか。ええ、友達と映画を見に行きます。山田さんは？私は家でゆっくり休みます。",
