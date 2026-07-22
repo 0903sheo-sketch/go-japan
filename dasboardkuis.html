@@ -109,9 +109,67 @@
         .feedback-display { margin-top: 20px; font-size: 1rem; font-weight: bold; min-height: 24px; }
         
         .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        /* ========================================= */
+        /* 👇 CSS TOMBOL BACK POJOK KIRI ATAS 👇 */
+        /* ========================================= */
+        .btn-back-pojok {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--accent-japan);
+            color: var(--accent-japan);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 9999; /* Pastikan selalu berada di lapisan paling atas */
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-back-pojok:hover {
+            background: var(--accent-japan);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(201, 31, 55, 0.5);
+        }
+/* ========================================= */
+        /* ========================================= */
+/* 👇 CSS TOMBOL BACK POJOK KIRI ATAS 👇 */
+/* ========================================= */
+        .btn-back-pojok {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--accent-japan);
+            color: var(--accent-japan);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 9999; /* Pastikan selalu berada di lapisan paling atas */
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-back-pojok:hover {
+            background: var(--accent-japan);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(201, 31, 55, 0.5);
+        }
+        /* ========================================= */
     </style>
 </head>
 <body>
+
+        <!-- 👇 HTML TOMBOL BACK POJOK KIRI ATAS 👇 -->
+    <button class="btn-back-pojok" onclick="window.history.back()">
+        ⬅ Kembali
+    </button>
+    <!-- 👆 HTML TOMBOL BACK POJOK KIRI ATAS 👆 -->
 
     <!-- 1. PANEL AUTENTIKASI -->
     <div id="auth-screen" class="panel fade-in">
@@ -281,6 +339,7 @@
 
         // --- DATABASE KOSAKATA DIPERLUAS ---
         const vocabDB = [
+            // Kosakata Sebelumnya
             { kana: "ありがとう", romaji: "Arigatou", arti: "Terima Kasih", acceptedSpeech: ["ありがとう", "有難う"] },
             { kana: "おはよう", romaji: "Ohayou", arti: "Selamat Pagi", acceptedSpeech: ["おはよう", "お早う"] },
             { kana: "パソコン", romaji: "Pasokon", arti: "Komputer / Laptop", acceptedSpeech: ["パソコン"] },
@@ -305,7 +364,89 @@
             { kana: "しごと", romaji: "Shigoto", arti: "Pekerjaan", acceptedSpeech: ["仕事", "しごと"] },
             { kana: "みせ", romaji: "Mise", arti: "Toko", acceptedSpeech: ["店", "みせ"] },
             { kana: "べんきょう", romaji: "Benkyou", arti: "Belajar", acceptedSpeech: ["勉強", "べんきょう"] },
-            { kana: "あめ", romaji: "Ame", arti: "Hujan", acceptedSpeech: ["雨", "あめ"] }
+            { kana: "あめ", romaji: "Ame", arti: "Hujan", acceptedSpeech: ["雨", "あめ"] },
+
+            // === TAMBAHAN KOSAKATA BARU ===
+
+            // Salam & Frasa Umum
+            { kana: "こんにちは", romaji: "Konnichiwa", arti: "Halo / Selamat Siang", acceptedSpeech: ["こんにちは", "今日は"] },
+            { kana: "こんばんは", romaji: "Konbanwa", arti: "Selamat Malam", acceptedSpeech: ["こんばんは", "今晩は"] },
+            { kana: "さようなら", romaji: "Sayounara", arti: "Selamat Tinggal", acceptedSpeech: ["さようなら", "さよなら"] },
+            { kana: "すみません", romaji: "Sumimasen", arti: "Permisi / Maaf", acceptedSpeech: ["すみません", "スミマセン"] },
+            
+            // Kata Ganti & Orang
+            { kana: "わたし", romaji: "Watashi", arti: "Saya", acceptedSpeech: ["私", "わたし"] },
+            { kana: "あなた", romaji: "Anata", arti: "Anda / Kamu", acceptedSpeech: ["あなた", "貴方"] },
+            { kana: "ひと", romaji: "Hito", arti: "Orang", acceptedSpeech: ["人", "ひと"] },
+            { kana: "おとこ", romaji: "Otoko", arti: "Laki-laki", acceptedSpeech: ["男", "おとこ"] },
+            { kana: "おんな", romaji: "Onna", arti: "Perempuan", acceptedSpeech: ["女", "おんな"] },
+            { kana: "こども", romaji: "Kodomo", arti: "Anak-anak", acceptedSpeech: ["子供", "こども"] },
+
+            // Benda Sehari-hari
+            { kana: "つくえ", romaji: "Tsukue", arti: "Meja", acceptedSpeech: ["机", "つくえ"] },
+            { kana: "いす", romaji: "Isu", arti: "Kursi", acceptedSpeech: ["椅子", "いす"] },
+            { kana: "かばん", romaji: "Kaban", arti: "Tas", acceptedSpeech: ["鞄", "かばん", "カバン"] },
+            { kana: "くつ", romaji: "Kutsu", arti: "Sepatu", acceptedSpeech: ["靴", "くつ"] },
+            { kana: "とけい", romaji: "Tokei", arti: "Jam", acceptedSpeech: ["時計", "とけい"] },
+            { kana: "かさ", romaji: "Kasa", arti: "Payung", acceptedSpeech: ["傘", "かさ"] },
+            { kana: "おかね", romaji: "Okane", arti: "Uang", acceptedSpeech: ["お金", "おかね"] },
+            { kana: "しゃしん", romaji: "Shashin", arti: "Foto", acceptedSpeech: ["写真", "しゃしん"] },
+            { kana: "てがみ", romaji: "Tegami", arti: "Surat", acceptedSpeech: ["手紙", "てがみ"] },
+            { kana: "くすり", romaji: "Kusuri", arti: "Obat", acceptedSpeech: ["薬", "くすり"] },
+
+            // Makanan & Minuman
+            { kana: "みず", romaji: "Mizu", arti: "Air", acceptedSpeech: ["水", "みず"] },
+            { kana: "おちゃ", romaji: "Ocha", arti: "Teh", acceptedSpeech: ["お茶", "おちゃ"] },
+            { kana: "ごはん", romaji: "Gohan", arti: "Nasi / Makan", acceptedSpeech: ["ご飯", "ごはん"] },
+            { kana: "パン", romaji: "Pan", arti: "Roti", acceptedSpeech: ["パン"] },
+            { kana: "にく", romaji: "Niku", arti: "Daging", acceptedSpeech: ["肉", "にく"] },
+            { kana: "さかな", romaji: "Sakana", arti: "Ikan", acceptedSpeech: ["魚", "さかな"] },
+            { kana: "やさい", romaji: "Yasai", arti: "Sayuran", acceptedSpeech: ["野菜", "やさい"] },
+            { kana: "くだもの", romaji: "Kudamono", arti: "Buah", acceptedSpeech: ["果物", "くだもの"] },
+            { kana: "たまご", romaji: "Tamago", arti: "Telur", acceptedSpeech: ["卵", "たまご", "玉子"] },
+
+            // Tempat
+            { kana: "がっこう", romaji: "Gakkou", arti: "Sekolah", acceptedSpeech: ["学校", "がっこう"] },
+            { kana: "びょういん", romaji: "Byouin", arti: "Rumah Sakit", acceptedSpeech: ["病院", "びょういん"] },
+            { kana: "えき", romaji: "Eki", arti: "Stasiun", acceptedSpeech: ["駅", "えき"] },
+            { kana: "うち", romaji: "Uchi", arti: "Rumah", acceptedSpeech: ["家", "うち"] },
+            { kana: "へや", romaji: "Heya", arti: "Kamar / Ruangan", acceptedSpeech: ["部屋", "へや"] },
+            { kana: "こうえん", romaji: "Kouen", arti: "Taman", acceptedSpeech: ["公園", "こうえん"] },
+            { kana: "だいがく", romaji: "Daigaku", arti: "Universitas", acceptedSpeech: ["大学", "だいがく"] },
+
+            // Keterangan Waktu
+            { kana: "きょう", romaji: "Kyou", arti: "Hari Ini", acceptedSpeech: ["今日", "きょう"] },
+            { kana: "いま", romaji: "Ima", arti: "Sekarang", acceptedSpeech: ["今", "いま"] },
+            { kana: "あさ", romaji: "Asa", arti: "Pagi", acceptedSpeech: ["朝", "あさ"] },
+            { kana: "ひる", romaji: "Hiru", arti: "Siang", acceptedSpeech: ["昼", "ひる"] },
+            { kana: "よる", romaji: "Yoru", arti: "Malam", acceptedSpeech: ["夜", "よる"] },
+            { kana: "まいにち", romaji: "Mainichi", arti: "Setiap Hari", acceptedSpeech: ["毎日", "まいにち"] },
+
+            // Kata Kerja Dasar
+            { kana: "いく", romaji: "Iku", arti: "Pergi", acceptedSpeech: ["行く", "いく"] },
+            { kana: "くる", romaji: "Kuru", arti: "Datang", acceptedSpeech: ["来る", "くる"] },
+            { kana: "かえる", romaji: "Kaeru", arti: "Pulang", acceptedSpeech: ["帰る", "かえる"] },
+            { kana: "みる", romaji: "Miru", arti: "Melihat / Menonton", acceptedSpeech: ["見る", "みる"] },
+            { kana: "きく", romaji: "Kiku", arti: "Mendengar / Bertanya", acceptedSpeech: ["聞く", "きく"] },
+            { kana: "よむ", romaji: "Yomu", arti: "Membaca", acceptedSpeech: ["読む", "よむ"] },
+            { kana: "かく", romaji: "Kaku", arti: "Menulis", acceptedSpeech: ["書く", "かく"] },
+            { kana: "かう", romaji: "Kau", arti: "Membeli", acceptedSpeech: ["買う", "かう"] },
+            { kana: "する", romaji: "Suru", arti: "Melakukan", acceptedSpeech: ["する"] },
+            { kana: "おきる", romaji: "Okiru", arti: "Bangun", acceptedSpeech: ["起きる", "おきる"] },
+            { kana: "ねる", romaji: "Neru", arti: "Tidur", acceptedSpeech: ["寝る", "ねる"] },
+            { kana: "はなす", romaji: "Hanasu", arti: "Berbicara", acceptedSpeech: ["話す", "はなす"] },
+
+            // Kata Sifat Dasar
+            { kana: "おおきい", romaji: "Ookii", arti: "Besar", acceptedSpeech: ["大きい", "おおきい"] },
+            { kana: "ちいさい", romaji: "Chiisai", arti: "Kecil", acceptedSpeech: ["小さい", "ちいさい"] },
+            { kana: "あたらしい", romaji: "Atarashii", arti: "Baru", acceptedSpeech: ["新しい", "あたらしい"] },
+            { kana: "ふるい", romaji: "Furui", arti: "Kuno / Lama", acceptedSpeech: ["古い", "ふるい"] },
+            { kana: "いい", romaji: "Ii (Yoi)", arti: "Bagus / Baik", acceptedSpeech: ["いい", "良い", "よい"] },
+            { kana: "わるい", romaji: "Warui", arti: "Buruk / Jahat", acceptedSpeech: ["悪い", "わるい"] },
+            { kana: "あつい", romaji: "Atsui", arti: "Panas", acceptedSpeech: ["暑い", "熱い", "あつい"] },
+            { kana: "さむい", romaji: "Samui", arti: "Dingin (Cuaca)", acceptedSpeech: ["寒い", "さむい"] },
+            { kana: "たかい", romaji: "Takai", arti: "Tinggi / Mahal", acceptedSpeech: ["高い", "たかい"] },
+            { kana: "やすい", romaji: "Yasui", arti: "Murah", acceptedSpeech: ["安い", "やすい"] }
         ];
 
         let currentVocab = {};
