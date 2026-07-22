@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Dashboard Interaktif</title>
+    <style>
+        /* Desain Minimalis & Profesional */
+        :root {
+            --panel-bg: rgba(10, 10, 10, 0.85); /* Hitam transparan */
+            --border-color: #2a2a2a;
+            --text-main: #ffffff;
+            --text-muted: #999999;
+            --accent-japan: #c91f37; /* Aksen merah Jepang */
+            --accent-success: #2e7d32;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            /* Wallpaper Online Bernuansa Jepang */
+            background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #000000;
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+        }
+
+        /* Animasi Transisi Halus */
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .hidden { display: none !important; }
+
+        /* Struktur Panel Umum (Tanpa Glow) */
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            border-top: 3px solid var(--accent-japan);
+            backdrop-filter: blur(8px);
+            border-radius: 4px;
+        }
+
+        .panel-large { max-width: 800px; padding: 40px; }
+
+        /* Tipografi */
+        h1, h2 { font-weight: 300; margin-bottom: 20px; text-align: center; letter-spacing: 1px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        
+        /* Form & Tombol */
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; color: var(--text-muted); font-size: 0.9rem; }
+        .input-group input { 
+            width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.6); 
+            border: 1px solid var(--border-color); color: var(--text-main); font-size: 1rem; 
+            border-radius: 2px;
+        }
+        .input-group input:focus { outline: none; border-color: var(--accent-japan); }
+
+        .btn {
+            width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.6); color: var(--text-main);
+            border: 1px solid var(--border-color); cursor: pointer; text-transform: uppercase;
+            letter-spacing: 2px; transition: all 0.2s; font-weight: bold; margin-bottom: 10px;
+            border-radius: 2px;
+        }
+        .btn:hover { border-color: var(--text-main); background: rgba(20, 20, 20, 0.8); }
+        .btn-primary { background: var(--accent-japan); border-color: var(--accent-japan); color: #fff; }
+        .btn-primary:hover { background: #a0172b; border-color: #a0172b; }
+        
+        /* Tombol Voice Recognition */
+        .btn-mic { background: rgba(20, 20, 20, 0.8); border-color: #444; color: #fff; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-mic:hover { background: rgba(40, 40, 40, 0.9); border-color: #666; }
+        .btn-mic.listening { background: var(--accent-japan); border-color: var(--accent-japan); animation: pulse 1s infinite alternate; }
+        @keyframes pulse { from { opacity: 1; } to { opacity: 0.7; } }
+
+        .alert { padding: 12px; margin-bottom: 20px; border: 1px solid; display: none; text-align: center; font-size: 0.95rem; border-radius: 2px;}
+        .alert-error { border-color: var(--accent-japan); color: var(--accent-japan); background: rgba(201, 31, 55, 0.1); }
+        .alert-success { border-color: var(--accent-success); color: var(--accent-success); background: rgba(46, 125, 50, 0.1); }
+
+        /* Dashboard Header */
+        .dash-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 30px; }
+        .user-info { font-size: 0.95rem; color: var(--text-muted); }
+        .points-badge { border: 1px solid var(--accent-japan); color: var(--accent-japan); padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; }
+
+        /* Gatekeeper Menu */
+        .menu-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        .menu-card {
+            border: 1px solid var(--border-color); padding: 25px; text-align: center;
+            cursor: pointer; transition: all 0.2s; background: rgba(0, 0, 0, 0.5);
+            border-radius: 2px;
+        }
+        .menu-card h3 { color: var(--accent-japan); margin-bottom: 10px; letter-spacing: 2px; font-weight: 600; }
+        .menu-card:hover { border-color: var(--accent-japan); background: rgba(20, 20, 20, 0.9); transform: translateY(-2px); }
+
+        /* Latihan Section */
+        .latihan-box { border: 1px solid var(--border-color); padding: 40px; text-align: center; margin-bottom: 20px; min-height: 220px; display: flex; flex-direction: column; justify-content: center; background: rgba(0, 0, 0, 0.3); border-radius: 2px;}
+        .kana-display { font-size: 4rem; font-weight: bold; margin-bottom: 15px; color: #fff; letter-spacing: 3px;}
+        .romaji-display { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 10px; display: none; letter-spacing: 1px;}
+        .arti-display { font-size: 1.1rem; color: var(--accent-japan); display: none; font-weight: bold;}
+        .feedback-display { margin-top: 20px; font-size: 1rem; font-weight: bold; min-height: 24px; }
+        
+        .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    </style>
+</head>
+<body>
+
+    <!-- 1. PANEL AUTENTIKASI -->
+    <div id="auth-screen" class="panel fade-in">
+        <span class="jp-title">日本語マスター</span>
+        <h1>Sistem Akses</h1>
+        <div id="auth-alert" class="alert"></div>
+        
+        <div class="input-group">
+            <label>ID Pengguna (Username)</label>
+            <input type="text" id="username" placeholder="Contoh: Rohman" autocomplete="off">
+        </div>
+        <div class="input-group">
+            <label>Kata Sandi (Password)</label>
+            <input type="password" id="password">
+        </div>
+        
+        <button class="btn btn-primary" onclick="handleAuth('login')">Masuk Sistem</button>
+        <button class="btn" onclick="handleAuth('register')">Registrasi Baru</button>
+        <p style="text-align: center; margin-top: 15px; font-size: 0.8rem; color: #999;">Terkoneksi dengan Database Google Sheets</p>
+    </div>
+
+    <!-- 2. GATEKEEPER / MENU UTAMA -->
+    <div id="gatekeeper-screen" class="panel panel-large hidden fade-in">
+        <div class="dash-header">
+            <div>
+                <span class="jp-title" style="text-align: left; margin:0; font-size: 1rem;">こんにちは</span>
+                <div class="user-info">ID: <span id="display-user" style="color: #fff;">User</span></div>
+            </div>
+            <div class="points-badge">POINT: <span id="display-points">0</span></div>
+        </div>
+
+        <h2 style="text-align: left; font-size: 1.5rem;">Pilih Modul Pembelajaran</h2>
+        
+        <div class="menu-grid">
+            <div class="menu-card" onclick="navigate('latihan')">
+                <h3>LATIHAN SUARA (音声練習)</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">Uji pelafalan Anda menggunakan mikrofon. Sistem akan mendeteksi bacaan Kana/Kanji secara otomatis. Dapatkan poin!</p>
+            </div>
+            <div class="menu-card" onclick="location.href='kuis.html'">
+                <h3>KUIS (クイズ)</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">Evaluasi tata bahasa dan partikel JLPT N5.</p>
+            </div>
+            <div class="menu-card" onclick="location.href='game.html'">
+                <h3>GAME (ゲーム)</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">Simulasi interaktif dan tantangan kecepatan.</p>
+            </div>
+        </div>
+        <button class="btn" style="margin-top: 30px; border-color: var(--border-color);" onclick="logout()">Keluar Sistem</button>
+    </div>
+
+    <!-- 3. DASHBOARD LATIHAN SUARA -->
+    <div id="latihan-screen" class="panel panel-large hidden fade-in">
+        <div class="dash-header">
+            <h2 style="margin: 0; font-size: 1.5rem;">Latihan Pelafalan (Voice)</h2>
+            <div class="points-badge">POINT: <span id="latihan-points">0</span></div>
+        </div>
+
+        <div class="latihan-box">
+            <div id="kana-text" class="kana-display">準備</div>
+            <div id="romaji-text" class="romaji-display">Junbi</div>
+            <div id="arti-text" class="arti-display">Persiapan</div>
+            <div id="feedback-text" class="feedback-display">Tekan tombol mikrofon lalu baca teks di atas.</div>
+        </div>
+
+        <div class="controls">
+            <button id="btn-mic" class="btn btn-mic" onclick="startListening()">🎤 Ucapkan (Suara)</button>
+            <button class="btn btn-primary" onclick="showAnswer()">Buka Jawaban</button>
+        </div>
+        <button class="btn" style="margin-top: 15px; border-color: var(--border-color); color: var(--text-main);" onclick="nextVocab()">Lewati & Lanjut</button>
+        <button class="btn" style="margin-top: 5px; border: none; color: #aaa; background: transparent;" onclick="navigate('gatekeeper')">Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        // === KONFIGURASI BACKEND ===
+        const GAS_URL = "URL_APPS_SCRIPT_ANDA_DISINI"; 
+
+        // State Global
+        let currentUser = "";
+        let currentPoints = 0;
+
+        // Navigasi UI
+        const screens = {
+            auth: document.getElementById('auth-screen'),
+            gatekeeper: document.getElementById('gatekeeper-screen'),
+            latihan: document.getElementById('latihan-screen')
+        };
+        const alertBox = document.getElementById('auth-alert');
+
+        function navigate(target) {
+            Object.values(screens).forEach(s => s.classList.add('hidden'));
+            if(target === 'auth') screens.auth.classList.remove('hidden');
+            if(target === 'gatekeeper') screens.gatekeeper.classList.remove('hidden');
+            if(target === 'latihan') {
+                screens.latihan.classList.remove('hidden');
+                loadVocab();
+            }
+        }
+
+        function showAlert(msg, type) {
+            alertBox.textContent = msg;
+            alertBox.className = `alert alert-${type}`;
+            alertBox.style.display = 'block';
+            setTimeout(() => alertBox.style.display = 'none', 3000);
+        }
+
+        // --- Sistem Autentikasi Frontend - Backend ---
+        async function handleAuth(action) {
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
+
+            if (!user || !pass) {
+                showAlert('Username dan Password wajib diisi.', 'error');
+                return;
+            }
+
+            if (GAS_URL === "URL_APPS_SCRIPT_ANDA_DISINI") {
+                currentUser = user;
+                currentPoints = 0;
+                document.getElementById('display-user').textContent = currentUser;
+                updatePointsDisplay();
+                navigate('gatekeeper');
+                return;
+            }
+
+            try {
+                const btn = document.querySelector('.btn-primary');
+                btn.textContent = "Memproses...";
+                
+                const response = await fetch(GAS_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: action, username: user, password: pass })
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    if (action === 'login') {
+                        currentUser = user;
+                        currentPoints = parseInt(result.points) || 0;
+                        document.getElementById('display-user').textContent = currentUser;
+                        updatePointsDisplay();
+                        navigate('gatekeeper');
+                    } else {
+                        showAlert('Registrasi sukses! Silakan klik Masuk Sistem.', 'success');
+                    }
+                } else {
+                    showAlert(result.message, 'error');
+                }
+                btn.textContent = "Masuk Sistem";
+            } catch (error) {
+                showAlert('Gagal terhubung ke server.', 'error');
+                document.querySelector('.btn-primary').textContent = "Masuk Sistem";
+            }
+        }
+
+        function logout() {
+            currentUser = "";
+            currentPoints = 0;
+            document.getElementById('password').value = "";
+            navigate('auth');
+        }
+
+        function updatePointsDisplay() {
+            document.getElementById('display-points').textContent = currentPoints;
+            document.getElementById('latihan-points').textContent = currentPoints;
+        }
+
+        // --- DATABASE KOSAKATA DIPERLUAS ---
+        const vocabDB = [
+            { kana: "ありがとう", romaji: "Arigatou", arti: "Terima Kasih", acceptedSpeech: ["ありがとう", "有難う"] },
+            { kana: "おはよう", romaji: "Ohayou", arti: "Selamat Pagi", acceptedSpeech: ["おはよう", "お早う"] },
+            { kana: "パソコン", romaji: "Pasokon", arti: "Komputer / Laptop", acceptedSpeech: ["パソコン"] },
+            { kana: "くるま", romaji: "Kuruma", arti: "Mobil", acceptedSpeech: ["車", "くるま", "クルマ"] },
+            { kana: "せんせい", romaji: "Sensei", arti: "Guru", acceptedSpeech: ["先生", "せんせい"] },
+            { kana: "ほん", romaji: "Hon", arti: "Buku", acceptedSpeech: ["本", "ほん"] },
+            { kana: "たべる", romaji: "Taberu", arti: "Makan", acceptedSpeech: ["食べる", "たべる"] },
+            { kana: "のむ", romaji: "Nomu", arti: "Minum", acceptedSpeech: ["飲む", "のむ"] },
+            { kana: "いぬ", romaji: "Inu", arti: "Anjing", acceptedSpeech: ["犬", "いぬ", "イヌ"] },
+            { kana: "ねこ", romaji: "Neko", arti: "Kucing", acceptedSpeech: ["猫", "ねこ", "ネコ"] },
+            { kana: "さくら", romaji: "Sakura", arti: "Bunga Sakura", acceptedSpeech: ["桜", "さくら", "サクラ"] },
+            { kana: "ぎんこう", romaji: "Ginkou", arti: "Bank", acceptedSpeech: ["銀行", "ぎんこう"] },
+            { kana: "えいが", romaji: "Eiga", arti: "Film", acceptedSpeech: ["映画", "えいが"] },
+            { kana: "としょかん", romaji: "Toshokan", arti: "Perpustakaan", acceptedSpeech: ["図書館", "としょかん"] },
+            { kana: "じてんしゃ", romaji: "Jitensha", arti: "Sepeda", acceptedSpeech: ["自転車", "じてんしゃ"] },
+            { kana: "やま", romaji: "Yama", arti: "Gunung", acceptedSpeech: ["山", "やま"] },
+            { kana: "かわ", romaji: "Kawa", arti: "Sungai", acceptedSpeech: ["川", "かわ"] },
+            { kana: "あした", romaji: "Ashita", arti: "Besok", acceptedSpeech: ["明日", "あした"] },
+            { kana: "きのう", romaji: "Kinou", arti: "Kemarin", acceptedSpeech: ["昨日", "きのう"] },
+            { kana: "ともだち", romaji: "Tomodachi", arti: "Teman", acceptedSpeech: ["友達", "ともだち"] },
+            { kana: "かぞく", romaji: "Kazoku", arti: "Keluarga", acceptedSpeech: ["家族", "かぞく"] },
+            { kana: "しごと", romaji: "Shigoto", arti: "Pekerjaan", acceptedSpeech: ["仕事", "しごと"] },
+            { kana: "みせ", romaji: "Mise", arti: "Toko", acceptedSpeech: ["店", "みせ"] },
+            { kana: "べんきょう", romaji: "Benkyou", arti: "Belajar", acceptedSpeech: ["勉強", "べんきょう"] },
+            { kana: "あめ", romaji: "Ame", arti: "Hujan", acceptedSpeech: ["雨", "あめ"] }
+        ];
+
+        let currentVocab = {};
+
+        function loadVocab() {
+            currentVocab = vocabDB[Math.floor(Math.random() * vocabDB.length)];
+            
+            document.getElementById('kana-text').textContent = currentVocab.kana;
+            document.getElementById('romaji-text').textContent = currentVocab.romaji;
+            document.getElementById('arti-text').textContent = currentVocab.arti;
+            document.getElementById('feedback-text').textContent = "Tekan tombol mikrofon lalu baca teks di atas.";
+            document.getElementById('feedback-text').style.color = "var(--text-main)";
+            
+            document.getElementById('romaji-text').style.display = 'none';
+            document.getElementById('arti-text').style.display = 'none';
+        }
+
+        function showAnswer() {
+            document.getElementById('romaji-text').style.display = 'block';
+            document.getElementById('arti-text').style.display = 'block';
+        }
+
+        function nextVocab() {
+            loadVocab();
+        }
+
+        // --- SISTEM PENGENALAN SUARA ---
+        function startListening() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            
+            if (!SpeechRecognition) {
+                alert("Browser Anda tidak mendukung fitur mikrofon. Gunakan Google Chrome versi terbaru.");
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'ja-JP';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            const micBtn = document.getElementById('btn-mic');
+            const feedbackText = document.getElementById('feedback-text');
+
+            recognition.onstart = function() {
+                micBtn.textContent = "Mendengarkan... 🎙️";
+                micBtn.classList.add('listening');
+                feedbackText.textContent = "Silakan bicara sekarang...";
+                feedbackText.style.color = "var(--text-main)";
+            };
+
+            recognition.onresult = function(event) {
+                // FILTER BARU: Menghapus titik (。), koma (、), dan spasi yang otomatis dibuat Google
+                let speechResult = event.results[0][0].transcript;
+                speechResult = speechResult.replace(/[。、\s]/g, '').trim();
+                
+                checkPronunciation(speechResult);
+            };
+
+            recognition.onspeechend = function() {
+                recognition.stop();
+            };
+
+            recognition.onerror = function(event) {
+                micBtn.textContent = "🎤 Ucapkan (Suara)";
+                micBtn.classList.remove('listening');
+                feedbackText.textContent = "Gagal mendeteksi suara: " + event.error;
+                feedbackText.style.color = "var(--accent-japan)";
+            };
+
+            recognition.onend = function() {
+                micBtn.textContent = "🎤 Ucapkan (Suara)";
+                micBtn.classList.remove('listening');
+            };
+
+            recognition.start();
+        }
+
+        function checkPronunciation(spokenText) {
+            const feedbackText = document.getElementById('feedback-text');
+            
+            if (currentVocab.acceptedSpeech.includes(spokenText)) {
+                feedbackText.textContent = `Hebat! Anda mengucapkannya dengan benar. (+20 Point)`;
+                feedbackText.style.color = "var(--accent-success)";
+                
+                currentPoints += 20;
+                updatePointsDisplay();
+                showAnswer();
+                
+                setTimeout(nextVocab, 2500);
+            } else {
+                feedbackText.textContent = `Kurang tepat. Terdengar seperti: "${spokenText}". Coba lagi!`;
+                feedbackText.style.color = "var(--accent-japan)";
+            }
+        }
+    </script>
+</body>
+</html>
