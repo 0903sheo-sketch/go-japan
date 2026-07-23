@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 17</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.9); 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+            --accent-blue: #1e88e5;
+            --accent-green: #43a047;
+            --accent-warning: #f57c00;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Tabel Khusus Rumus Perubahan */
+        .te-table th { background-color: #111; color: #fff; text-align: center; border: 1px solid #333;}
+        .te-table td { text-align: center; border: 1px solid #333; font-size: 1.15rem; font-weight: bold;}
+        .te-highlight { color: var(--accent-japan); }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 4px 4px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #111; padding: 15px; text-align: center; font-family: monospace; font-size: 1.15rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #333; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; position: relative; z-index: 10; transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .btn-back:active { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第17課 (Bab 17)</span>
+        <h1 class="main-title">Bentuk-NAI, Keharusan & Larangan</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA & BENTUK-NAI</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Kosakata bab ini banyak berkaitan dengan kesehatan, kewajiban, dan barang berharga.</p>
+            
+            <h3>1. Kata Kerja Baru</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana">おぼえます (覚えます)</td><td>Oboemasu</td><td>Mengingat / Menghafal</td><td>2</td></tr>
+                <tr><td class="kana">わすれます (忘れます)</td><td>Wasuremasu</td><td>Lupa</td><td>2</td></tr>
+                <tr><td class="kana">なくします</td><td>Nakushimasu</td><td>Menghilangkan</td><td>1</td></tr>
+                <tr><td class="kana">はらいます (払います)</td><td>Haraimasu</td><td>Membayar</td><td>1</td></tr>
+                <tr><td class="kana">かえします (返します)</td><td>Kaeshimasu</td><td>Mengembalikan</td><td>1</td></tr>
+                <tr><td class="kana">でかけます (出かけます)</td><td>Dekakemasu</td><td>Pergi keluar (rumah)</td><td>2</td></tr>
+                <tr><td class="kana">ぬぎます (脱ぎます)</td><td>Nugimasu</td><td>Membuka (baju/sepatu)</td><td>1</td></tr>
+                <tr><td class="kana">もって いきます</td><td>Motte ikimasu</td><td>Membawa pergi (barang)</td><td>1</td></tr>
+                <tr><td class="kana">もって きます</td><td>Motte kimasu</td><td>Membawa datang (barang)</td><td>3</td></tr>
+                <tr><td class="kana">しんぱいします (心配します)</td><td>Shinpai shimasu</td><td>Khawatir / Cemas</td><td>3</td></tr>
+                <tr><td class="kana">ざんぎょうします (残業します)</td><td>Zangyou shimasu</td><td>Kerja lembur</td><td>3</td></tr>
+                <tr><td class="kana">しゅっちょうします (出張します)</td><td>Shucchou shimasu</td><td>Dinas luar kota</td><td>3</td></tr>
+            </table>
+
+            <h3>2. Kata Benda & Kata Sifat</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">たいせつ（な）(大切)</td><td>Taisetsu (na)</td><td>Penting / Berharga</td></tr>
+                <tr><td class="kana">だいじょうぶ（な）(大丈夫)</td><td>Daijoubu (na)</td><td>Tidak apa-apa / Aman</td></tr>
+                <tr><td class="kana">あぶない (危ない)</td><td>Abunai</td><td>Berbahaya</td></tr>
+                <tr><td class="kana">けんこうほけんしょう</td><td>Kenkou hokenshou</td><td>Kartu Asuransi Kesehatan</td></tr>
+                <tr><td class="kana">ねつ (熱)</td><td>Netsu</td><td>Demam</td></tr>
+                <tr><td class="kana">びょうき (病気)</td><td>Byouki</td><td>Sakit / Penyakit</td></tr>
+                <tr><td class="kana">くすり (薬)</td><td>Kusuri</td><td>Obat (<i>Kusuri o nomimasu</i> = Minum obat)</td></tr>
+                <tr><td class="kana">おふろ</td><td>Ofuro</td><td>Tempat mandi rendam Jepang</td></tr>
+                <tr><td class="kana">うわぎ (上着)</td><td>Uwagi</td><td>Jaket / Baju luar</td></tr>
+                <tr><td class="kana">したぎ (下着)</td><td>Shitagi</td><td>Pakaian dalam</td></tr>
+            </table>
+
+            <h3>3. Kata Keterangan</h3>
+            <table>
+                <tr><th>Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">ですから</td><td>Desu kara</td><td>Karena itu / Oleh karena itu</td></tr>
+                <tr><td class="kana">～までに</td><td>~ Made ni</td><td>Paling lambat ... / Sebelum ...</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+
+            <div class="grammar-box" style="border-color: #fff;">
+                <h3>🌟 PANDUAN MERUBAH BENTUK-NAI (ない形)</h3>
+                <p>Bentuk-Nai adalah bentuk dasar (*plain form*) dari kata kerja negatif (pengganti ~masen). Rumusnya sangat beraturan berdasarkan urutan huruf Hiragana (a, i, u, e, o).</p>
+                
+                <h4 style="margin-top:20px; color: var(--accent-blue);">GOLONGAN 1 (Ubah bunyi "i" menjadi "a")</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 10px; color: var(--text-muted);">Cari huruf sebelum "masu". Ubah huruf yang berakhiran vokal "i" menjadi huruf vokal "a", lalu tambah "nai".</p>
+                <table class="te-table">
+                    <tr><th>Sebelum MASU</th><th>Berubah Menjadi</th><th>Contoh Perubahan</th></tr>
+                    <tr><td>か<span style="color:red">き</span>ます (kiki)</td><td>か<span class="te-highlight">か</span>ない (kaka)</td><td>書かない (Tidak menulis)</td></tr>
+                    <tr><td>よ<span style="color:red">み</span>ます (yomi)</td><td>よ<span class="te-highlight">ま</span>ない (yoma)</td><td>読まない (Tidak membaca)</td></tr>
+                    <tr><td>いそ<span style="color:red">ぎ</span>ます (isogi)</td><td>いそ<span class="te-highlight">が</span>ない (isoga)</td><td>急がない (Tidak buru-buru)</td></tr>
+                    <tr><td>と<span style="color:red">り</span>ます (tori)</td><td>と<span class="te-highlight">ら</span>ない (tora)</td><td>取らない (Tidak mengambil)</td></tr>
+                    <tr><td><strong style="color:var(--accent-warning);">PENGECUALIAN い (i)</strong></td><td><strong style="color:var(--accent-warning);">わ (wa)</strong></td><td>か<span style="color:red">い</span>ます ➔ か<strong style="color:var(--accent-warning);">わ</strong>ない (Tidak membeli)<br>※Bukan <i>ka-a-nai</i>, melainkan <i>kawanai</i>.</td></tr>
+                </table>
+
+                <h4 style="margin-top:25px; color: var(--accent-green);">GOLONGAN 2 (Coret MASU, tambah NAI)</h4>
+                <table class="te-table">
+                    <tr><td>たべます ➔ <span class="te-highlight">たべない</span> (Tidak makan)</td><td>あけます ➔ <span class="te-highlight">あけない</span> (Tidak membuka)</td></tr>
+                    <tr><td>みます ➔ <span class="te-highlight">みない</span> (Tidak melihat)</td><td>おきます ➔ <span class="te-highlight">おきない</span> (Tidak bangun)</td></tr>
+                </table>
+
+                <h4 style="margin-top:25px; color: var(--accent-japan);">GOLONGAN 3 (Kata Kerja Irregular)</h4>
+                <table class="te-table">
+                    <tr><td>します (Melakukan)</td><td>➔ <span class="te-highlight">しない (shinai)</span></td></tr>
+                    <tr><td>きます (Datang)</td><td>➔ <strong style="color:var(--accent-warning);">こない (konai)</strong> ※Awas, bacanya "ko", bukan "ki"</td></tr>
+                </table>
+            </div>
+            
+            <div class="grammar-box">
+                <h3>1. Larangan Halus (Tolong Jangan...)</h3>
+                <p>Digunakan saat Anda meminta lawan bicara untuk tidak melakukan sesuatu demi kebaikannya atau karena ada aturan.</p>
+                <div class="pattern">Kata Kerja (Bentuk-NAI) + で ください。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">ここで 写真を <strong>撮らないで ください</strong>。</div><div class="id-text"><strong>Tolong jangan mengambil</strong> foto di sini. (とります ➔ とらない)</div></li>
+                    <li><div class="jp-text">パスポートを <strong>なくさないで ください</strong>。</div><div class="id-text"><strong>Tolong jangan menghilangkan</strong> paspor. (なくします ➔ なくさない)</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-green);">
+                <h3>2. Menyatakan Kewajiban (Harus / Wajib)</h3>
+                <p>Pola ini terlihat panjang tapi sangat sering dipakai. Secara harfiah berarti "Jika tidak..., maka tidak boleh" alias <strong>Harus</strong>. Hilangkan "i" terakhir pada Bentuk-Nai, lalu tambah "kereba narimasen".</p>
+                <div class="pattern">Kata Kerja (Bentuk-NAI coret "i") + ければ なりません。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">毎日 薬を <strong>飲まなければ なりません</strong>。</div><div class="id-text">Setiap hari <strong>harus minum</strong> obat. (のまない ➔ のまなければ)</div></li>
+                    <li><div class="jp-text">明日 早く <strong>起きなければ なりません</strong>。</div><div class="id-text">Besok <strong>harus bangun</strong> pagi. (おきない ➔ おきなければ)</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-blue);">
+                <h3>3. Tidak Perlu / Tidak Usah (V-nakutemo ii desu)</h3>
+                <p>Pola ini adalah kebalikan dari kewajiban. Digunakan untuk menyatakan sesuatu yang boleh dilewatkan atau tidak diharuskan. Hilangkan "i" terakhir pada Bentuk-Nai, lalu tambah "kutemo ii desu".</p>
+                <div class="pattern">Kata Kerja (Bentuk-NAI coret "i") + くても いいです。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">明日は 学校へ <strong>行かなくても いいです</strong>。</div><div class="id-text">Besok <strong>tidak perlu pergi</strong> ke sekolah. (いかない ➔ いかなくても)</div></li>
+                    <li><div class="jp-text">名前を <strong>書かなくても いいです</strong>。</div><div class="id-text"><strong>Tidak usah menuliskan</strong> nama. (かかない ➔ かかなくても)</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-warning);">
+                <h3>4. ～までに (Paling Lambat / Batas Waktu)</h3>
+                <p>Hati-hati membedakan <strong>まで (made = sampai)</strong> dengan <strong>までに (made ni = paling lambat)</strong>. "Made ni" menekankan batas akhir waktu berlakunya sebuah aksi.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">金曜日<strong>までに</strong> 本を 返さなければ なりません。</div><div class="id-text"><strong>Paling lambat</strong> hari Jumat harus mengembalikan buku.</div></li>
+                    <li><div class="jp-text">会議は 5時<strong>までに</strong> 終わります。</div><div class="id-text">Rapat akan selesai <strong>sebelum/paling lambat</strong> jam 5.</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 17.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: 先生、お酒を 飲んでも いいですか。</div>
+                    <div class="id-text">A: Dokter, apakah saya boleh minum sake/alkohol?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、2、3日 お酒を 飲まないで ください。</div>
+                    <div class="id-text">B: Tidak, tolong jangan minum alkohol selama 2-3 hari.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: この 資料を コピーしなければ なりませんか。</div>
+                    <div class="id-text">A: Apakah dokumen ini harus difotokopi?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、コピーしなくても いいです。</div>
+                    <div class="id-text">B: Tidak, tidak perlu difotokopi.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: レポートは いつまでに 出さなければ なりませんか。</div>
+                    <div class="id-text">A: Laporannya paling lambat kapan harus diserahkan?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 木曜日までに 出して ください。</div>
+                    <div class="id-text">B: Tolong serahkan paling lambat hari Kamis.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: すみません。ここは 禁煙ですから、タバコを 吸わないで ください。</div>
+                    <div class="id-text">A: Permisi. Karena di sini kawasan dilarang merokok, tolong jangan merokok.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: あ、すみません。</div>
+                    <div class="id-text">B: Ah, maaf.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 子どもも お金を 払わなければ なりませんか。</div>
+                    <div class="id-text">A: Apakah anak-anak juga harus membayar?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、払わなくても いいです。</div>
+                    <div class="id-text">B: Tidak, tidak perlu membayar.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

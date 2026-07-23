@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 16</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.9); 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+            --accent-blue: #1e88e5;
+            --accent-green: #43a047;
+            --accent-warning: #f57c00;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 4px 4px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #111; padding: 15px; text-align: center; font-family: monospace; font-size: 1.15rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #333; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; position: relative; z-index: 10; transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .btn-back:active { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第16課 (Bab 16)</span>
+        <h1 class="main-title">Menyambung Kalimat & Bagian Tubuh</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Di bab ini kita belajar kosakata kata kerja perpindahan dan bagian tubuh manusia.</p>
+            
+            <h3>1. Kata Kerja</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th><th>Partikel</th></tr>
+                <tr><td class="kana">のります (乗ります)</td><td>Norimasu</td><td>Naik (kendaraan)</td><td>～に</td></tr>
+                <tr><td class="kana">おります (降ります)</td><td>Orimasu</td><td>Turun (dari kendaraan)</td><td>～を</td></tr>
+                <tr><td class="kana">のりかえます (乗り換えます)</td><td>Norikaemasu</td><td>Pindah/Transit kendaraan</td><td>-</td></tr>
+                <tr><td class="kana">あびます (浴びます)</td><td>Abimasu</td><td>Mandi (<i>Shawaa o abimasu</i>)</td><td>～を</td></tr>
+                <tr><td class="kana">いれます (入れます)</td><td>Iremasu</td><td>Memasukkan</td><td>～に</td></tr>
+                <tr><td class="kana">だします (出します)</td><td>Dashimasu</td><td>Mengeluarkan / Menyerahkan</td><td>～を</td></tr>
+                <tr><td class="kana">はいります (入ります)</td><td>Hairimasu</td><td>Masuk (contoh: Universitas)</td><td>～に</td></tr>
+                <tr><td class="kana">でます (出ます)</td><td>Demasu</td><td>Keluar / Lulus (dari Univ)</td><td>～を</td></tr>
+                <tr><td class="kana">やめます (辞めます)</td><td>Yamemasu</td><td>Berhenti / Keluar kerja</td><td>～を</td></tr>
+                <tr><td class="kana">おします (押します)</td><td>Oshimasu</td><td>Mendorong / Menekan (tombol)</td><td>～を</td></tr>
+            </table>
+
+            <h3>2. Bagian Tubuh</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">からだ (体)</td><td>Karada</td><td>Tubuh / Badan</td></tr>
+                <tr><td class="kana">あたま (頭)</td><td>Atama</td><td>Kepala</td></tr>
+                <tr><td class="kana">かみ (髪)</td><td>Kami</td><td>Rambut</td></tr>
+                <tr><td class="kana">かお (顔)</td><td>Kao</td><td>Wajah / Muka</td></tr>
+                <tr><td class="kana">め (目)</td><td>Me</td><td>Mata</td></tr>
+                <tr><td class="kana">みみ (耳)</td><td>Mimi</td><td>Telinga</td></tr>
+                <tr><td class="kana">はな (鼻)</td><td>Hana</td><td>Hidung</td></tr>
+                <tr><td class="kana">くち (口)</td><td>Kuchi</td><td>Mulut</td></tr>
+                <tr><td class="kana">は (歯)</td><td>Ha</td><td>Gigi</td></tr>
+                <tr><td class="kana">おなか</td><td>Onaka</td><td>Perut</td></tr>
+                <tr><td class="kana">あし (足)</td><td>Ashi</td><td>Kaki</td></tr>
+                <tr><td class="kana">せ (背)</td><td>Se</td><td>Tinggi badan</td></tr>
+            </table>
+
+            <h3>3. Kata Sifat Baru</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">わかい (若い)</td><td>Wakai</td><td>Muda</td></tr>
+                <tr><td class="kana">ながい (長い)</td><td>Nagai</td><td>Panjang</td></tr>
+                <tr><td class="kana">みじかい (短い)</td><td>Mijikai</td><td>Pendek</td></tr>
+                <tr><td class="kana">あかるい (明るい)</td><td>Akarui</td><td>Terang</td></tr>
+                <tr><td class="kana">くらい (暗い)</td><td>Kurai</td><td>Gelap</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-left-color: var(--accent-blue);">
+                <h3>1. Menyambung Kegiatan Secara Berurutan (V1-te, V2-te, ...)</h3>
+                <p>Jika Anda melakukan beberapa kegiatan secara berurutan ("...lalu..., lalu..."), gunakan <strong>Bentuk-TE</strong> untuk kata kerja pertama dan kedua. *Tense* (waktu sekarang atau masa lalu) ditentukan oleh kata kerja yang <strong>paling terakhir</strong> di ujung kalimat.</p>
+                <div class="pattern">V1(て形) 、 V2(て形) 、 V3ます/ました。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">朝 ジョギングを <strong>して</strong>、シャワーを <strong>浴びて</strong>、会社へ <strong>行きます</strong>。</div><div class="id-text">Pagi hari saya <i>jogging</i>, mandi, lalu <strong>pergi</strong> ke kantor. (Aktivitas rutin/sekarang)</div></li>
+                    <li><div class="jp-text">神戸へ <strong>行って</strong>、映画を <strong>見て</strong>、お茶を <strong>飲みました</strong>。</div><div class="id-text">Pergi ke Kobe, nonton film, lalu <strong>minum</strong> teh. (Masa lampau - <i>nomimashita</i>)</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-green);">
+                <h3>2. Setelah Melakukan... (V-te kara)</h3>
+                <p>Pola <strong>てから (te kara)</strong> digunakan untuk menekankan bahwa kegiatan kedua baru akan dilakukan <strong>SETELAH</strong> kegiatan pertama benar-benar selesai.</p>
+                <div class="pattern">V1(て形) ＋ から 、 V2ます。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">仕事が <strong>終わってから</strong>、飲みに行きます。</div><div class="id-text"><strong>Setelah</strong> pekerjaan selesai, saya pergi minum.</div></li>
+                    <li><div class="jp-text">お金を <strong>入れてから</strong>、ボタンを 押して ください。</div><div class="id-text"><strong>Setelah</strong> memasukkan uang, tolong tekan tombolnya.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-warning);">
+                <h3>3. Menyambungkan Kata Sifat dan Kata Benda (Dan)</h3>
+                <p>Tidak hanya kata kerja, kita juga bisa menyambungkan dua atau lebih Sifat/Benda ("Buku ini murah DAN bagus"). Cara menyambungkannya berbeda tergantung jenis katanya.</p>
+                
+                <h4 style="margin-top:10px; color: #fff;">👉 Kata Sifat-I (~i berubah jadi ~kute)</h4>
+                <div class="pattern">～い ➔ ～くて</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">大きく<strong>て</strong>、明るいです。 (Ookikute, akarui desu)</div><div class="id-text">Besar <strong>dan</strong> terang. (おおきい ➔ おおきくて)</div></li>
+                </ul>
+
+                <h4 style="margin-top:10px; color: #fff;">👉 Kata Sifat-Na & Kata Benda (Tambah ~de)</h4>
+                <div class="pattern">～な / Noun ➔ ～で</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">きれいで、静かです。 (Kirei de, shizuka desu)</div><div class="id-text">Cantik <strong>dan</strong> tenang. (きれい ➔ きれいで)</div></li>
+                    <li><div class="jp-text">カリナさんは 学生<strong>で</strong>、マリアさんは 主婦です。</div><div class="id-text">Karina adalah mahasiswa, <strong>dan</strong> Maria adalah ibu rumah tangga.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. N1 は N2 が [Kata Sifat] です (Menjelaskan Fisik)</h3>
+                <p>Pola ini sangat sering digunakan untuk menjelaskan atribut, ciri fisik, atau bagian spesifik (N2) dari suatu topik besar (N1). N1 ditandai partikel は, dan N2 ditandai partikel が.</p>
+                <div class="pattern">Topik は Bagian/Atribut が Sifat です。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">マリアさん<strong>は</strong> 髪<strong>が</strong> 長いです。</div><div class="id-text">Maria rambutnya panjang. (Lit: Mengenai Maria, rambutnya panjang).</div></li>
+                    <li><div class="jp-text">大阪<strong>は</strong> 食べ物<strong>が</strong> おいしいです。</div><div class="id-text">Osaka makanannya enak.</div></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 16.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: 昨日 何を しましたか。</div>
+                    <div class="id-text">A: Kemarin melakukan apa?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 図書館へ 行って、本を 借りて、それから 友達に 会いました。</div>
+                    <div class="id-text">B: Pergi ke perpustakaan, meminjam buku, lalu (setelah itu) bertemu teman.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 大学まで どうやって 行きますか。</div>
+                    <div class="id-text">A: Bagaimana cara pergi ke universitas?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 京都駅から 16番の バスに 乗って、大学前で 降ります。</div>
+                    <div class="id-text">B: Dari Stasiun Kyoto naik bus nomor 16, lalu turun di (halte) depan universitas.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 国へ 帰ってから、何を しますか。</div>
+                    <div class="id-text">A: Setelah pulang ke negara asal, akan melakukan apa?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 父の 会社で 働きます。</div>
+                    <div class="id-text">B: Bekerja di perusahaan ayah.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: サントスさんは どの 人ですか。</div>
+                    <div class="id-text">A: Sdr. Santos itu orang yang mana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: あの 背が 高くて、髪が 黒い 人です。</div>
+                    <div class="id-text">B: Orang yang badannya tinggi dan rambutnya hitam itu.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: ミラーさんは 若くて、元気ですね。</div>
+                    <div class="id-text">A: Sdr. Miller itu muda dan energik ya.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: はい、ジョギングを して、シャワーを 浴びてから、会社へ 行きますから。</div>
+                    <div class="id-text">B: Iya, karena dia (punya rutinitas) pergi ke kantor setelah jogging dan mandi.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

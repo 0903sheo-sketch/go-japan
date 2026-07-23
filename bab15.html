@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 15</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.9); 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+            --accent-blue: #1e88e5;
+            --accent-green: #43a047;
+            --accent-warning: #f57c00;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 4px 4px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #111; padding: 15px; text-align: center; font-family: monospace; font-size: 1.15rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #333; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; position: relative; z-index: 10; transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .btn-back:active { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第15課 (Bab 15)</span>
+        <h1 class="main-title">Izin, Larangan & Keadaan Status</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Perhatikan golongan kata kerjanya, karena semuanya akan digunakan dalam Bentuk-TE.</p>
+            
+            <h3>1. Kata Kerja Baru</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana">おきます (置きます)</td><td>Okimasu</td><td>Meletakkan / Menaruh</td><td>1</td></tr>
+                <tr><td class="kana">つくります (作ります)</td><td>Tsukurimasu</td><td>Membuat / Memproduksi</td><td>1</td></tr>
+                <tr><td class="kana">うります (売ります)</td><td>Urimasu</td><td>Menjual</td><td>1</td></tr>
+                <tr><td class="kana">しります (知ります)</td><td>Shirimasu</td><td>Mengetahui / Kenal</td><td>1</td></tr>
+                <tr><td class="kana">すみます (住みます)</td><td>Sumimasu</td><td>Tinggal / Menetap (Di...)</td><td>1</td></tr>
+                <tr><td class="kana">おもいだします (思い出します)</td><td>Omoidashimasu</td><td>Teringat / Mengingat kembali</td><td>1</td></tr>
+                <tr><td class="kana">けんきゅうします (研究します)</td><td>Kenkyuu shimasu</td><td>Melakukan penelitian</td><td>3</td></tr>
+            </table>
+
+            <h3>2. Kata Benda</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">しりょう (資料)</td><td>Shiryou</td><td>Bahan / Data / Dokumen</td></tr>
+                <tr><td class="kana">カタログ</td><td>Katarogu</td><td>Katalog</td></tr>
+                <tr><td class="kana">じこくひょう (時刻表)</td><td>Jikokuhyou</td><td>Jadwal Waktu (Kereta/Bus)</td></tr>
+                <tr><td class="kana">ふく (服)</td><td>Fuku</td><td>Pakaian / Baju</td></tr>
+                <tr><td class="kana">せいひん (製品)</td><td>Seihin</td><td>Barang Jadi / Produk</td></tr>
+                <tr><td class="kana">ソフト</td><td>Sofuto</td><td>Software (Perangkat Lunak)</td></tr>
+                <tr><td class="kana">はいしゃ (歯医者)</td><td>Haisha</td><td>Dokter Gigi</td></tr>
+                <tr><td class="kana">とこや (床屋)</td><td>Tokoya</td><td>Tukang Cukur / Barbershop</td></tr>
+                <tr><td class="kana">どくしん (独身)</td><td>Dokushin</td><td>Lajang / Belum Menikah</td></tr>
+            </table>
+
+            <h3>3. Kata Keterangan Khusus</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">とくに (特に)</td><td>Toku ni</td><td>Terutama / Khususnya</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-left-color: var(--accent-green);">
+                <h3>1. Memberi / Meminta Izin (Boleh...)</h3>
+                <p>Dengan menambahkan <strong>もいいです (mo ii desu)</strong> setelah kata kerja Bentuk-TE, kita bisa menyatakan "boleh melakukan...". Jika diubah menjadi kalimat tanya (<strong>～もいいですか</strong>), artinya menjadi "Bolehkah saya...?".</p>
+                <div class="pattern">Kata Kerja (Bentuk-TE) + も いいです。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">写真を <strong>撮っても いいですか</strong>。</div><div class="id-text"><strong>Bolehkah saya mengambil</strong> foto? (とります ➔ とって)</div></li>
+                    <li><div class="jp-text">はい、<strong>撮っても いいです</strong>。</div><div class="id-text">Ya, <strong>Anda boleh mengambilnya</strong>.</div></li>
+                    <li><div class="jp-text">この カタログを <strong>もらっても いいですか</strong>。</div><div class="id-text"><strong>Bolehkah saya meminta/mengambil</strong> katalog ini?</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-warning);">
+                <h3>2. Menyatakan Larangan (Tidak Boleh...)</h3>
+                <p>Pola ini adalah lawan dari izin. Digunakan untuk menyatakan aturan, larangan keras, atau tata tertib. Kata kerjanya menggunakan Bentuk-TE ditambah <strong>はいけません (wa ikemasen)</strong>.</p>
+                <div class="pattern">Kata Kerja (Bentuk-TE) + は いけません。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">ここで タバコを <strong>吸っては いけません</strong>。</div><div class="id-text"><strong>Tidak boleh mengisap</strong> rokok di sini. (すいます ➔ すって)</div></li>
+                    <li><div class="jp-text">車を <strong>止めては いけません</strong>。</div><div class="id-text"><strong>Dilarang memarkirkan</strong> mobil (di sini). (とめます ➔ とめて)</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-blue);">
+                <h3>3. Keadaan/Status Tetap (V-て います)</h3>
+                <p>Di Bab 14, <strong>～ています</strong> berarti "Sedang melakukan". Di Bab 15, pola ini diperluas untuk menyatakan <strong>keadaan, status, kebiasaan rutin, atau pekerjaan</strong> yang masih berlangsung sampai sekarang.</p>
+                <div class="pattern">Kata Kerja (Bentuk-TE) + います。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">わたしは 結婚<strong>して います</strong>。</div><div class="id-text">Saya (statusnya) <strong>sudah menikah</strong>. (Bukan berarti sedang melaksanakan pernikahan)</div></li>
+                    <li><div class="jp-text">IMCは コンピューターソフトを 作<strong>って います</strong>。</div><div class="id-text">IMC memproduksi software komputer. (Status pekerjaan/bisnis tetap)</div></li>
+                    <li><div class="jp-text">わたしは 大阪に 住<strong>んで います</strong>。</div><div class="id-text">Saya menetap/tinggal di Osaka.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. Pengecualian: しっています (Tahu / Kenal)</h3>
+                <p>Kata "tahu" atau "kenal" selalu menggunakan pola <strong>知っています (shitte imasu)</strong>. Namun, jika Anda <strong>TIDAK TAHU</strong>, Anda <strong>TIDAK BOLEH</strong> menggunakan "shitte imasen", melainkan harus menggunakan <strong>知りません (shirimasen)</strong>.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">[✓] 市役所の 電話番号を <strong>知って いますか</strong>。</div><div class="id-text">Apakah Anda <strong>tahu</strong> nomor telepon kantor walikota?</div></li>
+                    <li><div class="jp-text">[✓] はい、<strong>知って います</strong>。</div><div class="id-text">Ya, saya <strong>tahu</strong>.</div></li>
+                    <li><div class="jp-text">[✓] いいえ、<strong>知りません</strong>。</div><div class="id-text">Tidak, saya <strong>tidak tahu</strong>. (Bentuk negatif khusus)</div></li>
+                    <li><div class="jp-text" style="color: var(--text-muted);">[✗] <s>いいえ、知って いません。</s> (SALAH BESAR)</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 15.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: すみません、この 辞書を 借りても いいですか。</div>
+                    <div class="id-text">A: Permisi, bolehkah saya meminjam kamus ini?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: すみません、ちょっと……。今 使って います。</div>
+                    <div class="id-text">B: Maaf, agak (tidak bisa). Sekarang saya sedang menggunakannya. (Cara menolak dengan sopan)</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: ここで 遊んで いますか。</div>
+                    <div class="id-text">A: Apakah sedang bermain di sini?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、ここで 遊んで は いけません。</div>
+                    <div class="id-text">B: Tidak, tidak boleh bermain di sini.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: マリアさんは どこに 住んで いますか。</div>
+                    <div class="id-text">A: Sdr. Maria tinggal di mana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 大阪に 住んで います。</div>
+                    <div class="id-text">B: Tinggal di Osaka.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: ワンさんは 結婚して いますか。</div>
+                    <div class="id-text">A: Apakah Sdr. Wang sudah menikah?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、独身です。</div>
+                    <div class="id-text">B: Tidak, masih lajang.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: お仕事は 何ですか。</div>
+                    <div class="id-text">A: Pekerjaannya apa?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 教師です。高校で 英語を 教えて います。</div>
+                    <div class="id-text">B: Guru. Mengajar bahasa Inggris di SMA.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 19</title>
+    <style>
+        /* Desain Minimalis, Profesional & Solid Black */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #050505; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-japan: #c91f37;
+            --accent-blue: #1e88e5;
+            --accent-green: #43a047;
+            --accent-warning: #f57c00;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: #0a0a0a; }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Tabel Khusus Rumus Perubahan */
+        .te-table th { background-color: #111; color: #fff; text-align: center; border: 1px solid #222;}
+        .te-table td { text-align: center; border: 1px solid #222; font-size: 1.15rem; font-weight: bold;}
+        .te-highlight { color: var(--accent-japan); }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: #0a0a0a; border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 2px 2px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #000; padding: 15px; text-align: center; font-family: monospace; font-size: 1.15rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #222; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: #111111; border-color: var(--accent-japan);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第19課 (Bab 19)</span>
+        <h1 class="main-title">Pengalaman, Aktivitas Acak & Perubahan</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA & BENTUK-TA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <h3>1. Kata Kerja Baru</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana">のぼります (登ります)</td><td>Noborimasu</td><td>Mendaki (gunung)</td><td>1</td></tr>
+                <tr><td class="kana">とまります (泊まります)</td><td>Tomarimasu</td><td>Menginap (di hotel)</td><td>1</td></tr>
+                <tr><td class="kana">そうじします (掃除します)</td><td>Souji shimasu</td><td>Membersihkan / Menyapu</td><td>3</td></tr>
+                <tr><td class="kana">せんたくします (洗濯します)</td><td>Sentaku shimasu</td><td>Mencuci (baju)</td><td>3</td></tr>
+                <tr><td class="kana">れんしゅうします (練習します)</td><td>Renshuu shimasu</td><td>Berlatih</td><td>3</td></tr>
+                <tr><td class="kana">なります</td><td>Narimasu</td><td>Menjadi</td><td>1</td></tr>
+            </table>
+
+            <h3>2. Kata Sifat</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">ねむい (眠い)</td><td>Nemui</td><td>Mengantuk</td></tr>
+                <tr><td class="kana">つよい (強い)</td><td>Tsuyoi</td><td>Kuat</td></tr>
+                <tr><td class="kana">よわい (弱い)</td><td>Yowai</td><td>Lemah</td></tr>
+                <tr><td class="kana">ちょうしが いい (調子がいい)</td><td>Choushi ga ii</td><td>Kondisinya baik / Sehat</td></tr>
+                <tr><td class="kana">ちょうしが わるい (調子が悪い)</td><td>Choushi ga warui</td><td>Kondisinya buruk / Kurang sehat</td></tr>
+            </table>
+
+            <h3>3. Kata Keterangan & Frekuensi</h3>
+            <table>
+                <tr><th>Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">いちど (一度)</td><td>Ichido</td><td>Sekali / Satu kali</td></tr>
+                <tr><td class="kana">いちども (一度も)</td><td>Ichido mo</td><td>Belum pernah sama sekali (+ kalimat negatif)</td></tr>
+                <tr><td class="kana">だんだん</td><td>Dandan</td><td>Sedikit demi sedikit / Berangsur-angsur</td></tr>
+                <tr><td class="kana">もうすぐ</td><td>Mou sugu</td><td>Sebentar lagi / Segera</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+
+            <div class="grammar-box" style="border-color: #333;">
+                <h3>🌟 RUMUS BENTUK-TA (た形)</h3>
+                <p>Rumus perubahannya <strong>sama persis dengan Bentuk-TE</strong> (di Bab 14). Anda hanya perlu mengganti akhiran <strong>て (te)</strong> menjadi <strong>た (ta)</strong>, dan <strong>で (de)</strong> menjadi <strong>だ (da)</strong>.</p>
+                <table class="te-table">
+                    <tr><th>Bentuk ~MASU</th><th>Bentuk-TE (Bab 14)</th><th>Bentuk-TA (Bab 19)</th></tr>
+                    <tr><td>か<span style="color:red">き</span>ます (Menulis)</td><td>か<span style="color:red">いて</span></td><td>か<span class="te-highlight">いた</span></td></tr>
+                    <tr><td>いそ<span style="color:red">ぎ</span>ます (Buru-buru)</td><td>いそ<span style="color:red">いで</span></td><td>いそ<span class="te-highlight">いだ</span></td></tr>
+                    <tr><td>の<span style="color:red">み</span>ます (Minum)</td><td>の<span style="color:red">んで</span></td><td>の<span class="te-highlight">んだ</span></td></tr>
+                    <tr><td>た<span style="color:red">べ</span>ます (Makan - Gol 2)</td><td>たべ<span style="color:red">て</span></td><td>たべ<span class="te-highlight">た</span></td></tr>
+                    <tr><td><strong style="color:var(--accent-warning);">い/ち/り (Gol 1)</strong></td><td><strong style="color:var(--accent-warning);">って</strong></td><td><strong style="color:var(--accent-warning);">った</strong> (Contoh: 買った)</td></tr>
+                </table>
+            </div>
+            
+            <div class="grammar-box">
+                <h3>1. Pengalaman (Pernah Melakukan...)</h3>
+                <p>Digunakan untuk menyatakan bahwa Anda memiliki pengalaman melakukan sesuatu di masa lalu. Kata kerjanya harus diubah ke Bentuk-TA lalu ditambah <strong>ことがあります</strong>.</p>
+                <div class="pattern">Kata Kerja (Bentuk-TA) + ことが あります。<br><span style="font-size: 0.9rem; color: #888;">(Negatif: ことが ありません = Belum pernah)</span></div>
+                <ul class="example-list">
+                    <li><div class="jp-text">馬に <strong>乗った ことが あります</strong>。</div><div class="id-text">Saya <strong>pernah naik</strong> kuda. (のります ➔ のった)</div></li>
+                    <li><div class="jp-text">富士山に <strong>登った ことが ありません</strong>。</div><div class="id-text">Saya <strong>belum pernah mendaki</strong> Gunung Fuji.</div></li>
+                    <li><div class="jp-text">日本へ <strong>行った ことが ありますか</strong>。</div><div class="id-text">Apakah Anda <strong>pernah pergi</strong> ke Jepang?</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-blue);">
+                <h3>2. Menyebutkan Aktivitas Acak (~tari, ~tari shimasu)</h3>
+                <p>Berbeda dengan Bentuk-TE di Bab 16 yang berurutan (A lalu B lalu C), pola <strong>~tari ~tari</strong> digunakan untuk menyebutkan 2-3 aktivitas sebagai <strong>contoh acak</strong> dari banyak aktivitas yang dilakukan, tanpa peduli urutan waktunya.</p>
+                <div class="pattern">V1(た形)り、 V2(た形)り します／しました。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">休みの 日は テニスを <strong>したり</strong>、映画を <strong>見たり します</strong>。</div><div class="id-text">Pada hari libur saya (melakukan hal-hal seperti) <strong>bermain tenis dan menonton film</strong>.</div></li>
+                    <li><div class="jp-text">きのう 買い物を <strong>したり</strong>、音楽を <strong>聞いたり しました</strong>。</div><div class="id-text">Kemarin saya <strong>berbelanja, mendengarkan musik, dll</strong>. (Bentuk lampau ditentukan oleh <i>shimashita</i> di akhir).</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-green);">
+                <h3>3. Perubahan Keadaan (Menjadi...)</h3>
+                <p>Gunakan kata kerja <strong>なります (narimasu)</strong>. Cara menyambungkannya berbeda tergantung apakah itu Kata Sifat-I, Sifat-Na, atau Kata Benda.</p>
+                
+                <h4 style="margin-top:10px; color: #fff;">👉 Kata Sifat-I (Akhiran ~i ➔ ~ku)</h4>
+                <div class="pattern">～い ➔ ～く + なります</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">寒<strong style="color:var(--accent-japan);">く なります</strong>。 (Samuku narimasu)</div><div class="id-text"><strong>Menjadi</strong> dingin. (さむい ➔ さむく)</div></li>
+                </ul>
+
+                <h4 style="margin-top:10px; color: #fff;">👉 Kata Sifat-Na & Kata Benda (Tambah partikel ~ni)</h4>
+                <div class="pattern">～な / Noun ➔ ～に + なります</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">きれい<strong style="color:var(--accent-japan);">に なります</strong>。 (Kirei ni narimasu)</div><div class="id-text"><strong>Menjadi</strong> cantik/bersih. (きれい ➔ きれいに)</div></li>
+                    <li><div class="jp-text">25歳<strong style="color:var(--accent-japan);">に なりました</strong>。 (Nijuugo-sai ni narimashita)</div><div class="id-text"><strong>Telah menjadi</strong> 25 tahun (berulang tahun ke-25).</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 19.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: すしを 食べた ことが ありますか。</div>
+                    <div class="id-text">A: Apakah Anda pernah makan sushi?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: はい、あります。 / いいえ、一度も ありません。</div>
+                    <div class="id-text">B: Ya, pernah. / Tidak, belum pernah sama sekali.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 夏休みは 何を しましたか。</div>
+                    <div class="id-text">A: Libur musim panas (telah) melakukan apa saja?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 海で 泳いだり、山に 登ったり しました。</div>
+                    <div class="id-text">B: Berenang di laut, mendaki gunung, dan lain-lain.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 日本語が 上手に なりましたね。</div>
+                    <div class="id-text">A: Bahasa Jepangnya sudah menjadi pintar ya.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: ありがとうございます。でも、まだまだです。</div>
+                    <div class="id-text">B: Terima kasih. Tetapi, masih belum (masih harus banyak belajar).</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: だんだん 暖かく なりましたね。</div>
+                    <div class="id-text">A: Sedikit demi sedikit sudah menjadi hangat ya. (Pergantian musim)</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: そうですね。もうすぐ 春ですね。</div>
+                    <div class="id-text">B: Betul ya. Sebentar lagi musim semi ya.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 体の 調子は どうですか。</div>
+                    <div class="id-text">A: Bagaimana kondisi badannya (setelah sakit)?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: おかげさまで、よく なりました。</div>
+                    <div class="id-text">B: Berkat doa Anda, sudah menjadi baik/membaik.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

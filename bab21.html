@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 21</title>
+    <style>
+        /* Desain Minimalis, Profesional & Solid Black */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #050505; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-japan: #c91f37;
+            --accent-blue: #1e88e5;
+            --accent-green: #43a047;
+            --accent-warning: #f57c00;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: #0a0a0a; }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: #0a0a0a; border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 2px 2px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #000; padding: 15px; text-align: center; font-family: monospace; font-size: 1.15rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #222; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: #111111; border-color: var(--accent-japan);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第21課 (Bab 21)</span>
+        <h1 class="main-title">Pendapat, Kutipan & Persetujuan</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <h3>1. Kata Kerja Baru</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana">おもいます (思います)</td><td>Omoimasu</td><td>Berpikir / Mengira</td><td>1</td></tr>
+                <tr><td class="kana">いいます (言います)</td><td>Iimasu</td><td>Berkata / Mengucapkan</td><td>1</td></tr>
+                <tr><td class="kana">たります (足ります)</td><td>Tarimasu</td><td>Cukup (Jumlah/Porsi)</td><td>2</td></tr>
+                <tr><td class="kana">かちます (勝ちます)</td><td>Kachimasu</td><td>Menang</td><td>1</td></tr>
+                <tr><td class="kana">まけます (負けます)</td><td>Makemasu</td><td>Kalah</td><td>2</td></tr>
+                <tr><td class="kana">あります [お祭りが～]</td><td>Arimasu</td><td>Diadakan [Festival]</td><td>1</td></tr>
+                <tr><td class="kana">やくに たちます (役に立ちます)</td><td>Yakuni tachimasu</td><td>Berguna / Bermanfaat</td><td>1</td></tr>
+            </table>
+
+            <h3>2. Kata Sifat & Kata Benda</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">むだ（な）(無駄)</td><td>Muda (na)</td><td>Sia-sia / Percuma</td></tr>
+                <tr><td class="kana">ふべん（な）(不便)</td><td>Fuben (na)</td><td>Tidak praktis</td></tr>
+                <tr><td class="kana">おなじ (同じ)</td><td>Onaji</td><td>Sama</td></tr>
+                <tr><td class="kana">しゅしょう (首相)</td><td>Shushou</td><td>Perdana Menteri</td></tr>
+                <tr><td class="kana">だいとうりょう (大統領)</td><td>Daitouryou</td><td>Presiden</td></tr>
+                <tr><td class="kana">せいじ (政治)</td><td>Seiji</td><td>Politik</td></tr>
+                <tr><td class="kana">ニュース</td><td>Nyuusu</td><td>Berita (News)</td></tr>
+                <tr><td class="kana">スピーチ</td><td>Supiichi</td><td>Pidato</td></tr>
+                <tr><td class="kana">しあい (試合)</td><td>Shiai</td><td>Pertandingan</td></tr>
+                <tr><td class="kana">いけん (意見)</td><td>Iken</td><td>Pendapat / Opini</td></tr>
+            </table>
+
+            <h3>3. Kata Keterangan</h3>
+            <table>
+                <tr><th>Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">たぶん</td><td>Tabun</td><td>Mungkin</td></tr>
+                <tr><td class="kana">きっと</td><td>Kitto</td><td>Pasti</td></tr>
+                <tr><td class="kana">ほんとうに</td><td>Hontou ni</td><td>Benar-benar / Sungguh</td></tr>
+                <tr><td class="kana">そんなに</td><td>Sonna ni</td><td>Tidak begitu... (+ kalimat negatif)</td></tr>
+                <tr><td class="kana">～について</td><td>~ ni tsuite</td><td>Tentang... / Mengenai...</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-left-color: var(--accent-blue);">
+                <h3>1. Menyatakan Pendapat / Dugaan (~to omoimasu)</h3>
+                <p>Gunakan pola ini untuk menyatakan "Saya pikir..." atau "Saya rasa...". Kalimat sebelum partikel <strong>と (to)</strong> harus diubah ke <strong>Bentuk Biasa (Futsuutai)</strong>.</p>
+                <div class="pattern">[Kalimat Bentuk Biasa] と 思います。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">明日 雨が <strong>降る と 思います</strong>。</div><div class="id-text">Saya pikir besok <strong>akan turun</strong> hujan. (降ります ➔ 降る)</div></li>
+                    <li><div class="jp-text">あの レストランは <strong>おいしくない と 思います</strong>。</div><div class="id-text">Saya rasa restoran itu <strong>tidak enak</strong>.</div></li>
+                    <li><div class="jp-text" style="color: var(--accent-warning);">【Untuk Sifat-Na & Benda, gunakan だ (da)】</div><div class="id-text">日本は 交通が <strong>便利だ と 思います</strong>。<br>(Saya rasa transportasi di Jepang praktis.)</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-green);">
+                <h3>2. Mengutip Perkataan (~to iimashita)</h3>
+                <p>Digunakan untuk mengulangi perkataan seseorang ("Dia berkata bahwa..."). Ada dua cara: <strong>Kutipan Langsung</strong> (menggunakan tanda kutip 「 」) dan <strong>Kutipan Tidak Langsung</strong> (menggunakan Bentuk Biasa).</p>
+                <div class="pattern">「Kalimat Langsung」と 言いました。<br>[Kalimat Bentuk Biasa] と 言いました。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">寝る まえに、「おやすみなさい」<strong>と 言います</strong>。</div><div class="id-text">Sebelum tidur, <strong>kita mengucapkan</strong> "Oyasuminasai". (Kutipan Langsung)</div></li>
+                    <li><div class="jp-text">ミラーさんは 明日 東京へ <strong>行く と 言いました</strong>。</div><div class="id-text">Sdr. Miller <strong>berkata bahwa</strong> dia akan pergi ke Tokyo besok. (Kutipan Tidak Langsung)</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-warning);">
+                <h3>3. Meminta Persetujuan (~deshou?)</h3>
+                <p>Pola <strong>～でしょう？ (deshou?)</strong> diucapkan dengan intonasi naik di akhir kalimat. Artinya "Bukankah begitu?" atau "...kan?". Digunakan saat pembicara yakin bahwa lawan bicaranya tahu dan akan setuju dengannya.</p>
+                <div class="pattern">[Bentuk Biasa] でしょう？<br><span style="font-size:0.9rem; color:#888;">*Khusus Kata Benda & Sifat-Na: "da" DIHILANGKAN.</span></div>
+                <ul class="example-list">
+                    <li><div class="jp-text">日曜日 東京へ <strong>行く でしょう？ ⤴</strong></div><div class="id-text">Hari minggu <strong>akan pergi</strong> ke Tokyo, kan?</div></li>
+                    <li><div class="jp-text">北海道は <strong>寒かった でしょう？ ⤴</strong></div><div class="id-text">Hokkaido <strong>dingin, kan?</strong></div></li>
+                    <li><div class="jp-text">その カバン、<strong>高い でしょう？ ⤴</strong></div><div class="id-text">Tas itu <strong>mahal, kan?</strong> (TIDAK BOLEH: 高いだでしょう)</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. N1(Tempat) で N2(Acara) が あります</h3>
+                <p>Di bab awal, kita belajar bahwa あります (arimasu) berarti "ada benda" menggunakan partikel に (ni). Namun, jika N2 adalah sebuah <strong>ACARA</strong> (seperti festival, pertandingan, rapat), partikel tempatnya harus menggunakan <strong>で (de)</strong>, yang berarti "diadakan di...".</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">東京<strong>で</strong> 日本と ブラジルの サッカーの 試合<strong>が あります</strong>。</div><div class="id-text"><strong>Diadakan</strong> pertandingan sepak bola antara Jepang dan Brazil <strong>di</strong> Tokyo.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>5. ～について (~ni tsuite = Tentang...)</h3>
+                <p>Diletakkan setelah kata benda untuk menunjukkan topik pembicaraan atau tulisan.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">日本の 政治<strong>について</strong> どう 思いますか。</div><div class="id-text">Bagaimana pendapatmu <strong>tentang</strong> politik Jepang?</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 21.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: 新しい 空港について どう 思いますか。</div>
+                    <div class="id-text">A: Bagaimana pendapat Anda tentang bandara yang baru?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: きれいで、とても 便利だと 思います。</div>
+                    <div class="id-text">B: Saya rasa bersih dan sangat praktis.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: ファクスは 便利ですね。</div>
+                    <div class="id-text">A: Mesin faks itu praktis ya.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: ええ。でも、もうすぐ 使わなくなる と 思います。</div>
+                    <div class="id-text">B: Iya. Tapi, saya pikir sebentar lagi (orang) sudah tidak akan menggunakannya.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 会議で 何か 意見を 言いましたか。</div>
+                    <div class="id-text">A: Apakah Anda mengutarakan suatu pendapat di rapat?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: はい。無駄な コピーが 多い と 言いました。</div>
+                    <div class="id-text">B: Ya. Saya berkata bahwa fotokopi yang sia-sia itu banyak.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: ７月に 京都で お祭りが ある でしょう？</div>
+                    <div class="id-text">A: Bulan Juli akan diadakan festival di Kyoto, kan?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: ええ、あります。</div>
+                    <div class="id-text">B: Ya, diadakan.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: その カバン、すてきですね。高かった でしょう？</div>
+                    <div class="id-text">A: Tas itu bagus ya. Dulu belinya mahal, kan?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、そんなに 高くなかったです。</div>
+                    <div class="id-text">B: Tidak, tidak begitu mahal kok.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

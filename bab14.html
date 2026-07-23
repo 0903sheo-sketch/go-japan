@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 14</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.9); 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+            --accent-blue: #1e88e5;
+            --accent-green: #43a047;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Tabel Khusus Rumus Perubahan TE */
+        .te-table th { background-color: #111; color: #fff; text-align: center; border: 1px solid #333;}
+        .te-table td { text-align: center; border: 1px solid #333; font-size: 1.15rem; font-weight: bold;}
+        .te-highlight { color: var(--accent-japan); }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 4px 4px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #111; padding: 15px; text-align: center; font-family: monospace; font-size: 1.15rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #333; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; position: relative; z-index: 10; transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .btn-back:active { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第14課 (Bab 14)</span>
+        <h1 class="main-title">Perubahan Bentuk-TE, Permintaan & Penawaran</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA & BENTUK-TE</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Di bab ini, kata kerja langsung dipisahkan berdasarkan Golongan (Grup 1, 2, dan 3) agar memudahkan Anda mengubahnya ke Bentuk-TE.</p>
+            
+            <h3 style="color: var(--accent-blue);">1. Kata Kerja Golongan 1 (I-masu)</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">のみます (飲みます)</td><td>Nomimasu</td><td>Minum</td></tr>
+                <tr><td class="kana">よみます (読みます)</td><td>Yomimasu</td><td>Membaca</td></tr>
+                <tr><td class="kana">よびます (呼びます)</td><td>Yobimasu</td><td>Memanggil</td></tr>
+                <tr><td class="kana">いそぎます (急ぎます)</td><td>Isogimasu</td><td>Bergegas / Buru-buru</td></tr>
+                <tr><td class="kana">まちます (待ちます)</td><td>Machimasu</td><td>Menunggu</td></tr>
+                <tr><td class="kana">もちます (持ちます)</td><td>Mochimasu</td><td>Membawa / Memegang</td></tr>
+                <tr><td class="kana">とります (取ります)</td><td>Torimasu</td><td>Mengambil</td></tr>
+                <tr><td class="kana">てつだいます (手伝います)</td><td>Tetsudaimasu</td><td>Membantu</td></tr>
+                <tr><td class="kana">はなします (話します)</td><td>Hanashimasu</td><td>Berbicara</td></tr>
+                <tr><td class="kana">すわります (座ります)</td><td>Suwarimasu</td><td>Duduk</td></tr>
+                <tr><td class="kana">たちます (立ちます)</td><td>Tachimasu</td><td>Berdiri</td></tr>
+                <tr><td class="kana">ふります (降ります)</td><td>Furimasu</td><td>Turun (Hujan/Salju)</td></tr>
+                <tr><td class="kana">けします (消します)</td><td>Keshimasu</td><td>Mematikan (Listrik/Api)</td></tr>
+            </table>
+
+            <h3 style="color: var(--accent-green);">2. Kata Kerja Golongan 2 (E-masu & Pengecualian)</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">つけます</td><td>Tsukemasu</td><td>Menyalakan (Listrik)</td></tr>
+                <tr><td class="kana">あけます (開けます)</td><td>Akemasu</td><td>Membuka (Pintu/Jendela)</td></tr>
+                <tr><td class="kana">しめます (閉めます)</td><td>Shimemasu</td><td>Menutup (Pintu/Jendela)</td></tr>
+                <tr><td class="kana">とめます (止めます)</td><td>Tomemasu</td><td>Menghentikan / Memarkir</td></tr>
+                <tr><td class="kana">みせます (見せます)</td><td>Misemasu</td><td>Memperlihatkan</td></tr>
+                <tr><td class="kana">おしえます (教えます)</td><td>Oshiemasu</td><td>Mengajarkan / Memberitahu</td></tr>
+            </table>
+
+            <h3 style="color: var(--accent-japan);">3. Kata Kerja Golongan 3 (Irregular)</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">します</td><td>Shimasu</td><td>Melakukan</td></tr>
+                <tr><td class="kana">きます (来ます)</td><td>Kimasu</td><td>Datang</td></tr>
+                <tr><td class="kana">コピーします</td><td>Kopii shimasu</td><td>Memfotokopi</td></tr>
+            </table>
+
+            <h3>4. Kata Keterangan</h3>
+            <table>
+                <tr><th>Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">まっすぐ</td><td>Massugu</td><td>Lurus</td></tr>
+                <tr><td class="kana">ゆっくり</td><td>Yukkuri</td><td>Pelan-pelan</td></tr>
+                <tr><td class="kana">すぐ</td><td>Sugu</td><td>Segera / Langsung</td></tr>
+                <tr><td class="kana">また</td><td>Mata</td><td>Lagi</td></tr>
+                <tr><td class="kana">あとで</td><td>Atode</td><td>Nanti</td></tr>
+                <tr><td class="kana">もう すこし</td><td>Mou sukoshi</td><td>Sedikit lagi</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA & BENTUK-TE -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-color: #fff;">
+                <h3>🌟 PANDUAN LENGKAP MERUBAH BENTUK-TE (て形)</h3>
+                <p>Untuk membuat kalimat perintah, minta tolong, atau menyatakan kegiatan yang sedang berlangsung, kita harus mengubah akhiran <strong>~ます (masu)</strong> menjadi <strong>~て (te)</strong>. Rumusnya berbeda tergantung Golongan Kata Kerja.</p>
+                
+                <h4 style="margin-top:20px; color: var(--accent-blue);">GOLONGAN 1 (Perhatikan huruf SEBELUM ~masu)</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 10px; color: var(--text-muted);">Hapal rumus ini: <i>I, Chi, Ri ➔ tte | Mi, Ni, Bi ➔ nde | Ki ➔ ite | Gi ➔ ide | Shi ➔ shite</i></p>
+                <table class="te-table">
+                    <tr><th>Huruf Sebelum MASU</th><th>Berubah Menjadi</th><th>Contoh Perubahan</th></tr>
+                    <tr>
+                        <td>い (i)<br>ち (chi)<br>り (ri)</td>
+                        <td class="te-highlight">って (tte)</td>
+                        <td>か<span style="color:red">い</span>ます ➔ か<span style="color:red">って</span> (Membeli)<br>ま<span style="color:red">ち</span>ます ➔ ま<span style="color:red">って</span> (Menunggu)<br>と<span style="color:red">り</span>ます ➔ と<span style="color:red">って</span> (Mengambil)</td>
+                    </tr>
+                    <tr>
+                        <td>み (mi)<br>に (ni)<br>び (bi)</td>
+                        <td class="te-highlight">んで (nde)</td>
+                        <td>の<span style="color:red">み</span>ます ➔ の<span style="color:red">んで</span> (Minum)<br>し<span style="color:red">に</span>ます ➔ し<span style="color:red">んで</span> (Mati)<br>あそ<span style="color:red">び</span>ます ➔ あそ<span style="color:red">んで</span> (Bermain)</td>
+                    </tr>
+                    <tr>
+                        <td>き (ki)</td>
+                        <td class="te-highlight">いて (ite)</td>
+                        <td>か<span style="color:red">き</span>ます ➔ か<span style="color:red">いて</span> (Menulis)</td>
+                    </tr>
+                    <tr>
+                        <td>ぎ (gi)</td>
+                        <td class="te-highlight">いで (ide)</td>
+                        <td>いそ<span style="color:red">ぎ</span>ます ➔ いそ<span style="color:red">いで</span> (Buru-buru)</td>
+                    </tr>
+                    <tr>
+                        <td>し (shi)</td>
+                        <td class="te-highlight">して (shite)</td>
+                        <td>け<span style="color:red">し</span>ます ➔ け<span style="color:red">して</span> (Mematikan)</td>
+                    </tr>
+                </table>
+                <p style="color: var(--accent-japan); font-size: 0.9rem; text-align: center;"><strong>PENGECUALIAN GOL. 1:</strong> 行きます (Ikimasu) berubah menjadi <strong>行って (Itte)</strong>, BUKAN Iite.</p>
+
+                <h4 style="margin-top:25px; color: var(--accent-green);">GOLONGAN 2 (Coret MASU, tambah TE)</h4>
+                <p style="margin-bottom: 10px;">Sangat mudah, langsung coret "masu".</p>
+                <table class="te-table">
+                    <tr><td>たべます ➔ <span class="te-highlight">たべて</span> (Makan)</td><td>あけます ➔ <span class="te-highlight">あけて</span> (Membuka)</td></tr>
+                    <tr><td>みます ➔ <span class="te-highlight">みて</span> (Melihat)</td><td>おきます ➔ <span class="te-highlight">おきて</span> (Bangun)</td></tr>
+                </table>
+
+                <h4 style="margin-top:25px; color: var(--accent-japan);">GOLONGAN 3 (Kata Kerja Irregular)</h4>
+                <table class="te-table">
+                    <tr><td>します (Melakukan)</td><td>➔ <span class="te-highlight">して (shite)</span></td></tr>
+                    <tr><td>きます (Datang)</td><td>➔ <span class="te-highlight">きて (kite)</span></td></tr>
+                </table>
+            </div>
+
+            <div class="grammar-box">
+                <h3>1. Meminta Tolong (Bentuk-TE + ください)</h3>
+                <p>Digunakan untuk meminta orang lain melakukan sesuatu secara sopan ("Tolong...").</p>
+                <div class="pattern">Kata Kerja (Bentuk-TE) + ください。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">ちょっと <strong>待って ください</strong>。</div><div class="id-text">Tolong <strong>tunggu</strong> sebentar. (まちます ➔ まって)</div></li>
+                    <li><div class="jp-text">辞書を <strong>貸して ください</strong>。</div><div class="id-text">Tolong <strong>pinjamkan</strong> kamus. (かします ➔ かして)</div></li>
+                    <li><div class="jp-text">名前を <strong>書いて ください</strong>。</div><div class="id-text">Tolong <strong>tuliskan</strong> nama. (かきます ➔ かいて)</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>2. Sedang Melakukan... (Present Continuous)</h3>
+                <p>Digunakan untuk menyatakan aksi yang <strong>sedang berlangsung saat ini juga</strong> (seperti V-ing dalam bahasa Inggris).</p>
+                <div class="pattern">Kata Kerja (Bentuk-TE) + います。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">ミラーさんは 今 電話を <strong>かけて います</strong>。</div><div class="id-text">Sdr. Miller sekarang <strong>sedang menelepon</strong>. (かけます ➔ かけて)</div></li>
+                    <li><div class="jp-text">今 雨が <strong>降って います</strong>か。</div><div class="id-text">Apakah sekarang <strong>sedang turun</strong> hujan? (ふります ➔ ふって)</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>3. Menawarkan Bantuan (V-ましょうか)</h3>
+                <p>Pola ini digunakan saat pembicara menawarkan diri untuk melakukan sesuatu bagi lawan bicaranya ("Biar saya...", "Mau saya...").</p>
+                <div class="pattern">Kata Kerja (Coret MASU) + ましょうか。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">エアコンを <strong>つけましょうか</strong>。</div><div class="id-text"><strong>Biar saya nyalakan</strong> AC-nya?</div></li>
+                    <li><div class="jp-text">荷物を <strong>持ちましょうか</strong>。</div><div class="id-text"><strong>Mau saya bawakan</strong> barangnya?</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 14.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: すみません、その 塩を 取って ください。</div>
+                    <div class="id-text">A: Permisi, tolong ambilkan garam itu.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: はい、どうぞ。</div>
+                    <div class="id-text">B: Baik, silakan.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: パスポートを 見せて ください。</div>
+                    <div class="id-text">A: Tolong perlihatkan paspor Anda.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: はい。</div>
+                    <div class="id-text">B: Baik.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: ミラーさんは どこですか。</div>
+                    <div class="id-text">A: Sdr. Miller di mana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 今 会議室で 松本さんと 話して います。</div>
+                    <div class="id-text">B: Sekarang sedang berbicara dengan Bapak Matsumoto di ruang rapat.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 雨が 降って いますね。タクシーを 呼びましょうか。</div>
+                    <div class="id-text">A: Hujan sedang turun ya. Biar saya panggilkan taksi?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: すみません、お願い します。</div>
+                    <div class="id-text">B: Maaf (jadi merepotkan), tolong ya.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 駅まで 迎えに 行きましょうか。</div>
+                    <div class="id-text">A: Mau saya jemput ke stasiun?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、けっこうです。タクシーで 行きますから。</div>
+                    <div class="id-text">B: Tidak usah, terima kasih. Karena saya akan pergi menggunakan taksi.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
