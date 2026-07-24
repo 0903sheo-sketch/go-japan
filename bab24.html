@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 24</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition (Dengan Background Image) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.88); 
+            --border-color: #2a2a2a;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+            --accent-blue: #1e88e5;
+            --accent-green: #43a047;
+            --accent-warning: #f57c00;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 4px 4px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #111; padding: 15px; text-align: center; font-family: monospace; font-size: 1.15rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #333; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; position: relative; z-index: 10; transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .btn-back:active { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第24課 (Bab 24)</span>
+        <h1 class="main-title">Memberi & Menerima Kebaikan</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Kosakata Bab 24 difokuskan pada kata kerja yang melibatkan bantuan dan interaksi antar manusia.</p>
+            
+            <h3>1. Kata Kerja Baru</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana">くれます</td><td>Kuremasu</td><td>Memberikan (kepada SAYA)</td><td>2</td></tr>
+                <tr><td class="kana">つれて いきます (連れて行きます)</td><td>Tsurete ikimasu</td><td>Mengajak / Membawa pergi (orang)</td><td>1</td></tr>
+                <tr><td class="kana">つれて きます (連れて来ます)</td><td>Tsurete kimasu</td><td>Mengajak / Membawa datang (orang)</td><td>3</td></tr>
+                <tr><td class="kana">おくります (送ります)</td><td>Okurimasu</td><td>Mengantar [orang] <i>~o okurimasu</i></td><td>1</td></tr>
+                <tr><td class="kana">しょうかいします (紹介します)</td><td>Shoukai shimasu</td><td>Memperkenalkan</td><td>3</td></tr>
+                <tr><td class="kana">あんないします (案内します)</td><td>Annai shimasu</td><td>Memandu / Mengantar keliling</td><td>3</td></tr>
+                <tr><td class="kana">せつめいします (説明します)</td><td>Setsumei shimasu</td><td>Menjelaskan</td><td>3</td></tr>
+                <tr><td class="kana">いれます</td><td>Iremasu</td><td>Menyeduh / Membuat (Kopi/Teh)</td><td>2</td></tr>
+            </table>
+
+            <h3>2. Kata Benda</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">おじいさん / おじいちゃん</td><td>Ojiisan</td><td>Kakek (Orang tua laki-laki)</td></tr>
+                <tr><td class="kana">おばあさん / おばあちゃん</td><td>Obaasan</td><td>Nenek (Orang tua perempuan)</td></tr>
+                <tr><td class="kana">じゅんび (準備)</td><td>Junbi</td><td>Persiapan (<i>~shimasu</i> = Bersiap-siap)</td></tr>
+                <tr><td class="kana">いみ (意味)</td><td>Imi</td><td>Arti / Makna</td></tr>
+                <tr><td class="kana">おかし (お菓子)</td><td>Okashi</td><td>Kue / Permen / Jajan</td></tr>
+            </table>
+
+            <h3>3. Kata Keterangan & Frasa</h3>
+            <table>
+                <tr><th>Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">ぜんぶ (全部)</td><td>Zenbu</td><td>Semuanya</td></tr>
+                <tr><td class="kana">じぶんで (自分で)</td><td>Jibun de</td><td>Dengan (tenaga) sendiri</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-left-color: var(--accent-japan);">
+                <h3>1. くれます (Memberikan KEPADA SAYA)</h3>
+                <p>Di Bab 7 Anda belajar <strong>あげます (Agemasu)</strong> untuk "memberi". Namun, jika orang lain memberikan sesuatu <strong>KEPADA SAYA</strong> (atau keluarga saya), Anda <strong>TIDAK BOLEH</strong> menggunakan agemasu. Anda harus menggunakan <strong>くれます (Kuremasu)</strong>.</p>
+                <div class="pattern">Pemberi は わたし に Benda を くれます。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text" style="color: var(--text-muted);">[✗] 佐藤さんは わたしに 花を あげました。</div></li>
+                    <li><div class="jp-text">[✓] 佐藤さんは わたしに 花を <strong>くれました</strong>。</div><div class="id-text">Sdr. Sato <strong>telah memberikan</strong> bunga <strong>kepada saya</strong>.</div></li>
+                    <li><div class="jp-text">母は 妹に セーターを <strong>くれました</strong>。</div><div class="id-text">Ibu <strong>memberikan</strong> sweter kepada adik perempuan saya. (Adik = keluarga/kelompok saya).</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-blue);">
+                <h3>2. V-て もらいます (Menerima Kebaikan)</h3>
+                <p>Digunakan untuk menyatakan rasa syukur karena <strong>Anda "menerima perbuatan/bantuan"</strong> dari orang lain. Subjek kalimat ini adalah SAYA, dan orang yang membantu menggunakan partikel <strong>に (ni)</strong>.</p>
+                <div class="pattern">わたし は Orang に V(て形) もらいます。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">わたしは 木村さんに 本を <strong>貸して もらいました</strong>。</div><div class="id-text">Saya <strong>telah dipinjami</strong> buku oleh Sdr. Kimura. (Atau: Saya mendapat kebaikan 'dipinjami' dari Kimura).</div></li>
+                    <li><div class="jp-text">わたしは 山田さんに 図書館の 電話番号を <strong>教えて もらいました</strong>。</div><div class="id-text">Saya <strong>diberitahu</strong> nomor telepon perpustakaan oleh Sdr. Yamada.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-green);">
+                <h3>3. V-て くれます (Orang Lain Melakukan Kebaikan Untuk Saya)</h3>
+                <p>Maknanya sama dengan nomor 2, namun <strong>subjek (pelaku utama) dibalik menjadi sang penolong</strong>. Pola ini menekankan kebaikan hati sang penolong. Penerima (saya) menggunakan partikel に, tapi sering dihilangkan karena sudah jelas.</p>
+                <div class="pattern">Orang は (わたし に) V(て形) くれます。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">木村さんは わたしに 本を <strong>貸して くれました</strong>。</div><div class="id-text">Sdr. Kimura <strong>telah (berbaik hati) meminjamkan</strong> buku kepada saya.</div></li>
+                    <li><div class="jp-text">母が セーターを <strong>送って くれました</strong>。</div><div class="id-text">Ibu <strong>mengirimkan</strong> sweter (untuk saya).</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-warning);">
+                <h3>4. V-て あげます (Melakukan Kebaikan Untuk Orang Lain)</h3>
+                <p>Digunakan saat <strong>SAYA (subjek) melakukan kebaikan untuk orang lain</strong>. <br>⚠️ <strong>PERINGATAN:</strong> Jangan gunakan pola ini kepada atasan, guru, atau orang yang lebih tua secara langsung, karena akan terkesan pamer/sombong (seakan-akan Anda menonjolkan kebaikan Anda).</p>
+                <div class="pattern">わたし は Orang に V(て形) あげます。</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">わたしは マリアさんに 傘を <strong>貸して あげました</strong>。</div><div class="id-text">Saya <strong>telah meminjamkan</strong> payung kepada Sdr. Maria.</div></li>
+                    <li><div class="jp-text">わたしは 友達を 駅まで <strong>送って あげます</strong>。</div><div class="id-text">Saya <strong>mengantar</strong> teman ke stasiun.</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 24.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: 太郎君、その 自転車は どうしたんですか。</div>
+                    <div class="id-text">A: Taro, sepeda itu kenapa/dapat dari mana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: おばあちゃんが 買って くれました。</div>
+                    <div class="id-text">B: Nenek (berbaik hati) membelikannya untukku.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 美味しい ケーキですね。</div>
+                    <div class="id-text">A: Kue yang enak ya.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: ええ、カリナさんが 作って くれました。</div>
+                    <div class="id-text">B: Iya, Sdr. Karina yang membuatnya (untukku/untuk kami).</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 京都は 初めてですか。</div>
+                    <div class="id-text">A: Ke Kyoto apakah ini baru yang pertama kali?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、先週 木村さんに 案内して もらいました。</div>
+                    <div class="id-text">B: Tidak, minggu lalu saya sudah diajak berkeliling oleh Sdr. Kimura.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 荷物が たくさん ありますね。一つ 持ちましょうか。</div>
+                    <div class="id-text">A: Barangnya banyak ya. Biar saya bawakan satu? (Tawaran sopan Bab 14)</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: すみません。お願い します。</div>
+                    <div class="id-text">B: Maaf, tolong ya.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 誰に 傘を 貸して もらいましたか。</div>
+                    <div class="id-text">A: (Kamu) dipinjami payung oleh siapa?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 佐藤さんに 貸して もらいました。</div>
+                    <div class="id-text">B: (Saya) dipinjami oleh Sdr. Sato.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

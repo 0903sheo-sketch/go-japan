@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 25</title>
+    <style>
+        /* Desain Minimalis, Profesional, Clean & Solid Black */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #050505; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-pink: #ff1493; /* Flat Pink Accent - Tanpa Glow */
+            --accent-blue: #1e88e5;
+            --accent-green: #43a047;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            border-top: 3px solid var(--accent-pink);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-pink); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-pink); border-bottom-color: var(--accent-pink); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-pink); font-weight: 600; }
+        tr:hover { background-color: #0a0a0a; }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Tabel Khusus Rumus Perubahan */
+        .te-table th { background-color: #111; color: #fff; text-align: center; border: 1px solid #222;}
+        .te-table td { text-align: center; border: 1px solid #222; font-size: 1.15rem; font-weight: normal;}
+        .te-highlight { color: var(--accent-pink); font-weight: bold;}
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: #0a0a0a; border-left: 4px solid var(--accent-pink);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 2px 2px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #000; padding: 15px; text-align: center; font-family: monospace; font-size: 1.15rem; color: var(--accent-pink); margin-bottom: 15px; border: 1px solid #222; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: #111111; border-color: var(--accent-pink);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第25課 (Bab 25)</span>
+        <h1 class="main-title">Pengandaian, Syarat & Konsesi</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <h3>1. Kata Kerja Baru</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana">かんがえます (考えます)</td><td>Kangaemasu</td><td>Memikirkan / Mempertimbangkan</td><td>2</td></tr>
+                <tr><td class="kana">つきます (着きます)</td><td>Tsukimasu</td><td>Tiba / Sampai (di stasiun)</td><td>1</td></tr>
+                <tr><td class="kana">りゅうがくします (留学します)</td><td>Ryuugaku shimasu</td><td>Belajar di luar negeri</td><td>3</td></tr>
+                <tr><td class="kana">とります (取ります)</td><td>Torimasu</td><td>Bertambah (umur) [<i>toshi o ~</i>]</td><td>1</td></tr>
+            </table>
+
+            <h3>2. Kata Benda</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">いなか (田舎)</td><td>Inaka</td><td>Kampung halaman / Pedesaan</td></tr>
+                <tr><td class="kana">たいしかん (大使館)</td><td>Taishikan</td><td>Kedutaan besar</td></tr>
+                <tr><td class="kana">グループ</td><td>Guruupu</td><td>Grup / Kelompok</td></tr>
+                <tr><td class="kana">チャンス</td><td>Chansu</td><td>Kesempatan / Peluang</td></tr>
+                <tr><td class="kana">おく (億)</td><td>Oku</td><td>Seratus juta (100.000.000)</td></tr>
+            </table>
+
+            <h3>3. Kata Keterangan (Penting untuk Tata Bahasa)</h3>
+            <table>
+                <tr><th>Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">もし（～たら）</td><td>Moshi (~tara)</td><td>Kalau / Seandainya (Penekanan)</td></tr>
+                <tr><td class="kana">いくら（～ても）</td><td>Ikura (~temo)</td><td>Meskipun seberapa... (Penekanan)</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-color: #333;">
+                <h3>🌟 RUMUS 1: ～たら (~tara) = Kalau / Jika</h3>
+                <p>Pola <strong>~tara</strong> digunakan untuk menyatakan syarat ("Jika A terjadi, maka B"). Cara membuatnya sangat mudah: ubah kata ke <strong>Bentuk Lampau Biasa (Bentuk-TA)</strong>, lalu tambahkan <strong>ら (ra)</strong> di belakangnya.</p>
+                <table class="te-table">
+                    <tr><th>Jenis Kata</th><th>Bentuk-TA</th><th>Bentuk ~たら (Jika...)</th></tr>
+                    <tr><td>Kata Kerja (降ります)</td><td>降っ<span style="color:red">た</span></td><td>降っ<span class="te-highlight">たら</span> (Jika turun)</td></tr>
+                    <tr><td>Sifat-I (安いです)</td><td>安かっ<span style="color:red">た</span></td><td>安かっ<span class="te-highlight">たら</span> (Jika murah)</td></tr>
+                    <tr><td>Sifat-Na (暇です)</td><td>暇だっ<span style="color:red">た</span></td><td>暇だっ<span class="te-highlight">たら</span> (Jika luang)</td></tr>
+                    <tr><td>Benda (雨です)</td><td>雨だっ<span style="color:red">た</span></td><td>雨だっ<span class="te-highlight">たら</span> (Jika hujan)</td></tr>
+                </table>
+                <ul class="example-list" style="margin-top: 15px;">
+                    <li><div class="jp-text">お金が <strong>あったら</strong>、旅行 します。</div><div class="id-text"><strong>Kalau ada</strong> uang, saya akan jalan-jalan.</div></li>
+                    <li><div class="jp-text"><strong>安かったら</strong>、パソコンを 買います。</div><div class="id-text"><strong>Kalau murah</strong>, saya akan beli laptop.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-blue);">
+                <h3>🌟 RUMUS 2: ～たら (~tara) = Setelah</h3>
+                <p>Selain berarti "kalau", <strong>~tara</strong> juga berarti <strong>"Setelah"</strong> jika kejadian pertamanya <strong>pasti terjadi</strong> di masa depan. (Misal: Setelah jam 10, Setelah sampai di rumah).</p>
+                <div class="pattern">A(Bentuk ~たら) 、 B。 (Setelah A selesai, lakukan B)</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">10時に <strong>なったら</strong>、出かけましょう。</div><div class="id-text"><strong>Setelah menjadi</strong> jam 10, mari kita berangkat.</div></li>
+                    <li><div class="jp-text">うちへ <strong>帰ったら</strong>、すぐ シャワーを 浴びます。</div><div class="id-text"><strong>Setelah pulang</strong> ke rumah, saya akan langsung mandi.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-green);">
+                <h3>🌟 RUMUS 3: ～ても / ～でも (~temo/demo) = Meskipun</h3>
+                <p>Pola ini adalah kebalikan dari syarat. Digunakan saat hasil yang terjadi berlawanan dengan harapan ("Meskipun A, tapi B"). Rumusnya menggunakan <strong>Bentuk-TE</strong> ditambah <strong>も (mo)</strong>.</p>
+                <table class="te-table">
+                    <tr><th>Jenis Kata</th><th>Bentuk-TE</th><th>Bentuk ~ても (Meskipun)</th></tr>
+                    <tr><td>Kata Kerja (降ります)</td><td>降っ<span style="color:red">て</span></td><td>降っ<span class="te-highlight">ても</span> (Meskipun turun)</td></tr>
+                    <tr><td>Sifat-I (高いです)</td><td>高<span style="color:red">くて</span></td><td>高<span class="te-highlight">くても</span> (Meskipun mahal)</td></tr>
+                    <tr><td>Sifat-Na (便利です)</td><td>便利<span style="color:red">で</span></td><td>便利<span class="te-highlight">でも</span> (Meskipun praktis)</td></tr>
+                    <tr><td>Benda (雨です)</td><td>雨<span style="color:red">で</span></td><td>雨<span class="te-highlight">でも</span> (Meskipun hujan)</td></tr>
+                </table>
+                <ul class="example-list" style="margin-top: 15px;">
+                    <li><div class="jp-text">雨が <strong>降っても</strong>、サッカーを します。</div><div class="id-text"><strong>Meskipun turun</strong> hujan, saya (tetap) bermain sepak bola.</div></li>
+                    <li><div class="jp-text"><strong>高くても</strong>、この パソコンを 買いたいです。</div><div class="id-text"><strong>Meskipun mahal</strong>, saya ingin membeli laptop ini.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. もし (Moshi) dan いくら (Ikura)</h3>
+                <p>Kata <strong>もし (moshi)</strong> sering diletakkan di awal kalimat bersyarat (~tara) untuk menegaskan pengandaian (Seandainya...). Sedangkan <strong>いくら (ikura)</strong> diletakkan di awal kalimat (~temo) untuk menegaskan skala/jumlah (Meskipun seberapa... / Berapa pun...).</p>
+                <ul class="example-list">
+                    <li><div class="jp-text"><strong>もし</strong> 1億円 あったら、何を したいですか。</div><div class="id-text"><strong>Seandainya</strong> ada 100 juta yen, kamu ingin melakukan apa?</div></li>
+                    <li><div class="jp-text"><strong>いくら</strong> 考えても、わかりません。</div><div class="id-text"><strong>Meskipun seberapa</strong> (keras) saya berpikir, saya tidak mengerti.</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 25.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: もし 1億円 あったら、何を しますか。</div>
+                    <div class="id-text">A: Seandainya ada 100 juta yen, akan (kamu gunakan untuk) melakukan apa?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 学校を 作りたいです。</div>
+                    <div class="id-text">B: (Saya) ingin membuat/membangun sekolah.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 明日 雨だったら、どう しますか。</div>
+                    <div class="id-text">A: Kalau besok hujan, bagaimana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 雨だったら、どこも 行きません。</div>
+                    <div class="id-text">B: Kalau hujan, (saya) tidak pergi ke mana pun.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 駅に 着いたら、電話して ください。</div>
+                    <div class="id-text">A: Setelah tiba di stasiun, tolong telepon (saya).</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: はい、わかりました。</div>
+                    <div class="id-text">B: Baik, saya mengerti.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 眠い とき、どう しますか。</div>
+                    <div class="id-text">A: Saat mengantuk, apa yang kamu lakukan?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いくら 眠くても、レポートを 書かなければ なりません。</div>
+                    <div class="id-text">B: Meskipun seberapa mengantuk, (saya) tetap harus menulis laporan.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 毎日 日本語を 使って いますか。</div>
+                    <div class="id-text">A: Apakah (kamu) menggunakan bahasa Jepang setiap hari?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ。日本に 住んで いても、あまり 使いません。</div>
+                    <div class="id-text">B: Tidak. Meskipun tinggal di Jepang, (saya) tidak begitu menggunakannya.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

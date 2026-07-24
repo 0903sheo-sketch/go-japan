@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 23</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition (Dengan Background Image) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.88); 
+            --border-color: #2a2a2a;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+            --accent-blue: #1e88e5;
+            --accent-green: #43a047;
+            --accent-warning: #f57c00;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 4px 4px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #111; padding: 15px; text-align: center; font-family: monospace; font-size: 1.15rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #333; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; position: relative; z-index: 10; transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .btn-back:active { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">第23課 (Bab 23)</span>
+        <h1 class="main-title">Keadaan Waktu (Saat/Ketika) & Syarat</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Di bab ini banyak kosakata yang berkaitan dengan mesin, jalan raya, dan arah.</p>
+            
+            <h3>1. Kata Kerja Baru</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti & Partikel</th><th>Gol.</th></tr>
+                <tr><td class="kana">ききます (聞きます)</td><td>Kikimasu</td><td>Bertanya [Partikel: に]</td><td>1</td></tr>
+                <tr><td class="kana">まわします (回します)</td><td>Mawashimasu</td><td>Memutar</td><td>1</td></tr>
+                <tr><td class="kana">ひきます (引きます)</td><td>Hikimasu</td><td>Menarik</td><td>1</td></tr>
+                <tr><td class="kana">かえます (変えます)</td><td>Kaemasu</td><td>Mengubah</td><td>2</td></tr>
+                <tr><td class="kana">さわります (触ります)</td><td>Sawarimasu</td><td>Menyentuh [Partikel: に]</td><td>1</td></tr>
+                <tr><td class="kana">でます (出ます)</td><td>Demasu</td><td>Keluar (kembalian, dll) [Partikel: が]</td><td>2</td></tr>
+                <tr><td class="kana">うごきます (動きます)</td><td>Ugokimasu</td><td>Bergerak / Berjalan (mesin) [Partikel: が]</td><td>1</td></tr>
+                <tr><td class="kana">あるきます (歩きます)</td><td>Arukimasu</td><td>Berjalan kaki [Partikel: を]</td><td>1</td></tr>
+                <tr><td class="kana">わたります (渡ります)</td><td>Watarimasu</td><td>Menyeberang (jembatan) [Partikel: を]</td><td>1</td></tr>
+                <tr><td class="kana">きをつけます (気をつけます)</td><td>Ki o tsukemasu</td><td>Berhati-hati [Partikel: に]</td><td>2</td></tr>
+                <tr><td class="kana">ひっこします (引っ越します)</td><td>Hikkoshimasu</td><td>Pindah rumah</td><td>1</td></tr>
+            </table>
+
+            <h3>2. Benda, Mesin & Jalanan</h3>
+            <table>
+                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">おと (音)</td><td>Oto</td><td>Suara (dari barang/mesin)</td></tr>
+                <tr><td class="kana">きかい (機械)</td><td>Kikai</td><td>Mesin</td></tr>
+                <tr><td class="kana">つまみ</td><td>Tsumami</td><td>Kenop / Tombol putar</td></tr>
+                <tr><td class="kana">こしょう (故障)</td><td>Koshou</td><td>Kerusakan (Mesin) <i>~shimasu</i></td></tr>
+                <tr><td class="kana">みち (道)</td><td>Michi</td><td>Jalan</td></tr>
+                <tr><td class="kana">こうさてん (交差点)</td><td>Kousaten</td><td>Perempatan / Persimpangan</td></tr>
+                <tr><td class="kana">しんごう (信号)</td><td>Shingou</td><td>Lampu lalu lintas</td></tr>
+                <tr><td class="kana">かど (角)</td><td>Kado</td><td>Sudut / Belokan</td></tr>
+                <tr><td class="kana">はし (橋)</td><td>Hashi</td><td>Jembatan</td></tr>
+                <tr><td class="kana">ちゅうしゃじょう (駐車場)</td><td>Chuushajou</td><td>Tempat parkir</td></tr>
+            </table>
+
+            <h3>3. Posisi & Urutan</h3>
+            <table>
+                <tr><th>Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">～め (～目)</td><td>~ me</td><td>Ke - ... (Urutan, misal: <i>futatsu-me</i> = kedua)</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-left-color: var(--accent-blue);">
+                <h3>1. ～とき (~toki = Saat / Ketika)</h3>
+                <p>Digunakan untuk menggabungkan dua kalimat, di mana kalimat pertama menunjukkan <strong>waktu atau keadaan</strong> terjadinya kalimat kedua. Kata <strong>とき</strong> disambungkan layaknya sebuah Kata Benda.</p>
+                <div class="pattern">
+                    Kata Kerja (Bentuk Kamus / NAI / TA) + とき<br>
+                    い形容詞 (I-adj) + とき<br>
+                    な形容詞 (Na-adj) + <strong>な</strong> + とき<br>
+                    名詞 (Kata Benda) + <strong>の</strong> + とき
+                </div>
+                <ul class="example-list">
+                    <li><div class="jp-text">図書館で 本を <strong>借りる とき</strong>、カードが 要ります。</div><div class="id-text"><strong>Saat meminjam</strong> buku di perpustakaan, memerlukan kartu.</div></li>
+                    <li><div class="jp-text">使い方が <strong>わからない とき</strong>、わたしに 聞いて ください。</div><div class="id-text"><strong>Saat tidak mengerti</strong> cara menggunakannya, tolong tanyakan pada saya.</div></li>
+                    <li><div class="jp-text"><strong>暇な とき</strong>、遊びに 行きます。</div><div class="id-text"><strong>Saat luang</strong>, saya pergi bermain. (暇 = Na-adj)</div></li>
+                    <li><div class="jp-text">妻が <strong>病気の とき</strong>、会社を 休みました。</div><div class="id-text"><strong>Saat</strong> istri saya <strong>sakit</strong>, saya libur kerja. (病気 = Benda)</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-warning);">
+                <h3>2. Perbedaan [V-Kamus + とき] dan [V-Ta + とき]</h3>
+                <p>Memilih antara Bentuk Kamus (sebelum) atau Bentuk TA (sesudah) sangat penting untuk menentukan kronologi kejadian.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">パリへ <strong>行く とき</strong>、かばんを 買いました。</div><div class="id-text"><strong>Saat (akan) pergi / dalam perjalanan</strong> ke Paris, saya membeli tas. (Tasnya dibeli di negara asal atau di bandara).</div></li>
+                    <li><div class="jp-text">パリへ <strong>行った とき</strong>、かばんを 買いました。</div><div class="id-text"><strong>Saat (telah tiba)</strong> di Paris, saya membeli tas. (Tasnya dibeli di Paris).</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-green);">
+                <h3>3. V-Kamus + と (Kalau / Jika...)</h3>
+                <p>Pola ini menunjukkan konsekuensi pasti/alami. <strong>"Jika A terjadi, maka otomatis B akan terjadi."</strong> Sangat sering digunakan untuk menjelaskan cara kerja mesin atau memberi petunjuk jalan.</p>
+                <div class="pattern">Kata Kerja (Bentuk Kamus) + と、[Hasil/Konsekuensi]</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">この ボタンを <strong>押す と</strong>、お釣りが 出ます。</div><div class="id-text"><strong>Kalau menekan</strong> tombol ini, kembaliannya akan keluar.</div></li>
+                    <li><div class="jp-text">あの 交差点を 右へ <strong>曲がる と</strong>、郵便局が あります。</div><div class="id-text"><strong>Kalau belok</strong> kanan di perempatan itu, ada kantor pos.</div></li>
+                    <li><div class="jp-text" style="color: var(--text-muted); font-size: 0.95rem;">*Catatan: Kalimat di belakang "と" TIDAK BOLEH berupa ajakan (~mashou) atau permintaan (~te kudasai).</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. Kata Benda (Tempat) を V(Perpindahan)</h3>
+                <p>Kata kerja yang menunjukkan pergerakan atau perpindahan (seperti berjalan, melintasi, menyeberang, belok) menggunakan partikel <strong>を (o)</strong> untuk menandai area/tempat yang dilewati.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">公園<strong>を</strong> 散歩します。</div><div class="id-text">Berjalan-jalan <strong>di/melintasi</strong> taman.</div></li>
+                    <li><div class="jp-text">道<strong>を</strong> 渡ります。</div><div class="id-text">Menyeberang <strong>(di)</strong> jalan.</div></li>
+                    <li><div class="jp-text">交差点<strong>を</strong> 右へ 曲がります。</div><div class="id-text">Berbelok ke kanan <strong>di</strong> perempatan.</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 23.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: 日本語が わからない とき、どう しますか。</div>
+                    <div class="id-text">A: Saat tidak mengerti bahasa Jepang, apa yang Anda lakukan?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 先生に 聞きます。</div>
+                    <div class="id-text">B: (Saya) bertanya pada guru.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: お金が ない とき、どう しますか。</div>
+                    <div class="id-text">A: Saat tidak ada uang, apa yang Anda lakukan?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 友達に 借ります。</div>
+                    <div class="id-text">B: Meminjam kepada teman.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: パスポートを なくした とき、どう しますか。</div>
+                    <div class="id-text">A: Saat (telah) kehilangan paspor, apa yang Anda lakukan?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: すぐ 大使館へ 行きます。</div>
+                    <div class="id-text">B: Segera pergi ke kedutaan besar.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: 音が 小さいですね。</div>
+                    <div class="id-text">A: Suaranya kecil ya.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: この つまみを 右へ 回す と、大きく なります。</div>
+                    <div class="id-text">B: Kalau memutar kenop ini ke kanan, (suaranya) akan menjadi besar.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: すみません、市役所は どこですか。</div>
+                    <div class="id-text">A: Permisi, kantor walikota ada di mana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: この 道を まっすぐ 行く と、左に あります。</div>
+                    <div class="id-text">B: Kalau pergi lurus melewati jalan ini, ada di sebelah kiri.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
