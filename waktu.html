@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Kosakata Waktu Lengkap</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition (Background Image Restored) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.88); 
+            --border-color: #2a2a2a;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+            --accent-blue: #1e88e5;
+            --accent-green: #43a047;
+            --accent-warning: #f57c00;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: center; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); font-weight: 600; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .kana { font-weight: bold; font-size: 1.1rem; }
+        
+        /* Tabel Grid Spesial untuk Tanggal & Kalender */
+        .grid-table td { text-align: left; }
+        .highlight { color: var(--accent-warning); font-weight: bold; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--accent-japan);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 4px 4px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        
+        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; position: relative; z-index: 10; transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .btn-back:active { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">特別編 (Edisi Spesial)</span>
+        <h1 class="main-title">Kosakata Waktu Lengkap</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kalender')">📅 HARI & BULAN</div>
+            <div class="tab-btn" onclick="openTab('tanggal')">📆 TANGGAL 1 - 31</div>
+            <div class="tab-btn" onclick="openTab('periode')">⏳ PERIODE (LAMPAU-DEPAN)</div>
+        </div>
+
+        <!-- TAB 1: HARI & BULAN -->
+        <div id="kalender" class="tab-content active">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Nama hari dalam bahasa Jepang diambil dari unsur-unsur alam (Bulan, Api, Air, Kayu, Emas, Tanah, Matahari). Sedangkan nama bulan hanya menggunakan angka 1-12 ditambah kata "Gatsu".</p>
+            
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px;">
+                    <h3>1. Nama Hari (曜日 - Youbi)</h3>
+                    <table class="grid-table">
+                        <tr><th>Kanji</th><th>Kana</th><th>Romaji</th><th>Arti</th></tr>
+                        <tr><td>月曜日</td><td class="kana">げつようび</td><td>Getsuyoubi</td><td>Senin (Bulan)</td></tr>
+                        <tr><td>火曜日</td><td class="kana">かようび</td><td>Kayoubi</td><td>Selasa (Api)</td></tr>
+                        <tr><td>水曜日</td><td class="kana">すいようび</td><td>Suiyoubi</td><td>Rabu (Air)</td></tr>
+                        <tr><td>木曜日</td><td class="kana">もくようび</td><td>Mokuyoubi</td><td>Kamis (Pohon)</td></tr>
+                        <tr><td>金曜日</td><td class="kana">きんようび</td><td>Kinyoubi</td><td>Jumat (Emas)</td></tr>
+                        <tr><td>土曜日</td><td class="kana">どようび</td><td>Doyoubi</td><td>Sabtu (Tanah)</td></tr>
+                        <tr><td>日曜日</td><td class="kana">にちようび</td><td>Nichiyoubi</td><td>Minggu (Matahari)</td></tr>
+                        <tr><td>何曜日</td><td class="kana highlight">なんようび</td><td class="highlight">Nanyoubi</td><td class="highlight">Hari apa?</td></tr>
+                    </table>
+                </div>
+
+                <div style="flex: 1; min-width: 300px;">
+                    <h3>2. Nama Bulan (月 - Gatsu)</h3>
+                    <table class="grid-table">
+                        <tr><th>Bulan</th><th>Kana</th><th>Romaji</th></tr>
+                        <tr><td>Januari</td><td class="kana">いちがつ</td><td>Ichigatsu</td></tr>
+                        <tr><td>Februari</td><td class="kana">にがつ</td><td>Nigatsu</td></tr>
+                        <tr><td>Maret</td><td class="kana">さんがつ</td><td>Sangatsu</td></tr>
+                        <tr><td>April</td><td class="kana highlight">しがつ</td><td class="highlight">Shigatsu (Bukan Yon)</td></tr>
+                        <tr><td>Mei</td><td class="kana">ごがつ</td><td>Gogatsu</td></tr>
+                        <tr><td>Juni</td><td class="kana">ろくがつ</td><td>Rokugatsu</td></tr>
+                        <tr><td>Juli</td><td class="kana highlight">しちがつ</td><td class="highlight">Shichigatsu (Bukan Nana)</td></tr>
+                        <tr><td>Agustus</td><td class="kana">はちがつ</td><td>Hachigatsu</td></tr>
+                        <tr><td>September</td><td class="kana highlight">くがつ</td><td class="highlight">Kugatsu (Bukan Kyuu)</td></tr>
+                        <tr><td>Oktober</td><td class="kana">じゅうがつ</td><td>Juugatsu</td></tr>
+                        <tr><td>November</td><td class="kana">じゅういちがつ</td><td>Juu-ichigatsu</td></tr>
+                        <tr><td>Desember</td><td class="kana">じゅうにがつ</td><td>Juu-nigatsu</td></tr>
+                        <tr><td>Bulan Apa</td><td class="kana highlight">なんがつ</td><td class="highlight">Nangatsu?</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: TANGGAL 1-31 -->
+        <div id="tanggal" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Penyebutan tanggal 1 sampai 10, serta tanggal 14, 20, dan 24 memiliki penyebutan khusus (berwarna <span class="highlight">oranye</span>). Selain itu, formatnya hanyalah <strong>Angka + Nichi</strong>.</p>
+            
+            <table class="grid-table" style="font-size: 0.95rem;">
+                <tr><th>Tgl</th><th>Romaji (Huruf Jepang)</th><th>Tgl</th><th>Romaji (Huruf Jepang)</th></tr>
+                <tr>
+                    <td>1</td><td class="highlight">Tsuitachi (ついたち)</td>
+                    <td>17</td><td>Juu-shichi-nichi (じゅうしちにち)</td>
+                </tr>
+                <tr>
+                    <td>2</td><td class="highlight">Futsuka (ふつか)</td>
+                    <td>18</td><td>Juu-hachi-nichi (じゅうはちにち)</td>
+                </tr>
+                <tr>
+                    <td>3</td><td class="highlight">Mikka (みっか)</td>
+                    <td>19</td><td>Juu-ku-nichi (じゅうくにち)</td>
+                </tr>
+                <tr>
+                    <td>4</td><td class="highlight">Yokka (よっか)</td>
+                    <td>20</td><td class="highlight">Hatsuka (はつか)</td>
+                </tr>
+                <tr>
+                    <td>5</td><td class="highlight">Itsuka (いつか)</td>
+                    <td>21</td><td>Ni-juu-ichi-nichi (にじゅういちにち)</td>
+                </tr>
+                <tr>
+                    <td>6</td><td class="highlight">Muika (むいか)</td>
+                    <td>22</td><td>Ni-juu-ni-nichi (にじゅうににち)</td>
+                </tr>
+                <tr>
+                    <td>7</td><td class="highlight">Nanoka (なのか)</td>
+                    <td>23</td><td>Ni-juu-san-nichi (にじゅうさんにち)</td>
+                </tr>
+                <tr>
+                    <td>8</td><td class="highlight">Youka (ようか)</td>
+                    <td>24</td><td class="highlight">Ni-juu-yokka (にじゅうよっか)</td>
+                </tr>
+                <tr>
+                    <td>9</td><td class="highlight">Kokonoka (ここのか)</td>
+                    <td>25</td><td>Ni-juu-go-nichi (にじゅうごにち)</td>
+                </tr>
+                <tr>
+                    <td>10</td><td class="highlight">Tooka (とおか)</td>
+                    <td>26</td><td>Ni-juu-roku-nichi (にじゅうろくにち)</td>
+                </tr>
+                <tr>
+                    <td>11</td><td>Juu-ichi-nichi (じゅういちにち)</td>
+                    <td>27</td><td>Ni-juu-shichi-nichi (にじゅうしちにち)</td>
+                </tr>
+                <tr>
+                    <td>12</td><td>Juu-ni-nichi (じゅうににち)</td>
+                    <td>28</td><td>Ni-juu-hachi-nichi (にじゅうはちにち)</td>
+                </tr>
+                <tr>
+                    <td>13</td><td>Juu-san-nichi (じゅうさんにち)</td>
+                    <td>29</td><td>Ni-juu-ku-nichi (にじゅうくにち)</td>
+                </tr>
+                <tr>
+                    <td>14</td><td class="highlight">Juu-yokka (じゅうよっか)</td>
+                    <td>30</td><td>San-juu-nichi (さんじゅうにち)</td>
+                </tr>
+                <tr>
+                    <td>15</td><td>Juu-go-nichi (じゅうごにち)</td>
+                    <td>31</td><td>San-juu-ichi-nichi (さんじゅういちにち)</td>
+                </tr>
+                <tr>
+                    <td>16</td><td>Juu-roku-nichi (じゅうろくにち)</td>
+                    <td>Tanya</td><td class="highlight">Nan-nichi? (何日 / なんにち)</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- TAB 3: PERIODE WAKTU -->
+        <div id="periode" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Ini adalah tabel "Garis Waktu" (Timeline) untuk Hari, Minggu, Bulan, dan Tahun dari masa lalu hingga masa depan.</p>
+            
+            <div style="overflow-x: auto;">
+                <table>
+                    <tr>
+                        <th style="background:#0a0a0a; color:#fff;">Kategori</th>
+                        <th>2 Masa Lalu</th>
+                        <th>1 Masa Lalu (Lalu)</th>
+                        <th style="background-color: var(--accent-japan); color: #fff;">SEKARANG</th>
+                        <th>1 Masa Depan (Depan)</th>
+                        <th>2 Masa Depan</th>
+                        <th>Rutinitas (Setiap)</th>
+                    </tr>
+                    <tr>
+                        <td style="background:#111; font-weight:bold;">Hari (日)</td>
+                        <td>Ototoi<br><small>(Kemarin lusa)</small></td>
+                        <td>Kinou<br><small>(Kemarin)</small></td>
+                        <td style="color:var(--accent-japan); font-weight:bold;">Kyou<br><small>(Hari ini)</small></td>
+                        <td>Ashita<br><small>(Besok)</small></td>
+                        <td>Asatte<br><small>(Besok lusa)</small></td>
+                        <td>Mainichi<br><small>(Setiap hari)</small></td>
+                    </tr>
+                    <tr>
+                        <td style="background:#111; font-weight:bold;">Minggu (週)</td>
+                        <td>Sensenshuu<br><small>(2 mgg lalu)</small></td>
+                        <td>Senshuu<br><small>(Mgg lalu)</small></td>
+                        <td style="color:var(--accent-japan); font-weight:bold;">Konshuu<br><small>(Mgg ini)</small></td>
+                        <td>Raishuu<br><small>(Mgg depan)</small></td>
+                        <td>Saraishuu<br><small>(2 mgg depan)</small></td>
+                        <td>Maishuu<br><small>(Setiap mgg)</small></td>
+                    </tr>
+                    <tr>
+                        <td style="background:#111; font-weight:bold;">Bulan (月)</td>
+                        <td>Sensengetsu<br><small>(2 bln lalu)</small></td>
+                        <td>Sengetsu<br><small>(Bln lalu)</small></td>
+                        <td style="color:var(--accent-japan); font-weight:bold;">Kongetsu<br><small>(Bln ini)</small></td>
+                        <td>Raigetsu<br><small>(Bln depan)</small></td>
+                        <td>Saraigetsu<br><small>(2 bln depan)</small></td>
+                        <td>Maitsuki<br><small>(Setiap bln)</small></td>
+                    </tr>
+                    <tr>
+                        <td style="background:#111; font-weight:bold;">Tahun (年)</td>
+                        <td>Ototoshi<br><small>(2 thn lalu)</small></td>
+                        <td>Kyonen<br><small>(Thn lalu)</small></td>
+                        <td style="color:var(--accent-japan); font-weight:bold;">Kotoshi<br><small>(Thn ini)</small></td>
+                        <td>Rainen<br><small>(Thn depan)</small></td>
+                        <td>Sarainen<br><small>(2 thn depan)</small></td>
+                        <td>Maitoshi<br><small>(Setiap thn)</small></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: var(--accent-blue);">
+                <h3>Keterangan Waktu Harian Tambahan</h3>
+                <table class="grid-table" style="margin-bottom: 0;">
+                    <tr>
+                        <td class="kana">あさ (朝)</td><td>Asa (Pagi)</td>
+                        <td class="kana">ひる (昼)</td><td>Hiru (Siang)</td>
+                    </tr>
+                    <tr>
+                        <td class="kana">ゆうがた (夕方)</td><td>Yuugata (Sore)</td>
+                        <td class="kana">よる / ばん (夜 / 晩)</td><td>Yoru / Ban (Malam)</td>
+                    </tr>
+                    <tr>
+                        <td class="kana">ごぜん (午前)</td><td>Gozen (AM / 00:00 - 11:59)</td>
+                        <td class="kana">ごご (午後)</td><td>Gogo (PM / 12:00 - 23:59)</td>
+                    </tr>
+                    <tr>
+                        <td class="kana">けさ (今朝)</td><td>Kesa (Tadi pagi)</td>
+                        <td class="kana">こんばん (今晩)</td><td>Konban (Malam ini)</td>
+                    </tr>
+                    <tr>
+                        <td class="kana">いま (今)</td><td>Ima (Sekarang)</td>
+                        <td class="kana">あとで (後で)</td><td>Atode (Nanti)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

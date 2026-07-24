@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Mega Kosakata N5 & N4</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition (Dengan Background Image) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.9); 
+            --border-color: #2a2a2a;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+            --accent-n5: #43a047; /* Green for N5 */
+            --accent-n4: #1e88e5; /* Blue for N4 */
+            --highlight-bg: #111111;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 1100px;
+            border-top: 4px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px; font-weight: bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 2rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 3px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 150px; font-size: 1.1rem;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active#btn-n5 { color: var(--accent-n5); border-bottom-color: var(--accent-n5); }
+        .tab-btn.active#btn-n4 { color: var(--accent-n4); border-bottom-color: var(--accent-n4); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Desain Grid untuk 2 Kolom Tabel */
+        .table-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        /* Tabel Umum */
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        
+        /* Header Tabel N5 */
+        #n5-tab th { background-color: rgba(67, 160, 71, 0.15); color: var(--accent-n5); font-weight: 600; border-bottom: 2px solid var(--accent-n5);}
+        /* Header Tabel N4 */
+        #n4-tab th { background-color: rgba(30, 136, 229, 0.15); color: var(--accent-n4); font-weight: 600; border-bottom: 2px solid var(--accent-n4);}
+        
+        tr:hover { background-color: var(--highlight-bg); }
+        .kana { font-weight: bold; font-size: 1.05rem; color: #fff;}
+        .romaji { color: var(--text-muted); font-size: 0.9rem; }
+
+        .section-title {
+            padding-left: 10px;
+            border-left: 4px solid var(--text-main);
+            margin-bottom: 15px;
+            margin-top: 20px;
+        }
+        #n5-tab .section-title { border-left-color: var(--accent-n5); }
+        #n4-tab .section-title { border-left-color: var(--accent-n4); }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">大語彙集 (Master Kosakata)</span>
+        <h1 class="main-title">Kamus Mini JLPT N5 & N4</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" id="btn-n5" onclick="openTab('n5-tab', this)">🟢 KOSAKATA N5 (Dasar)</div>
+            <div class="tab-btn" id="btn-n4" onclick="openTab('n4-tab', this)">🔵 KOSAKATA N4 (Menengah)</div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB 1: KOSAKATA N5                             -->
+        <!-- ============================================== -->
+        <div id="n5-tab" class="tab-content active">
+            <p style="color: var(--text-muted); margin-bottom: 20px; text-align: center;">Kosakata N5 mencakup kata-kata esensial untuk kehidupan sehari-hari (sekitar Bab 1 - 25 Minna no Nihongo).</p>
+            
+            <h3 class="section-title">1. 動詞 (Kata Kerja N5)</h3>
+            <div class="table-grid">
+                <div class="table-container">
+                    <table>
+                        <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                        <tr><td class="kana">行く (いきます)</td><td class="romaji">Iku (Ikimasu)</td><td>Pergi</td></tr>
+                        <tr><td class="kana">来る (きます)</td><td class="romaji">Kuru (Kimasu)</td><td>Datang</td></tr>
+                        <tr><td class="kana">帰る (かえります)</td><td class="romaji">Kaeru (Kaerimasu)</td><td>Pulang</td></tr>
+                        <tr><td class="kana">食べる (たべます)</td><td class="romaji">Taberu (Tabemasu)</td><td>Makan</td></tr>
+                        <tr><td class="kana">飲む (のみます)</td><td class="romaji">Nomu (Nomimasu)</td><td>Minum</td></tr>
+                        <tr><td class="kana">見る (みます)</td><td class="romaji">Miru (Mimasu)</td><td>Melihat / Menonton</td></tr>
+                        <tr><td class="kana">聞く (ききます)</td><td class="romaji">Kiku (Kikimasu)</td><td>Mendengar / Bertanya</td></tr>
+                        <tr><td class="kana">読む (よみます)</td><td class="romaji">Yomu (Yomimasu)</td><td>Membaca</td></tr>
+                        <tr><td class="kana">書く (かきます)</td><td class="romaji">Kaku (Kakimasu)</td><td>Menulis</td></tr>
+                        <tr><td class="kana">買う (かいます)</td><td class="romaji">Kau (Kaimasu)</td><td>Membeli</td></tr>
+                        <tr><td class="kana">撮る (とります)</td><td class="romaji">Toru (Torimasu)</td><td>Mengambil (Foto)</td></tr>
+                        <tr><td class="kana">会う (あいます)</td><td class="romaji">Au (Aimasu)</td><td>Bertemu</td></tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                        <tr><td class="kana">寝る (ねます)</td><td class="romaji">Neru (Nemasu)</td><td>Tidur</td></tr>
+                        <tr><td class="kana">起きる (おきます)</td><td class="romaji">Okiru (Okimasu)</td><td>Bangun</td></tr>
+                        <tr><td class="kana">休む (やすみます)</td><td class="romaji">Yasumu (Yasumimasu)</td><td>Istirahat / Libur</td></tr>
+                        <tr><td class="kana">働く (はたらきます)</td><td class="romaji">Hataraku (Hatarakimasu)</td><td>Bekerja</td></tr>
+                        <tr><td class="kana">終わる (おわります)</td><td class="romaji">Owaru (Owarimasu)</td><td>Selesai</td></tr>
+                        <tr><td class="kana">教える (おしえます)</td><td class="romaji">Oshieru (Oshiemasu)</td><td>Mengajar / Memberitahu</td></tr>
+                        <tr><td class="kana">習う (ならいます)</td><td class="romaji">Narau (Naraimasu)</td><td>Belajar (dari orang lain)</td></tr>
+                        <tr><td class="kana">待つ (まちます)</td><td class="romaji">Matsu (Machimasu)</td><td>Menunggu</td></tr>
+                        <tr><td class="kana">話す (はなします)</td><td class="romaji">Hanasu (Hanashimasu)</td><td>Berbicara</td></tr>
+                        <tr><td class="kana">分かる (わかります)</td><td class="romaji">Wakaru (Wakarimasu)</td><td>Mengerti</td></tr>
+                        <tr><td class="kana">ある (あります)</td><td class="romaji">Aru (Arimasu)</td><td>Ada (Benda mati)</td></tr>
+                        <tr><td class="kana">いる (います)</td><td class="romaji">Iru (Imasu)</td><td>Ada (Makhluk hidup)</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <h3 class="section-title">2. 名詞 (Kata Benda N5)</h3>
+            <div class="table-grid">
+                <div class="table-container">
+                    <table>
+                        <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                        <tr><td class="kana">私 (わたし)</td><td class="romaji">Watashi</td><td>Saya</td></tr>
+                        <tr><td class="kana">あなた</td><td class="romaji">Anata</td><td>Anda / Kamu</td></tr>
+                        <tr><td class="kana">人 (ひと)</td><td class="romaji">Hito</td><td>Orang</td></tr>
+                        <tr><td class="kana">先生 (せんせい)</td><td class="romaji">Sensei</td><td>Guru</td></tr>
+                        <tr><td class="kana">学生 (がくせい)</td><td class="romaji">Gakusei</td><td>Siswa / Mahasiswa</td></tr>
+                        <tr><td class="kana">会社員 (かいしゃいん)</td><td class="romaji">Kaishain</td><td>Pegawai Perusahaan</td></tr>
+                        <tr><td class="kana">学校 (がっこう)</td><td class="romaji">Gakkou</td><td>Sekolah</td></tr>
+                        <tr><td class="kana">病院 (びょういん)</td><td class="romaji">Byouin</td><td>Rumah Sakit</td></tr>
+                        <tr><td class="kana">駅 (えき)</td><td class="romaji">Eki</td><td>Stasiun</td></tr>
+                        <tr><td class="kana">家 (うち / いえ)</td><td class="romaji">Uchi / Ie</td><td>Rumah</td></tr>
+                        <tr><td class="kana">水 (みず)</td><td class="romaji">Mizu</td><td>Air</td></tr>
+                        <tr><td class="kana">本 (ほん)</td><td class="romaji">Hon</td><td>Buku</td></tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                        <tr><td class="kana">車 (くるま)</td><td class="romaji">Kuruma</td><td>Mobil</td></tr>
+                        <tr><td class="kana">電車 (でんしゃ)</td><td class="romaji">Densha</td><td>Kereta Listrik</td></tr>
+                        <tr><td class="kana">時間 (じかん)</td><td class="romaji">Jikan</td><td>Waktu</td></tr>
+                        <tr><td class="kana">時計 (とけい)</td><td class="romaji">Tokei</td><td>Jam (Benda)</td></tr>
+                        <tr><td class="kana">お金 (おかね)</td><td class="romaji">Okane</td><td>Uang</td></tr>
+                        <tr><td class="kana">名前 (なまえ)</td><td class="romaji">Namae</td><td>Nama</td></tr>
+                        <tr><td class="kana">天気 (てんき)</td><td class="romaji">Tenki</td><td>Cuaca</td></tr>
+                        <tr><td class="kana">今日 (きょう)</td><td class="romaji">Kyou</td><td>Hari ini</td></tr>
+                        <tr><td class="kana">明日 (あした)</td><td class="romaji">Ashita</td><td>Besok</td></tr>
+                        <tr><td class="kana">昨日 (きのう)</td><td class="romaji">Kinou</td><td>Kemarin</td></tr>
+                        <tr><td class="kana">右 (みぎ)</td><td class="romaji">Migi</td><td>Kanan</td></tr>
+                        <tr><td class="kana">左 (ひだり)</td><td class="romaji">Hidari</td><td>Kiri</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <h3 class="section-title">3. 形容詞 (Kata Sifat N5)</h3>
+            <div class="table-grid">
+                <div class="table-container">
+                    <table>
+                        <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                        <tr><td class="kana">大きい (おおきい)</td><td class="romaji">Ookii</td><td>Besar</td></tr>
+                        <tr><td class="kana">小さい (ちいさい)</td><td class="romaji">Chiisai</td><td>Kecil</td></tr>
+                        <tr><td class="kana">新しい (あたらしい)</td><td class="romaji">Atarashii</td><td>Baru</td></tr>
+                        <tr><td class="kana">古い (ふるい)</td><td class="romaji">Furui</td><td>Lama / Kuno</td></tr>
+                        <tr><td class="kana">良い (いい / よい)</td><td class="romaji">Ii / Yoi</td><td>Bagus / Baik</td></tr>
+                        <tr><td class="kana">悪い (わるい)</td><td class="romaji">Warui</td><td>Buruk / Jelek</td></tr>
+                        <tr><td class="kana">暑い (あつい)</td><td class="romaji">Atsui</td><td>Panas (Cuaca)</td></tr>
+                        <tr><td class="kana">寒い (さむい)</td><td class="romaji">Samui</td><td>Dingin (Cuaca)</td></tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                        <tr><td class="kana">高い (たかい)</td><td class="romaji">Takai</td><td>Tinggi / Mahal</td></tr>
+                        <tr><td class="kana">安い (やすい)</td><td class="romaji">Yasui</td><td>Murah</td></tr>
+                        <tr><td class="kana">難しい (むずかしい)</td><td class="romaji">Muzukashii</td><td>Sulit</td></tr>
+                        <tr><td class="kana">易しい (やさしい)</td><td class="romaji">Yasashii</td><td>Mudah</td></tr>
+                        <tr><td class="kana">美味しい (おいしい)</td><td class="romaji">Oishii</td><td>Enak</td></tr>
+                        <tr><td class="kana">忙しい (いそがしい)</td><td class="romaji">Isogashii</td><td>Sibuk</td></tr>
+                        <tr><td class="kana">きれい（な）</td><td class="romaji">Kirei (na)</td><td>Cantik / Bersih</td></tr>
+                        <tr><td class="kana">静か（な） (しずか)</td><td class="romaji">Shizuka (na)</td><td>Tenang / Sepi</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB 2: KOSAKATA N4                             -->
+        <!-- ============================================== -->
+        <div id="n4-tab" class="tab-content">
+            <p style="color: var(--text-muted); margin-bottom: 20px; text-align: center;">Kosakata N4 memiliki tingkat kerumitan yang lebih tinggi dan lebih spesifik (sekitar Bab 26 - 50 Minna no Nihongo).</p>
+            
+            <h3 class="section-title">1. 動詞 (Kata Kerja N4)</h3>
+            <div class="table-grid">
+                <div class="table-container">
+                    <table>
+                        <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                        <tr><td class="kana">集まる (あつまります)</td><td class="romaji">Atsumaru</td><td>Berkumpul</td></tr>
+                        <tr><td class="kana">謝る (あやまります)</td><td class="romaji">Ayamaru</td><td>Meminta maaf</td></tr>
+                        <tr><td class="kana">急ぐ (いそぎます)</td><td class="romaji">Isogu</td><td>Buru-buru</td></tr>
+                        <tr><td class="kana">選ぶ (えらびます)</td><td class="romaji">Erabu</td><td>Memilih</td></tr>
+                        <tr><td class="kana">驚く (おどろきます)</td><td class="romaji">Odoroku</td><td>Terkejut</td></tr>
+                        <tr><td class="kana">考える (かんがえます)</td><td class="romaji">Kangaeru</td><td>Memikirkan</td></tr>
+                        <tr><td class="kana">決める (きめます)</td><td class="romaji">Kimeru</td><td>Memutuskan</td></tr>
+                        <tr><td class="kana">比べる (くらべます)</td><td class="romaji">Kuraberu</td><td>Membandingkan</td></tr>
+                        <tr><td class="kana">下げる (さげます)</td><td class="romaji">Sageru</td><td>Menurunkan</td></tr>
+                        <tr><td class="kana">探す (さがします)</td><td class="romaji">Sagasu</td><td>Mencari</td></tr>
+                        <tr><td class="kana">知らせる (しらせます)</td><td class="romaji">Shiraseru</td><td>Memberitahu / Menginformasikan</td></tr>
+                        <tr><td class="kana">調べる (しらべます)</td><td class="romaji">Shiraberu</td><td>Memeriksa / Menyelidiki</td></tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                        <tr><td class="kana">育てる (そだてます)</td><td class="romaji">Sodateru</td><td>Membesarkan / Memelihara</td></tr>
+                        <tr><td class="kana">倒れる (たおれます)</td><td class="romaji">Taoreru</td><td>Tumbang / Jatuh pingsan</td></tr>
+                        <tr><td class="kana">足す (たします)</td><td class="romaji">Tasu</td><td>Menambah</td></tr>
+                        <tr><td class="kana">伝える (つたえます)</td><td class="romaji">Tsutaeru</td><td>Menyampaikan (pesan)</td></tr>
+                        <tr><td class="kana">続ける (つづけます)</td><td class="romaji">Tsuzukeru</td><td>Melanjutkan</td></tr>
+                        <tr><td class="kana">直す (なおします)</td><td class="romaji">Naosu</td><td>Memperbaiki</td></tr>
+                        <tr><td class="kana">投げる (なげます)</td><td class="romaji">Nageru</td><td>Melempar</td></tr>
+                        <tr><td class="kana">逃げる (にげます)</td><td class="romaji">Nigeru</td><td>Melarikan diri</td></tr>
+                        <tr><td class="kana">盗む (ぬすみます)</td><td class="romaji">Nusumu</td><td>Mencuri</td></tr>
+                        <tr><td class="kana">運ぶ (はこびます)</td><td class="romaji">Hakobu</td><td>Mengangkut / Membawa</td></tr>
+                        <tr><td class="kana">褒める (ほめます)</td><td class="romaji">Homeru</td><td>Memuji</td></tr>
+                        <tr><td class="kana">間違える (まちがえます)</td><td class="romaji">Machigaeru</td><td>Melakukan kesalahan</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <h3 class="section-title">2. 名詞 (Kata Benda N4)</h3>
+            <div class="table-grid">
+                <div class="table-container">
+                    <table>
+                        <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                        <tr><td class="kana">挨拶 (あいさつ)</td><td class="romaji">Aisatsu</td><td>Salam</td></tr>
+                        <tr><td class="kana">赤ちゃん (あかちゃん)</td><td class="romaji">Akachan</td><td>Bayi</td></tr>
+                        <tr><td class="kana">案内 (あんない)</td><td class="romaji">Annai</td><td>Panduan / Petunjuk</td></tr>
+                        <tr><td class="kana">意見 (いけん)</td><td class="romaji">Iken</td><td>Pendapat</td></tr>
+                        <tr><td class="kana">お祝い (おいわい)</td><td class="romaji">Oiwai</td><td>Perayaan / Hadiah perayaan</td></tr>
+                        <tr><td class="kana">鏡 (かがみ)</td><td class="romaji">Kagami</td><td>Cermin</td></tr>
+                        <tr><td class="kana">景色 (けしき)</td><td class="romaji">Keshiki</td><td>Pemandangan</td></tr>
+                        <tr><td class="kana">原因 (げんいん)</td><td class="romaji">Gen'in</td><td>Penyebab</td></tr>
+                        <tr><td class="kana">試合 (しあい)</td><td class="romaji">Shiai</td><td>Pertandingan</td></tr>
+                        <tr><td class="kana">地震 (じしん)</td><td class="romaji">Jishin</td><td>Gempa bumi</td></tr>
+                        <tr><td class="kana">習慣 (しゅうかん)</td><td class="romaji">Shuukan</td><td>Kebiasaan / Adat</td></tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                        <tr><td class="kana">準備 (じゅんび)</td><td class="romaji">Junbi</td><td>Persiapan</td></tr>
+                        <tr><td class="kana">将来 (しょうらい)</td><td class="romaji">Shourai</td><td>Masa depan (sendiri)</td></tr>
+                        <tr><td class="kana">世話 (せわ)</td><td class="romaji">Sewa</td><td>Perawatan / Mengurus</td></tr>
+                        <tr><td class="kana">卒業 (そつぎょう)</td><td class="romaji">Sotsugyou</td><td>Kelulusan</td></tr>
+                        <tr><td class="kana">泥棒 (どろぼう)</td><td class="romaji">Dorobou</td><td>Pencuri / Maling</td></tr>
+                        <tr><td class="kana">熱 (ねつ)</td><td class="romaji">Netsu</td><td>Demam / Panas</td></tr>
+                        <tr><td class="kana">番組 (ばんぐみ)</td><td class="romaji">Bangumi</td><td>Program (TV/Radio)</td></tr>
+                        <tr><td class="kana">復習 (ふくしゅう)</td><td class="romaji">Fukushuu</td><td>Mengulang pelajaran</td></tr>
+                        <tr><td class="kana">法律 (ほうりつ)</td><td class="romaji">Houritsu</td><td>Hukum</td></tr>
+                        <tr><td class="kana">約束 (やくそく)</td><td class="romaji">Yakusoku</td><td>Janji</td></tr>
+                        <tr><td class="kana">理由 (りゆう)</td><td class="romaji">Riyuu</td><td>Alasan</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <h3 class="section-title">3. 形容詞 & 副詞 (Sifat & Keterangan N4)</h3>
+            <div class="table-grid">
+                <div class="table-container">
+                    <table>
+                        <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                        <tr><td class="kana">安全（な） (あんぜん)</td><td class="romaji">Anzen (na)</td><td>Aman</td></tr>
+                        <tr><td class="kana">複雑（な） (ふくざつ)</td><td class="romaji">Fukuzatsu (na)</td><td>Rumit / Kompleks</td></tr>
+                        <tr><td class="kana">丁寧（な） (ていねい)</td><td class="romaji">Teinei (na)</td><td>Sopan / Hati-hati</td></tr>
+                        <tr><td class="kana">自由（な） (じゆう)</td><td class="romaji">Jiyuu (na)</td><td>Bebas</td></tr>
+                        <tr><td class="kana">危険（な） (きけん)</td><td class="romaji">Kiken (na)</td><td>Berbahaya</td></tr>
+                        <tr><td class="kana">丈夫（な） (じょうぶ)</td><td class="romaji">Joubu (na)</td><td>Kuat / Awet (Benda/Badan)</td></tr>
+                        <tr><td class="kana">特別（な） (とくべつ)</td><td class="romaji">Tokubetsu (na)</td><td>Spesial / Khusus</td></tr>
+                        <tr><td class="kana">真面目（な） (まじめ)</td><td class="romaji">Majime (na)</td><td>Serius / Rajin</td></tr>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                        <tr><td class="kana">柔らかい (やわらかい)</td><td class="romaji">Yawarakai</td><td>Lembut / Empuk</td></tr>
+                        <tr><td class="kana">固い (かたい)</td><td class="romaji">Katai</td><td>Keras</td></tr>
+                        <tr><td class="kana">恥ずかしい (はずかしい)</td><td class="romaji">Hazukashii</td><td>Malu</td></tr>
+                        <tr><td class="kana">珍しい (めずらしい)</td><td class="romaji">Mezurashii</td><td>Langka / Jarang</td></tr>
+                        <tr><td class="kana">必ず (かならず)</td><td class="romaji">Kanarazu</td><td>Pasti / Tentu</td></tr>
+                        <tr><td class="kana">急に (きゅうに)</td><td class="romaji">Kyuu ni</td><td>Tiba-tiba</td></tr>
+                        <tr><td class="kana">ずいぶん</td><td class="romaji">Zuibun</td><td>Sangat / Luar biasa</td></tr>
+                        <tr><td class="kana">たまに</td><td class="romaji">Tama ni</td><td>Kadang-kadang</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName, element) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            element.classList.add('active');
+        }
+    </script>
+</body>
+</html>

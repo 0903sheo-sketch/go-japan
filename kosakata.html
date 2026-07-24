@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Gatekeeper</title>
+    <style>
+        /* Desain Minimalis & Solid Black UI dengan Background Unsplash */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #000000; /* Solid Black */
+            --card-bg: #0a0a0a;
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-japan: #c91f37;
+            --accent-blue: #1e88e5;
+            --accent-green: #43a047;
+            --accent-pink: #ff1493;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            /* Background Jejepangan dari Unsplash */
+            background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Panel Utama - Solid Black Tanpa Efek Transparan/Glow */
+        .gatekeeper-panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 1000px;
+            border-top: 4px solid var(--accent-japan);
+            border-radius: 2px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .jp-title { 
+            color: var(--accent-japan); 
+            font-size: 1.2rem; 
+            margin-bottom: 10px; 
+            display: block; 
+            letter-spacing: 4px;
+            font-weight: bold;
+        }
+        
+        .main-title { 
+            font-size: 2.2rem; 
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        /* Grid Layout untuk Menu */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* Desain Kartu Menu (Solid, Flat, Minimalis) */
+        .menu-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px 25px;
+            border-radius: 2px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            border-left: 4px solid #333;
+        }
+
+        .menu-card:hover {
+            background-color: #111111;
+            border-color: #444;
+            transform: translateY(-3px);
+        }
+
+        /* Warna Aksen per Kategori (Flat/Tanpa Glow) */
+        .card-utama:hover { border-left-color: var(--accent-japan); }
+        .card-waktu:hover { border-left-color: var(--accent-blue); }
+        .card-bilangan:hover { border-left-color: var(--accent-pink); }
+        .card-future:hover { border-left-color: var(--accent-green); }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: var(--accent-japan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        
+        .card-future .card-footer {
+            color: var(--accent-green);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gatekeeper-panel fade-in">
+        
+        <div class="header-section">
+            <span class="jp-title">ゲートキーパー</span>
+            <h1 class="main-title">KOSAKATA</h1>
+            <p class="subtitle">kosakata bahasa jepang untuk N5-N4</p>
+        </div>
+
+        <div class="menu-grid">
+            
+            <!-- Menu 1: Materi Bab (Kosakata & Tata Bahasa) -->
+            <a href="kosakataumum.html" class="menu-card card-utama">
+                <div class="card-icon">📚</div>
+                <div class="card-title">KOSAKATA UMUM</div>
+                <div class="card-desc">Kumpulan kosakata umum.</div>
+                <div class="card-footer">Buka Modul ➔</div>
+            </a>
+
+            <!-- Menu 2: Kosakata Waktu -->
+            <a href="waktu.html" class="menu-card card-waktu">
+                <div class="card-icon">📅</div>
+                <div class="card-title">Kosakata Waktu</div>
+                <div class="card-desc">Panduan lengkap kalender, nama hari, bulan, tanggal 1-31, dan periode waktu lampau-depan.</div>
+                <div class="card-footer">Buka Modul ➔</div>
+            </a>
+
+            <!-- Menu 3: Bilangan & Satuan Hitung -->
+            <a href="bilangan.html" class="menu-card card-bilangan">
+                <div class="card-icon">🔢</div>
+                <div class="card-title">Satuan Hitung</div>
+                <div class="card-desc">Panduan lengkap bilangan dan kata bantu hitung (Counters) seperti orang, batang, ekor, lembar, dll.</div>
+                <div class="card-footer">Buka Modul ➔</div>
+            </a>
+
+            <!-- Menu 4: Placeholder untuk masa depan -->
+            <a href="#" class="menu-card card-future">
+                <div class="card-icon">⚙️</div>
+                <div class="card-title">Modul Tambahan</div>
+                <div class="card-desc">Slot disiapkan untuk penambahan modul baru di masa mendatang (Kanji, Percakapan Lanjut, dll).</div>
+                <div class="card-footer">Coming Soon ➔</div>
+            </a>
+
+            <!-- Anda bisa mencopy blok <a href="...">...</a> di atas untuk menambah menu baru nantinya -->
+
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Satuan Hitung 1-20</title>
+    <style>
+        /* Desain Minimalis, Solid Black, Flat Pink Accent (Tanpa Efek Glow) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #0a0a0a; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-pink: #ff1493; /* Flat Pink */
+            --highlight-bg: #1a050f; 
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 950px;
+            border-top: 3px solid var(--accent-pink);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-pink); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px; font-weight: bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.2s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-pink); border-bottom-color: var(--accent-pink); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-out; }
+
+        /* Desain Grid Tabel */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;}
+        th, td { padding: 10px 12px; text-align: left; border: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-pink); font-weight: 600; text-align: center;}
+        tr:nth-child(even) { background-color: #0d0d0d; }
+        
+        /* Highlight Pengecualian */
+        .irr { color: var(--accent-pink); font-weight: bold; }
+        .irr-row { background-color: var(--highlight-bg) !important; }
+
+        /* Tanya Box */
+        .question-box {
+            background-color: #111;
+            border-left: 4px solid var(--accent-pink);
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .q-word { color: var(--accent-pink); font-weight: bold; font-size: 1.3rem; margin-left: 10px;}
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: #111111; border-color: var(--accent-pink);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">助数詞 (Josuushi)</span>
+        <h1 class="main-title">Panduan Satuan Hitung 1-20</h1>
+
+        <p style="text-align: center; margin-bottom: 30px; color: var(--text-muted);">Baris yang berwarna <span style="color: var(--accent-pink); font-weight: bold;">pink</span> adalah pengecualian (cara bacanya berubah). Ingat baik-baik polanya!</p>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('tab1')">👤 ORANG & UMUM</div>
+            <div class="tab-btn" onclick="openTab('tab2')">✏️ BATANG & EKOR</div>
+            <div class="tab-btn" onclick="openTab('tab3')">📄 LEMBAR, UNIT & JILID</div>
+        </div>
+
+        <!-- TAB 1: ORANG & BARANG UMUM -->
+        <div id="tab1" class="tab-content active">
+            <div class="grid-container">
+                <!-- Tabel Orang -->
+                <div>
+                    <h3 style="text-align: center;">Orang (～人 / nin)</h3>
+                    <div class="question-box">Berapa orang? <span class="q-word">何人 (Nannin)</span></div>
+                    <table>
+                        <tr><th>Angka</th><th>Hiragana</th><th>Romaji</th></tr>
+                        <tr class="irr-row"><td>1</td><td class="irr">ひとり</td><td class="irr">Hitori</td></tr>
+                        <tr class="irr-row"><td>2</td><td class="irr">ふたり</td><td class="irr">Futari</td></tr>
+                        <tr><td>3</td><td>さんにん</td><td>Sannin</td></tr>
+                        <tr class="irr-row"><td>4</td><td class="irr">よにん</td><td class="irr">Yonin</td></tr>
+                        <tr><td>5</td><td>ごにん</td><td>Gonin</td></tr>
+                        <tr><td>6</td><td>ろくにん</td><td>Rokunin</td></tr>
+                        <tr><td>7</td><td>しちにん / ななにん</td><td>Shichinin / Nananin</td></tr>
+                        <tr><td>8</td><td>はちにん</td><td>Hachinin</td></tr>
+                        <tr><td>9</td><td>きゅうにん</td><td>Kyuunin</td></tr>
+                        <tr><td>10</td><td>じゅうにん</td><td>Juunin</td></tr>
+                        <tr><td>11</td><td>じゅういちにん</td><td>Juu-ichinin</td></tr>
+                        <tr><td>12</td><td>じゅうににん</td><td>Juu-ninin</td></tr>
+                        <tr><td>13</td><td>じゅうさんにん</td><td>Juu-sannin</td></tr>
+                        <tr class="irr-row"><td>14</td><td class="irr">じゅうよにん</td><td class="irr">Juu-yonin</td></tr>
+                        <tr><td>15</td><td>じゅうごにん</td><td>Juu-gonin</td></tr>
+                        <tr><td>16</td><td>じゅうろくにん</td><td>Juu-rokunin</td></tr>
+                        <tr><td>17</td><td>じゅうななにん</td><td>Juu-nananin</td></tr>
+                        <tr><td>18</td><td>じゅうはちにん</td><td>Juu-hachinin</td></tr>
+                        <tr><td>19</td><td>じゅうきゅうにん</td><td>Juu-kyuunin</td></tr>
+                        <tr><td>20</td><td>にじゅうにん</td><td>Ni-juunin</td></tr>
+                    </table>
+                </div>
+
+                <!-- Tabel Barang Abstrak / Buah -->
+                <div>
+                    <h3 style="text-align: center;">Benda Kecil/Bulat (～個 / ko)</h3>
+                    <div class="question-box">Berapa buah? <span class="q-word">何個 (Nanko)</span></div>
+                    <table>
+                        <tr><th>Angka</th><th>Hiragana</th><th>Romaji</th></tr>
+                        <tr class="irr-row"><td>1</td><td class="irr">いっこ</td><td class="irr">Ikko</td></tr>
+                        <tr><td>2</td><td>にこ</td><td>Niko</td></tr>
+                        <tr><td>3</td><td>さんこ</td><td>Sanko</td></tr>
+                        <tr><td>4</td><td>よんこ</td><td>Yonko</td></tr>
+                        <tr><td>5</td><td>ごこ</td><td>Goko</td></tr>
+                        <tr class="irr-row"><td>6</td><td class="irr">ろっこ</td><td class="irr">Rokko</td></tr>
+                        <tr><td>7</td><td>ななこ</td><td>Nanako</td></tr>
+                        <tr class="irr-row"><td>8</td><td class="irr">はっこ</td><td class="irr">Hakko</td></tr>
+                        <tr><td>9</td><td>きゅうこ</td><td>Kyuuko</td></tr>
+                        <tr class="irr-row"><td>10</td><td class="irr">じゅっこ</td><td class="irr">Jukko</td></tr>
+                        <tr class="irr-row"><td>11</td><td class="irr">じゅういっこ</td><td class="irr">Juu-ikko</td></tr>
+                        <tr><td>12</td><td>じゅうにこ</td><td>Juu-niko</td></tr>
+                        <tr><td>13</td><td>じゅうさんこ</td><td>Juu-sanko</td></tr>
+                        <tr><td>14</td><td>じゅうよんこ</td><td>Juu-yonko</td></tr>
+                        <tr><td>15</td><td>じゅうごこ</td><td>Juu-goko</td></tr>
+                        <tr class="irr-row"><td>16</td><td class="irr">じゅうろっこ</td><td class="irr">Juu-rokko</td></tr>
+                        <tr><td>17</td><td>じゅうななこ</td><td>Juu-nanako</td></tr>
+                        <tr class="irr-row"><td>18</td><td class="irr">じゅうはっこ</td><td class="irr">Juu-hakko</td></tr>
+                        <tr><td>19</td><td>じゅうきゅうこ</td><td>Juu-kyuuko</td></tr>
+                        <tr class="irr-row"><td>20</td><td class="irr">にじゅっこ</td><td class="irr">Ni-jukko</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: BATANG & EKOR -->
+        <div id="tab2" class="tab-content">
+            <p style="text-align:center; color:var(--text-muted); margin-bottom: 20px;">Aturan pengecualian untuk ~Hon (Batang) dan ~Hiki (Ekor) sama persis! Yaitu di angka 1, 3, 6, 8, 10.</p>
+            <div class="grid-container">
+                <!-- Tabel Batang -->
+                <div>
+                    <h3 style="text-align: center;">Batang/Silinder (～本 / hon)</h3>
+                    <div class="question-box">Berapa batang? <span class="q-word">何本 (Nanbon)</span></div>
+                    <table>
+                        <tr><th>Angka</th><th>Hiragana</th><th>Romaji</th></tr>
+                        <tr class="irr-row"><td>1</td><td class="irr">いっぽん</td><td class="irr">Ippon</td></tr>
+                        <tr><td>2</td><td>にほん</td><td>Nihon</td></tr>
+                        <tr class="irr-row"><td>3</td><td class="irr">さんぼん</td><td class="irr">Sanbon</td></tr>
+                        <tr><td>4</td><td>よんほん</td><td>Yonhon</td></tr>
+                        <tr><td>5</td><td>ごほん</td><td>Gohon</td></tr>
+                        <tr class="irr-row"><td>6</td><td class="irr">ろっぽん</td><td class="irr">Roppon</td></tr>
+                        <tr><td>7</td><td>ななほん</td><td>Nanahon</td></tr>
+                        <tr class="irr-row"><td>8</td><td class="irr">はっぽん</td><td class="irr">Happon</td></tr>
+                        <tr><td>9</td><td>きゅうほん</td><td>Kyuuhon</td></tr>
+                        <tr class="irr-row"><td>10</td><td class="irr">じゅっぽん</td><td class="irr">Juppon</td></tr>
+                        <tr class="irr-row"><td>11</td><td class="irr">じゅういっぽん</td><td class="irr">Juu-ippon</td></tr>
+                        <tr><td>12</td><td>じゅうにほん</td><td>Juu-nihon</td></tr>
+                        <tr class="irr-row"><td>13</td><td class="irr">じゅうさんぼん</td><td class="irr">Juu-sanbon</td></tr>
+                        <tr><td>14</td><td>じゅうよんほん</td><td>Juu-yonhon</td></tr>
+                        <tr><td>15</td><td>じゅうごほん</td><td>Juu-gohon</td></tr>
+                        <tr class="irr-row"><td>16</td><td class="irr">じゅうろっぽん</td><td class="irr">Juu-roppon</td></tr>
+                        <tr><td>17</td><td>じゅうななほん</td><td>Juu-nanahon</td></tr>
+                        <tr class="irr-row"><td>18</td><td class="irr">じゅうはっぽん</td><td class="irr">Juu-happon</td></tr>
+                        <tr><td>19</td><td>じゅうきゅうほん</td><td>Juu-kyuuhon</td></tr>
+                        <tr class="irr-row"><td>20</td><td class="irr">にじゅっぽん</td><td class="irr">Ni-juppon</td></tr>
+                    </table>
+                </div>
+
+                <!-- Tabel Ekor -->
+                <div>
+                    <h3 style="text-align: center;">Hewan Kecil (～匹 / hiki)</h3>
+                    <div class="question-box">Berapa ekor? <span class="q-word">何匹 (Nanbiki)</span></div>
+                    <table>
+                        <tr><th>Angka</th><th>Hiragana</th><th>Romaji</th></tr>
+                        <tr class="irr-row"><td>1</td><td class="irr">いっぴき</td><td class="irr">Ippiki</td></tr>
+                        <tr><td>2</td><td>にひき</td><td>Nihiki</td></tr>
+                        <tr class="irr-row"><td>3</td><td class="irr">さんびき</td><td class="irr">Sanbiki</td></tr>
+                        <tr><td>4</td><td>よんひき</td><td>Yonhiki</td></tr>
+                        <tr><td>5</td><td>ごひき</td><td>Gohiki</td></tr>
+                        <tr class="irr-row"><td>6</td><td class="irr">ろっぴき</td><td class="irr">Roppiki</td></tr>
+                        <tr><td>7</td><td>ななひき</td><td>Nanahiki</td></tr>
+                        <tr class="irr-row"><td>8</td><td class="irr">はっぴき</td><td class="irr">Happiki</td></tr>
+                        <tr><td>9</td><td>きゅうひき</td><td>Kyuuhiki</td></tr>
+                        <tr class="irr-row"><td>10</td><td class="irr">じゅっぴき</td><td class="irr">Juppiki</td></tr>
+                        <tr class="irr-row"><td>11</td><td class="irr">じゅういっぴき</td><td class="irr">Juu-ippiki</td></tr>
+                        <tr><td>12</td><td>じゅうにひき</td><td>Juu-nihiki</td></tr>
+                        <tr class="irr-row"><td>13</td><td class="irr">じゅうさんびき</td><td class="irr">Juu-sanbiki</td></tr>
+                        <tr><td>14</td><td>じゅうよんひき</td><td>Juu-yonhiki</td></tr>
+                        <tr><td>15</td><td>じゅうごひき</td><td>Juu-gohiki</td></tr>
+                        <tr class="irr-row"><td>16</td><td class="irr">じゅうろっぴき</td><td class="irr">Juu-roppiki</td></tr>
+                        <tr><td>17</td><td>じゅうななひき</td><td>Juu-nanahiki</td></tr>
+                        <tr class="irr-row"><td>18</td><td class="irr">じゅうはっぴき</td><td class="irr">Juu-happiki</td></tr>
+                        <tr><td>19</td><td>じゅうきゅうひき</td><td>Juu-kyuuhiki</td></tr>
+                        <tr class="irr-row"><td>20</td><td class="irr">にじゅっぴき</td><td class="irr">Ni-juppiki</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: LEMBAR, UNIT & JILID -->
+        <div id="tab3" class="tab-content">
+            <p style="text-align:center; color:var(--text-muted); margin-bottom: 20px;">Kabar baik! Untuk <strong>~Mai</strong> (Lembar) dan <strong>~Dai</strong> (Unit/Mesin) tidak ada pengecualian sama sekali, cukup baca angka biasa + Mai/Dai.</p>
+            <div class="grid-container">
+                <!-- Tabel Lembar -->
+                <div>
+                    <h3 style="text-align: center;">Lembar / Tipis (～枚 / mai)</h3>
+                    <div class="question-box">Berapa lembar? <span class="q-word">何枚 (Nanmai)</span></div>
+                    <table>
+                        <tr><th>Angka</th><th>Hiragana</th><th>Romaji</th></tr>
+                        <tr><td>1</td><td>いちまい</td><td>Ichi-mai</td></tr>
+                        <tr><td>2</td><td>にまい</td><td>Ni-mai</td></tr>
+                        <tr><td>3</td><td>さんまい</td><td>San-mai</td></tr>
+                        <tr><td>4</td><td>よんまい</td><td>Yon-mai</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>10</td><td>じゅうまい</td><td>Juu-mai</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>20</td><td>にじゅうまい</td><td>Ni-juu-mai</td></tr>
+                    </table>
+                </div>
+
+                <!-- Tabel Unit Mesin -->
+                <div>
+                    <h3 style="text-align: center;">Unit Mesin/Mobil (～台 / dai)</h3>
+                    <div class="question-box">Berapa unit? <span class="q-word">何台 (Nandai)</span></div>
+                    <table>
+                        <tr><th>Angka</th><th>Hiragana</th><th>Romaji</th></tr>
+                        <tr><td>1</td><td>いちだい</td><td>Ichi-dai</td></tr>
+                        <tr><td>2</td><td>にだい</td><td>Ni-dai</td></tr>
+                        <tr><td>3</td><td>さんだい</td><td>San-dai</td></tr>
+                        <tr><td>4</td><td>よんだい</td><td>Yon-dai</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>10</td><td>じゅうだい</td><td>Juu-dai</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>20</td><td>にじゅうだい</td><td>Ni-juu-dai</td></tr>
+                    </table>
+                </div>
+
+                <!-- Tabel Buku/Jilid -->
+                <div>
+                    <h3 style="text-align: center;">Jilid / Buku (～冊 / satsu)</h3>
+                    <div class="question-box">Berapa jilid? <span class="q-word">何冊 (Nansatsu)</span></div>
+                    <table>
+                        <tr><th>Angka</th><th>Hiragana</th><th>Romaji</th></tr>
+                        <tr class="irr-row"><td>1</td><td class="irr">いっさつ</td><td class="irr">Issatsu</td></tr>
+                        <tr><td>2</td><td>にさつ</td><td>Nisatsu</td></tr>
+                        <tr><td>3</td><td>さんさつ</td><td>Sansatsu</td></tr>
+                        <tr><td>4</td><td>よんさつ</td><td>Yonsatsu</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td></tr>
+                        <tr class="irr-row"><td>8</td><td class="irr">はっさつ</td><td class="irr">Hassatsu</td></tr>
+                        <tr class="irr-row"><td>10</td><td class="irr">じゅっさつ</td><td class="irr">Jussatsu</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td></tr>
+                        <tr class="irr-row"><td>20</td><td class="irr">にじゅっさつ</td><td class="irr">Ni-jussatsu</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
