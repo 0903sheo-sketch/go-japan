@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 41</title>
+    <style>
+        /* Desain Minimalis, Profesional, Clean & Solid Black (No Glow) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #050505; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-n4: #1e88e5; /* Biru N4 */
+            --furigana-color: #4fc3f7; /* Biru muda agar furigana mudah dibaca */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 950px;
+            border-top: 3px solid var(--accent-n4);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-n4); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px; font-weight: bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-n4); border-bottom-color: var(--accent-n4); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Pengaturan Furigana (Ruby) */
+        ruby { ruby-align: center; }
+        rt { font-size: 0.7rem; color: var(--furigana-color); font-weight: normal; letter-spacing: 0;}
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-n4); font-weight: 600; }
+        tr:hover { background-color: #0a0a0a; }
+        .kana { font-weight: bold; font-size: 1.15rem; }
+
+        /* Tabel Khusus Rumus */
+        .te-table th { background-color: #111; color: #fff; text-align: center; border: 1px solid #222;}
+        .te-table td { text-align: center; border: 1px solid #222; font-size: 1.15rem;}
+        .te-highlight { color: var(--accent-n4); font-weight: bold;}
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: #0a0a0a; border-left: 4px solid var(--accent-n4);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 2px 2px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #000; padding: 15px; text-align: center; font-size: 1.15rem; color: var(--accent-n4); margin-bottom: 15px; border: 1px solid #222; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.25rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease; text-decoration: none;
+        }
+        .btn-back:hover { color: #ffffff; background: #111111; border-color: var(--accent-n4); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title"><ruby>第<rt>だい</rt></ruby>41<ruby>課<rt>か</rt></ruby> (Bab 41)</span>
+        <h1 class="main-title">Memberi & Menerima (Tingkat Sopan)</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <h3>1. <ruby>動詞<rt>どうし</rt></ruby> (Kata Kerja Memberi/Menerima)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th><th>Keterangan</th></tr>
+                <tr><td class="kana">いただきます</td><td>Itadakimasu</td><td>Menerima</td><td>Bentuk merendah dari もらいます</td></tr>
+                <tr><td class="kana">くださいます</td><td>Kudasaimasu</td><td>Memberi (kepada saya)</td><td>Bentuk hormat dari くれます</td></tr>
+                <tr><td class="kana">やります</td><td>Yarimasu</td><td>Memberi (ke bawahan/hewan)</td><td>Bentuk biasa/kasar dari あげます</td></tr>
+            </table>
+
+            <h3>2. <ruby>動詞<rt>どうし</rt></ruby> (Kata Kerja Lainnya)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana"><ruby>上<rt>あ</rt></ruby>げます</td><td>Agemasu</td><td>Menaikkan</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>下<rt>さ</rt></ruby>げます</td><td>Sagemasu</td><td>Menurunkan</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>親切<rt>しんせつ</rt></ruby>にします</td><td>Shinsetsu ni shimasu</td><td>Berbuat ramah / Berbaik hati</td><td>3</td></tr>
+            </table>
+
+            <h3>3. <ruby>名詞<rt>めいし</rt></ruby> (Kata Benda)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">お<ruby>祝い<rt>いわい</rt></ruby></td><td>Oiwai</td><td>Hadiah perayaan (～を します: merayakan)</td></tr>
+                <tr><td class="kana">お<ruby>年玉<rt>としだま</rt></ruby></td><td>Otoshidama</td><td>Hadiah uang tahun baru (Angpau)</td></tr>
+                <tr><td class="kana">お<ruby>見舞<rt>みま</rt></ruby>い</td><td>Omimai</td><td>Kunjungan/Hadiah untuk orang sakit</td></tr>
+                <tr><td class="kana"><ruby>興味<rt>きょうみ</rt></ruby></td><td>Kyoumi</td><td>Minat / Ketertarikan (～に 興味が あります)</td></tr>
+                <tr><td class="kana"><ruby>情報<rt>じょうほう</rt></ruby></td><td>Jouhou</td><td>Informasi</td></tr>
+                <tr><td class="kana">えさ</td><td>Esa</td><td>Makanan hewan / Umpan</td></tr>
+                <tr><td class="kana">お<ruby>祖父<rt>じい</rt></ruby>さん</td><td>Ojiisan</td><td>Kakek (orang lain) / Kakek tua</td></tr>
+                <tr><td class="kana">お<ruby>祖母<rt>ばあ</rt></ruby>さん</td><td>Obaasan</td><td>Nenek (orang lain) / Nenek tua</td></tr>
+            </table>
+            
+            <h3>4. <ruby>形容詞<rt>けいようし</rt></ruby> (Kata Sifat)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">かわいい</td><td>Kawaii</td><td>Manis / Imut / Lucu</td></tr>
+                <tr><td class="kana"><ruby>珍<rt>めずら</rt></ruby>しい</td><td>Mezurashii</td><td>Langka / Jarang</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-color: #333;">
+                <h3>1. Menerima dari Atasan (いただきます)</h3>
+                <p><strong>いただきます (Itadakimasu)</strong> adalah bentuk <em>Kenjougo</em> (Bahasa Merendah) dari <strong>もらいます (Moraimasu)</strong>. Digunakan ketika Anda menerima barang (atau perbuatan) dari orang yang statusnya lebih tinggi (guru, atasan) atau orang yang belum akrab.</p>
+                <div class="pattern">
+                    <ruby>私<rt>わたし</rt></ruby> は [Orang yg lebih tinggi] <strong style="color:var(--accent-n4);">に</strong> Benda を <strong>いただきます</strong>。<br>
+                    <span style="font-size: 0.9rem; color: #888;">*Jika berupa tindakan/bantuan: V-<ruby>て形<rt>てけい</rt></ruby> + いただきます。</span>
+                </div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>私<rt>わたし</rt></ruby>は <ruby>社長<rt>しゃちょう</rt></ruby>に <ruby>時計<rt>とけい</rt></ruby>を <strong class="te-highlight">いただきました</strong>。</div><div class="id-text">Saya <strong>menerima</strong> jam tangan dari Presiden Direktur.</div></li>
+                    <li><div class="jp-text"><ruby>私<rt>わたし</rt></ruby>は <ruby>先生<rt>せんせい</rt></ruby>に <ruby>本<rt>ほん</rt></ruby>を <ruby>貸<rt>か</rt></ruby>し<strong class="te-highlight">て いただきました</strong>。</div><div class="id-text">Saya <strong>dipinjami (menerima bantuan peminjaman)</strong> buku oleh Guru.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #ff1493;">
+                <h3>2. Atasan Memberi Kepada Saya (くださいます)</h3>
+                <p><strong>くださいます (Kudasaimasu)</strong> adalah bentuk <em>Sonkeigo</em> (Bahasa Hormat) dari <strong>くれます (Kuremasu)</strong>. Subjek kalimatnya adalah orang yang posisinya lebih tinggi, yang memberikan sesuatu kepada Anda (atau kelompok Anda).</p>
+                <div class="pattern">
+                    [Orang yg lebih tinggi] は (<ruby>私<rt>わたし</rt></ruby>に) Benda を <strong style="color:#ff1493;">くださいます</strong>。<br>
+                    <span style="font-size: 0.9rem; color: #888;">*Jika berupa tindakan/bantuan: V-<ruby>て形<rt>てけい</rt></ruby> + くださいます。</span>
+                </div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>部長<rt>ぶちょう</rt></ruby>が (<ruby>私<rt>わたし</rt></ruby>に) お<ruby>土産<rt>みやげ</rt></ruby>を <strong style="color:#ff1493;">くださいました</strong>。</div><div class="id-text">Kepala Bagian <strong>memberikan</strong> oleh-oleh kepada saya.</div></li>
+                    <li><div class="jp-text"><ruby>先生<rt>せんせい</rt></ruby>が <ruby>漢字<rt>かんじ</rt></ruby>の <ruby>間違<rt>まちが</rt></ruby>いを <ruby>直<rt>なお</rt></ruby>し<strong style="color:#ff1493;">て くださいました</strong>。</div><div class="id-text">Guru <strong>telah (berbaik hati) memperbaiki</strong> kesalahan Kanji saya.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #43a047;">
+                <h3>3. Memberi ke Bawahan / Hewan / Tanaman (やります)</h3>
+                <p><strong>やります (Yarimasu)</strong> digunakan saat Anda memberikan barang atau tindakan kepada orang yang berstatus lebih rendah (seperti anak, cucu, adik), atau kepada hewan dan tumbuhan. (Meskipun Anda juga bisa tetap menggunakan <i>agemasu</i> kepada adik/anak).</p>
+                <div class="pattern">
+                    <ruby>私<rt>わたし</rt></ruby> は [Bawahan/Hewan/Tumbuhan] <strong style="color:var(--accent-n4);">に</strong> Benda を <strong style="color:#43a047;">やります</strong>。<br>
+                    <span style="font-size: 0.9rem; color: #888;">*Jika berupa tindakan/bantuan: V-<ruby>て形<rt>てけい</rt></ruby> + やります。</span>
+                </div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>私<rt>わたし</rt></ruby>は <ruby>犬<rt>いぬ</rt></ruby>に えさを <strong style="color:#43a047;">やりました</strong>。</div><div class="id-text">Saya <strong>telah memberi</strong> makanan ke anjing.</div></li>
+                    <li><div class="jp-text"><ruby>私<rt>わたし</rt></ruby>は <ruby>花<rt>はな</rt></ruby>に <ruby>水<rt>みず</rt></ruby>を <strong style="color:#43a047;">やります</strong>。</div><div class="id-text">Saya <strong>akan menyiram (memberi air)</strong> ke bunga.</div></li>
+                    <li><div class="jp-text"><ruby>息子<rt>むすこ</rt></ruby>に <ruby>紙飛行機<rt>かみひこうき</rt></ruby>を <ruby>作<rt>つく</rt></ruby>っ<strong style="color:#43a047;">て やりました</strong>。</div><div class="id-text">Saya <strong>telah membuatkan</strong> pesawat kertas untuk anak laki-laki saya.</div></li>
+                </ul>
+            </div>
+            
+            <div class="grammar-box" style="border-left-color: #ff9800;">
+                <h3>4. Tolong... / Mohon... (~て くださいませんか)</h3>
+                <p>Di Bab 26, Anda belajar <strong>~て いただけませんか (~te itadakemasen ka)</strong> untuk meminta tolong dengan sangat sopan. Di Bab 41 ini, Anda juga bisa menggunakan <strong>~て くださいませんか (~te kudasaimasen ka)</strong> yang memiliki tingkat kesopanan yang kurang lebih setara.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">コピー<ruby>機<rt>き</rt></ruby>の <ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>を <ruby>教<rt>おし</rt></ruby>え<strong style="color:#ff9800;">て くださいませんか</strong>。</div><div class="id-text"><strong>Maukah Anda (tolong)</strong> mengajari saya cara menggunakan mesin fotokopi?</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan standar yang sering muncul di Bab 41.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: すてきな ネクタイですね。</div>
+                    <div class="id-text">A: Dasi yang bagus ya.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: ええ。<ruby>部長<rt>ぶちょう</rt></ruby>に <strong style="color:var(--accent-n4);">いただいた</strong>んです。</div>
+                    <div class="id-text">B: Iya. Saya <strong>menerima(nya)</strong> dari Kepala Bagian (penekanan dengan <i>~ndesu</i>).</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: その お<ruby>茶<rt>ちゃ</rt></ruby>、おいしいですか。</div>
+                    <div class="id-text">A: Teh itu, apakah enak?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: ええ。<ruby>先生<rt>せんせい</rt></ruby>が <strong style="color:#ff1493;">くださいました</strong>。<ruby>台湾<rt>たいわん</rt></ruby>の お<ruby>茶<rt>ちゃ</rt></ruby>です。</div>
+                    <div class="id-text">B: Iya. Guru yang <strong>memberikan(nya kepada saya)</strong>. Ini teh dari Taiwan.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: <ruby>休<rt>やす</rt></ruby>みの <ruby>日<rt>ひ</rt></ruby>は <ruby>何<rt>なに</rt></ruby>を しましたか。</div>
+                    <div class="id-text">A: Pada hari libur apa yang (Anda) lakukan?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: <ruby>子供<rt>こども</rt></ruby>と <ruby>遊園地<rt>ゆうえんち</rt></ruby>へ <ruby>行<rt>い</rt></ruby>って <strong style="color:#43a047;">やりました</strong>。</div>
+                    <div class="id-text">B: Saya <strong>telah membawa (memberi tindakan mengantar)</strong> anak saya pergi ke taman hiburan.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: すみませんが、この <ruby>手紙<rt>てがみ</rt></ruby>の <ruby>間違<rt>まちが</rt></ruby>いを <ruby>直<rt>なお</rt></ruby>し<strong style="color:#ff9800;">て くださいませんか</strong>。</div>
+                    <div class="id-text">A: Permisi, <strong>maukah Anda (tolong)</strong> memperbaiki kesalahan pada surat ini?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいですよ。</div>
+                    <div class="id-text">B: Boleh.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <a href="n4-gatekeeper.html" class="btn-back">⬅ Kembali ke Menu N4</a>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

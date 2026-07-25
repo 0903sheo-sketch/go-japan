@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 49</title>
+    <style>
+        /* Desain Minimalis, Profesional, Clean & Solid Black (No Glow) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #050505; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-n4: #1e88e5; /* Biru N4 */
+            --furigana-color: #4fc3f7; /* Biru muda agar furigana mudah dibaca */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 950px;
+            border-top: 3px solid var(--accent-n4);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-n4); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px; font-weight: bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-n4); border-bottom-color: var(--accent-n4); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Pengaturan Furigana (Ruby) */
+        ruby { ruby-align: center; }
+        rt { font-size: 0.7rem; color: var(--furigana-color); font-weight: normal; letter-spacing: 0;}
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-n4); font-weight: 600; }
+        tr:hover { background-color: #0a0a0a; }
+        .kana { font-weight: bold; font-size: 1.15rem; }
+
+        /* Tabel Khusus Rumus */
+        .te-table th { background-color: #111; color: #fff; text-align: center; border: 1px solid #222;}
+        .te-table td { text-align: center; border: 1px solid #222; font-size: 1.15rem;}
+        .te-highlight { color: var(--accent-n4); font-weight: bold;}
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: #0a0a0a; border-left: 4px solid var(--accent-n4);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 2px 2px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #000; padding: 15px; text-align: center; font-size: 1.15rem; color: var(--accent-n4); margin-bottom: 15px; border: 1px solid #222; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.25rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease; text-decoration: none;
+        }
+        .btn-back:hover { color: #ffffff; background: #111111; border-color: var(--accent-n4); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title"><ruby>第<rt>だい</rt></ruby>49<ruby>課<rt>か</rt></ruby> (Bab 49)</span>
+        <h1 class="main-title">Bahasa Hormat (Sonkeigo)</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Di bab ini, Anda wajib menghafal kata kerja khusus yang hanya digunakan untuk menghormati lawan bicara.</p>
+
+            <h3>1. <ruby>尊敬語<rt>そんけいご</rt></ruby> (Kata Kerja Hormat Khusus)</h3>
+            <table>
+                <tr><th>Bentuk Hormat</th><th>Asal Kata (Bentuk Biasa)</th><th>Arti</th></tr>
+                <tr><td class="kana">いらっしゃいます</td><td><ruby>行<rt>い</rt></ruby>きます / <ruby>来<rt>き</rt></ruby>ます / います</td><td>Pergi / Datang / Ada</td></tr>
+                <tr><td class="kana"><ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がります</td><td><ruby>食<rt>た</rt></ruby>べます / <ruby>飲<rt>の</rt></ruby>みます</td><td>Makan / Minum</td></tr>
+                <tr><td class="kana">おっしゃいます</td><td><ruby>言<rt>い</rt></ruby>います</td><td>Berkata / Mengucapkan</td></tr>
+                <tr><td class="kana">なさいます</td><td>します</td><td>Melakukan</td></tr>
+                <tr><td class="kana">ご<ruby>覧<rt>らん</rt></ruby>に なります</td><td><ruby>見<rt>み</rt></ruby>ます</td><td>Melihat / Menonton</td></tr>
+                <tr><td class="kana">ご<ruby>存<rt>ぞん</rt></ruby>じです</td><td><ruby>知<rt>し</rt></ruby>って います</td><td>Mengetahui</td></tr>
+            </table>
+
+            <h3>2. <ruby>名詞<rt>めいし</rt></ruby> (Kata Benda)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana"><ruby>社長<rt>しゃちょう</rt></ruby> / <ruby>部長<rt>ぶちょう</rt></ruby></td><td>Shachou / Buchou</td><td>Presiden Direktur / Manajer</td></tr>
+                <tr><td class="kana"><ruby>奥様<rt>おくさま</rt></ruby></td><td>Okusama</td><td>Istri (Orang lain - Sangat sopan)</td></tr>
+                <tr><td class="kana"><ruby>皆様<rt>みなさま</rt></ruby></td><td>Minasama</td><td>Para hadirin / Tuan-tuan & Nyonya</td></tr>
+                <tr><td class="kana"><ruby>挨拶<rt>あいさつ</rt></ruby></td><td>Aisatsu</td><td>Salam / Sambutan (～を します)</td></tr>
+                <tr><td class="kana"><ruby>灰皿<rt>はいざら</rt></ruby></td><td>Haizara</td><td>Asbak</td></tr>
+                <tr><td class="kana"><ruby>旅館<rt>りょかん</rt></ruby></td><td>Ryokan</td><td>Penginapan tradisional Jepang</td></tr>
+                <tr><td class="kana">バス<ruby>停<rt>てい</rt></ruby></td><td>Basutei</td><td>Halte bus</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-color: #333;">
+                <h3>1. Bahasa Hormat Tipe 1 (Bentuk Pasif: ～れます / られます)</h3>
+                <p>Cara paling mudah untuk membuat kalimat hormat adalah dengan mengubah kata kerjanya menjadi <strong>Bentuk Pasif</strong> (sama seperti yang dipelajari di Bab 37). Meskipun bentuknya pasif, maknanya tetap aktif, namun dengan tingkat kesopanan yang lebih tinggi.</p>
+                <div class="pattern">Subjek (Orang yg dihormati) は + V-Pasif (<ruby>受身形<rt>うけみけい</rt></ruby>)</div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>社長<rt>しゃちょう</rt></ruby>は ７<ruby>時<rt>じ</rt></ruby>に <ruby>帰<rt>かえ</rt></ruby><strong class="te-highlight">られました</strong>。</div><div class="id-text">Presiden Direktur (sudah) pulang pada jam 7. (Lebih sopan dari <i>kaerimashita</i>).</div></li>
+                    <li><div class="jp-text"><ruby>先生<rt>せんせい</rt></ruby>は この <ruby>本<rt>ほん</rt></ruby>を <ruby>読<rt>よ</rt></ruby><strong class="te-highlight">まれました</strong>か。</div><div class="id-text">Apakah Guru (sudah) membaca buku ini?</div></li>
+                    <li><div class="jp-text"><ruby>山田<rt>やまだ</rt></ruby>さんは アメリカへ <ruby>出張<rt>しゅっちょう</rt></ruby><strong class="te-highlight">されました</strong>。</div><div class="id-text">Bapak Yamada telah pergi dinas ke Amerika.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #ff1493;">
+                <h3>2. Bahasa Hormat Tipe 2 (お + V-masu + に なります)</h3>
+                <p>Cara kedua ini <strong>lebih sopan</strong> daripada tipe 1. Anda menambahkan awalan <strong>お (o)</strong> sebelum kata kerja (tanpa "masu"), lalu menambahkan <strong>に なります (ni narimasu)</strong> di belakangnya. (Pola ini tidak bisa dipakai untuk kata kerja Golongan 3 atau kata kerja berakhiran 1 suku kata seperti 見ます/寝ます).</p>
+                <div class="pattern">お + V-(Coret ます) + <strong style="color:#ff1493;">に なります</strong></div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>社長<rt>しゃちょう</rt></ruby>は もう <strong>お</strong><ruby>帰<rt>かえ</rt></ruby>り<strong style="color:#ff1493;">に なりました</strong>。</div><div class="id-text">Presiden Direktur sudah pulang. (Sangat sopan).</div></li>
+                    <li><div class="jp-text">この <ruby>本<rt>ほん</rt></ruby>を <strong>お</strong><ruby>読<rt>よ</rt></ruby>み<strong style="color:#ff1493;">に なりました</strong>か。</div><div class="id-text">Apakah (Anda) sudah membaca buku ini?</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #43a047;">
+                <h3>3. Bahasa Hormat Tipe 3 (Kata Kerja Khusus)</h3>
+                <p>Ini adalah tingkat paling sopan. Untuk beberapa kata kerja umum, orang Jepang memiliki kosakata khusus penggantinya (Lihat daftar Kosakata 1). Anda harus menghafalnya, karena sering muncul dalam dunia bisnis.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">（<ruby>行<rt>い</rt></ruby>きますか ➔） <ruby>明日<rt>あした</rt></ruby> <ruby>東京<rt>とうきょう</rt></ruby>へ <strong style="color:#43a047;">いらっしゃいます</strong>か。</div><div class="id-text">Apakah besok Anda akan pergi ke Tokyo?</div></li>
+                    <li><div class="jp-text">（<ruby>食<rt>た</rt></ruby>べます ➔） どうぞ <strong style="color:#43a047;"><ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がって</strong> ください。</div><div class="id-text">Silakan makan/dicicipi.</div></li>
+                    <li><div class="jp-text">（<ruby>言<rt>い</rt></ruby>いました ➔） <ruby>社長<rt>しゃちょう</rt></ruby>が そう <strong style="color:#43a047;">おっしゃいました</strong>。</div><div class="id-text">Direktur (telah) berkata demikian.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #ff9800;">
+                <h3>4. Permintaan Halus (お / ご + V-masu + ください)</h3>
+                <p>Saat Anda ingin mempersilakan tamu atau atasan dengan sangat sopan, gunakan pola ini (sebagai ganti <i>~te kudasai</i>). Gunakan <strong>お</strong> untuk kata kerja Golongan 1 & 2, dan <strong>ご</strong> untuk kata kerja Golongan 3 (yang berasal dari Kanji Tionghoa).</p>
+                <div class="pattern">お / ご + V-(Coret ます) + <strong style="color:#ff9800;">ください</strong></div>
+                <ul class="example-list">
+                    <li><div class="jp-text">あちらから <strong>お</strong><ruby>入<rt>はい</rt></ruby>り<strong style="color:#ff9800;">ください</strong>。</div><div class="id-text">Silakan masuk dari sebelah sana.</div></li>
+                    <li><div class="jp-text">少々 <strong>お</strong><ruby>待<rt>ま</rt></ruby>ち<strong style="color:#ff9800;">ください</strong>。</div><div class="id-text">Mohon tunggu sebentar. (Sering diucapkan resepsionis / pelayan).</div></li>
+                    <li><div class="jp-text">この ペンを <strong>ご</strong><ruby>利用<rt>りよう</rt></ruby><strong style="color:#ff9800;">ください</strong>。</div><div class="id-text">Silakan gunakan pena ini. (Riyou = Gol. 3).</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan standar yang sering muncul di Bab 49, khususnya di lingkungan kantor atau pelayanan tamu.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: <ruby>課長<rt>かちょう</rt></ruby>、<ruby>新<rt>あたら</rt></ruby>しい コピー<ruby>機<rt>き</rt></ruby>は もう <strong>お</strong><ruby>使<rt>つか</rt></ruby>い<strong style="color:#ff1493;">に なりました</strong>か。</div>
+                    <div class="id-text">A: Kepala Seksi, apakah Anda sudah menggunakan mesin fotokopi yang baru?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: ええ、<ruby>今日<rt>きょう</rt></ruby> <ruby>使<rt>つか</rt></ruby>いましたよ。とても <ruby>早<rt>はや</rt></ruby>いですね。</div>
+                    <div class="id-text">B: Iya, saya sudah menggunakannya hari ini. Sangat cepat ya. (Subjek berbicara tentang dirinya sendiri menggunakan bahasa biasa).</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: すみません。<ruby>松本<rt>まつもと</rt></ruby><ruby>部長<rt>ぶちょう</rt></ruby>は <strong style="color:#43a047;">いらっしゃいます</strong>か。</div>
+                    <div class="id-text">A: Permisi, apakah Manajer Matsumoto ada?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: <ruby>松本<rt>まつもと</rt></ruby>は さっき <ruby>出<rt>で</rt></ruby>かけ<strong style="color:var(--accent-n4);">られました</strong>。</div>
+                    <div class="id-text">B: Matsumoto tadi (sudah) pergi keluar.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: どうぞ こちらに <strong>お</strong><ruby>掛<rt>か</rt></ruby>け<strong style="color:#ff9800;">ください</strong>。</div>
+                    <div class="id-text">A: Silakan duduk di sebelah sini. (Dari kata <i>kakemasu</i>).</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: はい、ありがとう ございます。</div>
+                    <div class="id-text">B: Baik, terima kasih.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: <ruby>何<rt>なに</rt></ruby>を <strong style="color:#43a047;"><ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がり</strong>ますか。</div>
+                    <div class="id-text">A: Anda (ingin) makan/minum apa?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: わたしは コーヒーに します。</div>
+                    <div class="id-text">B: Saya pesan kopi. (Menggunakan bab 44 'ni shimasu').</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <a href="n4-gatekeeper.html" class="btn-back">⬅ Kembali ke Menu N4</a>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

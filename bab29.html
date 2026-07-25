@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 29</title>
+    <style>
+        /* Desain Minimalis, Profesional, Clean & Solid Black (No Glow) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #050505; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-n4: #1e88e5; /* Biru N4 */
+            --furigana-color: #4fc3f7; /* Biru muda agar furigana mudah dibaca */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            border-top: 3px solid var(--accent-n4);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-n4); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px; font-weight: bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-n4); border-bottom-color: var(--accent-n4); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Pengaturan Furigana (Ruby) */
+        ruby { ruby-align: center; }
+        rt { font-size: 0.7rem; color: var(--furigana-color); font-weight: normal; letter-spacing: 0;}
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-n4); font-weight: 600; }
+        tr:hover { background-color: #0a0a0a; }
+        .kana { font-weight: bold; font-size: 1.15rem; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: #0a0a0a; border-left: 4px solid var(--accent-n4);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 2px 2px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #000; padding: 15px; text-align: center; font-size: 1.15rem; color: var(--accent-n4); margin-bottom: 15px; border: 1px solid #222; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.25rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease; text-decoration: none;
+        }
+        .btn-back:hover { color: #ffffff; background: #111111; border-color: var(--accent-n4); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title"><ruby>第<rt>だい</rt></ruby>29<ruby>課<rt>か</rt></ruby> (Bab 29)</span>
+        <h1 class="main-title">Kondisi Barang & Keterlanjuran</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Di bab ini, Anda akan banyak belajar Kata Kerja Intransitif (terjadi dengan sendirinya / keadaan barang).</p>
+            
+            <h3>1. <ruby>自動詞<rt>じどうし</rt></ruby> (Kata Kerja Intransitif)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana"><ruby>開<rt>あ</rt></ruby>きます</td><td>Akimasu</td><td>Terbuka (Pintu/Jendela)</td><td>1</td></tr>
+                <tr><td class="kana"><ruby>閉<rt>し</rt></ruby>まります</td><td>Shimarimasu</td><td>Tertutup (Pintu/Jendela)</td><td>1</td></tr>
+                <tr><td class="kana">つきます</td><td>Tsukimasu</td><td>Menyala (Lampu)</td><td>1</td></tr>
+                <tr><td class="kana"><ruby>消<rt>き</rt></ruby>えます</td><td>Kiemasu</td><td>Padam / Mati (Lampu)</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>壊<rt>こわ</rt></ruby>れます</td><td>Kowaremasu</td><td>Rusak (Kursi/Mesin)</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>割<rt>わ</rt></ruby>れます</td><td>Waremasu</td><td>Pecah (Gelas/Kaca)</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>折<rt>お</rt></ruby>れます</td><td>Oremasu</td><td>Patah (Pohon/Ranting)</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>破<rt>やぶ</rt></ruby>れます</td><td>Yaburemasu</td><td>Robek (Kertas)</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>汚<rt>よご</rt></ruby>れます</td><td>Yogoremasu</td><td>Kotor (Baju/Tangan)</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>外<rt>はず</rt></ruby>れます</td><td>Hazuremasu</td><td>Terlepas (Kancing)</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>止<rt>と</rt></ruby>まります</td><td>Tomarimasu</td><td>Berhenti (Mobil/Mesin)</td><td>1</td></tr>
+            </table>
+
+            <h3>2. Kata Kerja Lainnya</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana"><ruby>落<rt>お</rt></ruby>とします</td><td>Otoshimasu</td><td>Menjatuhkan / Menghilangkan</td><td>1</td></tr>
+                <tr><td class="kana"><ruby>間違<rt>まちが</rt></ruby>えます</td><td>Machigaemasu</td><td>Melakukan kesalahan / Keliru</td><td>2</td></tr>
+            </table>
+
+            <h3>3. <ruby>名詞<rt>めいし</rt></ruby> (Kata Benda)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">お<ruby>皿<rt>さら</rt></ruby> / ちゃわん</td><td>Osara / Chawan</td><td>Piring / Mangkuk (nasi)</td></tr>
+                <tr><td class="kana">コップ / ガラス</td><td>Koppu / Garasu</td><td>Gelas minum / Kaca</td></tr>
+                <tr><td class="kana"><ruby>袋<rt>ふくろ</rt></ruby></td><td>Fukuro</td><td>Kantong (plastik/belanja)</td></tr>
+                <tr><td class="kana"><ruby>財布<rt>さいふ</rt></ruby></td><td>Saifu</td><td>Dompet</td></tr>
+                <tr><td class="kana"><ruby>枝<rt>えだ</rt></ruby></td><td>Eda</td><td>Ranting / Cabang pohon</td></tr>
+                <tr><td class="kana"><ruby>駅員<rt>えきいん</rt></ruby> / <ruby>交番<rt>こうばん</rt></ruby></td><td>Ekiin / Kouban</td><td>Pegawai stasiun / Pos polisi</td></tr>
+                <tr><td class="kana"><ruby>忘<rt>わす</rt></ruby>れ<ruby>物<rt>もの</rt></ruby></td><td>Wasuremono</td><td>Barang yang tertinggal/kelupaan</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-color: #333;">
+                <h3>1. Menyatakan Kondisi / Keadaan (～て います)</h3>
+                <p>Jika Anda menggunakan <strong>Kata Kerja Intransitif</strong> (yang terjadi dengan sendirinya) dan diubah ke bentuk <strong>～て います</strong>, maknanya BUKAN "sedang melakukan", melainkan <strong>"Keadaan yang tersisa akibat suatu kejadian"</strong>. Partikel yang digunakan di depan kata kerjanya adalah <strong>が (ga)</strong>.</p>
+                <div class="pattern">Kata Benda <strong style="color:var(--accent-n4);">が</strong> <ruby>自動詞<rt>じどうし</rt></ruby> (Intransitif <ruby>て形<rt>てけい</rt></ruby>) + います</div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>窓<rt>まど</rt></ruby><strong style="color:var(--accent-n4);">が</strong> <ruby>閉<rt>し</rt></ruby>まっ<strong style="color:var(--accent-n4);">て います</strong>。</div><div class="id-text">Jendela <strong>dalam keadaan tertutup</strong>.</div></li>
+                    <li><div class="jp-text"><ruby>電気<rt>でんき</rt></ruby><strong style="color:var(--accent-n4);">が</strong> <ruby>消<rt>き</rt></ruby>え<strong style="color:var(--accent-n4);">て います</strong>。</div><div class="id-text">Lampu <strong>dalam keadaan padam/mati</strong>.</div></li>
+                    <li><div class="jp-text">この <ruby>椅子<rt>いす</rt></ruby>は <ruby>壊<rt>こわ</rt></ruby>れ<strong style="color:var(--accent-n4);">て います</strong>。</div><div class="id-text">Kursi ini <strong>dalam keadaan rusak</strong>. (Jika kursi dijadikan topik kalimat, "ga" diganti "wa").</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #ff1493;">
+                <h3>2. Menyelesaikan Seluruhnya (～て しまいました)</h3>
+                <p>Pola <strong>～て しまいました (~te shimaimashita)</strong> memiliki dua fungsi utama. Fungsi pertama adalah untuk menekankan bahwa suatu aksi telah <strong>selesai dilakukan sepenuhnya</strong> atau tuntas.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>宿題<rt>しゅくだい</rt></ruby>を <ruby>全部<rt>ぜんぶ</rt></ruby> し<strong style="color:#ff1493;">て しまいました</strong>。</div><div class="id-text">Saya <strong>telah menyelesaikan seluruh</strong> PR-nya.</div></li>
+                    <li><div class="jp-text"><ruby>買<rt>か</rt></ruby>った ワインは <ruby>全部<rt>ぜんぶ</rt></ruby> <ruby>飲<rt>の</rt></ruby>ん<strong style="color:#ff1493;">で しまいました</strong>。</div><div class="id-text">Anggur yang (saya) beli <strong>telah habis diminum semuanya</strong>.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #43a047;">
+                <h3>3. Penyesalan & Keterlanjuran (～て しまいました)</h3>
+                <p>Fungsi kedua dari pola ini sangat sering digunakan oleh orang Jepang, yaitu untuk mengekspresikan <strong>perasaan menyesal, kecewa, atau suatu kesalahan (keterlanjuran)</strong>.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">タクシーに <ruby>財布<rt>さいふ</rt></ruby>を <ruby>忘<rt>わす</rt></ruby>れ<strong style="color:#43a047;">て しまいました</strong>。</div><div class="id-text">Saya <strong>(terlanjur/dengan ceroboh) ketinggalan</strong> dompet di taksi. (Mengandung nada penyesalan).</div></li>
+                    <li><div class="jp-text">お<ruby>皿<rt>さら</rt></ruby>を <ruby>割<rt>わ</rt></ruby>っ<strong style="color:#43a047;">て しまいました</strong>。</div><div class="id-text">Saya <strong>(tidak sengaja) memecahkan</strong> piring.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. ああ、ありました (Ah, Ketemu!)</h3>
+                <p>Saat Anda mencari barang yang hilang dan akhirnya menemukannya, orang Jepang menggunakan bentuk lampau <strong>ありました (Arimashita)</strong>, bukan <i>Arimasu</i>. Artinya "Ah, ternyata (sejak tadi memang) ada di sini!".</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">ああ、カバンが <strong style="color:var(--accent-n4);">ありました</strong>。</div><div class="id-text">Ah, tasnya <strong>ketemu (ada di sini)</strong>.</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan standar yang sering muncul di Bab 29.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: その コピー<ruby>機<rt>き</rt></ruby>、<ruby>使<rt>つか</rt></ruby>えますか。</div>
+                    <div class="id-text">A: Mesin fotokopi itu, apakah bisa digunakan?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、<ruby>故障<rt>こしょう</rt></ruby>し<strong style="color:var(--accent-n4);">て います</strong>。</div>
+                    <div class="id-text">B: Tidak, (mesinnya) <strong>dalam keadaan rusak</strong>.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: この シャツを <ruby>洗<rt>あら</rt></ruby>って いただけませんか。</div>
+                    <div class="id-text">A: Maukah Anda berbaik hati mencucikan kemeja ini?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: トマトジュースで <ruby>汚<rt>よご</rt></ruby>れ<strong style="color:var(--accent-n4);">て います</strong>ね。わかりました。</div>
+                    <div class="id-text">B: <strong>Dalam keadaan kotor</strong> karena jus tomat ya. Saya mengerti (akan kucucikan).</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: シュミットさんが <ruby>持<rt>も</rt></ruby>って <ruby>来<rt>き</rt></ruby>た ワインは どこですか。</div>
+                    <div class="id-text">A: Anggur yang dibawa oleh Sdr. Schmidt ada di mana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: みんなで <ruby>飲<rt>の</rt></ruby>ん<strong style="color:#ff1493;">で しまいました</strong>。</div>
+                    <div class="id-text">B: (Sudah) <strong>habis kita minum semua</strong> sama-sama.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: どう し<strong style="color:#43a047;">たんですか</strong>。</div>
+                    <div class="id-text">A: Ada apa? / Kenapa? (Bertanya alasan dengan <i>~ndesu</i> Bab 26).</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: タクシーに <ruby>傘<rt>かさ</rt></ruby>を <ruby>忘<rt>わす</rt></ruby>れ<strong style="color:#43a047;">て しまったんです</strong>。</div>
+                    <div class="id-text">B: Saya <strong>terlanjur (dengan bodohnya) ketinggalan</strong> payung di taksi.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <a href="n4-gatekeeper.html" class="btn-back">⬅ Kembali ke Menu N4</a>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

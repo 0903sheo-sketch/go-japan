@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 39</title>
+    <style>
+        /* Desain Minimalis, Profesional, Clean & Solid Black (No Glow) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #050505; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-n4: #1e88e5; /* Biru N4 */
+            --furigana-color: #4fc3f7; /* Biru muda agar furigana mudah dibaca */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 950px;
+            border-top: 3px solid var(--accent-n4);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-n4); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px; font-weight: bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-n4); border-bottom-color: var(--accent-n4); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Pengaturan Furigana (Ruby) */
+        ruby { ruby-align: center; }
+        rt { font-size: 0.7rem; color: var(--furigana-color); font-weight: normal; letter-spacing: 0;}
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-n4); font-weight: 600; }
+        tr:hover { background-color: #0a0a0a; }
+        .kana { font-weight: bold; font-size: 1.15rem; }
+
+        /* Tabel Khusus Rumus */
+        .te-table th { background-color: #111; color: #fff; text-align: center; border: 1px solid #222;}
+        .te-table td { text-align: center; border: 1px solid #222; font-size: 1.15rem;}
+        .te-highlight { color: var(--accent-n4); font-weight: bold;}
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: #0a0a0a; border-left: 4px solid var(--accent-n4);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 2px 2px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #000; padding: 15px; text-align: center; font-size: 1.15rem; color: var(--accent-n4); margin-bottom: 15px; border: 1px solid #222; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.25rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease; text-decoration: none;
+        }
+        .btn-back:hover { color: #ffffff; background: #111111; border-color: var(--accent-n4); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title"><ruby>第<rt>だい</rt></ruby>39<ruby>課<rt>か</rt></ruby> (Bab 39)</span>
+        <h1 class="main-title">Menyatakan Alasan & Sebab</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <h3>1. <ruby>動詞<rt>どうし</rt></ruby> (Kata Kerja)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana"><ruby>答<rt>こた</rt></ruby>えます</td><td>Kotaemasu</td><td>Menjawab (Pertanyaan)</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>倒<rt>たお</rt></ruby>れます</td><td>Taoremasu</td><td>Roboh / Tumbang / Jatuh Pingsan</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>通<rt>とお</rt></ruby>ります</td><td>Toorimasu</td><td>Melewati (Jalan)</td><td>1</td></tr>
+                <tr><td class="kana"><ruby>死<rt>し</rt></ruby>にます</td><td>Shinimasu</td><td>Mati / Meninggal</td><td>1</td></tr>
+                <tr><td class="kana">びっくりします</td><td>Bikkuri shimasu</td><td>Terkejut / Kaget</td><td>3</td></tr>
+                <tr><td class="kana">がっかりします</td><td>Gakkari shimasu</td><td>Kecewa</td><td>3</td></tr>
+                <tr><td class="kana"><ruby>安心<rt>あんしん</rt></ruby>します</td><td>Anshin shimasu</td><td>Merasa lega / Tenang</td><td>3</td></tr>
+                <tr><td class="kana"><ruby>遅刻<rt>ちこく</rt></ruby>します</td><td>Chikoku shimasu</td><td>Terlambat datang</td><td>3</td></tr>
+                <tr><td class="kana"><ruby>早退<rt>そうたい</rt></ruby>します</td><td>Soutai shimasu</td><td>Pulang lebih awal / Pulang cepat</td><td>3</td></tr>
+                <tr><td class="kana">けんかします</td><td>Kenka shimasu</td><td>Bertengkar</td><td>3</td></tr>
+                <tr><td class="kana"><ruby>離婚<rt>りこん</rt></ruby>します</td><td>Rikon shimasu</td><td>Bercerai</td><td>3</td></tr>
+            </table>
+
+            <h3>2. <ruby>形容詞<rt>けいようし</rt></ruby> (Kata Sifat)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana"><ruby>複雑<rt>ふくざつ</rt></ruby>（な）</td><td>Fukuzatsu (na)</td><td>Rumit / Kompleks</td></tr>
+                <tr><td class="kana"><ruby>邪魔<rt>じゃま</rt></ruby>（な）</td><td>Jama (na)</td><td>Mengganggu / Menghalangi</td></tr>
+                <tr><td class="kana"><ruby>汚<rt>きたな</rt></ruby>い</td><td>Kitanai</td><td>Kotor</td></tr>
+                <tr><td class="kana">うれしい</td><td>Ureshii</td><td>Senang (Perasaan)</td></tr>
+                <tr><td class="kana"><ruby>悲<rt>かな</rt></ruby>しい</td><td>Kanashii</td><td>Sedih</td></tr>
+                <tr><td class="kana"><ruby>恥<rt>はず</rt></ruby>ずかしい</td><td>Hazukashii</td><td>Malu</td></tr>
+            </table>
+
+            <h3>3. <ruby>名詞<rt>めいし</rt></ruby> (Kata Benda: Fenomena & Kejadian)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana"><ruby>地震<rt>じしん</rt></ruby></td><td>Jishin</td><td>Gempa bumi</td></tr>
+                <tr><td class="kana"><ruby>台風<rt>たいふう</rt></ruby></td><td>Taifuu</td><td>Angin topan / Badai</td></tr>
+                <tr><td class="kana"><ruby>火事<rt>かじ</rt></ruby></td><td>Kaji</td><td>Kebakaran</td></tr>
+                <tr><td class="kana"><ruby>事故<rt>じこ</rt></ruby></td><td>Jiko</td><td>Kecelakaan</td></tr>
+                <tr><td class="kana">お<ruby>見合<rt>みあ</rt></ruby>い</td><td>Omiai</td><td>Perjodohan tradisional</td></tr>
+                <tr><td class="kana"><ruby>電話代<rt>でんわだい</rt></ruby></td><td>Denwadai</td><td>Biaya / Tagihan telepon</td></tr>
+                <tr><td class="kana">フロント</td><td>Furonto</td><td>Resepsionis / Front desk</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-color: #333;">
+                <h3>1. Bentuk ~Te (～て) untuk Menyatakan Sebab</h3>
+                <p>Bentuk-Te tidak hanya digunakan untuk menyambung kalimat ("lalu"), tetapi juga bisa berarti <strong>"Karena"</strong>. Pola ini khususnya digunakan jika kalimat bagian belakang menyatakan <strong>perasaan (kaget, sedih), kemampuan (tidak bisa), atau kejadian di masa lalu</strong>. <i>Tidak boleh digunakan untuk ajakan atau perintah.</i></p>
+                <table class="te-table">
+                    <tr><th>Jenis Kata</th><th>Bentuk Syarat/Alasan (Karena...)</th></tr>
+                    <tr><td><strong>Kata Kerja (<ruby>て形<rt>てけい</rt></ruby>)</strong></td><td><ruby>聞<rt>き</rt></ruby><span class="te-highlight">いて</span> (Karena mendengar...)</td></tr>
+                    <tr><td><strong><ruby>い形容詞<rt>いけいようし</rt></ruby> (Sifat-I)</strong></td><td><ruby>高<rt>たか</rt></ruby><span class="te-highlight">くて</span> (Karena mahal...)</td></tr>
+                    <tr><td><strong><ruby>な形容詞<rt>なけいようし</rt></ruby> (Sifat-Na)</strong></td><td><ruby>静<rt>しず</rt></ruby>か<span class="te-highlight">で</span> (Karena sepi...)</td></tr>
+                    <tr><td><strong>Bentuk Negatif (なくて)</strong></td><td><ruby>来<rt>こ</rt></ruby><span class="te-highlight">なくて</span> (Karena tidak datang...)</td></tr>
+                </table>
+                <ul class="example-list" style="margin-top: 15px;">
+                    <li><div class="jp-text">ニュースを <ruby>聞<rt>き</rt></ruby>い<strong class="te-highlight">て</strong>、びっくりしました。</div><div class="id-text"><strong>Karena</strong> mendengar berita, saya terkejut. (Alasan perasaan).</div></li>
+                    <li><div class="jp-text"><ruby>説明<rt>せつめい</rt></ruby>が <ruby>複雑<rt>ふくざつ</rt></ruby><strong class="te-highlight">で</strong>、わかりません。</div><div class="id-text"><strong>Karena</strong> penjelasannya rumit, saya tidak mengerti. (Alasan kemampuan).</div></li>
+                    <li><div class="jp-text"><ruby>家族<rt>かぞく</rt></ruby>に <ruby>会<rt>あ</rt></ruby>え<strong class="te-highlight">なくて</strong>、<ruby>寂<rt>さび</rt></ruby>しいです。</div><div class="id-text"><strong>Karena tidak</strong> bisa bertemu keluarga, saya kesepian.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #ff1493;">
+                <h3>2. Kata Benda + で (Karena Kejadian / Fenomena Alam)</h3>
+                <p>Partikel <strong>で (de)</strong> yang diletakkan setelah Kata Benda yang berupa kejadian (gempa, kecelakaan, penyakit, kebakaran) berfungsi untuk menyatakan <strong>sebab atau alasan</strong> terjadinya sesuatu.</p>
+                <div class="pattern">Kata Benda (Kejadian) + <strong style="color:#ff1493;">で</strong>、[Akibat]</div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>地震<rt>じしん</rt></ruby><strong style="color:#ff1493;">で</strong> ビルが <ruby>倒<rt>たお</rt></ruby>れました。</div><div class="id-text"><strong>Karena/Akibat</strong> gempa bumi, gedung roboh.</div></li>
+                    <li><div class="jp-text"><ruby>事故<rt>じこ</rt></ruby><strong style="color:#ff1493;">で</strong> <ruby>電車<rt>でんしゃ</rt></ruby>が <ruby>止<rt>と</rt></ruby>まりました。</div><div class="id-text"><strong>Karena</strong> kecelakaan, kereta berhenti.</div></li>
+                    <li><div class="jp-text"><ruby>病気<rt>びょうき</rt></ruby><strong style="color:#ff1493;">で</strong> <ruby>会社<rt>かいしゃ</rt></ruby>を <ruby>休<rt>やす</rt></ruby>みました。</div><div class="id-text"><strong>Karena</strong> penyakit (sakit), saya libur kerja.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #43a047;">
+                <h3>3. Menyatakan Alasan Objektif (～ので)</h3>
+                <p>Anda sudah belajar <strong>～から (~kara)</strong> untuk "Karena". Pola <strong>～ので (~node)</strong> memiliki arti yang sama, tetapi terdengar <strong>lebih sopan, halus, dan objektif</strong> (seolah-olah alasannya adalah fakta yang tidak bisa dihindari). Sangat disarankan dipakai kepada atasan, saat meminta izin, atau saat meminta maaf.</p>
+                <div class="pattern">
+                    <ruby>普通体<rt>ふつうたい</rt></ruby> (Bentuk Biasa) + ので、～<br>
+                    <span style="font-size: 0.9rem; color: #888;">*Khusus Kata Benda & Sifat-Na, ganti "だ" menjadi "な". (Contoh: <ruby>病気<rt>びょうき</rt></ruby>なので / <ruby>暇<rt>ひま</rt></ruby>なので)</span>
+                </div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>用事<rt>ようじ</rt></ruby>が ある<strong style="color:#43a047;">ので</strong>、お<ruby>先<rt>さき</rt></ruby>に <ruby>失礼<rt>しつれい</rt></ruby>します。</div><div class="id-text"><strong>Karena (oleh sebab)</strong> ada urusan, saya permisi pulang duluan.</div></li>
+                    <li><div class="jp-text"><ruby>日本語<rt>にほんご</rt></ruby>が わからない<strong style="color:#43a047;">ので</strong>、<ruby>英語<rt>えいご</rt></ruby>で <ruby>話<rt>はな</rt></ruby>して いただけませんか。</div><div class="id-text"><strong>Karena (berhubung)</strong> saya tidak mengerti bahasa Jepang, maukah Anda berbicara dengan bahasa Inggris?</div></li>
+                    <li><div class="jp-text">バスが <ruby>来<rt>こ</rt></ruby>なかった<strong style="color:#43a047;">ので</strong>、<ruby>遅刻<rt>ちこく</rt></ruby>しました。</div><div class="id-text"><strong>Karena</strong> busnya tidak datang, saya terlambat. (Permintaan maaf objektif).</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan standar yang sering muncul di Bab 39.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: マラソンの <ruby>大会<rt>たいかい</rt></ruby>、どうでしたか。</div>
+                    <div class="id-text">A: Lomba maratonnya, bagaimana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: <ruby>２位<rt>にい</rt></ruby>でした。<ruby>優勝<rt>ゆうしょう</rt></ruby>できな<strong style="color:var(--accent-n4);">くて</strong>、<ruby>残念<rt>ざんねん</rt></ruby>です。</div>
+                    <div class="id-text">B: (Saya dapat) juara ke-2. <strong>Karena</strong> tidak bisa juara pertama, saya merasa kecewa/sayang sekali.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: どうして <ruby>遅<rt>おく</rt></ruby>れたんですか。</div>
+                    <div class="id-text">A: Kenapa terlambat?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 事故<strong style="color:#ff1493;">で</strong> バスが <ruby>止<rt>と</rt></ruby>まってい<strong style="color:var(--accent-n4);">たんです</strong>。</div>
+                    <div class="id-text">B: <strong>Akibat</strong> kecelakaan, busnya (dalam keadaan) berhenti (penekanan alasan).</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: すみません。<ruby>明日<rt>あした</rt></ruby>の <ruby>午後<rt>ごご</rt></ruby> <ruby>早退<rt>そうたい</rt></ruby>しても いいですか。</div>
+                    <div class="id-text">A: Permisi. Apakah besok siang saya boleh pulang cepat?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: ええ、かまいませんよ。</div>
+                    <div class="id-text">B: Ya, tidak apa-apa.</div>
+                    <div class="jp-text" style="margin-top: 10px;">A: <ruby>市役所<rt>しやくしょ</rt></ruby>へ <ruby>行<rt>い</rt></ruby>かなければ ならない<strong style="color:#43a047;">ので</strong>...。</div>
+                    <div class="id-text">A: (Terima kasih), <strong>berhubung/karena</strong> saya harus pergi ke kantor balai kota...</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: この <ruby>説明書<rt>せつめいしょ</rt></ruby>、<ruby>英語<rt>えいご</rt></ruby>な<strong style="color:#43a047;">ので</strong>、わかりません。<ruby>読<rt>よ</rt></ruby>んで いただけませんか。</div>
+                    <div class="id-text">A: Buku petunjuk ini, <strong>karena</strong> berbahasa Inggris (saya) tidak mengerti. Maukah Anda membacakannya untuk saya?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいですよ。</div>
+                    <div class="id-text">B: Boleh.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <a href="n4-gatekeeper.html" class="btn-back">⬅ Kembali ke Menu N4</a>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

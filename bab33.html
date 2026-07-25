@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 33</title>
+    <style>
+        /* Desain Minimalis, Profesional, Clean & Solid Black (No Glow) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #050505; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-n4: #1e88e5; /* Biru N4 */
+            --furigana-color: #4fc3f7; /* Biru muda agar furigana mudah dibaca */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 950px;
+            border-top: 3px solid var(--accent-n4);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-n4); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px; font-weight: bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-n4); border-bottom-color: var(--accent-n4); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Pengaturan Furigana (Ruby) */
+        ruby { ruby-align: center; }
+        rt { font-size: 0.7rem; color: var(--furigana-color); font-weight: normal; letter-spacing: 0;}
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-n4); font-weight: 600; }
+        tr:hover { background-color: #0a0a0a; }
+        .kana { font-weight: bold; font-size: 1.15rem; }
+
+        /* Tabel Khusus Rumus */
+        .te-table th { background-color: #111; color: #fff; text-align: center; border: 1px solid #222;}
+        .te-table td { text-align: center; border: 1px solid #222; font-size: 1.1rem;}
+        .te-highlight { color: var(--accent-n4); font-weight: bold;}
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: #0a0a0a; border-left: 4px solid var(--accent-n4);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 2px 2px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #000; padding: 15px; text-align: center; font-size: 1.15rem; color: var(--accent-n4); margin-bottom: 15px; border: 1px solid #222; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.25rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Label Tanda/Rambu */
+        .sign-label { display: inline-block; background-color: #c91f37; color: white; padding: 2px 8px; border-radius: 3px; font-weight: bold; font-size: 0.9rem; margin-right: 8px;}
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease; text-decoration: none;
+        }
+        .btn-back:hover { color: #ffffff; background: #111111; border-color: var(--accent-n4); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title"><ruby>第<rt>だい</rt></ruby>33<ruby>課<rt>か</rt></ruby> (Bab 33)</span>
+        <h1 class="main-title">Perintah, Larangan & Pesan</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <h3>1. <ruby>動詞<rt>どうし</rt></ruby> (Kata Kerja)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana"><ruby>逃<rt>に</rt></ruby>げます</td><td>Nigemasu</td><td>Lari / Melarikan diri</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>騒<rt>さわ</rt></ruby>ぎます</td><td>Sawagimasu</td><td>Membuat keributan / Bising</td><td>1</td></tr>
+                <tr><td class="kana">あきらめます</td><td>Akiramemasu</td><td>Menyerah / Putus asa</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>投<rt>な</rt></ruby>げます</td><td>Nagemasu</td><td>Melempar</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>守<rt>まも</rt></ruby>ります</td><td>Mamorimasu</td><td>Mematuhi (aturan) / Melindungi</td><td>1</td></tr>
+                <tr><td class="kana"><ruby>上<rt>あ</rt></ruby>げます</td><td>Agemasu</td><td>Menaikkan / Mengangkat</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>下<rt>さ</rt></ruby>げます</td><td>Sagemasu</td><td>Menurunkan</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>伝<rt>つた</rt></ruby>えます</td><td>Tsutaemasu</td><td>Menyampaikan (pesan)</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>注意<rt>ちゅうい</rt></ruby>します</td><td>Chuui shimasu</td><td>Berhati-hati / Memperingatkan</td><td>3</td></tr>
+                <tr><td class="kana"><ruby>外<rt>はず</rt></ruby>します</td><td>Hazushimasu</td><td>Meninggalkan (tempat duduk)</td><td>1</td></tr>
+            </table>
+
+            <h3>2. Rambu & Tanda Pengumuman (Sangat Penting)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana"><ruby>使用禁止<rt>しようきんし</rt></ruby></td><td>Shiyou kinshi</td><td>Dilarang menggunakan</td></tr>
+                <tr><td class="kana"><ruby>立入禁止<rt>たちいりきんし</rt></ruby></td><td>Tachiiri kinshi</td><td>Dilarang masuk</td></tr>
+                <tr><td class="kana"><ruby>営業中<rt>えいぎょうちゅう</rt></ruby></td><td>Eigyouchuu</td><td>Sedang buka (Toko/Bisnis)</td></tr>
+                <tr><td class="kana"><ruby>準備中<rt>じゅんびちゅう</rt></ruby></td><td>Junbichuu</td><td>Sedang persiapan (Toko belum buka)</td></tr>
+                <tr><td class="kana"><ruby>本日休業<rt>ほんじつきゅうぎょう</rt></ruby></td><td>Honjitsu kyuugyou</td><td>Hari ini tutup / Libur</td></tr>
+                <tr><td class="kana"><ruby>非常口<rt>ひじょうぐち</rt></ruby></td><td>Hijouguchi</td><td>Pintu darurat</td></tr>
+                <tr><td class="kana"><ruby>規則<rt>きそく</rt></ruby></td><td>Kisoku</td><td>Peraturan</td></tr>
+            </table>
+
+            <h3>3. <ruby>名詞<rt>めいし</rt></ruby> (Kata Benda)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana"><ruby>席<rt>せき</rt></ruby></td><td>Seki</td><td>Tempat duduk</td></tr>
+                <tr><td class="kana">マーク</td><td>Maaku</td><td>Tanda / Mark</td></tr>
+                <tr><td class="kana"><ruby>意味<rt>いみ</rt></ruby></td><td>Imi</td><td>Arti / Makna</td></tr>
+                <tr><td class="kana">ファイト</td><td>Faito</td><td>Bersemangatlah! (Dari "Fight")</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-color: #333;">
+                <h3>🌟 RUMUS 1: <ruby>命令形<rt>めいれいけい</rt></ruby> (Bentuk Perintah)</h3>
+                <p>Bentuk ini digunakan untuk <strong>memberi perintah secara tegas dan keras</strong>. Umumnya diucapkan oleh laki-laki kepada bawahannya, saat keadaan darurat, atau saat bersorak di pertandingan olahraga. (Wanita jarang menggunakannya).</p>
+                <table class="te-table">
+                    <tr><th>Golongan</th><th>Bentuk ~ます</th><th>Bentuk Perintah (Lakukan!)</th></tr>
+                    <tr><td><strong>GOL. 1</strong> (Ubah 'i' ke 'e')</td><td><ruby>行<rt>い</rt></ruby><span style="color:red">き</span>ます (Ikimasu)</td><td><ruby>行<rt>い</rt></ruby><span class="te-highlight">け</span> (Ike!) = Pergilah!</td></tr>
+                    <tr><td><strong>GOL. 1</strong> (Ubah 'i' ke 'e')</td><td><ruby>休<rt>やす</rt></ruby><span style="color:red">み</span>ます (Yasumimasu)</td><td><ruby>休<rt>やす</rt></ruby><span class="te-highlight">め</span> (Yasume!) = Istirahatlah!</td></tr>
+                    <tr><td><strong>GOL. 2</strong> (Ubah 'masu' ke 'ro')</td><td><ruby>食<rt>た</rt></ruby>べ<span style="color:red">ます</span> (Tabemasu)</td><td><ruby>食<rt>た</rt></ruby>べ<span class="te-highlight">ろ</span> (Tabero!) = Makan!</td></tr>
+                    <tr><td><strong>GOL. 2</strong> (Ubah 'masu' ke 'ro')</td><td><ruby>見<rt>み</rt></ruby><span style="color:red">ます</span> (Mimasu)</td><td><ruby>見<rt>み</rt></ruby><span class="te-highlight">ろ</span> (Miro!) = Lihat!</td></tr>
+                    <tr><td><strong>GOL. 3</strong> (Irregular)</td><td><ruby>来<rt>き</rt></ruby>ます (Kimasu)</td><td><strong class="te-highlight"><ruby>来<rt>こ</rt></ruby>い</strong> (Koi!) = Datanglah!</td></tr>
+                    <tr><td><strong>GOL. 3</strong> (Irregular)</td><td>します (Shimasu)</td><td><strong class="te-highlight">しろ</strong> (Shiro!) = Lakukan!</td></tr>
+                </table>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #ff1493;">
+                <h3>🌟 RUMUS 2: <ruby>禁止形<rt>きんしけい</rt></ruby> (Bentuk Larangan)</h3>
+                <p>Bentuk ini sangat mudah. Anda hanya perlu <strong>menambahkan な (na) di belakang Kata Kerja Bentuk Kamus (<ruby>辞書形<rt>じしょけい</rt></ruby>)</strong>. Artinya "Jangan lakukan!". Bentuk ini juga terdengar keras dan tegas.</p>
+                <div class="pattern">V-<ruby>辞書形<rt>じしょけい</rt></ruby> (Kamus) + な (Jangan...)</div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>行<rt>い</rt></ruby>く<strong style="color:#ff1493;">な</strong>！</div><div class="id-text">Jangan pergi!</div></li>
+                    <li><div class="jp-text"><ruby>負<rt>ま</rt></ruby>ける<strong style="color:#ff1493;">な</strong>！</div><div class="id-text">Jangan menyerah / Jangan kalah!</div></li>
+                    <li><div class="jp-text">ここで <ruby>写真<rt>しゃしん</rt></ruby>を <ruby>撮<rt>と</rt></ruby>る<strong style="color:#ff1493;">な</strong>！</div><div class="id-text">Jangan memotret di sini!</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #43a047;">
+                <h3>3. Bertanya Arti & Membaca Tulisan</h3>
+                <p>Saat Anda melihat papan pengumuman/kanji dan tidak mengerti, gunakan pola ini. Gunakan <strong>「 」</strong> sebagai tanda kutip.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">あそこに 「<ruby>止<rt>と</rt></ruby>まれ」 <strong style="color:#43a047;">と <ruby>書<rt>か</rt></ruby>いて あります</strong>。</div><div class="id-text">Di sana <strong>tertulis</strong> "Berhenti".</div></li>
+                    <li><div class="jp-text">あの <ruby>漢字<rt>かんじ</rt></ruby>は <ruby>何<rt>なん</rt></ruby> <strong style="color:#43a047;">と <ruby>読<rt>よ</rt></ruby>みますか</strong>。</div><div class="id-text">Kanji itu <strong>dibaca apa?</strong></div></li>
+                    <li><div class="jp-text">この マークは <ruby>何<rt>なん</rt></ruby> <strong style="color:#43a047;">と いう <ruby>意味<rt>いみ</rt></ruby>ですか</strong>。</div><div class="id-text">Tanda ini <strong>apa artinya?</strong> (Lit: Punya arti yang disebut apa?)</div></li>
+                    <li><div class="jp-text">「<ruby>洗濯機<rt>せんたくき</rt></ruby>を <ruby>使<rt>つか</rt></ruby>うな」 <strong style="color:#43a047;">と いう <ruby>意味<rt>いみ</rt></ruby>です</strong>。</div><div class="id-text"><strong>Artinya adalah</strong> "Jangan menggunakan mesin cuci".</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. Mengutip Perkataan Orang Lain & Menyampaikan Pesan</h3>
+                <p>Di Bab 21 Anda belajar <i>~to iimashita</i>. Jika Anda ingin menyampaikan bahwa "Tadi (seseorang) berkata bahwa...", gunakan <strong>～と <ruby>言<rt>い</rt></ruby>って いました</strong>. Untuk meminta tolong menyampaikan pesan kepada orang lain, gunakan <strong>～と <ruby>伝<rt>つた</rt></ruby>えて いただけませんか</strong>.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>田中<rt>たなか</rt></ruby>さんは 「<ruby>明日<rt>あした</rt></ruby> <ruby>休<rt>やす</rt></ruby>む」 <strong style="color:var(--accent-n4);">と <ruby>言<rt>い</rt></ruby>って いました</strong>。</div><div class="id-text">Sdr. Tanaka (tadi) <strong>berkata bahwa</strong> "Besok libur".</div></li>
+                    <li><div class="jp-text">すみませんが、<ruby>渡辺<rt>わたなべ</rt></ruby>さんに 「パーティーは ６<ruby>時<rt>じ</rt></ruby>からだ」 <strong style="color:var(--accent-n4);">と <ruby>伝<rt>つた</rt></ruby>えて いただけませんか</strong>。</div><div class="id-text">Maaf, maukah Anda <strong>menyampaikan (pesan)</strong> kepada Sdr. Watanabe <strong>bahwa</strong> "Pesta dimulai jam 6"?</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan standar yang sering muncul di Bab 33.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: あの <ruby>漢字<rt>かんじ</rt></ruby>は <ruby>何<rt>なん</rt></ruby> <strong style="color:var(--accent-n4);">と <ruby>読<rt>よ</rt></ruby>みますか</strong>。</div>
+                    <div class="id-text">A: Kanji itu dibaca apa?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 「きんえん」 <strong style="color:var(--accent-n4);">と <ruby>読<rt>よ</rt></ruby>みます</strong>。たばこを <ruby>吸<rt>す</rt></ruby>う<strong style="color:#ff1493;">な</strong> と いう <ruby>意味<rt>いみ</rt></ruby>です。</div>
+                    <div class="id-text">B: <strong>Dibaca</strong> "Kin-en". Artinya adalah <strong>jangan</strong> merokok.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: あそこに 「<ruby>車<rt>くるま</rt></ruby>を <ruby>止<rt>と</rt></ruby>める<strong style="color:#ff1493;">な</strong>」 <strong style="color:#43a047;">と <ruby>書<rt>か</rt></ruby>いて あります</strong>よ。</div>
+                    <div class="id-text">A: Di sana <strong>tertulis</strong> "<strong>Jangan</strong> memarkir mobil" lho.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: あっ、すみません。</div>
+                    <div class="id-text">B: Ah, maaf.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: サントスさんは どこですか。</div>
+                    <div class="id-text">A: Sdr. Santos ada di mana?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: サントスさんは <ruby>今日<rt>きょう</rt></ruby> <ruby>休<rt>やす</rt></ruby>む <strong style="color:var(--accent-n4);">と <ruby>言<rt>い</rt></ruby>って いました</strong>よ。</div>
+                    <div class="id-text">B: Sdr. Santos (tadi) <strong>berkata bahwa</strong> hari ini dia libur lho.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: すみませんが、イーさんに 「<ruby>明日<rt>あした</rt></ruby> <ruby>私<rt>わたし</rt></ruby>は <ruby>会社<rt>かいしゃ</rt></ruby>へ <ruby>行<rt>い</rt></ruby>かない」 <strong style="color:var(--accent-n4);">と <ruby>伝<rt>つた</rt></ruby>えて いただけませんか</strong>。</div>
+                    <div class="id-text">A: Maaf, bisakah tolong <strong>sampaikan pesan</strong> kepada Sdr. Lee <strong>bahwa</strong> "Besok saya tidak pergi ke kantor"?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: はい、わかりました。</div>
+                    <div class="id-text">B: Ya, saya mengerti.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <a href="n4-gatekeeper.html" class="btn-back">⬅ Kembali ke Menu N4</a>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

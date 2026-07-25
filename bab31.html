@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 31</title>
+    <style>
+        /* Desain Minimalis, Profesional, Clean & Solid Black (No Glow) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #050505; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-n4: #1e88e5; /* Biru N4 */
+            --furigana-color: #4fc3f7; /* Biru muda agar furigana mudah dibaca */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            border-top: 3px solid var(--accent-n4);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-n4); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px; font-weight: bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-n4); border-bottom-color: var(--accent-n4); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Pengaturan Furigana (Ruby) */
+        ruby { ruby-align: center; }
+        rt { font-size: 0.7rem; color: var(--furigana-color); font-weight: normal; letter-spacing: 0;}
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-n4); font-weight: 600; }
+        tr:hover { background-color: #0a0a0a; }
+        .kana { font-weight: bold; font-size: 1.15rem; }
+
+        /* Tabel Khusus Rumus */
+        .te-table th { background-color: #111; color: #fff; text-align: center; border: 1px solid #222;}
+        .te-table td { text-align: center; border: 1px solid #222; font-size: 1.15rem;}
+        .te-highlight { color: var(--accent-n4); font-weight: bold;}
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: #0a0a0a; border-left: 4px solid var(--accent-n4);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 2px 2px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #000; padding: 15px; text-align: center; font-size: 1.15rem; color: var(--accent-n4); margin-bottom: 15px; border: 1px solid #222; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.25rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease; text-decoration: none;
+        }
+        .btn-back:hover { color: #ffffff; background: #111111; border-color: var(--accent-n4); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title"><ruby>第<rt>だい</rt></ruby>31<ruby>課<rt>か</rt></ruby> (Bab 31)</span>
+        <h1 class="main-title">Niat, Rencana & Jadwal</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <h3>1. <ruby>動詞<rt>どうし</rt></ruby> (Kata Kerja)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana"><ruby>始<rt>はじ</rt></ruby>まります</td><td>Hajimarimasu</td><td>Dimulai [Partikel: が]</td><td>1</td></tr>
+                <tr><td class="kana"><ruby>続<rt>つづ</rt></ruby>けます</td><td>Tsuzukemasu</td><td>Melanjutkan / Meneruskan</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>見<rt>み</rt></ruby>つけます</td><td>Mitsukemasu</td><td>Menemukan</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>受<rt>う</rt></ruby>けます</td><td>Ukemasu</td><td>Mengikuti (ujian) [<i>shiken o ~</i>]</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>入学<rt>にゅうがく</rt></ruby>します</td><td>Nyuugaku shimasu</td><td>Masuk (sekolah/universitas) [Partikel: に]</td><td>3</td></tr>
+                <tr><td class="kana"><ruby>卒業<rt>そつぎょう</rt></ruby>します</td><td>Sotsugyou shimasu</td><td>Lulus (sekolah/universitas) [Partikel: を]</td><td>3</td></tr>
+                <tr><td class="kana"><ruby>休憩<rt>きゅうけい</rt></ruby>します</td><td>Kyuukei shimasu</td><td>Beristirahat sejenak</td><td>3</td></tr>
+            </table>
+
+            <h3>2. <ruby>名詞<rt>めいし</rt></ruby> (Kata Benda)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana"><ruby>映画館<rt>えいがかん</rt></ruby></td><td>Eigakan</td><td>Gedung bioskop</td></tr>
+                <tr><td class="kana"><ruby>村<rt>むら</rt></ruby></td><td>Mura</td><td>Desa</td></tr>
+                <tr><td class="kana"><ruby>都会<rt>とかい</rt></ruby></td><td>Tokai</td><td>Kota besar</td></tr>
+                <tr><td class="kana"><ruby>連休<rt>れんきゅう</rt></ruby></td><td>Renkyuu</td><td>Liburan berturut-turut</td></tr>
+                <tr><td class="kana"><ruby>予定<rt>よてい</rt></ruby></td><td>Yotei</td><td>Jadwal / Rencana</td></tr>
+                <tr><td class="kana"><ruby>本社<rt>ほんしゃ</rt></ruby> / <ruby>支店<rt>してん</rt></ruby></td><td>Honsha / Shiten</td><td>Kantor pusat / Kantor cabang</td></tr>
+                <tr><td class="kana">インターネット</td><td>Inta-netto</td><td>Internet</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-color: #333;">
+                <h3>🌟 RUMUS: <ruby>意向形<rt>いこうけい</rt></ruby> (Bentuk Maksud / Ajakan Kasual)</h3>
+                <p>Bentuk ini adalah versi kasual (biasa) dari <strong>～ましょう (~mashou)</strong>. Artinya "Ayo..." atau "Mari kita...". Sering dipakai saat berbicara pada diri sendiri atau teman akrab.</p>
+                <table class="te-table">
+                    <tr><th>Golongan</th><th>Bentuk ~ます</th><th>Bentuk Maksud / Ajakan</th></tr>
+                    <tr><td><strong>GOL. 1</strong> (Bunyi 'i' jadi 'o' + う)</td><td><ruby>行<rt>い</rt></ruby><span style="color:red">き</span>ます (Ikimasu)</td><td><ruby>行<rt>い</rt></ruby><span class="te-highlight">こう</span> (Ikou) = Ayo pergi</td></tr>
+                    <tr><td><strong>GOL. 1</strong> (Bunyi 'i' jadi 'o' + う)</td><td><ruby>休<rt>やす</rt></ruby><span style="color:red">み</span>ます (Yasumimasu)</td><td><ruby>休<rt>やす</rt></ruby><span class="te-highlight">もう</span> (Yasumou) = Ayo istirahat</td></tr>
+                    <tr><td><strong>GOL. 2</strong> (Ubah 'masu' jadi 'you')</td><td><ruby>食<rt>た</rt></ruby>べます (Tabemasu)</td><td><ruby>食<rt>た</rt></ruby>べ<span class="te-highlight">よう</span> (Tabeyou) = Ayo makan</td></tr>
+                    <tr><td><strong>GOL. 2</strong> (Ubah 'masu' jadi 'you')</td><td><ruby>見<rt>み</rt></ruby>ます (Mimasu)</td><td><ruby>見<rt>み</rt></ruby><span class="te-highlight">よう</span> (Miyou) = Ayo nonton</td></tr>
+                    <tr><td><strong>GOL. 3</strong> (Irregular)</td><td><ruby>来<rt>き</rt></ruby>ます (Kimasu)</td><td><strong class="te-highlight"><ruby>来<rt>こ</rt></ruby>よう</strong> (Koyou) = Ayo datang</td></tr>
+                    <tr><td><strong>GOL. 3</strong> (Irregular)</td><td>します (Shimasu)</td><td><strong class="te-highlight">しよう</strong> (Shiyou) = Ayo lakukan</td></tr>
+                </table>
+                <ul class="example-list" style="margin-top: 15px;">
+                    <li><div class="jp-text"><ruby>少<rt>すこ</rt></ruby>し <ruby>休<rt>やす</rt></ruby><strong class="te-highlight">もう</strong>。</div><div class="id-text">Ayo istirahat sebentar. (Bentuk biasa dari <ruby>休<rt>やす</rt></ruby>みましょう).</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #ff1493;">
+                <h3>1. Menyatakan Niat (～と <ruby>思<rt>おも</rt></ruby>って います)</h3>
+                <p>Gunakan Bentuk Maksud yang baru dipelajari ditambah <strong>～と <ruby>思<rt>おも</rt></ruby>って います</strong> untuk menyatakan <strong>"Saya bermaksud untuk..."</strong> atau <strong>"Saya berencana..."</strong>. Pola ini menunjukkan bahwa niat tersebut sudah dipikirkan sejak beberapa waktu yang lalu dan masih berlaku hingga sekarang.</p>
+                <div class="pattern"><ruby>意向形<rt>いこうけい</rt></ruby> (Bentuk Maksud) + と <ruby>思<rt>おも</rt></ruby>って います</div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>週末<rt>しゅうまつ</rt></ruby>は <ruby>海<rt>うみ</rt></ruby>へ <ruby>行<rt>い</rt></ruby>こ<strong style="color:#ff1493;">う と <ruby>思<rt>おも</rt></ruby>って います</strong>。</div><div class="id-text">Akhir pekan ini saya <strong>bermaksud/berencana</strong> pergi ke laut.</div></li>
+                    <li><div class="jp-text"><ruby>会社<rt>かいしゃ</rt></ruby>を <ruby>辞<rt>や</rt></ruby>めよ<strong style="color:#ff1493;">う と <ruby>思<rt>おも</rt></ruby>って います</strong>。</div><div class="id-text">Saya <strong>berniat</strong> untuk berhenti dari perusahaan.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #43a047;">
+                <h3>2. Menyatakan Tekad/Niat Kuat (～つもりです)</h3>
+                <p>Pola <strong>～つもりです (~tsumori desu)</strong> artinya <strong>"Berniat untuk..."</strong>. Dibandingkan dengan pola nomor 1, niat/tekad pada pola <i>tsumori</i> ini <strong>jauh lebih kuat dan pasti</strong>.</p>
+                <div class="pattern">Kata Kerja (<ruby>辞書形<rt>じしょけい</rt></ruby> / ない<ruby>形<rt>けい</rt></ruby>) + つもりです</div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>国<rt>くに</rt></ruby>へ <ruby>帰<rt>かえ</rt></ruby>っても、<ruby>日本語<rt>にほんご</rt></ruby>の <ruby>勉強<rt>べんきょう</rt></ruby>を <ruby>続<rt>つづ</rt></ruby>ける<strong style="color:#43a047;">つもりです</strong>。</div><div class="id-text">Meskipun pulang ke negara asal, saya <strong>sangat berniat</strong> melanjutkan belajar bahasa Jepang.</div></li>
+                    <li><div class="jp-text"><ruby>明日<rt>あした</rt></ruby>からは たばこを <ruby>吸<rt>す</rt></ruby>わない<strong style="color:#43a047;">つもりです</strong>。</div><div class="id-text">Mulai besok saya <strong>bertekad kuat</strong> untuk tidak merokok.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>3. Menyatakan Jadwal Pasti (～<ruby>予定<rt>よてい</rt></ruby>です)</h3>
+                <p>Pola <strong>～<ruby>予定<rt>よてい</rt></ruby>です (~yotei desu)</strong> digunakan untuk <strong>jadwal resmi, agenda, atau rencana yang sudah pasti dan objektif</strong> (biasanya ditetapkan oleh pihak lain atau organisasi).</p>
+                <div class="pattern">Kata Kerja (<ruby>辞書形<rt>じしょけい</rt></ruby>) / Kata Benda + の + <ruby>予定<rt>よてい</rt></ruby>です</div>
+                <ul class="example-list">
+                    <li><div class="jp-text">7<ruby>月<rt>がつ</rt></ruby>の <ruby>終<rt>お</rt></ruby>わりに ドイツへ <ruby>出張<rt>しゅっちょう</rt></ruby>する<strong style="color:var(--accent-n4);"><ruby>予定<rt>よてい</rt></ruby>です</strong>。</div><div class="id-text">Akhir bulan Juli <strong>dijadwalkan</strong> untuk tugas luar kota ke Jerman.</div></li>
+                    <li><div class="jp-text"><ruby>明日<rt>あした</rt></ruby>は <ruby>会議<rt>かいぎ</rt></ruby>の<strong style="color:var(--accent-n4);"><ruby>予定<rt>よてい</rt></ruby>です</strong>。</div><div class="id-text">Besok <strong>adalah jadwal</strong> rapat.</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan standar yang menggunakan tata bahasa Bab 31.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: <ruby>週末<rt>しゅうまつ</rt></ruby>は <ruby>何<rt>なに</rt></ruby>を しますか。</div>
+                    <div class="id-text">A: Akhir pekan akan melakukan apa?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: <ruby>子供<rt>こども</rt></ruby>と <ruby>遊園地<rt>ゆうえんち</rt></ruby>へ <ruby>行<rt>い</rt></ruby>こ<strong style="color:#ff1493;">う と <ruby>思<rt>おも</rt></ruby>って います</strong>。</div>
+                    <div class="id-text">B: Saya <strong>bermaksud</strong> pergi ke taman hiburan bersama anak.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: <ruby>今年<rt>ことし</rt></ruby>の <ruby>夏休<rt>なつやす</rt></ruby>みは <ruby>国<rt>くに</rt></ruby>へ <ruby>帰<rt>かえ</rt></ruby>りますか。</div>
+                    <div class="id-text">A: Liburan musim panas tahun ini apakah (Anda) akan pulang ke negara asal?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、<ruby>帰<rt>かえ</rt></ruby>らない<strong style="color:#43a047;">つもりです</strong>。<ruby>大学院<rt>だいがくいん</rt></ruby>の <ruby>試験<rt>しけん</rt></ruby>を <ruby>受<rt>う</rt></ruby>けますから。</div>
+                    <div class="id-text">B: Tidak, saya <strong>berniat kuat</strong> tidak pulang. Karena saya akan mengikuti ujian program pascasarjana.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: <ruby>飛行機<rt>ひこうき</rt></ruby>は <ruby>何時<rt>なんじ</rt></ruby>に <ruby>着<rt>つ</rt></ruby>くんですか。</div>
+                    <div class="id-text">A: Pesawatnya akan tiba jam berapa? (Ingin tahu)</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 11<ruby>時半<rt>じはん</rt></ruby>に <ruby>着<rt>つ</rt></ruby>く<strong style="color:var(--accent-n4);"><ruby>予定<rt>よてい</rt></ruby>です</strong>。</div>
+                    <div class="id-text">B: <strong>Dijadwalkan</strong> tiba pada pukul 11:30.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: ちょっと <ruby>休<rt>やす</rt></ruby><strong style="color:var(--accent-n4);">まない？</strong></div>
+                    <div class="id-text">A: Mau istirahat sebentar? (Bentuk kasual dari Yasumimasenka).</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: うん、<ruby>休<rt>やす</rt></ruby><strong style="color:var(--accent-n4);">もう</strong>。</div>
+                    <div class="id-text">B: Ya, <strong>ayo istirahat</strong>.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <a href="n4-gatekeeper.html" class="btn-back">⬅ Kembali ke Menu N4</a>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

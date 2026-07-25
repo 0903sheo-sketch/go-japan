@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 38</title>
+    <style>
+        /* Desain Minimalis, Profesional, Clean & Solid Black (No Glow) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #050505; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-n4: #1e88e5; /* Biru N4 */
+            --furigana-color: #4fc3f7; /* Biru muda agar furigana mudah dibaca */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 950px;
+            border-top: 3px solid var(--accent-n4);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-n4); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px; font-weight: bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-n4); border-bottom-color: var(--accent-n4); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Pengaturan Furigana (Ruby) */
+        ruby { ruby-align: center; }
+        rt { font-size: 0.7rem; color: var(--furigana-color); font-weight: normal; letter-spacing: 0;}
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-n4); font-weight: 600; }
+        tr:hover { background-color: #0a0a0a; }
+        .kana { font-weight: bold; font-size: 1.15rem; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: #0a0a0a; border-left: 4px solid var(--accent-n4);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 2px 2px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #000; padding: 15px; text-align: center; font-size: 1.15rem; color: var(--accent-n4); margin-bottom: 15px; border: 1px solid #222; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.25rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease; text-decoration: none;
+        }
+        .btn-back:hover { color: #ffffff; background: #111111; border-color: var(--accent-n4); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title"><ruby>第<rt>だい</rt></ruby>38<ruby>課<rt>か</rt></ruby> (Bab 38)</span>
+        <h1 class="main-title">Nominalisasi (Kata Kerja menjadi Kata Benda)</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <h3>1. <ruby>動詞<rt>どうし</rt></ruby> (Kata Kerja)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana"><ruby>育<rt>そだ</rt></ruby>てます</td><td>Sodatemasu</td><td>Membesarkan / Memelihara</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>運<rt>はこ</rt></ruby>びます</td><td>Hakobimasu</td><td>Mengangkut / Membawa</td><td>1</td></tr>
+                <tr><td class="kana"><ruby>亡<rt>な</rt></ruby>くなります</td><td>Nakunarimasu</td><td>Meninggal dunia (Eufemisme dari Shinu)</td><td>1</td></tr>
+                <tr><td class="kana"><ruby>入院<rt>にゅういん</rt></ruby>します</td><td>Nyuuin shimasu</td><td>Masuk rumah sakit</td><td>3</td></tr>
+                <tr><td class="kana"><ruby>退院<rt>たいいん</rt></ruby>します</td><td>Taiin shimasu</td><td>Keluar rumah sakit / Pulang</td><td>3</td></tr>
+                <tr><td class="kana"><ruby>入<rt>い</rt></ruby>れます</td><td>Ireru</td><td>Menghidupkan (Saklar / Listrik)</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>切<rt>き</rt></ruby>ります</td><td>Kiru</td><td>Mematikan (Saklar / Listrik)</td><td>1</td></tr>
+                <tr><td class="kana"><ruby>掛<rt>か</rt></ruby>けます</td><td>Kakeru</td><td>Mengunci [<ruby>鍵<rt>かぎ</rt></ruby>を～]</td><td>2</td></tr>
+            </table>
+
+            <h3>2. <ruby>形容詞<rt>けいようし</rt></ruby> (Kata Sifat)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana"><ruby>気持<rt>きも</rt></ruby>ちが いい</td><td>Kimochi ga ii</td><td>Perasaannya enak / Nyaman</td></tr>
+                <tr><td class="kana"><ruby>気持<rt>きも</rt></ruby>ちが <ruby>悪<rt>わる</rt></ruby>い</td><td>Kimochi ga warui</td><td>Perasaannya tidak enak / Menjijikkan</td></tr>
+                <tr><td class="kana"><ruby>危険<rt>きけん</rt></ruby>（な）</td><td>Kiken (na)</td><td>Berbahaya</td></tr>
+            </table>
+
+            <h3>3. <ruby>名詞<rt>めいし</rt></ruby> (Kata Benda)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana">うそ</td><td>Uso</td><td>Bohong / Dusta</td></tr>
+                <tr><td class="kana"><ruby>電源<rt>でんげん</rt></ruby></td><td>Dengen</td><td>Power / Sumber listrik</td></tr>
+                <tr><td class="kana"><ruby>習慣<rt>しゅうかん</rt></ruby></td><td>Shuukan</td><td>Kebiasaan</td></tr>
+                <tr><td class="kana"><ruby>双子<rt>ふたご</rt></ruby></td><td>Futago</td><td>Anak kembar</td></tr>
+                <tr><td class="kana"><ruby>海岸<rt>かいがん</rt></ruby></td><td>Kaigan</td><td>Pantai / Pesisir</td></tr>
+                <tr><td class="kana"><ruby>工場<rt>こうじょう</rt></ruby></td><td>Koujou</td><td>Pabrik</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-color: #333;">
+                <h3>1. Menjadikan Kata Kerja sebagai Subjek (～のは)</h3>
+                <p>Dalam bahasa Jepang, Anda tidak bisa langsung memberikan kata sifat pada kata kerja. Anda harus <strong>mengubah kata kerja menjadi kata benda terlebih dahulu dengan menambahkan の (no)</strong>. Setelah itu, baru bisa diikuti partikel <strong>は (wa)</strong> dan kata sifat.</p>
+                <div class="pattern">V-<ruby>辞書形<rt>じしょけい</rt></ruby> (Kamus) + <strong style="color:var(--accent-n4);">のは</strong> + Kata Sifat + です</div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>音楽<rt>おんがく</rt></ruby>を <ruby>聞<rt>き</rt></ruby>く<strong style="color:var(--accent-n4);">のは</strong> <ruby>楽<rt>たの</rt></ruby>しいです。</div><div class="id-text">Mendengarkan musik <strong>itu</strong> menyenangkan.</div></li>
+                    <li><div class="jp-text"><ruby>一人<rt>ひとり</rt></ruby>で <ruby>病院<rt>びょういん</rt></ruby>へ <ruby>行<rt>い</rt></ruby>く<strong style="color:var(--accent-n4);">のは</strong> <ruby>心細<rt>こころぼそ</rt></ruby>いです。</div><div class="id-text">Pergi ke rumah sakit sendirian <strong>itu</strong> membuat cemas/kesepian.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #ff1493;">
+                <h3>2. Menyatakan Hobi / Kemampuan (～のが)</h3>
+                <p>Sama seperti fungsi di atas, tetapi diikuti dengan partikel <strong>が (ga)</strong>. Pola ini sering digunakan bersama kata sifat yang menyatakan preferensi atau keahlian, seperti: <ruby>好<rt>す</rt></ruby>き (suka), <ruby>嫌<rt>きら</rt></ruby>い (benci), <ruby>上手<rt>じょうず</rt></ruby> (pintar), <ruby>下手<rt>へた</rt></ruby> (payah), <ruby>早<rt>はや</rt></ruby>い (cepat), <ruby>遅<rt>おそ</rt></ruby>い (lambat).</p>
+                <div class="pattern">V-<ruby>辞書形<rt>じしょけい</rt></ruby> (Kamus) + <strong style="color:#ff1493;">のが</strong> + Suka / Pintar / dll + です</div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>私<rt>わたし</rt></ruby>は <ruby>絵<rt>え</rt></ruby>を <ruby>描<rt>か</rt></ruby>く<strong style="color:#ff1493;">のが</strong> <ruby>好<rt>す</rt></ruby>きです。</div><div class="id-text">Saya suka (<strong>kegiatan</strong>) menggambar.</div></li>
+                    <li><div class="jp-text"><ruby>山田<rt>やまだ</rt></ruby>さんは <ruby>走<rt>はし</rt></ruby>る<strong style="color:#ff1493;">のが</strong> <ruby>速<rt>はや</rt></ruby>いです。</div><div class="id-text">Sdr. Yamada (<strong>kegiatan</strong>) berlarinya cepat.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #43a047;">
+                <h3>3. Lupa Melakukan Sesuatu (～のを <ruby>忘<rt>わす</rt></ruby>れました)</h3>
+                <p>Jika Anda lupa membawa barang, Anda menggunakan benda langsung (Contoh: Kunci o wasuremashita). Tapi jika Anda <strong>lupa melakukan suatu kegiatan</strong> (lupa mengunci), gunakan pola kata kerja diubah menjadi benda dengan <strong>のを (no o)</strong>.</p>
+                <div class="pattern">V-<ruby>辞書形<rt>じしょけい</rt></ruby> (Kamus) + <strong style="color:#43a047;">のを</strong> <ruby>忘<rt>わす</rt></ruby>れました</div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>薬<rt>くすり</rt></ruby>を <ruby>飲<rt>の</rt></ruby>む<strong style="color:#43a047;">のを</strong> <ruby>忘<rt>わす</rt></ruby>れました。</div><div class="id-text">Saya lupa (<strong>kegiatan</strong>) meminum obat.</div></li>
+                    <li><div class="jp-text"><ruby>車<rt>くるま</rt></ruby>の <ruby>窓<rt>まど</rt></ruby>を <ruby>閉<rt>し</rt></ruby>める<strong style="color:#43a047;">のを</strong> <ruby>忘<rt>わす</rt></ruby>れました。</div><div class="id-text">Saya lupa <strong>menutup</strong> jendela mobil.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. Tahukah kamu bahwa...? (～のを <ruby>知<rt>し</rt></ruby>って いますか)</h3>
+                <p>Gunakan pola ini untuk menanyakan apakah seseorang mengetahui sebuah informasi/berita. Anda menggabungkan seluruh kalimat fakta menjadi benda dengan partikel <strong>のを (no o)</strong>. Syaratnya: Kalimat di depan の harus dalam <strong><ruby>普通体<rt>ふつうたい</rt></ruby> (Bentuk Biasa)</strong>.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>鈴木<rt>すずき</rt></ruby>さんが <ruby>来月<rt>らいげつ</rt></ruby> <ruby>結婚<rt>けっこん</rt></ruby>する<strong style="color:var(--accent-n4);">のを</strong> <ruby>知<rt>し</rt></ruby>って いますか。</div><div class="id-text">Tahukah Anda <strong>bahwa</strong> Sdr. Suzuki akan menikah bulan depan?</div></li>
+                    <li><div class="jp-text"><ruby>木村<rt>きむら</rt></ruby>さんに <ruby>赤<rt>あか</rt></ruby>ちゃんが <ruby>生<rt>う</rt></ruby>まれた<strong style="color:var(--accent-n4);">のを</strong> <ruby>知<rt>し</rt></ruby>って いますか。</div><div class="id-text">Tahukah Anda <strong>bahwa</strong> Sdr. Kimura telah melahirkan bayi?</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan standar yang sering muncul di Bab 38.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: テニスを する<strong style="color:var(--accent-n4);">のと</strong> <ruby>見<rt>み</rt></ruby>る<strong style="color:var(--accent-n4);">のと</strong>、どちらが <ruby>好<rt>す</rt></ruby>きですか。</div>
+                    <div class="id-text">A: Antara (kegiatan) bermain tenis dan menonton tenis, mana yang lebih Anda suka?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: わたしは <ruby>見<rt>み</rt></ruby>る<strong style="color:#ff1493;">のが</strong> <ruby>好<rt>す</rt></ruby>きです。</div>
+                    <div class="id-text">B: Saya lebih suka (<strong>kegiatan</strong>) menontonnya.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: あっ、<ruby>車<rt>くるま</rt></ruby>の <ruby>窓<rt>まど</rt></ruby>を <ruby>閉<rt>し</rt></ruby>める<strong style="color:#43a047;">のを</strong> <ruby>忘<rt>わす</rt></ruby>れました。</div>
+                    <div class="id-text">A: Ah, saya lupa (<strong>kegiatan</strong>) menutup jendela mobil.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: じゃ、すぐ <ruby>戻<rt>もど</rt></ruby>りましょう。</div>
+                    <div class="id-text">B: Kalau begitu, mari segera kembali (ke sana).</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: <ruby>山田<rt>やまだ</rt></ruby>さんが <ruby>入院<rt>にゅういん</rt></ruby>した<strong style="color:var(--accent-n4);">のを</strong> <ruby>知<rt>し</rt></ruby>って いますか。</div>
+                    <div class="id-text">A: Tahukah Anda <strong>bahwa</strong> Sdr. Yamada masuk rumah sakit?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、<ruby>知<rt>し</rt></ruby>りませんでした。いつですか。</div>
+                    <div class="id-text">B: Tidak, saya tidak tahu. Kapan (kejadiannya)?</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: <ruby>初<rt>はじ</rt></ruby>めて <ruby>日本<rt>にほん</rt></ruby>の <ruby>料理<rt>りょうり</rt></ruby>を <ruby>食<rt>た</rt></ruby>べた<strong style="color:var(--accent-n4);">のは</strong> いつですか。</div>
+                    <div class="id-text">A: (Waktu) pertama kali memakan masakan Jepang <strong>itu</strong> kapan?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: ３<ruby>年前<rt>ねんまえ</rt></ruby>です。</div>
+                    <div class="id-text">B: 3 tahun yang lalu.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <a href="n4-gatekeeper.html" class="btn-back">⬅ Kembali ke Menu N4</a>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 42</title>
+    <style>
+        /* Desain Minimalis, Profesional, Clean & Solid Black (No Glow) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #050505; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-n4: #1e88e5; /* Biru N4 */
+            --furigana-color: #4fc3f7; /* Biru muda agar furigana mudah dibaca */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 950px;
+            border-top: 3px solid var(--accent-n4);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-n4); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px; font-weight: bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-n4); border-bottom-color: var(--accent-n4); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Pengaturan Furigana (Ruby) */
+        ruby { ruby-align: center; }
+        rt { font-size: 0.7rem; color: var(--furigana-color); font-weight: normal; letter-spacing: 0;}
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-n4); font-weight: 600; }
+        tr:hover { background-color: #0a0a0a; }
+        .kana { font-weight: bold; font-size: 1.15rem; }
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: #0a0a0a; border-left: 4px solid var(--accent-n4);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 2px 2px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #000; padding: 15px; text-align: center; font-size: 1.15rem; color: var(--accent-n4); margin-bottom: 15px; border: 1px solid #222; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.25rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease; text-decoration: none;
+        }
+        .btn-back:hover { color: #ffffff; background: #111111; border-color: var(--accent-n4); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title"><ruby>第<rt>だい</rt></ruby>42<ruby>課<rt>か</rt></ruby> (Bab 42)</span>
+        <h1 class="main-title">Tujuan, Manfaat & Penggunaan</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <h3>1. <ruby>動詞<rt>どうし</rt></ruby> (Kata Kerja)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana"><ruby>包<rt>つつ</rt></ruby>みます</td><td>Tsutsumimasu</td><td>Membungkus</td><td>1</td></tr>
+                <tr><td class="kana"><ruby>沸<rt>わ</rt></ruby>かします</td><td>Wakashimasu</td><td>Mendidihkan / Memasak air</td><td>1</td></tr>
+                <tr><td class="kana"><ruby>混<rt>ま</rt></ruby>ぜます</td><td>Mazemasu</td><td>Mencampur / Mengaduk</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>計算<rt>けいさん</rt></ruby>します</td><td>Keisan shimasu</td><td>Menghitung (angka/uang)</td><td>3</td></tr>
+                <tr><td class="kana"><ruby>並<rt>なら</rt></ruby>びます</td><td>Narabimasu</td><td>Berbaris / Mengantre</td><td>1</td></tr>
+            </table>
+
+            <h3>2. <ruby>名詞<rt>めいし</rt></ruby> (Bidang & Hal Umum)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana"><ruby>教育<rt>きょういく</rt></ruby></td><td>Kyouiku</td><td>Pendidikan</td></tr>
+                <tr><td class="kana"><ruby>文化<rt>ぶんか</rt></ruby></td><td>Bunka</td><td>Kebudayaan</td></tr>
+                <tr><td class="kana"><ruby>社会<rt>しゃかい</rt></ruby></td><td>Shakai</td><td>Masyarakat / Sosial</td></tr>
+                <tr><td class="kana"><ruby>政治<rt>せいじ</rt></ruby></td><td>Seiji</td><td>Politik</td></tr>
+                <tr><td class="kana"><ruby>法律<rt>ほうりつ</rt></ruby></td><td>Houritsu</td><td>Hukum</td></tr>
+                <tr><td class="kana"><ruby>戦争<rt>せんそう</rt></ruby></td><td>Sensou</td><td>Perang</td></tr>
+                <tr><td class="kana"><ruby>平和<rt>へいわ</rt></ruby></td><td>Heiwa</td><td>Perdamaian</td></tr>
+                <tr><td class="kana"><ruby>目的<rt>もくてき</rt></ruby></td><td>Mokuteki</td><td>Tujuan / Maksud</td></tr>
+            </table>
+
+            <h3>3. <ruby>名詞<rt>めいし</rt></ruby> (Profesi & Benda)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana"><ruby>弁護士<rt>べんごし</rt></ruby></td><td>Bengoshi</td><td>Pengacara</td></tr>
+                <tr><td class="kana"><ruby>音楽家<rt>おんがくか</rt></ruby></td><td>Ongakuka</td><td>Musisi</td></tr>
+                <tr><td class="kana">ミキサー</td><td>Mikisaa</td><td>Mixer / Blender</td></tr>
+                <tr><td class="kana">やかん</td><td>Yakan</td><td>Teko (untuk menjerang air)</td></tr>
+                <tr><td class="kana">ふた</td><td>Futa</td><td>Tutup (Panci/Botol)</td></tr>
+            </table>
+
+            <h3>4. <ruby>形容詞<rt>けいようし</rt></ruby> (Kata Sifat)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana"><ruby>丈夫<rt>じょうぶ</rt></ruby>（な）</td><td>Joubu (na)</td><td>Kuat / Awet (Barang/Badan)</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-color: #333;">
+                <h3>1. Menyatakan Tujuan / Demi (～ために)</h3>
+                <p>Pola <strong>～ために (~tame ni)</strong> digunakan untuk menyatakan bahwa suatu tindakan dilakukan "demi" atau "untuk (tujuan)" sesuatu/seseorang. Berbeda dengan <i>~you ni</i> di Bab 36, kata kerja di depan <i>tame ni</i> haruslah berupa <strong>tindakan yang bisa disengaja (Bentuk Kamus)</strong>.</p>
+                <div class="pattern">
+                    V-<ruby>辞書形<rt>じしょけい</rt></ruby> (Kamus) + <strong style="color:var(--accent-n4);">ために</strong>、～<br>
+                    Kata Benda + <strong style="color:var(--accent-n4);">の ために</strong>、～
+                </div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>自分<rt>じぶん</rt></ruby>の <ruby>店<rt>みせ</rt></ruby>を <ruby>持<rt>も</rt></ruby>つ<strong style="color:var(--accent-n4);">ために</strong>、<ruby>貯金<rt>ちょきん</rt></ruby>して います。</div><div class="id-text">Saya menabung <strong>untuk (tujuan)</strong> memiliki toko sendiri.</div></li>
+                    <li><div class="jp-text"><ruby>家族<rt>かぞく</rt></ruby><strong style="color:var(--accent-n4);">の ために</strong>、うちを <ruby>建<rt>た</rt></ruby>てます。</div><div class="id-text">Saya akan membangun rumah <strong>demi (untuk)</strong> keluarga.</div></li>
+                    <li><div class="jp-text"><ruby>健康<rt>けんこう</rt></ruby><strong style="color:var(--accent-n4);">の ために</strong>、<ruby>毎朝<rt>まいあさ</rt></ruby> <ruby>走<rt>はし</rt></ruby>って います。</div><div class="id-text"><strong>Demi</strong> kesehatan, saya berlari setiap pagi.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #ff1493;">
+                <h3>2. Digunakan Untuk / Berguna Untuk (～のに)</h3>
+                <p>Pola <strong>～のに (~no ni)</strong> sering dipakai bersama dengan kata-kata seperti <ruby>使<rt>つか</rt></ruby>います (menggunakan), いいです (bagus), <ruby>便利<rt>べんり</rt></ruby>です (praktis), <ruby>役<rt>やく</rt></ruby>に <ruby>立<rt>た</rt></ruby>ちます (berguna), atau kata kerja yang menunjukkan waktu/biaya seperti かかります (membutuhkan waktu/biaya).</p>
+                <div class="pattern">
+                    V-<ruby>辞書形<rt>じしょけい</rt></ruby> (Kamus) + <strong style="color:#ff1493;">のに</strong> + <ruby>使<rt>つか</rt></ruby>います / いいです / かかります<br>
+                    Kata Benda + <strong style="color:#ff1493;">に</strong> + <ruby>使<rt>つか</rt></ruby>います / いいです / かかります
+                </div>
+                <ul class="example-list">
+                    <li><div class="jp-text">この はさみは <ruby>花<rt>はな</rt></ruby>を <ruby>切<rt>き</rt></ruby>る<strong style="color:#ff1493;">のに</strong> <ruby>使<rt>つか</rt></ruby>います。</div><div class="id-text">Gunting ini digunakan <strong>untuk</strong> memotong bunga.</div></li>
+                    <li><div class="jp-text">この かばんは <ruby>大<rt>おお</rt></ruby>きくて、<ruby>旅行<rt>りょこう</rt></ruby><strong style="color:#ff1493;">に</strong> <ruby>便利<rt>べんり</rt></ruby>です。</div><div class="id-text">Tas ini besar, (sehingga) praktis <strong>untuk</strong> bepergian. (Kata benda <ruby>旅行<rt>りょこう</rt></ruby> langsung ditambah に).</div></li>
+                    <li><div class="jp-text"><ruby>家<rt>いえ</rt></ruby>を <ruby>建<rt>た</rt></ruby>てる<strong style="color:#ff1493;">のに</strong> ３<ruby>千万<rt>せんまん</rt></ruby><ruby>円<rt>えん</rt></ruby> かかります。</div><div class="id-text">Membutuhkan 30 juta Yen <strong>untuk</strong> membangun rumah.</div></li>
+                </ul>
+            </div>
+            
+            <div class="grammar-box" style="border-left-color: #43a047;">
+                <h3>* Catatan: Beda ～ために dan ～のに</h3>
+                <p>Meskipun dalam bahasa Indonesia keduanya sering diterjemahkan "Untuk", penggunaannya sangat berbeda:<br>
+                - <strong>ために (Tame ni)</strong>: Fokus pada "TUJUAN/NIAT" yang ingin dicapai oleh subjek. (Saya melakukan X demi mencapai Y).<br>
+                - <strong>のに (No ni)</strong>: Fokus pada "FUNGSI/KEGUNAAN/WAKTU" dari suatu benda atau kegiatan. (Alat ini digunakan untuk X / Butuh waktu lama untuk Y).</p>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan standar yang sering muncul di Bab 42.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: なぜ <ruby>一人<rt>ひとり</rt></ruby>で <ruby>山<rt>やま</rt></ruby>に <ruby>登<rt>のぼ</rt></ruby>るんですか。</div>
+                    <div class="id-text">A: Mengapa (Anda) mendaki gunung sendirian?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: <ruby>一人<rt>ひとり</rt></ruby>に なって、<ruby>考<rt>かんが</rt></ruby>える<strong style="color:var(--accent-n4);">ために</strong>、<ruby>行<rt>い</rt></ruby>くんです。</div>
+                    <div class="id-text">B: Saya pergi <strong>untuk (tujuan)</strong> menyendiri dan berpikir.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: <ruby>将来<rt>しょうらい</rt></ruby> <ruby>何<rt>なに</rt></ruby>に なりたいですか。</div>
+                    <div class="id-text">A: Di masa depan, (Anda) ingin menjadi apa?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: <ruby>弁護士<rt>べんごし</rt></ruby>に なりたいです。</div>
+                    <div class="id-text">B: Saya ingin menjadi pengacara.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: <ruby>困<rt>こま</rt></ruby>っている <ruby>人<rt>ひと</rt></ruby><strong style="color:var(--accent-n4);">の ために</strong> 働きたいんです。</div>
+                    <div class="id-text">B: Saya ingin bekerja <strong>demi</strong> orang-orang yang sedang kesulitan.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: この アプリは <ruby>何<rt>なん</rt></ruby><strong style="color:#ff1493;">に</strong> <ruby>使<rt>つか</rt></ruby>うんですか。</div>
+                    <div class="id-text">A: Aplikasi ini digunakan <strong>untuk</strong> apa? (Tanya kegunaan).</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: カロリーを <ruby>計算<rt>けいさん</rt></ruby>する<strong style="color:#ff1493;">のに</strong> <ruby>使<rt>つか</rt></ruby>います。</div>
+                    <div class="id-text">B: Digunakan <strong>untuk</strong> menghitung kalori.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: <ruby>会社<rt>かいしゃ</rt></ruby>へ <ruby>行<rt>い</rt></ruby>く<strong style="color:#ff1493;">のに</strong>、どのくらい かかりますか。</div>
+                    <div class="id-text">A: <strong>Untuk</strong> pergi ke perusahaan, membutuhkan waktu berapa lama?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: 2<ruby>時間<rt>じかん</rt></ruby> かかります。</div>
+                    <div class="id-text">B: Membutuhkan 2 jam.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <a href="n4-gatekeeper.html" class="btn-back">⬅ Kembali ke Menu N4</a>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

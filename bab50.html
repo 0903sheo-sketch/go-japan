@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 50</title>
+    <style>
+        /* Desain Minimalis, Profesional, Clean & Solid Black (No Glow) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #050505; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-n4: #1e88e5; /* Biru N4 */
+            --furigana-color: #4fc3f7; /* Biru muda agar furigana mudah dibaca */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 950px;
+            border-top: 3px solid var(--accent-n4);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-n4); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px; font-weight: bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-n4); border-bottom-color: var(--accent-n4); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Pengaturan Furigana (Ruby) */
+        ruby { ruby-align: center; }
+        rt { font-size: 0.7rem; color: var(--furigana-color); font-weight: normal; letter-spacing: 0;}
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-n4); font-weight: 600; }
+        tr:hover { background-color: #0a0a0a; }
+        .kana { font-weight: bold; font-size: 1.15rem; }
+
+        /* Tabel Khusus Rumus */
+        .te-table th { background-color: #111; color: #fff; text-align: center; border: 1px solid #222;}
+        .te-table td { text-align: center; border: 1px solid #222; font-size: 1.15rem;}
+        .te-highlight { color: var(--accent-n4); font-weight: bold;}
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: #0a0a0a; border-left: 4px solid var(--accent-n4);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 2px 2px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #000; padding: 15px; text-align: center; font-size: 1.15rem; color: var(--accent-n4); margin-bottom: 15px; border: 1px solid #222; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.25rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease; text-decoration: none;
+        }
+        .btn-back:hover { color: #ffffff; background: #111111; border-color: var(--accent-n4); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title"><ruby>第<rt>だい</rt></ruby>50<ruby>課<rt>か</rt></ruby> (Bab 50)</span>
+        <h1 class="main-title">Bahasa Merendah (Kenjougo)</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Sama seperti Bab 49, ada kata kerja khusus yang harus Anda hafalkan. Namun kali ini, kata kerja ini <strong>hanya digunakan untuk aksi yang dilakukan oleh Anda sendiri atau kelompok/perusahaan Anda</strong>.</p>
+
+            <h3>1. <ruby>謙譲語<rt>けんじょうご</rt></ruby> (Kata Kerja Merendah Khusus)</h3>
+            <table>
+                <tr><th>Bentuk Merendah (Kenjougo)</th><th>Asal Kata (Bentuk Biasa)</th><th>Arti</th></tr>
+                <tr><td class="kana"><ruby>参<rt>まい</rt></ruby>ります</td><td><ruby>行<rt>い</rt></ruby>きます / <ruby>来<rt>き</rt></ruby>ます</td><td>Saya Pergi / Saya Datang</td></tr>
+                <tr><td class="kana">おります</td><td>います</td><td>Saya Ada / Berada</td></tr>
+                <tr><td class="kana">いただきます</td><td><ruby>食<rt>た</rt></ruby>べます / <ruby>飲<rt>の</rt></ruby>みます / もらいます</td><td>Saya Makan / Minum / Menerima</td></tr>
+                <tr><td class="kana"><ruby>申<rt>もう</rt></ruby>します</td><td><ruby>言<rt>い</rt></ruby>います</td><td>Saya Berkata / Bernama</td></tr>
+                <tr><td class="kana">いたします</td><td>します</td><td>Saya Melakukan</td></tr>
+                <tr><td class="kana"><ruby>拝見<rt>はいけん</rt></ruby>します</td><td><ruby>見<rt>み</rt></ruby>ます</td><td>Saya Melihat</td></tr>
+                <tr><td class="kana"><ruby>存<rt>ぞん</rt></ruby>じて おります</td><td><ruby>知<rt>し</rt></ruby>って います</td><td>Saya Mengetahui</td></tr>
+                <tr><td class="kana"><ruby>伺<rt>うかが</rt></ruby>います</td><td><ruby>聞<rt>き</rt></ruby>きます / <ruby>行<rt>い</rt></ruby>きます (ke tempat atasan)</td><td>Saya Bertanya / Saya Berkunjung</td></tr>
+                <tr><td class="kana">お<ruby>目<rt>め</rt></ruby>に かかります</td><td><ruby>会<rt>あ</rt></ruby>います</td><td>Saya Bertemu</td></tr>
+            </table>
+
+            <h3>2. <ruby>丁寧語<rt>ていねいご</rt></ruby> (Kata Sangat Sopan)</h3>
+            <table>
+                <tr><th>Bentuk Sangat Sopan</th><th>Bentuk Biasa</th><th>Arti</th></tr>
+                <tr><td class="kana">ございます</td><td>あります</td><td>Ada (Benda mati)</td></tr>
+                <tr><td class="kana">～で ございます</td><td>～です</td><td>Adalah... (Kopula)</td></tr>
+                <tr><td class="kana">よろしいでしょうか</td><td>いいですか</td><td>Apakah boleh? / Apakah tidak apa-apa?</td></tr>
+            </table>
+
+            <h3>3. <ruby>名詞<rt>めいし</rt></ruby> (Kata Benda Lainnya)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana"><ruby>私<rt>わたくし</rt></ruby></td><td>Watakushi</td><td>Saya (Sangat formal)</td></tr>
+                <tr><td class="kana">ガイド</td><td>Gaido</td><td>Pemandu (Tour guide)</td></tr>
+                <tr><td class="kana">スケジュール / <ruby>予定<rt>よてい</rt></ruby></td><td>Sukejuuru / Yotei</td><td>Jadwal / Rencana</td></tr>
+                <tr><td class="kana"><ruby>賞金<rt>しょうきん</rt></ruby></td><td>Shoukin</td><td>Uang hadiah (lomba)</td></tr>
+                <tr><td class="kana"><ruby>心<rt>こころ</rt></ruby>から</td><td>Kokoro kara</td><td>Dari hati / Dengan tulus</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-color: #333;">
+                <h3>1. Bahasa Merendah (お + V-masu + します)</h3>
+                <p>Pola ini digunakan saat <strong>Anda melakukan sesuatu untuk lawan bicara</strong> (atau tindakan Anda melibatkan mereka). Dengan merendahkan tindakan Anda, Anda secara otomatis meninggikan mereka.</p>
+                <div class="pattern">
+                    <ruby>私<rt>わたし</rt></ruby> は + お + V-(Coret ます) + <strong style="color:var(--accent-n4);">します</strong>
+                </div>
+                <ul class="example-list">
+                    <li><div class="jp-text">（<ruby>私<rt>わたし</rt></ruby>が） <ruby>重<rt>おも</rt></ruby>い <ruby>荷物<rt>にもつ</rt></ruby>を <strong>お</strong><ruby>持<rt>も</rt></ruby>ち<strong class="te-highlight">します</strong>。</div><div class="id-text">Saya akan <strong>(dengan rendah hati) membawakan</strong> barang bawaan yang berat (untuk Anda).</div></li>
+                    <li><div class="jp-text"><ruby>後<rt>あと</rt></ruby>で <strong>お</strong><ruby>電話<rt>でんわ</rt></ruby><strong class="te-highlight">します</strong>。</div><div class="id-text">Nanti saya akan <strong>menelpon</strong> (Anda).</div></li>
+                    <li><div class="jp-text"><ruby>明日<rt>あした</rt></ruby>の <ruby>予定<rt>よてい</rt></ruby>を <strong>お</strong><ruby>伝<rt>つた</rt></ruby>え<strong class="te-highlight">します</strong>。</div><div class="id-text">Saya akan <strong>menyampaikan</strong> jadwal besok (kepada Anda).</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #ff1493;">
+                <h3>2. Bahasa Merendah untuk Gol. 3 (ご + Benda + します)</h3>
+                <p>Khusus untuk kata kerja Golongan 3 yang berasal dari dua huruf Kanji (seperti Annai, Shoukai, Setsumei), awalan yang digunakan adalah <strong>ご (go)</strong>, dan "shimasu" tetap digunakan.</p>
+                <div class="pattern">
+                    <ruby>私<rt>わたし</rt></ruby> は + ご + Kata Benda (Gol.3) + <strong style="color:#ff1493;">します</strong>
+                </div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>私<rt>わたくし</rt></ruby>が <strong>ご</strong><ruby>案内<rt>あんない</rt></ruby><strong style="color:#ff1493;">します</strong>。</div><div class="id-text">Saya akan <strong>memandu</strong> (Anda).</div></li>
+                    <li><div class="jp-text"><ruby>社長<rt>しゃちょう</rt></ruby>に <ruby>山田<rt>やまだ</rt></ruby>さんを <strong>ご</strong><ruby>紹介<rt>しょうかい</rt></ruby><strong style="color:#ff1493;">します</strong>。</div><div class="id-text">Saya akan <strong>memperkenalkan</strong> Sdr. Yamada kepada Presiden Direktur.</div></li>
+                    <li><div class="jp-text"><ruby>今日<rt>きょう</rt></ruby>の <ruby>結果<rt>けっか</rt></ruby>を <strong>ご</strong><ruby>報告<rt>ほうこく</rt></ruby><strong style="color:#ff1493;">します</strong>。</div><div class="id-text">Saya akan <strong>melaporkan</strong> hasil hari ini.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #43a047;">
+                <h3>3. Kata Kerja Merendah Khusus</h3>
+                <p>Gunakan kosakata khusus (dari Tabel 1) saat membicarakan diri Anda sendiri di depan atasan atau pelanggan. Ini sangat sering diucapkan saat wawancara kerja, melayani pelanggan, atau menelepon ke kantor klien.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">（<ruby>来<rt>き</rt></ruby>ました ➔） インドネシアから <strong style="color:#43a047;"><ruby>参<rt>まい</rt></ruby>りました</strong>。</div><div class="id-text">Saya <strong>datang</strong> dari Indonesia.</div></li>
+                    <li><div class="jp-text">（<ruby>言<rt>い</rt></ruby>います ➔） <ruby>私<rt>わたくし</rt></ruby>は アリと <strong style="color:#43a047;"><ruby>申<rt>もう</rt></ruby>します</strong>。</div><div class="id-text">Saya <strong>bernama / menyebut diri saya</strong> Ali. (Standar perkenalan bisnis).</div></li>
+                    <li><div class="jp-text">（<ruby>見<rt>み</rt></ruby>ました ➔） はい、その メールは もう <strong style="color:#43a047;"><ruby>拝見<rt>はいけん</rt></ruby>しました</strong>。</div><div class="id-text">Ya, email tersebut sudah saya <strong>lihat/baca</strong>.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box">
+                <h3>4. Bahasa Sopan Ekstra (ございます / で ございます)</h3>
+                <p>Gunakan ini sebagai pengganti "arimasu" (untuk benda) dan "desu". Ini tidak merendahkan siapa pun, tetapi hanya meningkatkan nuansa kesopanan dan formalitas (Teineigo) secara umum. Sering dipakai di pengumuman stasiun, pramugari, atau kasir.</p>
+                <ul class="example-list">
+                    <li><div class="jp-text">（あります ➔） お<ruby>飲<rt>の</rt></ruby>み<ruby>物<rt>もの</rt></ruby>は あちらに <strong style="color:var(--accent-n4);">ございます</strong>。</div><div class="id-text">Untuk minuman <strong>ada</strong> di sebelah sana.</div></li>
+                    <li><div class="jp-text">（です ➔） こちらは <ruby>東京<rt>とうきょう</rt></ruby>ホテル<strong style="color:var(--accent-n4);">で ございます</strong>。</div><div class="id-text">Ini <strong>adalah</strong> Tokyo Hotel. (Cara mengangkat telepon di hotel).</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan standar yang sering muncul di Bab 50, khususnya dalam situasi bisnis dan perkenalan formal.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: はじめまして。ABC<ruby>会社<rt>かいしゃ</rt></ruby>の サントスと <strong style="color:#43a047;"><ruby>申<rt>もう</rt></ruby>します</strong>。</div>
+                    <div class="id-text">A: Salam kenal. Saya <strong>bernama (dari)</strong> perusahaan ABC, Santos.</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: <ruby>山田<rt>やまだ</rt></ruby><strong style="color:var(--accent-n4);">で ございます</strong>。どうぞ よろしく お<ruby>願<rt>ねが</rt></ruby>いいたします。</div>
+                    <div class="id-text">B: Saya <strong>adalah</strong> Yamada. Mohon kerja samanya. (Menggunakan <i>de gozaimasu</i> dan <i>itashimasu</i>).</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: その カタログ、<strong style="color:#43a047;"><ruby>拝見<rt>はいけん</rt></ruby>しても</strong> よろしいでしょうか。</div>
+                    <div class="id-text">A: Apakah tidak apa-apa jika saya <strong>melihat</strong> katalog itu?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: はい、どうぞ <strong style="color:#ff1493;">ご<ruby>覧<rt>らん</rt></ruby> ください</strong>。</div>
+                    <div class="id-text">B: Ya, silakan <strong>dilihat</strong>. (A merendahkan dirinya dengan <i>haiken</i>, B meninggikan A dengan <i>goran</i> - Bab 49).</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: IMCの <ruby>松本<rt>まつもと</rt></ruby><ruby>部長<rt>ぶちょう</rt></ruby>を <strong style="color:#43a047;"><ruby>存<rt>ぞん</rt></ruby>じて おります</strong>か。</div>
+                    <div class="id-text">A: Apakah Anda <strong>mengetahui</strong> Manajer Matsumoto dari IMC? (Bertanya menggunakan Kenjougo jika pembicara mewakili perusahaannya/in-group).</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: はい、<strong style="color:#43a047;"><ruby>存<rt>ぞん</rt></ruby>じて おります</strong>。</div>
+                    <div class="id-text">B: Ya, saya <strong>tahu</strong>.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: <ruby>重<rt>おも</rt></ruby>そうですね。<strong style="color:var(--accent-n4);">お</strong><ruby>持<rt>も</rt></ruby>ち<strong style="color:var(--accent-n4);">しましょう</strong>か。</div>
+                    <div class="id-text">A: (Barangnya) kelihatan berat ya. Mau saya <strong>bawakan</strong>?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: すみません。お<ruby>願<rt>ねが</rt></ruby>いします。</div>
+                    <div class="id-text">B: Maaf (merepotkan). Tolong (bawakan).</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <a href="n4-gatekeeper.html" class="btn-back">⬅ Kembali ke Menu N4</a>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

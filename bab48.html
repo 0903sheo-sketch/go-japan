@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Materi Bab 48</title>
+    <style>
+        /* Desain Minimalis, Profesional, Clean & Solid Black (No Glow) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #050505; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-n4: #1e88e5; /* Biru N4 */
+            --furigana-color: #4fc3f7; /* Biru muda agar furigana mudah dibaca */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 950px;
+            border-top: 3px solid var(--accent-n4);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-n4); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px; font-weight: bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-n4); border-bottom-color: var(--accent-n4); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* Pengaturan Furigana (Ruby) */
+        ruby { ruby-align: center; }
+        rt { font-size: 0.7rem; color: var(--furigana-color); font-weight: normal; letter-spacing: 0;}
+
+        /* Tabel Umum */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-n4); font-weight: 600; }
+        tr:hover { background-color: #0a0a0a; }
+        .kana { font-weight: bold; font-size: 1.15rem; }
+
+        /* Tabel Khusus Rumus */
+        .te-table th { background-color: #111; color: #fff; text-align: center; border: 1px solid #222;}
+        .te-table td { text-align: center; border: 1px solid #222; font-size: 1.15rem;}
+        .te-highlight { color: var(--accent-n4); font-weight: bold;}
+
+        /* Block Penjelasan Tata Bahasa */
+        .grammar-box {
+            background: #0a0a0a; border-left: 4px solid var(--accent-n4);
+            padding: 20px; margin-bottom: 25px; border-radius: 0 2px 2px 0;
+        }
+        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .pattern { background: #000; padding: 15px; text-align: center; font-size: 1.15rem; color: var(--accent-n4); margin-bottom: 15px; border: 1px solid #222; }
+        
+        .example-list { list-style: none; margin-top: 15px; }
+        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
+        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .jp-text { font-size: 1.25rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease; text-decoration: none;
+        }
+        .btn-back:hover { color: #ffffff; background: #111111; border-color: var(--accent-n4); }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title"><ruby>第<rt>だい</rt></ruby>48<ruby>課<rt>か</rt></ruby> (Bab 48)</span>
+        <h1 class="main-title">Menyuruh & Meminta Izin (Kausatif)</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
+            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
+            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+        </div>
+
+        <!-- TAB 1: KOSAKATA -->
+        <div id="kosakata" class="tab-content active">
+            <h3>1. <ruby>動詞<rt>どうし</rt></ruby> (Kata Kerja)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th><th>Gol.</th></tr>
+                <tr><td class="kana"><ruby>降<rt>お</rt></ruby>ろします</td><td>Oroshimasu</td><td>Menurunkan (barang/orang)</td><td>1</td></tr>
+                <tr><td class="kana"><ruby>届<rt>とど</rt></ruby>けます</td><td>Todokemasu</td><td>Mengantarkan / Menyampaikan</td><td>2</td></tr>
+                <tr><td class="kana"><ruby>世話<rt>せわ</rt></ruby>を します</td><td>Sewa o shimasu</td><td>Merawat / Mengurus</td><td>3</td></tr>
+                <tr><td class="kana"><ruby>録音<rt>ろくおん</rt></ruby>します</td><td>Rokuon shimasu</td><td>Merekam (suara)</td><td>3</td></tr>
+                <tr><td class="kana"><ruby>嫌<rt>いや</rt></ruby>がります</td><td>Iyagarimasu</td><td>Merasa enggan / Tidak suka</td><td>1</td></tr>
+            </table>
+
+            <h3>2. <ruby>名詞<rt>めいし</rt></ruby> (Kata Benda)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana"><ruby>塾<rt>じゅく</rt></ruby></td><td>Juku</td><td>Tempat les / Bimbingan belajar</td></tr>
+                <tr><td class="kana"><ruby>生徒<rt>せいと</rt></ruby></td><td>Seito</td><td>Murid (Sekolah dasar/menengah)</td></tr>
+                <tr><td class="kana">ファイル</td><td>Fairu</td><td>File / Dokumen</td></tr>
+                <tr><td class="kana"><ruby>営業<rt>えいぎょう</rt></ruby></td><td>Eigyou</td><td>Sales / Penjualan / Bisnis</td></tr>
+                <tr><td class="kana"><ruby>親<rt>おや</rt></ruby></td><td>Oya</td><td>Orang tua</td></tr>
+            </table>
+
+            <h3>3. <ruby>副詞<rt>ふくし</rt></ruby> (Kata Keterangan)</h3>
+            <table>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="kana"><ruby>自由<rt>じゆう</rt></ruby>に</td><td>Jiyuu ni</td><td>Dengan bebas / Sesuka hati</td></tr>
+                <tr><td class="kana">いいことですね</td><td>Ii koto desu ne</td><td>Itu hal yang bagus ya</td></tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: TATA BAHASA -->
+        <div id="tatabahasa" class="tab-content">
+            
+            <div class="grammar-box" style="border-color: #333;">
+                <h3>🌟 RUMUS: <ruby>使役形<rt>しえきけい</rt></ruby> (Bentuk Kausatif)</h3>
+                <p>Bentuk Kausatif artinya <strong>"Menyuruh"</strong>, <strong>"Membuat"</strong>, atau <strong>"Membiarkan/Mengizinkan"</strong> seseorang melakukan sesuatu. Setelah diubah ke bentuk Kausatif, kata kerja ini diperlakukan sebagai <strong>Kata Kerja Golongan 2</strong> (berakhiran -emasu).</p>
+                <table class="te-table">
+                    <tr><th>Golongan</th><th>Bentuk Biasa (~ます)</th><th>Bentuk Kausatif (Menyuruh...)</th></tr>
+                    <tr><td><strong>GOL. 1</strong> (Ubah 'i' ke 'a' + せます)</td><td><ruby>行<rt>い</rt></ruby><span style="color:red">き</span>ます (Ikimasu)</td><td><ruby>行<rt>い</rt></ruby><span class="te-highlight">かせます</span> (Ikasemasu) = Menyuruh pergi</td></tr>
+                    <tr><td><strong>GOL. 1</strong> (Ubah 'i' ke 'a' + せます)</td><td><ruby>休<rt>やす</rt></ruby><span style="color:red">み</span>ます (Yasumimasu)</td><td><ruby>休<rt>やす</rt></ruby><span class="te-highlight">ませます</span> (Yasumasemasu) = Mengizinkan istirahat</td></tr>
+                    <tr><td><strong>GOL. 2</strong> (Tambah 'させます')</td><td><ruby>食<rt>た</rt></ruby>べます (Tabemasu)</td><td><ruby>食<rt>た</rt></ruby>べ<span class="te-highlight">させます</span> (Tabesasemasu) = Menyuruh makan</td></tr>
+                    <tr><td><strong>GOL. 2</strong> (Tambah 'させます')</td><td><ruby>調<rt>しら</rt></ruby>べます (Shirabemasu)</td><td><ruby>調<rt>しら</rt></ruby>べ<span class="te-highlight">させます</span> (Shirabesasemasu) = Menyuruh periksa</td></tr>
+                    <tr><td><strong>GOL. 3</strong> (Irregular)</td><td><ruby>来<rt>き</rt></ruby>ます (Kimasu)</td><td><strong class="te-highlight"><ruby>来<rt>こ</rt></ruby>させます</strong> (Kosasemasu) = Menyuruh datang</td></tr>
+                    <tr><td><strong>GOL. 3</strong> (Irregular)</td><td>します (Shimasu)</td><td><strong class="te-highlight">させます</strong> (Sasemasu) = Menyuruh melakukan</td></tr>
+                </table>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #ff1493;">
+                <h3>1. Menyuruh (Kata Kerja Intransitif) -> Partikel を</h3>
+                <p>Jika kata kerja yang digunakan <strong>tidak memerlukan objek (Intransitif)</strong> seperti pergi, datang, istirahat, menangis, maka orang yang disuruh/diizinkan ditandai dengan partikel <strong>を (o)</strong>.</p>
+                <div class="pattern">
+                    Subjek (Atasan/Ortu) は + <strong>Orang <strong style="color:#ff1493;">を</strong></strong> + V-Kausatif Intransitif
+                </div>
+                <ul class="example-list">
+                    <li><div class="jp-text"><ruby>部長<rt>ぶちょう</rt></ruby>は <ruby>田中<rt>たなか</rt></ruby>さん<strong style="color:#ff1493;">を</strong> <ruby>東京<rt>とうきょう</rt></ruby>へ <ruby>行<rt>い</rt></ruby>か<strong style="color:var(--accent-n4);">せました</strong>。</div><div class="id-text">Manajer <strong>menyuruh</strong> Sdr. Tanaka pergi ke Tokyo.</div></li>
+                    <li><div class="jp-text">わたしは <ruby>娘<rt>むすめ</rt></ruby><strong style="color:#ff1493;">を</strong> <ruby>自由<rt>じゆう</rt></ruby>に <ruby>遊<rt>あそ</rt></ruby>ば<strong style="color:var(--accent-n4);">せます</strong>。</div><div class="id-text">Saya <strong>membiarkan (mengizinkan)</strong> anak perempuan saya bermain dengan bebas.</div></li>
+                </ul>
+            </div>
+
+            <div class="grammar-box" style="border-left-color: #43a047;">
+                <h3>2. Menyuruh (Kata Kerja Transitif) -> Partikel に</h3>
+                <p>Jika kata kerja yang digunakan <strong>memerlukan objek (Transitif)</strong> seperti membaca buku, makan nasi, membawa barang, maka partikel "o" sudah dipakai untuk bendanya. Oleh karena itu, orang yang disuruh ditandai dengan partikel <strong>に (ni)</strong>.</p>
+                <div class="pattern">
+                    Subjek (Atasan/Ortu) は + <strong>Orang <strong style="color:#43a047;">に</strong></strong> + Benda を + V-Kausatif Transitif
+                </div>
+                <ul class="example-list">
+                    <li><div class="jp-text">お<ruby>母<rt>かあ</rt></ruby>さんは <ruby>子供<rt>こども</rt></ruby><strong style="color:#43a047;">に</strong> <ruby>本<rt>ほん</rt></ruby>を <ruby>読<rt>よ</rt></ruby>ま<strong style="color:var(--accent-n4);">せます</strong>。</div><div class="id-text">Ibu <strong>menyuruh</strong> anaknya membaca buku.</div></li>
+                    <li><div class="jp-text"><ruby>先生<rt>せんせい</rt></ruby>は <ruby>生徒<rt>せいと</rt></ruby><strong style="color:#43a047;">に</strong> <ruby>宿題<rt>しゅくだい</rt></ruby>を さ<strong style="color:var(--accent-n4);">せました</strong>。</div><div class="id-text">Guru <strong>menyuruh</strong> murid mengerjakan PR.</div></li>
+                </ul>
+            </div>
+            
+            <div class="grammar-box" style="border-left-color: #ff9800;">
+                <h3>3. Meminta Izin (～させて いただけませんか)</h3>
+                <p>Ini adalah ungkapan yang sangat sopan untuk meminta izin melakukan sesuatu. Secara harfiah berarti <em>"Maukah Anda menerima perbuatan saya yang membiarkan diri saya sendiri untuk melakukan..."</em>. Singkatnya: <strong>"Izinkan saya untuk..."</strong></p>
+                <div class="pattern">
+                    V-Kausatif (<ruby>て形<rt>てけい</rt></ruby>) + <strong style="color:#ff9800;">いただけませんか</strong>
+                </div>
+                <ul class="example-list">
+                    <li><div class="jp-text">すみません、<ruby>早<rt>はや</rt></ruby>く <ruby>帰<rt>かえ</rt></ruby>ら<strong style="color:#ff9800;">せて いただけませんか</strong>。</div><div class="id-text">Maaf, <strong>maukah Anda mengizinkan saya</strong> pulang lebih awal?</div></li>
+                    <li><div class="jp-text">この パンフレットを コピーさ<strong style="color:#ff9800;">せて いただけませんか</strong>。</div><div class="id-text"><strong>Izinkan saya</strong> untuk memfotokopi brosur ini.</div></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: CONTOH KALIMAT -->
+        <div id="contoh" class="tab-content">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan standar yang sering muncul di Bab 48.</p>
+            
+            <ul class="example-list">
+                <li>
+                    <div class="jp-text">A: <ruby>疲<rt>つか</rt></ruby>れましたね。すこし <ruby>休<rt>やす</rt></ruby>みませんか。</div>
+                    <div class="id-text">A: Lelah ya. Maukah beristirahat sebentar?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: すみません。<ruby>部長<rt>ぶちょう</rt></ruby>が この <ruby>資料<rt>しりょう</rt></ruby>を コピーさ<strong style="color:var(--accent-n4);">せた</strong>んです。</div>
+                    <div class="id-text">B: Maaf. Manajer <strong>menyuruh</strong> saya memfotokopi dokumen ini.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: お<ruby>子<rt>こ</rt></ruby>さんは ピアノの <ruby>練習<rt>れんしゅう</rt></ruby>が <ruby>好<rt>す</rt></ruby>きですか。</div>
+                    <div class="id-text">A: Apakah anak Anda suka berlatih piano?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: いいえ。<ruby>嫌<rt>いや</rt></ruby>がりますが、<ruby>無理<rt>むり</rt></ruby>に 練習さ<strong style="color:var(--accent-n4);">せて います</strong>。</div>
+                    <div class="id-text">B: Tidak. (Dia) enggan melakukannya, tapi saya memaksa <strong>menyuruhnya</strong> berlatih.</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: <ruby>気分<rt>きぶん</rt></ruby>が <ruby>悪<rt>わる</rt></ruby>いんですか。</div>
+                    <div class="id-text">A: Apakah (Anda) merasa tidak enak badan?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: ええ。<ruby>今日<rt>きょう</rt></ruby>は <ruby>早<rt>はや</rt></ruby>く <ruby>帰<rt>かえ</rt></ruby>ら<strong style="color:#ff9800;">せて いただけませんか</strong>。</div>
+                    <div class="id-text">B: Iya. Hari ini <strong>maukah Anda mengizinkan saya</strong> pulang lebih cepat?</div>
+                </li>
+                <li>
+                    <div class="jp-text">A: あのう、この <ruby>仕事<rt>しごと</rt></ruby>は わたしに やら<strong style="color:#ff9800;">せて いただけませんか</strong>。</div>
+                    <div class="id-text">A: Anu, untuk pekerjaan ini, <strong>maukah Anda membiarkan (mempercayakan)</strong> saya yang mengerjakannya?</div>
+                    <div class="jp-text" style="margin-top: 10px;">B: わかりました。じゃ、お<ruby>願<rt>ねが</rt></ruby>いします。</div>
+                    <div class="id-text">B: Mengerti. Kalau begitu, tolong kerjakan.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <a href="n4-gatekeeper.html" class="btn-back">⬅ Kembali ke Menu N4</a>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

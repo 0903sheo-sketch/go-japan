@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Minna no Nihongo 2 (N4)</title>
+    <style>
+        /* Desain Minimalis, Profesional, Clean & Solid Black (No Glow) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #050505; 
+            --card-bg: #0d0d0d;
+            --border-color: #222222;
+            --border-hover: #444444;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-japan: #c91f37;
+            --accent-n4: #1e88e5; /* Warna Biru Khas N4 */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Helvetica, sans-serif; }
+        
+        body { 
+            /* Menggunakan gambar latar belakang dari Unsplash dengan tema Jepang yang elegan */
+            background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Panel Utama - Solid Black, tanpa efek transparan/blur yang berlebihan */
+        .gatekeeper-panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 1000px;
+            border-top: 4px solid var(--accent-n4);
+            border-radius: 2px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .jp-title { 
+            color: var(--accent-n4); 
+            font-size: 1.2rem; 
+            margin-bottom: 10px; 
+            display: block; 
+            letter-spacing: 4px;
+            font-weight: bold;
+        }
+        
+        .main-title { 
+            font-size: 2.2rem; 
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Grid Layout untuk 25 Bab */
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        /* Desain Tombol/Tile Bab (Solid, Flat, Minimalis, Tanpa Glow) */
+        .chapter-tile {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px 10px;
+            border-radius: 2px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chapter-tile:hover {
+            background-color: #111111;
+            border-color: var(--accent-n4);
+            transform: translateY(-2px);
+        }
+
+        .ch-num {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .ch-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chapter-tile:hover .ch-num {
+            color: var(--accent-n4);
+        }
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-back:hover {
+            color: #ffffff; 
+            background: #111111; 
+            border-color: var(--accent-japan);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gatekeeper-panel fade-in">
+        
+        <div class="header-section">
+            <span class="jp-title">みんなの日本語 2</span>
+            <h1 class="main-title">Minna no Nihongo (N4)</h1>
+            <p class="subtitle">Pilih modul pembelajaran dari Bab 26 hingga Bab 50</p>
+        </div>
+
+        <div class="chapter-grid">
+            <!-- Generate Tombol Bab 26 sampai 50 -->
+            <a href="bab26.html" class="chapter-tile"><span class="ch-num">26</span><span class="ch-label">Bab</span></a>
+            <a href="bab27.html" class="chapter-tile"><span class="ch-num">27</span><span class="ch-label">Bab</span></a>
+            <a href="bab28.html" class="chapter-tile"><span class="ch-num">28</span><span class="ch-label">Bab</span></a>
+            <a href="bab29.html" class="chapter-tile"><span class="ch-num">29</span><span class="ch-label">Bab</span></a>
+            <a href="bab30.html" class="chapter-tile"><span class="ch-num">30</span><span class="ch-label">Bab</span></a>
+            <a href="bab31.html" class="chapter-tile"><span class="ch-num">31</span><span class="ch-label">Bab</span></a>
+            <a href="bab32.html" class="chapter-tile"><span class="ch-num">32</span><span class="ch-label">Bab</span></a>
+            <a href="bab33.html" class="chapter-tile"><span class="ch-num">33</span><span class="ch-label">Bab</span></a>
+            <a href="bab34.html" class="chapter-tile"><span class="ch-num">34</span><span class="ch-label">Bab</span></a>
+            <a href="bab35.html" class="chapter-tile"><span class="ch-num">35</span><span class="ch-label">Bab</span></a>
+            <a href="bab36.html" class="chapter-tile"><span class="ch-num">36</span><span class="ch-label">Bab</span></a>
+            <a href="bab37.html" class="chapter-tile"><span class="ch-num">37</span><span class="ch-label">Bab</span></a>
+            <a href="bab38.html" class="chapter-tile"><span class="ch-num">38</span><span class="ch-label">Bab</span></a>
+            <a href="bab39.html" class="chapter-tile"><span class="ch-num">39</span><span class="ch-label">Bab</span></a>
+            <a href="bab40.html" class="chapter-tile"><span class="ch-num">40</span><span class="ch-label">Bab</span></a>
+            <a href="bab41.html" class="chapter-tile"><span class="ch-num">41</span><span class="ch-label">Bab</span></a>
+            <a href="bab42.html" class="chapter-tile"><span class="ch-num">42</span><span class="ch-label">Bab</span></a>
+            <a href="bab43.html" class="chapter-tile"><span class="ch-num">43</span><span class="ch-label">Bab</span></a>
+            <a href="bab44.html" class="chapter-tile"><span class="ch-num">44</span><span class="ch-label">Bab</span></a>
+            <a href="bab45.html" class="chapter-tile"><span class="ch-num">45</span><span class="ch-label">Bab</span></a>
+            <a href="bab46.html" class="chapter-tile"><span class="ch-num">46</span><span class="ch-label">Bab</span></a>
+            <a href="bab47.html" class="chapter-tile"><span class="ch-num">47</span><span class="ch-label">Bab</span></a>
+            <a href="bab48.html" class="chapter-tile"><span class="ch-num">48</span><span class="ch-label">Bab</span></a>
+            <a href="bab49.html" class="chapter-tile"><span class="ch-num">49</span><span class="ch-label">Bab</span></a>
+            <a href="bab50.html" class="chapter-tile"><span class="ch-num">50</span><span class="ch-label">Bab</span></a>
+        </div>
+
+        <!-- Tombol kembali ke Gatekeeper Utama (misalnya index.html) -->
+        <a href="index.html" class="btn-back">⬅ Kembali ke Gatekeeper Utama</a>
+        
+    </div>
+
+</body>
+</html>
