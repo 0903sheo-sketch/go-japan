@@ -124,6 +124,34 @@
             color: var(--accent-n4);
         }
 
+        /* Tombol Flashcard Memanjang */
+        .btn-flashcard {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 20px;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 2px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-bottom: 15px; /* Memberi jarak dengan tombol kembali */
+        }
+
+        .btn-flashcard:hover {
+            background-color: #111111;
+            border-color: var(--accent-n4);
+            color: var(--accent-n4);
+        }
+
         /* Tombol Back */
         .btn-back {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -179,6 +207,9 @@
             <a href="bab49.html" class="chapter-tile"><span class="ch-num">49</span><span class="ch-label">Bab</span></a>
             <a href="bab50.html" class="chapter-tile"><span class="ch-num">50</span><span class="ch-label">Bab</span></a>
         </div>
+
+        <!-- Tombol Latihan Flashcard (Baru ditambahkan) -->
+        <a href="flashcard-n4.html" class="btn-flashcard">🎴 Latihan Flashcard Kanji N4</a>
 
         <!-- Tombol kembali ke Gatekeeper Utama (misalnya index.html) -->
         <a href="index.html" class="btn-back">⬅ Kembali ke Gatekeeper Utama</a>
