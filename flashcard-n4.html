@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | N4 Kanji Flashcards</title>
+    <style>
+        /* Desain Modern, Dark Theme & Neon Accents */
+        :root {
+            --bg-color: #050505;
+            --card-bg: #111111;
+            --card-border: #333333;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --neon-accent: #00e5ff; /* Cyan Neon */
+            --neon-accent-2: #ff0055; /* Pink Neon */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        button {
+            background: transparent;
+            color: var(--neon-accent);
+            border: 1px solid var(--neon-accent);
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: var(--neon-accent);
+            color: var(--bg-color);
+            box-shadow: 0 0 15px var(--neon-accent);
+        }
+
+        /* Flashcard Grid Layout */
+        .flashcard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* 3D Flip Card CSS */
+        .card {
+            background-color: transparent;
+            width: 100%;
+            height: 200px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        /* Trigger Flip via Class */
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        /* Tampilan Depan (Kanji) */
+        .card-front {
+            border-bottom: 3px solid var(--neon-accent);
+        }
+        
+        .card-front .kanji {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--text-main);
+            text-shadow: 0 0 15px rgba(255,255,255,0.2);
+        }
+
+        .card-front .click-hint {
+            position: absolute;
+            bottom: 15px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        /* Tampilan Belakang (Arti & Cara Baca) */
+        .card-back {
+            transform: rotateY(180deg);
+            border-bottom: 3px solid var(--neon-accent-2);
+            background: #0a0a0a;
+        }
+
+        .card-back .kana {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--neon-accent);
+            margin-bottom: 5px;
+        }
+
+        .card-back .romaji {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .card-back .meaning {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        /* Animasi Muncul Pertama Kali */
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        /* Desain Tombol Back */
+        .btn-back-global {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 350px;
+            padding: 15px 20px;
+            background-color: #0a0a0a;
+            color: #888888;
+            border: 1px solid #222222;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin: 40px auto 0 auto;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-back-global:hover {
+            color: #ffffff;
+            background-color: #111111;
+            border-color: #1e88e5; /* Warna aksen biru */
+            box-shadow: 0 0 12px rgba(30, 136, 229, 0.4);
+            transform: translateY(-2px);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="fade-in">
+        <h1>N4 KANJI FLASHCARDS</h1>
+        <p class="subtitle">Klik kartu untuk membaliknya. Uji ingatanmu!</p>
+        <div class="controls">
+            <button onclick="shuffleCards()">🔀 Acak Kartu</button>
+            <button onclick="resetCards()">🔄 Reset</button>
+        </div>
+    </header>
+
+    <div class="flashcard-container" id="cardContainer">
+        <!-- Kartu akan di-generate oleh JavaScript di sini -->
+    </div>
+
+    <script>
+        // Database Kosakata Kanji N4 (Format: Kanji, Kana, Romaji, Arti)
+        const flashcardsData = [
+            { kanji: "映画", kana: "えいが", romaji: "eiga", meaning: "Film" },
+            { kanji: "勉強", kana: "べんきょう", romaji: "benkyou", meaning: "Belajar" },
+            { kanji: "家族", kana: "かぞく", romaji: "kazoku", meaning: "Keluarga" },
+            { kanji: "質問", kana: "しつもん", romaji: "shitsumon", meaning: "Pertanyaan" },
+            { kanji: "特別", kana: "とくべつ", romaji: "tokubetsu", meaning: "Spesial / Khusus" },
+            { kanji: "理由", kana: "りゆう", romaji: "riyuu", meaning: "Alasan" },
+            { kanji: "準備", kana: "じゅんび", romaji: "junbi", meaning: "Persiapan" },
+            { kanji: "注意", kana: "ちゅうい", romaji: "chuui", meaning: "Peringatan / Hati-hati" },
+            { kanji: "経験", kana: "けいけん", romaji: "keiken", meaning: "Pengalaman" },
+            { kanji: "意味", kana: "いみ", romaji: "imi", meaning: "Arti / Makna" },
+            { kanji: "試合", kana: "しあい", romaji: "shiai", meaning: "Pertandingan" },
+            { kanji: "意見", kana: "いけん", romaji: "iken", meaning: "Pendapat" },
+            { kanji: "計画", kana: "けいかく", romaji: "keikaku", meaning: "Rencana" },
+            { kanji: "案内", kana: "あんない", romaji: "annai", meaning: "Panduan / Informasi" },
+            { kanji: "住所", kana: "じゅうしょ", romaji: "juusho", meaning: "Alamat" },
+            { kanji: "世話", kana: "せわ", romaji: "sewa", meaning: "Merawat / Mengurus" },
+            { kanji: "交通", kana: "こうつう", romaji: "koutsuu", meaning: "Lalu lintas" },
+            { kanji: "約束", kana: "やくそく", romaji: "yakusoku", meaning: "Janji" },
+            { kanji: "景色", kana: "けしき", romaji: "keshiki", meaning: "Pemandangan" },
+            { kanji: "季節", kana: "きせつ", romaji: "kisetsu", meaning: "Musim" },
+            { kanji: "旅行", kana: "りょこう", romaji: "ryokou", meaning: "Perjalanan / Wisata" },
+            { kanji: "科学", kana: "かがく", romaji: "kagaku", meaning: "Ilmu Sains" },
+            { kanji: "経済", kana: "けいざい", romaji: "keizai", meaning: "Ekonomi" },
+            { kanji: "法律", kana: "ほうりつ", romaji: "houritsu", meaning: "Hukum" },
+            { kanji: "政治", kana: "せいじ", romaji: "seiji", meaning: "Politik" },
+            { kanji: "教育", kana: "きょういく", romaji: "kyouiku", meaning: "Pendidikan" },
+            { kanji: "文化", kana: "ぶんか", romaji: "bunka", meaning: "Kebudayaan" },
+            { kanji: "習慣", kana: "しゅうかん", romaji: "shuukan", meaning: "Kebiasaan" },
+            { kanji: "発音", kana: "はつおん", romaji: "hatsuon", meaning: "Pelafalan" },
+            { kanji: "文法", kana: "ぶんぽう", romaji: "bunpou", meaning: "Tata Bahasa" },
+            { kanji: "事故", kana: "じこ", romaji: "jiko", meaning: "Kecelakaan" },
+            { kanji: "地震", kana: "じしん", romaji: "jishin", meaning: "Gempa bumi" },
+            { kanji: "火事", kana: "かじ", romaji: "kaji", meaning: "Kebakaran" },
+            { kanji: "場合", kana: "ばあい", romaji: "baai", meaning: "Situasi / Dalam hal..." },
+            { kanji: "原因", kana: "げんいん", romaji: "gen'in", meaning: "Penyebab" },
+            { kanji: "複雑", kana: "ふくざつ", romaji: "fukuzatsu", meaning: "Rumit" },
+            { kanji: "安全", kana: "あんぜん", romaji: "anzen", meaning: "Aman" },
+            { kanji: "危険", kana: "きけん", romaji: "kiken", meaning: "Berbahaya" },
+            { kanji: "一生懸命", kana: "いっしょうけんめい", romaji: "isshoukenmei", meaning: "Bersungguh-sungguh" },
+            { kanji: "親切", kana: "しんせつ", romaji: "shinsetsu", meaning: "Ramah / Baik hati" },
+            { kanji: "便利", kana: "べんり", romaji: "benri", meaning: "Praktis / Mudah" },
+            { kanji: "不便", kana: "ふべん", romaji: "fuben", meaning: "Tidak praktis" },
+            { kanji: "目的", kana: "もくてき", romaji: "mokuteki", meaning: "Tujuan (Goal)" },
+            { kanji: "将来", kana: "しょうらい", romaji: "shourai", meaning: "Masa depan" },
+            { kanji: "社長", kana: "しゃちょう", romaji: "shachou", meaning: "Presiden Direktur" },
+            { kanji: "会議", kana: "かいぎ", romaji: "kaigi", meaning: "Rapat" },
+            { kanji: "工場", kana: "こうじょう", romaji: "koujou", meaning: "Pabrik" },
+            { kanji: "日記", kana: "にっき", romaji: "nikki", meaning: "Buku harian" },
+            { kanji: "泥棒", kana: "どろぼう", romaji: "dorobou", meaning: "Pencuri / Maling" },
+            { kanji: "警察", kana: "けいさつ", romaji: "keisatsu", meaning: "Polisi" },
+            { kanji: "お土産", kana: "おみやげ", romaji: "omiyage", meaning: "Oleh-oleh" },
+            { kanji: "荷物", kana: "にもつ", romaji: "nimotsu", meaning: "Barang bawaan" },
+            { kanji: "時計", kana: "とけい", romaji: "tokei", meaning: "Jam tangan / Jam" },
+            { kanji: "洋服", kana: "ようふく", romaji: "youfuku", meaning: "Pakaian barat" },
+            { kanji: "靴下", kana: "くつした", romaji: "kutsushita", meaning: "Kaos kaki" },
+            { kanji: "帽子", kana: "ぼうし", romaji: "boushi", meaning: "Topi" },
+            { kanji: "辞書", kana: "じしょ", romaji: "jisho", meaning: "Kamus" },
+            { kanji: "地図", kana: "ちず", romaji: "chizu", meaning: "Peta" },
+            { kanji: "冷蔵庫", kana: "れいぞうこ", romaji: "reizouko", meaning: "Kulkas" },
+            { kanji: "洗濯機", kana: "せんたくき", romaji: "sentakuki", meaning: "Mesin cuci" },
+            { kanji: "音楽", kana: "おんがく", romaji: "ongaku", meaning: "Musik" },
+            { kanji: "機械", kana: "きかい", romaji: "kikai", meaning: "Mesin" },
+            { kanji: "技術", kana: "ぎじゅつ", romaji: "gijutsu", meaning: "Teknologi / Teknik" },
+            { kanji: "情報", kana: "じょうほう", romaji: "jouhou", meaning: "Informasi / Data" },
+            { kanji: "趣味", kana: "しゅみ", romaji: "shumi", meaning: "Hobi" },
+            { kanji: "連絡", kana: "れんらく", romaji: "renraku", meaning: "Menghubungi / Kontak" },
+            { kanji: "相談", kana: "そうだん", romaji: "soudan", meaning: "Konsultasi / Diskusi" },
+            { kanji: "報告", kana: "ほうこく", romaji: "houkoku", meaning: "Laporan" },
+            { kanji: "成功", kana: "せいこう", romaji: "seikou", meaning: "Sukses / Berhasil" },
+            { kanji: "失敗", kana: "しっぱい", romaji: "shippai", meaning: "Gagal / Kegagalan" },
+            { kanji: "賛成", kana: "さんせい", romaji: "sansei", meaning: "Setuju" },
+            { kanji: "反対", kana: "はんたい", romaji: "hantai", meaning: "Menentang / Tidak setuju" },
+            { kanji: "世界", kana: "せかい", romaji: "sekai", meaning: "Dunia" },
+            { kanji: "社会", kana: "しゃかい", romaji: "shakai", meaning: "Masyarakat / Sosial" },
+            { kanji: "自然", kana: "しぜん", romaji: "shizen", meaning: "Alam" },
+            { kanji: "説明", kana: "せつめい", romaji: "setsumei", meaning: "Penjelasan" },
+            { kanji: "紹介", kana: "しょうかい", romaji: "shoukai", meaning: "Perkenalan" },
+            { kanji: "専門", kana: "せんもん", romaji: "senmon", meaning: "Keahlian / Jurusan" },
+            { kanji: "医学", kana: "いがく", romaji: "igaku", meaning: "Ilmu Kedokteran" },
+            { kanji: "数学", kana: "すうがく", romaji: "suugaku", meaning: "Matematika" },
+            { kanji: "文学", kana: "ぶんがく", romaji: "bungaku", meaning: "Sastra" },
+            { kanji: "歴史", kana: "れきし", romaji: "rekishi", meaning: "Sejarah" },
+            { kanji: "地理", kana: "ちり", romaji: "chiri", meaning: "Geografi" },
+            { kanji: "気分", kana: "きぶん", romaji: "kibun", meaning: "Perasaan / Suasana hati" },
+            { kanji: "具合", kana: "ぐあい", romaji: "guai", meaning: "Kondisi (fisik/mesin)" },
+            { kanji: "健康", kana: "けんこう", romaji: "kenkou", meaning: "Kesehatan" },
+            { kanji: "入院", kana: "にゅういん", romaji: "nyuuin", meaning: "Masuk Rumah Sakit" },
+            { kanji: "退院", kana: "たいいん", romaji: "taiin", meaning: "Keluar Rumah Sakit" },
+            { kanji: "注射", kana: "ちゅうしゃ", romaji: "chuusha", meaning: "Suntikan" },
+            { kanji: "手術", kana: "しゅじゅつ", romaji: "shujutsu", meaning: "Operasi (Medis)" },
+            { kanji: "卒業", kana: "そつぎょう", romaji: "sotsugyou", meaning: "Lulus Sekolah" },
+            { kanji: "入学", kana: "にゅうがく", romaji: "nyuugaku", meaning: "Masuk Sekolah/Universitas" },
+            { kanji: "通勤", kana: "つうきん", romaji: "tsuukin", meaning: "Pergi-Pulang Kerja (Komuter)" },
+            { kanji: "出張", kana: "しゅっちょう", romaji: "shucchou", meaning: "Perjalanan Bisnis" },
+            { kanji: "転勤", kana: "てんきん", romaji: "tenkin", meaning: "Pindah Tugas / Mutasi" },
+            { kanji: "面接", kana: "めんせつ", romaji: "mensetsu", meaning: "Wawancara" },
+            { kanji: "課長", kana: "かちょう", romaji: "kachou", meaning: "Manajer Seksi" },
+            { kanji: "部長", kana: "ぶちょう", romaji: "buchou", meaning: "Manajer Departemen" },
+            { kanji: "受付", kana: "うけつけ", romaji: "uketsuke", meaning: "Resepsionis" },
+            { kanji: "放送", kana: "ほうそう", romaji: "housou", meaning: "Siaran (Broadcast)" },
+            { kanji: "番組", kana: "ばんぐみ", romaji: "bangumi", meaning: "Program TV/Radio" },
+            { kanji: "記事", kana: "きじ", romaji: "kiji", meaning: "Artikel Berita" },
+            { kanji: "小説", kana: "しょうせつ", romaji: "shousetsu", meaning: "Novel" },
+            { kanji: "漫画", kana: "まんが", romaji: "manga", meaning: "Komik" },
+            { kanji: "展覧会", kana: "てんらんかい", romaji: "tenrankai", meaning: "Pameran" },
+            { kanji: "美術館", kana: "びじゅつかん", romaji: "bijutsukan", meaning: "Museum Seni" },
+            { kanji: "博物館", kana: "はくぶつかん", romaji: "hakubutsukan", meaning: "Museum Umum" },
+            { kanji: "動物園", kana: "どうぶつえん", romaji: "doubutsuen", meaning: "Kebun Binatang" },
+            { kanji: "植物", kana: "しょくぶつ", romaji: "shokubutsu", meaning: "Tumbuhan / Tanaman" },
+            { kanji: "旅館", kana: "りょかん", romaji: "ryokan", meaning: "Penginapan Tradisional Jepang" },
+            { kanji: "神社", kana: "じんじゃ", romaji: "jinja", meaning: "Kuil Shinto" },
+            { kanji: "郊外", kana: "こうがい", romaji: "kougai", meaning: "Pinggiran Kota" },
+            { kanji: "田舎", kana: "いなか", romaji: "inaka", meaning: "Pedesaan / Kampung Halaman" },
+            { kanji: "空港", kana: "くうこう", romaji: "kuukou", meaning: "Bandara" },
+            { kanji: "港", kana: "みなと", romaji: "minato", meaning: "Pelabuhan" },
+            { kanji: "海岸", kana: "かいがん", romaji: "kaigan", meaning: "Pantai / Pesisir" },
+            { kanji: "湖", kana: "みずうみ", romaji: "mizuumi", meaning: "Danau" },
+            { kanji: "太陽", kana: "たいよう", romaji: "taiyou", meaning: "Matahari" },
+            { kanji: "地球", kana: "ちきゅう", romaji: "chikyuu", meaning: "Bumi" },
+            { kanji: "宇宙", kana: "うちゅう", romaji: "uchuu", meaning: "Luar Angkasa" },
+            { kanji: "国際", kana: "こくさい", romaji: "kokusai", meaning: "Internasional" },
+            { kanji: "会話", kana: "かいわ", romaji: "kaiwa", meaning: "Percakapan" },
+            { kanji: "翻訳", kana: "ほんやく", romaji: "hon'yaku", meaning: "Terjemahan Teks" },
+            { kanji: "通訳", kana: "つうやく", romaji: "tsuuyaku", meaning: "Juru Bahasa (Lisan)" },
+            { kanji: "言葉", kana: "ことば", romaji: "kotoba", meaning: "Kata / Bahasa" },
+            { kanji: "試験", kana: "しけん", romaji: "shiken", meaning: "Ujian" },
+            { kanji: "復習", kana: "ふくしゅう", romaji: "fukushuu", meaning: "Mengulang Pelajaran" },
+            { kanji: "予習", kana: "よしゅう", romaji: "yoshuu", meaning: "Mempersiapkan Pelajaran" },
+            { kanji: "講義", kana: "こうぎ", romaji: "kougi", meaning: "Kuliah" },
+            { kanji: "研究", kana: "けんきゅう", romaji: "kenkyuu", meaning: "Penelitian" }
+        ];
+
+        const container = document.getElementById('cardContainer');
+
+        // Fungsi untuk membuat elemen HTML kartu
+        function renderCards(dataArray) {
+            container.innerHTML = '';
+            dataArray.forEach((data, index) => {
+                const cardHTML = `
+                    <div class="card fade-in" style="animation-delay: ${index * 0.02}s" onclick="this.classList.toggle('flipped')">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="kanji">${data.kanji}</div>
+                                <div class="click-hint">Klik untuk membalik ↻</div>
+                            </div>
+                            <div class="card-back">
+                                <div class="kana">${data.kana}</div>
+                                <div class="romaji">${data.romaji}</div>
+                                <div class="meaning">${data.meaning}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        // Fungsi Acak Kartu (Fisher-Yates Shuffle)
+        function shuffleCards() {
+            let shuffled = [...flashcardsData];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            renderCards(shuffled);
+        }
+
+        // Fungsi Reset (Menutup semua kartu & mengembalikan urutan)
+        function resetCards() {
+            renderCards(flashcardsData);
+        }
+
+        // Render awal saat halaman dimuat
+        renderCards(flashcardsData);
+    </script>
+    <!-- Tombol Kembali ke Menu Utama -->
+<div style="text-align: center; width: 100%;">
+    <a href="n4-gatekeeper.html" class="btn-back-global">
+        ⬅ Kembali ke Menu N4
+    </a>
+</div>
+</body>
+</html>
