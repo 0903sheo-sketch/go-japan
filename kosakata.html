@@ -39,6 +39,29 @@
         .fade-in { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Tombol Back Pojok Kiri Atas */
+        .btn-back-pojok {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+        .btn-back-pojok:hover {
+            border-color: var(--text-main);
+            color: var(--text-main);
+            background: #111;
+        }
+
         /* Panel Utama - Solid Black Tanpa Efek Transparan/Glow */
         .gatekeeper-panel {
             background-color: var(--panel-bg);
@@ -47,7 +70,8 @@
             width: 100%;
             max-width: 1000px;
             border-top: 4px solid var(--accent-japan);
-            border-radius: 2px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
         .header-section {
@@ -90,10 +114,10 @@
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             padding: 30px 25px;
-            border-radius: 2px;
+            border-radius: 4px;
             text-decoration: none;
             color: var(--text-main);
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             border-left: 4px solid #333;
@@ -102,7 +126,8 @@
         .menu-card:hover {
             background-color: #111111;
             border-color: #444;
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
         }
 
         /* Warna Aksen per Kategori (Flat/Tanpa Glow) */
@@ -112,7 +137,7 @@
         .card-future:hover { border-left-color: var(--accent-green); }
 
         .card-icon {
-            font-size: 2rem;
+            font-size: 2.2rem;
             margin-bottom: 15px;
         }
 
@@ -125,48 +150,54 @@
         .card-desc {
             color: var(--text-muted);
             font-size: 0.95rem;
-            line-height: 1.5;
+            line-height: 1.6;
             flex-grow: 1;
         }
 
         .card-footer {
             margin-top: 20px;
             font-size: 0.85rem;
-            color: var(--accent-japan);
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: bold;
+            transition: 0.3s;
         }
         
-        .card-future .card-footer {
-            color: var(--accent-green);
-        }
+        .card-utama:hover .card-footer { color: var(--accent-japan); }
+        .card-waktu:hover .card-footer { color: var(--accent-blue); }
+        .card-bilangan:hover .card-footer { color: var(--accent-pink); }
+        .card-future:hover .card-footer { color: var(--accent-green); }
+
     </style>
 </head>
 <body>
+
+    <!-- Tombol Back -->
+    <button class="btn-back-pojok" onclick="window.history.back()">⬅ Kembali</button>
 
     <div class="gatekeeper-panel fade-in">
         
         <div class="header-section">
             <span class="jp-title">ゲートキーパー</span>
             <h1 class="main-title">KOSAKATA</h1>
-            <p class="subtitle">kosakata bahasa jepang untuk N5-N4</p>
+            <p class="subtitle">Modul Kosakata Bahasa Jepang N5-N4</p>
         </div>
 
         <div class="menu-grid">
             
-            <!-- Menu 1: Materi Bab (Kosakata & Tata Bahasa) -->
+            <!-- Menu 1: Kosakata Umum -->
             <a href="kosakataumum.html" class="menu-card card-utama">
                 <div class="card-icon">📚</div>
                 <div class="card-title">KOSAKATA UMUM</div>
-                <div class="card-desc">Kumpulan kosakata umum.</div>
+                <div class="card-desc">Kumpulan kosakata umum yang wajib dikuasai untuk JLPT N5 dan N4.</div>
                 <div class="card-footer">Buka Modul ➔</div>
             </a>
 
             <!-- Menu 2: Kosakata Waktu -->
             <a href="waktu.html" class="menu-card card-waktu">
                 <div class="card-icon">📅</div>
-                <div class="card-title">Kosakata Waktu</div>
+                <div class="card-title">KOSAKATA WAKTU</div>
                 <div class="card-desc">Panduan lengkap kalender, nama hari, bulan, tanggal 1-31, dan periode waktu lampau-depan.</div>
                 <div class="card-footer">Buka Modul ➔</div>
             </a>
@@ -174,20 +205,18 @@
             <!-- Menu 3: Bilangan & Satuan Hitung -->
             <a href="bilangan.html" class="menu-card card-bilangan">
                 <div class="card-icon">🔢</div>
-                <div class="card-title">Satuan Hitung</div>
-                <div class="card-desc">Panduan lengkap bilangan dan kata bantu hitung (Counters) seperti orang, batang, ekor, lembar, dll.</div>
+                <div class="card-title">SATUAN HITUNG</div>
+                <div class="card-desc">Panduan lengkap bilangan dan kata bantu hitung (Counters) seperti orang, batang, lembar, dll.</div>
                 <div class="card-footer">Buka Modul ➔</div>
             </a>
 
-            <!-- Menu 4: Placeholder untuk masa depan -->
+            <!-- Menu 4: Placeholder / Segera Hadir -->
             <a href="#" class="menu-card card-future">
                 <div class="card-icon">⚙️</div>
-                <div class="card-title">Modul Tambahan</div>
-                <div class="card-desc">Slot disiapkan untuk penambahan modul baru di masa mendatang (Kanji, Percakapan Lanjut, dll).</div>
+                <div class="card-title">MODUL TAMBAHAN</div>
+                <div class="card-desc">Slot disiapkan untuk penambahan modul baru di masa mendatang (Kata Kerja, Kata Sifat, dll).</div>
                 <div class="card-footer">Coming Soon ➔</div>
             </a>
-
-            <!-- Anda bisa mencopy blok <a href="...">...</a> di atas untuk menambah menu baru nantinya -->
 
         </div>
     </div>
