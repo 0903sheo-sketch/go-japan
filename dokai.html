@@ -59,6 +59,24 @@
         .timer-box.warning { color: var(--accent-japan); border-color: var(--accent-japan); animation: pulse 1s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
+        /* Tombol Acak Soal */
+        .btn-shuffle {
+            background: transparent;
+            border: 1px solid var(--text-muted);
+            color: var(--text-main);
+            padding: 5px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            transition: 0.2s;
+            display: inline-block;
+        }
+        .btn-shuffle:hover {
+            border-color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+
         /* Furigana & Kanji Target Styling */
         ruby { font-size: 1.25rem; }
         rt { font-size: 0.7rem; color: #aaa; }
@@ -116,6 +134,8 @@
 
             <div style="text-align: right;">
                 <div class="points-badge">SOAL: <span id="progress-text">1/50</span></div>
+                <br>
+                <button class="btn-shuffle" onclick="shuffleQuiz()">🔀 Acak Soal</button>
             </div>
         </div>
 
@@ -132,14 +152,14 @@
             <div class="final-score" id="final-score">0</div>
             <div class="score-desc">Target Kelulusan Minimal: 38 / 100 Poin</div>
             <p id="feedback-message" style="color: var(--text-main); margin-bottom: 30px; font-size: 1.1rem; font-weight: bold;"></p>
-            <button class="btn" style="background: var(--accent-japan); border-color: var(--accent-japan); margin-bottom: 10px;" onclick="location.reload()">Ulangi Ujian</button>
+            <button class="btn" style="background: var(--accent-japan); border-color: var(--accent-japan); margin-bottom: 10px;" onclick="shuffleQuiz()">Ulangi & Acak Ujian</button>
             <button class="btn" style="background: transparent; border-color: var(--border-color); color: var(--text-muted);" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
         </div>
     </div>
 
     <script>
         // JLPT N4 Database: Campuran Moji-Goi (Kanji/Kosakata) & Bunpou (Tata Bahasa)
-        const jlptDB = [
+        const originalDB = [
             // BAGIAN 1: KANJI READING (Moji) - Target tidak ada furigana
             { q: "この <span class='kanji-target'>建物</span> は とても <ruby>古<rt>ふる</rt></ruby>いです。", options: ["たてもの", "のりもの", "かいもの", "たべもの"], answer: 0 },
             { q: "<ruby>私<rt>わたし</rt></ruby>は <ruby>毎朝<rt>まいあさ</rt></ruby> 6<ruby>時<rt>じ</rt></ruby>に <span class='kanji-target'>起きます</span>。", options: ["あるきます", "おきます", "いきます", "あきます"], answer: 1 },
@@ -211,6 +231,7 @@
             { q: "<ruby>週末<rt>しゅうまつ</rt></ruby>は <ruby>海<rt>うみ</rt></ruby>へ <ruby>行<rt>い</rt></ruby>こうと（  ）います。", options: ["<ruby>思<rt>おも</rt></ruby>って", "<ruby>考<rt>かんが</rt></ruby>えて", "<ruby>言<rt>い</rt></ruby>って", "<ruby>見<rt>み</rt></ruby>て"], answer: 0 }
         ];
 
+        let jlptDB = [...originalDB];
         let currentQuestionIndex = 0;
         let score = 0;
         let isAnswered = false;
@@ -226,6 +247,7 @@
         const timerDisplay = document.getElementById('timer-display');
 
         function startTimer() {
+            clearInterval(timerInterval); // Bersihkan interval yang ada sebelumnya
             timerInterval = setInterval(() => {
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
@@ -243,6 +265,30 @@
                     }
                 }
             }, 1000);
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function shuffleQuiz() {
+            if(confirm("Apakah Anda yakin ingin mengacak ulang soal? Ujian akan dimulai dari awal.")) {
+                // Sembunyikan layar hasil jika tombol ditekan dari layar akhir
+                document.getElementById('result-screen').style.display = "none";
+                document.getElementById('quiz-screen').style.display = "block";
+                
+                shuffleArray(jlptDB);
+                currentQuestionIndex = 0;
+                score = 0;
+                timeLeft = 35 * 60;
+                timerDisplay.classList.remove('warning');
+                
+                loadQuestion();
+                startTimer();
+            }
         }
 
         function loadQuestion() {
@@ -323,6 +369,7 @@
             } else {
                 feedback.textContent = "GAGAL (Fail). Skor Anda masih di bawah standar JLPT N4. Evaluasi lagi perbendaharaan Kanji & Pola Kalimat.";
                 document.getElementById('final-score').style.color = "var(--accent-japan)";
+                feedback.style.color = "var(--accent-japan)";
             }
         }
 
