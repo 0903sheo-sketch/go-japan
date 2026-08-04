@@ -153,6 +153,7 @@
             padding: 4px 10px;
             border-radius: 20px;
             border: 1px solid #333;
+            transition: 0.3s;
         }
         
         .chapter-card:hover .chap-status {
@@ -219,19 +220,13 @@
         chapterTitles.forEach((title, index) => {
             const babNumber = index + 1;
             
-            // Membuat elemen kartu
+            // Membuat elemen link (a)
             const card = document.createElement('a');
             card.className = 'chapter-card';
             
-            // Nantinya Anda bisa mengarahkan href ini ke file pembaca.
-            // Misalnya: href = "baca.html?bab=" + babNumber;
-            card.href = "#"; 
-            
-            // Ketika diklik (Untuk simulasi)
-            card.onclick = (e) => {
-                e.preventDefault(); // Mencegah reload halaman
-                alert(`Anda memilih Bab ${babNumber}:\n${title}\n\n(Nantinya ini bisa diarahkan ke halaman membaca Anda)`);
-            };
+            // MENGARAHKAN KE FILE HTML SESUAI BAB
+            // Contoh: bab1.html, bab2.html, bab3.html, dst.
+            card.href = `bab${babNumber}.html`; 
 
             card.innerHTML = `
                 <div class="chap-number">Bab ${babNumber}</div>
