@@ -1,1 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Daftar Bab Dokkai</title>
+    <style>
+        /* Desain Minimalis & Solid Black UI dengan Background Unsplash */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.85);
+            --border-color: #333333;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+            --card-bg: rgba(0, 0, 0, 0.7);
+        }
 
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 60px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Tombol Back Pojok Kiri Atas */
+        .btn-back-pojok {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+        .btn-back-pojok:hover {
+            border-color: var(--text-main);
+            color: var(--text-main);
+            background: #111;
+        }
+
+        /* Panel Utama */
+        .main-panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 1000px;
+            border-top: 4px solid var(--accent-japan);
+            border-radius: 6px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .jp-title { 
+            color: var(--accent-japan); 
+            font-size: 1.2rem; 
+            margin-bottom: 10px; 
+            display: block; 
+            letter-spacing: 4px;
+            font-weight: bold;
+        }
+        
+        .main-title { 
+            font-size: 2.2rem; 
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        /* Grid Layout Bab 1 - 25 */
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+        }
+
+        /* Desain Kartu Bab */
+        .chapter-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .chapter-card:hover {
+            background-color: rgba(20, 20, 20, 0.95);
+            border-color: var(--accent-japan);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(201, 31, 55, 0.3);
+        }
+
+        .chap-number {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--accent-japan);
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+
+        .chap-title {
+            font-size: 0.9rem;
+            color: #dddddd;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .chap-status {
+            margin-top: 15px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: #111;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid #333;
+        }
+        
+        .chapter-card:hover .chap-status {
+            background: var(--accent-japan);
+            color: #fff;
+            border-color: var(--accent-japan);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Tombol Back -->
+    <button class="btn-back-pojok" onclick="window.history.back()">⬅ Kembali</button>
+
+    <div class="main-panel fade-in">
+        
+        <div class="header-section">
+            <span class="jp-title">読解の目次</span>
+            <h1 class="main-title">Daftar Bab (1 - 25)</h1>
+            <p class="subtitle">Pilih bab yang ingin Anda baca dan pelajari hari ini.</p>
+        </div>
+
+        <!-- Wadah Grid yang akan diisi oleh JavaScript -->
+        <div class="chapter-grid" id="chapter-container">
+            <!-- Kartu Bab akan di-render di sini -->
+        </div>
+
+    </div>
+
+    <script>
+        // Data Judul 25 Bab yang diambil dari materi latihan membaca sebelumnya
+        const chapterTitles = [
+            "じこしょうかい (Perkenalan)", 
+            "まいにちの せいかつ (Keseharian)", 
+            "しゅうまつの りょこう (Liburan)", 
+            "あたらしい くるま (Mobil Baru)", 
+            "ももたろう (Momotaro)",
+            "スーパーでの かいもの (Belanja)", 
+            "はるの てんき (Musim Semi)", 
+            "わたしの しゅみ (Hobi Saya)", 
+            "でんしゃの なかで (Di Kereta)", 
+            "レストラン (Restoran)",
+            "かぜを ひきました (Flu)", 
+            "たんじょうび (Ulang Tahun)", 
+            "としょかん (Perpustakaan)", 
+            "わたしの いぬ (Anjing Saya)", 
+            "ゆうびんきょく (Kantor Pos)",
+            "わすれもの (Barang Tertinggal)", 
+            "かんじの べんきょう (Belajar Kanji)", 
+            "ふゆの きせつ (Musim Dingin)", 
+            "ともだちとの やくそく (Janji)", 
+            "しょうらいの ゆめ (Mimpi)",
+            "りょうり (Memasak)", 
+            "みちに まよいました (Tersesat)", 
+            "かぞく りょこう (Wisata Keluarga)", 
+            "ははへの てがみ (Surat Ibu)", 
+            "そうじ (Bersih-bersih)"
+        ];
+
+        const container = document.getElementById('chapter-container');
+
+        // Render 25 Kartu Bab ke dalam HTML menggunakan JavaScript
+        chapterTitles.forEach((title, index) => {
+            const babNumber = index + 1;
+            
+            // Membuat elemen kartu
+            const card = document.createElement('a');
+            card.className = 'chapter-card';
+            
+            // Nantinya Anda bisa mengarahkan href ini ke file pembaca.
+            // Misalnya: href = "baca.html?bab=" + babNumber;
+            card.href = "#"; 
+            
+            // Ketika diklik (Untuk simulasi)
+            card.onclick = (e) => {
+                e.preventDefault(); // Mencegah reload halaman
+                alert(`Anda memilih Bab ${babNumber}:\n${title}\n\n(Nantinya ini bisa diarahkan ke halaman membaca Anda)`);
+            };
+
+            card.innerHTML = `
+                <div class="chap-number">Bab ${babNumber}</div>
+                <div class="chap-title">${title}</div>
+                <div class="chap-status">Buka ➔</div>
+            `;
+
+            container.appendChild(card);
+        });
+    </script>
+
+</body>
+</html>
