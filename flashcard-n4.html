@@ -3,415 +3,453 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nihongo Master | N4 Kanji Flashcards</title>
+    <title>Nihongo Master | 10 Kanji N4 Harian</title>
+    <!-- Memuat Library HanziWriter untuk Animasi Coretan Kanji -->
+    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
     <style>
-        /* Desain Modern, Dark Theme & Neon Accents */
+        /* Desain Minimalis & Solid Black UI dengan Background Unsplash */
         :root {
-            --bg-color: #050505;
-            --card-bg: #111111;
-            --card-border: #333333;
+            --bg-solid: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.88); 
+            --border-color: #2a2a2a;
             --text-main: #ffffff;
-            --text-muted: #888888;
-            --neon-accent: #00e5ff; /* Cyan Neon */
-            --neon-accent-2: #ff0055; /* Pink Neon */
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+            --accent-green: #43a047;
+            --card-bg: rgba(20, 20, 20, 0.9);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            min-height: 100vh;
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
             padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.9); } 50% { transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
 
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+        /* Tombol Back Pojok Kiri Atas */
+        .btn-back-pojok {
+            position: fixed; top: 20px; left: 20px; background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--border-color); color: var(--text-muted);
+            padding: 10px 20px; border-radius: 30px; cursor: pointer;
+            font-size: 14px; font-weight: bold; transition: 0.3s; z-index: 9999; backdrop-filter: blur(5px);
         }
+        .btn-back-pojok:hover { border-color: var(--text-main); color: var(--text-main); background: #111; }
 
-        p.subtitle {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
-
-        .controls {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-bottom: 40px;
-        }
-
-        button {
-            background: transparent;
-            color: var(--neon-accent);
-            border: 1px solid var(--neon-accent);
-            padding: 10px 20px;
-            font-size: 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
-        }
-
-        button:hover {
-            background: var(--neon-accent);
-            color: var(--bg-color);
-            box-shadow: 0 0 15px var(--neon-accent);
-        }
-
-        /* Flashcard Grid Layout */
-        .flashcard-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
+        /* Panel Utama */
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
             width: 100%;
-            max-width: 1200px;
+            max-width: 900px;
+            border-top: 4px solid var(--accent-japan);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
         }
 
-        /* 3D Flip Card CSS */
-        .card {
-            background-color: transparent;
-            width: 100%;
-            height: 200px;
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px; font-weight:bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Navigasi Tab */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* ================================== */
+        /* MODE 1: FLASHCARD                  */
+        /* ================================== */
+        .flashcard-wrapper {
             perspective: 1000px;
+            width: 300px;
+            height: 400px;
+            margin: 20px auto;
             cursor: pointer;
         }
-
-        .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
+        .flashcard {
+            width: 100%; height: 100%; position: relative;
             transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
             transform-style: preserve-3d;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+            border-radius: 12px;
         }
-
-        /* Trigger Flip via Class */
-        .card.flipped .card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+        .flashcard.flipped { transform: rotateY(180deg); }
+        .flashcard-face {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; border-radius: 12px;
             background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            border: 2px solid #444; padding: 20px; box-sizing: border-box; text-align: center;
         }
-
-        /* Tampilan Depan (Kanji) */
-        .card-front {
-            border-bottom: 3px solid var(--neon-accent);
-        }
+        .flashcard-front { color: #fff; }
+        .flashcard-front:hover { border-color: var(--accent-japan); }
+        .flashcard-back { transform: rotateY(180deg); background: #111; border-color: var(--accent-japan); }
         
-        .card-front .kanji {
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: var(--text-main);
-            text-shadow: 0 0 15px rgba(255,255,255,0.2);
+        .fc-kanji { font-size: 140px; line-height: 1; text-shadow: 2px 2px 10px rgba(201,31,55,0.5); }
+        .fc-arti { font-size: 24px; font-weight: bold; color: var(--accent-green); margin-bottom: 15px; }
+        .fc-romaji { font-size: 18px; color: #ccc; }
+        
+        .fc-controls { display: flex; justify-content: center; align-items: center; margin-top: 25px; gap: 15px; }
+        .fc-controls button {
+            background-color: rgba(0,0,0,0.6); color: #fff; border: 1px solid var(--border-color);
+            border-radius: 30px; padding: 10px 25px; cursor: pointer; font-weight: bold; transition: 0.3s;
         }
+        .fc-controls button:hover { background-color: var(--text-main); color: #000; }
 
-        .card-front .click-hint {
-            position: absolute;
-            bottom: 15px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            opacity: 0.5;
+        /* ================================== */
+        /* MODE 2: KANVAS TULIS               */
+        /* ================================== */
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 20px; max-height: 65vh; overflow-y: auto; }
+        table { width: 100%; border-collapse: separate; border-spacing: 4px; min-width: 800px; }
+        th { background-color: rgba(40, 10, 15, 0.9); color: var(--text-main); padding: 15px; border-radius: 4px; font-size: 1.1rem; position: sticky; top: 0; z-index: 5; border-bottom: 2px solid var(--accent-japan);}
+        td { background-color: rgba(20, 20, 20, 0.8); padding: 15px; text-align: center; vertical-align: middle; border-radius: 4px; border: 1px solid #333;}
+        
+        .kanji-cell { width: 200px; color: #ffffff; line-height: 1.3; }
+        .kanji-big { font-size: 45px; display: block; text-shadow: 0 0 10px rgba(201,31,55,0.4);}
+        .arti-text { font-size: 16px; color: var(--accent-green); display: block; font-weight: bold; margin-top: 5px; }
+        .romaji-text { font-size: 13px; color: var(--text-muted); display: block; }
+        
+        .btn-urutan { 
+            display: inline-block; margin-top: 10px; font-size: 12px; color: #fff; 
+            border: 1px solid #555; padding: 5px 10px; border-radius: 20px; 
+            background: #222; transition: 0.2s; cursor: pointer;
         }
+        .btn-urutan:hover { background-color: var(--accent-japan); color: #fff; border-color: var(--accent-japan); }
+        
+        .draw-canvas { background-color: #050505; border: 2px dashed #444; border-radius: 8px; cursor: crosshair; touch-action: none; }
+        
+        .btn-clear { font-size: 12px; padding: 6px 10px; border: 1px solid #ff5252; color: #ff5252; border-radius: 4px; background: transparent; cursor:pointer; margin-top:5px; width: 100%;}
+        .btn-clear:hover { background-color: #ff5252; color: #fff; }
 
-        /* Tampilan Belakang (Arti & Cara Baca) */
-        .card-back {
-            transform: rotateY(180deg);
-            border-bottom: 3px solid var(--neon-accent-2);
-            background: #0a0a0a;
-        }
+        /* Scrollbar */
+        .table-responsive::-webkit-scrollbar { height: 8px; width: 8px; }
+        .table-responsive::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.5); border-radius: 4px; }
+        .table-responsive::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+        .table-responsive::-webkit-scrollbar-thumb:hover { background: var(--accent-japan); }
 
-        .card-back .kana {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--neon-accent);
-            margin-bottom: 5px;
+        /* ================================== */
+        /* MODAL (POP-UP) ANIMASI CORETAN     */
+        /* ================================== */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.85); display: none; justify-content: center;
+            align-items: center; z-index: 10000; backdrop-filter: blur(5px);
         }
-
-        .card-back .romaji {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            font-style: italic;
+        .modal-content {
+            background: #151515; border: 2px solid var(--accent-japan);
+            padding: 30px; border-radius: 12px; text-align: center;
+            position: relative; animation: popIn 0.3s ease-out forwards;
         }
-
-        .card-back .meaning {
-            font-size: 1.2rem;
-            color: var(--text-main);
-            font-weight: 500;
+        .modal-close {
+            position: absolute; top: 10px; right: 15px; font-size: 24px;
+            color: #fff; cursor: pointer; transition: 0.2s;
         }
-
-        /* Animasi Muncul Pertama Kali */
-        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
+        .modal-close:hover { color: var(--accent-japan); }
+        #kanji-animator {
+            width: 250px; height: 250px; background: #eee;
+            border-radius: 8px; margin: 20px auto;
         }
-        /* Desain Tombol Back */
-        .btn-back-global {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            max-width: 350px;
-            padding: 15px 20px;
-            background-color: #0a0a0a;
-            color: #888888;
-            border: 1px solid #222222;
-            border-radius: 5px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin: 40px auto 0 auto;
-            transition: all 0.3s ease;
-            text-decoration: none;
+        .btn-replay {
+            background: var(--accent-japan); color: #fff; border: none;
+            padding: 10px 20px; border-radius: 30px; cursor: pointer;
+            font-weight: bold; font-size: 1rem;
         }
-
-        .btn-back-global:hover {
-            color: #ffffff;
-            background-color: #111111;
-            border-color: #1e88e5; /* Warna aksen biru */
-            box-shadow: 0 0 12px rgba(30, 136, 229, 0.4);
-            transform: translateY(-2px);
-        }
-
+        .btn-replay:hover { background: #a0172b; }
     </style>
 </head>
 <body>
 
-    <header class="fade-in">
-        <h1>N4 KANJI FLASHCARDS</h1>
-        <p class="subtitle">Klik kartu untuk membaliknya. Uji ingatanmu!</p>
-        <div class="controls">
-            <button onclick="shuffleCards()">🔀 Acak Kartu</button>
-            <button onclick="resetCards()">🔄 Reset</button>
-        </div>
-    </header>
+    <button class="btn-back-pojok" onclick="window.history.back()">⬅ Kembali</button>
 
-    <div class="flashcard-container" id="cardContainer">
-        <!-- Kartu akan di-generate oleh JavaScript di sini -->
+    <!-- Modal Animasi Coretan -->
+    <div class="modal-overlay" id="strokeModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3 style="color: var(--text-main); margin-bottom: 5px;">Urutan Coretan</h3>
+            <p id="modal-kanji-info" style="color: var(--accent-green); margin-bottom: 15px; font-weight: bold;"></p>
+            
+            <div id="kanji-animator"></div>
+            
+            <button class="btn-replay" onclick="replayAnimation()">🔄 Ulangi Animasi</button>
+        </div>
+    </div>
+
+    <div class="panel fade-in">
+        <span class="jp-title">毎日の漢字</span>
+        <h1 class="main-title">Hafalan 10 Kanji N4 (Hari 1)</h1>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('flashcard')">1. Hafalan Flashcard</div>
+            <div class="tab-btn" onclick="openTab('tulis')">2. Latihan Tulis (Goresan)</div>
+        </div>
+
+        <!-- TAB 1: FLASHCARD -->
+        <div id="flashcard" class="tab-content active">
+            <p style="text-align: center; color: var(--text-muted);">Klik kartu untuk melihat cara baca dan artinya. Ini adalah 10 kanji yang paling sering muncul di soal teks/ujian.</p>
+            
+            <div class="flashcard-wrapper" onclick="flipCard()">
+                <div class="flashcard" id="flashcard-inner">
+                    <div class="flashcard-face flashcard-front">
+                        <div class="fc-kanji" id="fc-kanji">-</div>
+                    </div>
+                    <div class="flashcard-face flashcard-back">
+                        <div class="fc-arti" id="fc-arti">-</div>
+                        <div class="fc-romaji" id="fc-romaji">-</div>
+                        <div style="margin-top:20px; font-size:12px; color:#666;">(Klik lagi untuk menutup)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="fc-controls">
+                <button onclick="prevCard(event)">⬅ Prev</button>
+                <span id="fc-counter" style="font-size: 1.2rem; color: #fff;">1 / 10</span>
+                <button onclick="nextCard(event)">Next ➔</button>
+            </div>
+        </div>
+
+        <!-- TAB 2: LATIHAN TULIS -->
+        <div id="tulis" class="tab-content">
+            <p style="color: var(--text-muted); margin-bottom: 10px;">Latihlah goresan kanji di dalam kotak. Klik <strong style="color:white;">"Cek Urutan 🎬"</strong> untuk melihat animasi goresan secara langsung di layar.</p>
+            
+            <div class="table-responsive">
+                <div id="tulis-container">
+                    <!-- Tabel akan di-generate JS -->
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        // Database Kosakata Kanji N4 (Format: Kanji, Kana, Romaji, Arti)
-        const flashcardsData = [
-            { kanji: "映画", kana: "えいが", romaji: "eiga", meaning: "Film" },
-            { kanji: "勉強", kana: "べんきょう", romaji: "benkyou", meaning: "Belajar" },
-            { kanji: "家族", kana: "かぞく", romaji: "kazoku", meaning: "Keluarga" },
-            { kanji: "質問", kana: "しつもん", romaji: "shitsumon", meaning: "Pertanyaan" },
-            { kanji: "特別", kana: "とくべつ", romaji: "tokubetsu", meaning: "Spesial / Khusus" },
-            { kanji: "理由", kana: "りゆう", romaji: "riyuu", meaning: "Alasan" },
-            { kanji: "準備", kana: "じゅんび", romaji: "junbi", meaning: "Persiapan" },
-            { kanji: "注意", kana: "ちゅうい", romaji: "chuui", meaning: "Peringatan / Hati-hati" },
-            { kanji: "経験", kana: "けいけん", romaji: "keiken", meaning: "Pengalaman" },
-            { kanji: "意味", kana: "いみ", romaji: "imi", meaning: "Arti / Makna" },
-            { kanji: "試合", kana: "しあい", romaji: "shiai", meaning: "Pertandingan" },
-            { kanji: "意見", kana: "いけん", romaji: "iken", meaning: "Pendapat" },
-            { kanji: "計画", kana: "けいかく", romaji: "keikaku", meaning: "Rencana" },
-            { kanji: "案内", kana: "あんない", romaji: "annai", meaning: "Panduan / Informasi" },
-            { kanji: "住所", kana: "じゅうしょ", romaji: "juusho", meaning: "Alamat" },
-            { kanji: "世話", kana: "せわ", romaji: "sewa", meaning: "Merawat / Mengurus" },
-            { kanji: "交通", kana: "こうつう", romaji: "koutsuu", meaning: "Lalu lintas" },
-            { kanji: "約束", kana: "やくそく", romaji: "yakusoku", meaning: "Janji" },
-            { kanji: "景色", kana: "けしき", romaji: "keshiki", meaning: "Pemandangan" },
-            { kanji: "季節", kana: "きせつ", romaji: "kisetsu", meaning: "Musim" },
-            { kanji: "旅行", kana: "りょこう", romaji: "ryokou", meaning: "Perjalanan / Wisata" },
-            { kanji: "科学", kana: "かがく", romaji: "kagaku", meaning: "Ilmu Sains" },
-            { kanji: "経済", kana: "けいざい", romaji: "keizai", meaning: "Ekonomi" },
-            { kanji: "法律", kana: "ほうりつ", romaji: "houritsu", meaning: "Hukum" },
-            { kanji: "政治", kana: "せいじ", romaji: "seiji", meaning: "Politik" },
-            { kanji: "教育", kana: "きょういく", romaji: "kyouiku", meaning: "Pendidikan" },
-            { kanji: "文化", kana: "ぶんか", romaji: "bunka", meaning: "Kebudayaan" },
-            { kanji: "習慣", kana: "しゅうかん", romaji: "shuukan", meaning: "Kebiasaan" },
-            { kanji: "発音", kana: "はつおん", romaji: "hatsuon", meaning: "Pelafalan" },
-            { kanji: "文法", kana: "ぶんぽう", romaji: "bunpou", meaning: "Tata Bahasa" },
-            { kanji: "事故", kana: "じこ", romaji: "jiko", meaning: "Kecelakaan" },
-            { kanji: "地震", kana: "じしん", romaji: "jishin", meaning: "Gempa bumi" },
-            { kanji: "火事", kana: "かじ", romaji: "kaji", meaning: "Kebakaran" },
-            { kanji: "場合", kana: "ばあい", romaji: "baai", meaning: "Situasi / Dalam hal..." },
-            { kanji: "原因", kana: "げんいん", romaji: "gen'in", meaning: "Penyebab" },
-            { kanji: "複雑", kana: "ふくざつ", romaji: "fukuzatsu", meaning: "Rumit" },
-            { kanji: "安全", kana: "あんぜん", romaji: "anzen", meaning: "Aman" },
-            { kanji: "危険", kana: "きけん", romaji: "kiken", meaning: "Berbahaya" },
-            { kanji: "一生懸命", kana: "いっしょうけんめい", romaji: "isshoukenmei", meaning: "Bersungguh-sungguh" },
-            { kanji: "親切", kana: "しんせつ", romaji: "shinsetsu", meaning: "Ramah / Baik hati" },
-            { kanji: "便利", kana: "べんり", romaji: "benri", meaning: "Praktis / Mudah" },
-            { kanji: "不便", kana: "ふべん", romaji: "fuben", meaning: "Tidak praktis" },
-            { kanji: "目的", kana: "もくてき", romaji: "mokuteki", meaning: "Tujuan (Goal)" },
-            { kanji: "将来", kana: "しょうらい", romaji: "shourai", meaning: "Masa depan" },
-            { kanji: "社長", kana: "しゃちょう", romaji: "shachou", meaning: "Presiden Direktur" },
-            { kanji: "会議", kana: "かいぎ", romaji: "kaigi", meaning: "Rapat" },
-            { kanji: "工場", kana: "こうじょう", romaji: "koujou", meaning: "Pabrik" },
-            { kanji: "日記", kana: "にっき", romaji: "nikki", meaning: "Buku harian" },
-            { kanji: "泥棒", kana: "どろぼう", romaji: "dorobou", meaning: "Pencuri / Maling" },
-            { kanji: "警察", kana: "けいさつ", romaji: "keisatsu", meaning: "Polisi" },
-            { kanji: "お土産", kana: "おみやげ", romaji: "omiyage", meaning: "Oleh-oleh" },
-            { kanji: "荷物", kana: "にもつ", romaji: "nimotsu", meaning: "Barang bawaan" },
-            { kanji: "時計", kana: "とけい", romaji: "tokei", meaning: "Jam tangan / Jam" },
-            { kanji: "洋服", kana: "ようふく", romaji: "youfuku", meaning: "Pakaian barat" },
-            { kanji: "靴下", kana: "くつした", romaji: "kutsushita", meaning: "Kaos kaki" },
-            { kanji: "帽子", kana: "ぼうし", romaji: "boushi", meaning: "Topi" },
-            { kanji: "辞書", kana: "じしょ", romaji: "jisho", meaning: "Kamus" },
-            { kanji: "地図", kana: "ちず", romaji: "chizu", meaning: "Peta" },
-            { kanji: "冷蔵庫", kana: "れいぞうこ", romaji: "reizouko", meaning: "Kulkas" },
-            { kanji: "洗濯機", kana: "せんたくき", romaji: "sentakuki", meaning: "Mesin cuci" },
-            { kanji: "音楽", kana: "おんがく", romaji: "ongaku", meaning: "Musik" },
-            { kanji: "機械", kana: "きかい", romaji: "kikai", meaning: "Mesin" },
-            { kanji: "技術", kana: "ぎじゅつ", romaji: "gijutsu", meaning: "Teknologi / Teknik" },
-            { kanji: "情報", kana: "じょうほう", romaji: "jouhou", meaning: "Informasi / Data" },
-            { kanji: "趣味", kana: "しゅみ", romaji: "shumi", meaning: "Hobi" },
-            { kanji: "連絡", kana: "れんらく", romaji: "renraku", meaning: "Menghubungi / Kontak" },
-            { kanji: "相談", kana: "そうだん", romaji: "soudan", meaning: "Konsultasi / Diskusi" },
-            { kanji: "報告", kana: "ほうこく", romaji: "houkoku", meaning: "Laporan" },
-            { kanji: "成功", kana: "せいこう", romaji: "seikou", meaning: "Sukses / Berhasil" },
-            { kanji: "失敗", kana: "しっぱい", romaji: "shippai", meaning: "Gagal / Kegagalan" },
-            { kanji: "賛成", kana: "さんせい", romaji: "sansei", meaning: "Setuju" },
-            { kanji: "反対", kana: "はんたい", romaji: "hantai", meaning: "Menentang / Tidak setuju" },
-            { kanji: "世界", kana: "せかい", romaji: "sekai", meaning: "Dunia" },
-            { kanji: "社会", kana: "しゃかい", romaji: "shakai", meaning: "Masyarakat / Sosial" },
-            { kanji: "自然", kana: "しぜん", romaji: "shizen", meaning: "Alam" },
-            { kanji: "説明", kana: "せつめい", romaji: "setsumei", meaning: "Penjelasan" },
-            { kanji: "紹介", kana: "しょうかい", romaji: "shoukai", meaning: "Perkenalan" },
-            { kanji: "専門", kana: "せんもん", romaji: "senmon", meaning: "Keahlian / Jurusan" },
-            { kanji: "医学", kana: "いがく", romaji: "igaku", meaning: "Ilmu Kedokteran" },
-            { kanji: "数学", kana: "すうがく", romaji: "suugaku", meaning: "Matematika" },
-            { kanji: "文学", kana: "ぶんがく", romaji: "bungaku", meaning: "Sastra" },
-            { kanji: "歴史", kana: "れきし", romaji: "rekishi", meaning: "Sejarah" },
-            { kanji: "地理", kana: "ちり", romaji: "chiri", meaning: "Geografi" },
-            { kanji: "気分", kana: "きぶん", romaji: "kibun", meaning: "Perasaan / Suasana hati" },
-            { kanji: "具合", kana: "ぐあい", romaji: "guai", meaning: "Kondisi (fisik/mesin)" },
-            { kanji: "健康", kana: "けんこう", romaji: "kenkou", meaning: "Kesehatan" },
-            { kanji: "入院", kana: "にゅういん", romaji: "nyuuin", meaning: "Masuk Rumah Sakit" },
-            { kanji: "退院", kana: "たいいん", romaji: "taiin", meaning: "Keluar Rumah Sakit" },
-            { kanji: "注射", kana: "ちゅうしゃ", romaji: "chuusha", meaning: "Suntikan" },
-            { kanji: "手術", kana: "しゅじゅつ", romaji: "shujutsu", meaning: "Operasi (Medis)" },
-            { kanji: "卒業", kana: "そつぎょう", romaji: "sotsugyou", meaning: "Lulus Sekolah" },
-            { kanji: "入学", kana: "にゅうがく", romaji: "nyuugaku", meaning: "Masuk Sekolah/Universitas" },
-            { kanji: "通勤", kana: "つうきん", romaji: "tsuukin", meaning: "Pergi-Pulang Kerja (Komuter)" },
-            { kanji: "出張", kana: "しゅっちょう", romaji: "shucchou", meaning: "Perjalanan Bisnis" },
-            { kanji: "転勤", kana: "てんきん", romaji: "tenkin", meaning: "Pindah Tugas / Mutasi" },
-            { kanji: "面接", kana: "めんせつ", romaji: "mensetsu", meaning: "Wawancara" },
-            { kanji: "課長", kana: "かちょう", romaji: "kachou", meaning: "Manajer Seksi" },
-            { kanji: "部長", kana: "ぶちょう", romaji: "buchou", meaning: "Manajer Departemen" },
-            { kanji: "受付", kana: "うけつけ", romaji: "uketsuke", meaning: "Resepsionis" },
-            { kanji: "放送", kana: "ほうそう", romaji: "housou", meaning: "Siaran (Broadcast)" },
-            { kanji: "番組", kana: "ばんぐみ", romaji: "bangumi", meaning: "Program TV/Radio" },
-            { kanji: "記事", kana: "きじ", romaji: "kiji", meaning: "Artikel Berita" },
-            { kanji: "小説", kana: "しょうせつ", romaji: "shousetsu", meaning: "Novel" },
-            { kanji: "漫画", kana: "まんが", romaji: "manga", meaning: "Komik" },
-            { kanji: "展覧会", kana: "てんらんかい", romaji: "tenrankai", meaning: "Pameran" },
-            { kanji: "美術館", kana: "びじゅつかん", romaji: "bijutsukan", meaning: "Museum Seni" },
-            { kanji: "博物館", kana: "はくぶつかん", romaji: "hakubutsukan", meaning: "Museum Umum" },
-            { kanji: "動物園", kana: "どうぶつえん", romaji: "doubutsuen", meaning: "Kebun Binatang" },
-            { kanji: "植物", kana: "しょくぶつ", romaji: "shokubutsu", meaning: "Tumbuhan / Tanaman" },
-            { kanji: "旅館", kana: "りょかん", romaji: "ryokan", meaning: "Penginapan Tradisional Jepang" },
-            { kanji: "神社", kana: "じんじゃ", romaji: "jinja", meaning: "Kuil Shinto" },
-            { kanji: "郊外", kana: "こうがい", romaji: "kougai", meaning: "Pinggiran Kota" },
-            { kanji: "田舎", kana: "いなか", romaji: "inaka", meaning: "Pedesaan / Kampung Halaman" },
-            { kanji: "空港", kana: "くうこう", romaji: "kuukou", meaning: "Bandara" },
-            { kanji: "港", kana: "みなと", romaji: "minato", meaning: "Pelabuhan" },
-            { kanji: "海岸", kana: "かいがん", romaji: "kaigan", meaning: "Pantai / Pesisir" },
-            { kanji: "湖", kana: "みずうみ", romaji: "mizuumi", meaning: "Danau" },
-            { kanji: "太陽", kana: "たいよう", romaji: "taiyou", meaning: "Matahari" },
-            { kanji: "地球", kana: "ちきゅう", romaji: "chikyuu", meaning: "Bumi" },
-            { kanji: "宇宙", kana: "うちゅう", romaji: "uchuu", meaning: "Luar Angkasa" },
-            { kanji: "国際", kana: "こくさい", romaji: "kokusai", meaning: "Internasional" },
-            { kanji: "会話", kana: "かいわ", romaji: "kaiwa", meaning: "Percakapan" },
-            { kanji: "翻訳", kana: "ほんやく", romaji: "hon'yaku", meaning: "Terjemahan Teks" },
-            { kanji: "通訳", kana: "つうやく", romaji: "tsuuyaku", meaning: "Juru Bahasa (Lisan)" },
-            { kanji: "言葉", kana: "ことば", romaji: "kotoba", meaning: "Kata / Bahasa" },
-            { kanji: "試験", kana: "しけん", romaji: "shiken", meaning: "Ujian" },
-            { kanji: "復習", kana: "ふくしゅう", romaji: "fukushuu", meaning: "Mengulang Pelajaran" },
-            { kanji: "予習", kana: "よしゅう", romaji: "yoshuu", meaning: "Mempersiapkan Pelajaran" },
-            { kanji: "講義", kana: "こうぎ", romaji: "kougi", meaning: "Kuliah" },
-            { kanji: "研究", kana: "けんきゅう", romaji: "kenkyuu", meaning: "Penelitian" }
+        // Data 10 Kanji N4 Frekuensi Tinggi (Ujian, Pertanyaan, Bekerja, Belajar)
+        const dailyKanji = [
+            { k: "勉", m: "Berusaha / Belajar", r: "ben / tsuto(meru)" },
+            { k: "強", m: "Kuat", r: "kyou / tsuyo(i)" },
+            { k: "答", m: "Menjawab", r: "tou / kota(eru)" },
+            { k: "問", m: "Bertanya / Masalah", r: "mon / to(i)" },
+            { k: "題", m: "Topik / Judul", r: "dai" },
+            { k: "考", m: "Berpikir", r: "kou / kanga(eru)" },
+            { k: "知", m: "Mengetahui", r: "chi / shi(ru)" },
+            { k: "働", m: "Bekerja", r: "dou / hatara(ku)" },
+            { k: "終", m: "Selesai / Berakhir", r: "shuu / o(waru)" },
+            { k: "建", m: "Membangun", r: "ken / ta(teru)" }
         ];
 
-        const container = document.getElementById('cardContainer');
+        let fcIndex = 0;
+        let writer = null; // Variabel untuk HanziWriter
 
-        // Fungsi untuk membuat elemen HTML kartu
-        function renderCards(dataArray) {
-            container.innerHTML = '';
-            dataArray.forEach((data, index) => {
-                const cardHTML = `
-                    <div class="card fade-in" style="animation-delay: ${index * 0.02}s" onclick="this.classList.toggle('flipped')">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <div class="kanji">${data.kanji}</div>
-                                <div class="click-hint">Klik untuk membalik ↻</div>
-                            </div>
-                            <div class="card-back">
-                                <div class="kana">${data.kana}</div>
-                                <div class="romaji">${data.romaji}</div>
-                                <div class="meaning">${data.meaning}</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += cardHTML;
+        function openTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // --- FLASHCARD LOGIC ---
+        function updateFlashcard() {
+            const card = document.getElementById('flashcard-inner');
+            card.classList.remove('flipped'); 
+            
+            setTimeout(() => {
+                const data = dailyKanji[fcIndex];
+                document.getElementById('fc-kanji').innerText = data.k;
+                document.getElementById('fc-arti').innerText = data.m;
+                document.getElementById('fc-romaji').innerText = data.r;
+                document.getElementById('fc-counter').innerText = `${fcIndex + 1} / ${dailyKanji.length}`;
+            }, 150); // Delay sedikit agar pergantian teks terjadi saat tertutup
+        }
+
+        function flipCard() {
+            document.getElementById('flashcard-inner').classList.toggle('flipped');
+        }
+
+        function nextCard(event) {
+            event.stopPropagation();
+            if (fcIndex < dailyKanji.length - 1) {
+                fcIndex++;
+                updateFlashcard();
+            }
+        }
+
+        function prevCard(event) {
+            event.stopPropagation();
+            if (fcIndex > 0) {
+                fcIndex--;
+                updateFlashcard();
+            }
+        }
+
+        // --- DRAWING CANVAS LOGIC ---
+        function generateTulisTable() {
+            const container = document.getElementById('tulis-container');
+            let html = '<table>';
+            html += '<tr><th>Info Kanji</th><th>Latihan 1</th><th>Latihan 2</th><th>Latihan 3</th></tr>';
+            
+            dailyKanji.forEach((item, index) => {
+                html += `<tr id="row-${index}">`;
+                html += `<td class="kanji-cell">
+                            <span class="kanji-big">${item.k}</span>
+                            <span class="arti-text">${item.m}</span>
+                            <span class="romaji-text">${item.r}</span>
+                            <!-- Tombol ini sekarang memanggil fungsi openModal -->
+                            <button class="btn-urutan" onclick="openModal('${item.k}', '${item.m}')">Cek Urutan 🎬</button>
+                         </td>`;
+                
+                // Buat 3 kolom kanvas per Kanji
+                for (let i = 0; i < 3; i++) {
+                    html += `<td>
+                                <canvas class="draw-canvas" width="120" height="120" data-row="${index}" data-col="${i}" data-char="${item.k}"></canvas>
+                                <button class="btn-clear" onclick="clearSingleCanvas(${index}, ${i})">Hapus</button>
+                             </td>`;
+                }
+                html += `</tr>`;
+            });
+            
+            html += '</table>';
+            container.innerHTML = html;
+            setupDrawing();
+        }
+
+        function drawGuide(canvas, char) {
+            const ctx = canvas.getContext('2d');
+            ctx.font = "80px sans-serif";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.1)"; // Guide warna transparan
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(char, canvas.width / 2, canvas.height / 2 + 5);
+        }
+
+        function clearSingleCanvas(rowIndex, colIndex) {
+            const canvas = document.querySelector(`canvas[data-row="${rowIndex}"][data-col="${colIndex}"]`);
+            if(canvas) {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawGuide(canvas, canvas.getAttribute('data-char'));
+            }
+        }
+
+        function setupDrawing() {
+            const canvases = document.querySelectorAll('.draw-canvas');
+            
+            canvases.forEach(canvas => {
+                const ctx = canvas.getContext('2d');
+                let isDrawing = false;
+
+                drawGuide(canvas, canvas.getAttribute('data-char'));
+
+                canvas.addEventListener('mousedown', startPosition);
+                canvas.addEventListener('mouseup', endPosition);
+                canvas.addEventListener('mousemove', draw);
+                canvas.addEventListener('mouseout', endPosition);
+
+                canvas.addEventListener('touchstart', (e) => {
+                    e.preventDefault(); 
+                    startPosition(e.touches[0]);
+                }, { passive: false });
+                
+                canvas.addEventListener('touchend', endPosition);
+                
+                canvas.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                    draw(e.touches[0]);
+                }, { passive: false });
+
+                function startPosition(e) {
+                    isDrawing = true;
+                    draw(e);
+                }
+
+                function endPosition() {
+                    isDrawing = false;
+                    ctx.beginPath(); 
+                }
+
+                function draw(e) {
+                    if (!isDrawing) return;
+                    const rect = canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    ctx.lineWidth = 4;
+                    ctx.lineCap = 'round';
+                    ctx.strokeStyle = '#ffffff'; 
+                    
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                }
             });
         }
 
-        // Fungsi Acak Kartu (Fisher-Yates Shuffle)
-        function shuffleCards() {
-            let shuffled = [...flashcardsData];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        // --- STROKE ORDER ANIMATION (HANZIWRITER) ---
+        function openModal(kanji, arti) {
+            const modal = document.getElementById('strokeModal');
+            const animatorContainer = document.getElementById('kanji-animator');
+            
+            document.getElementById('modal-kanji-info').innerText = `${kanji} - ${arti}`;
+            modal.style.display = "flex";
+            
+            // Bersihkan instance sebelumnya jika ada
+            animatorContainer.innerHTML = "";
+
+            // Inisialisasi HanziWriter
+            writer = HanziWriter.create('kanji-animator', kanji, {
+                width: 250,
+                height: 250,
+                padding: 15,
+                strokeAnimationSpeed: 1.2,
+                delayBetweenStrokes: 200,
+                strokeColor: '#000000',     // Warna garis coretan (hitam)
+                radicalColor: '#c91f37',    // Opsional: Warna radikal merah
+                showOutline: true           // Tampilkan garis panduan
+            });
+
+            // Mulai animasi
+            writer.animateCharacter();
+        }
+
+        function replayAnimation() {
+            if(writer) {
+                writer.animateCharacter();
             }
-            renderCards(shuffled);
         }
 
-        // Fungsi Reset (Menutup semua kartu & mengembalikan urutan)
-        function resetCards() {
-            renderCards(flashcardsData);
+        function closeModal() {
+            document.getElementById('strokeModal').style.display = "none";
+            if(writer) {
+                writer.hideCharacter(); // Hentikan animasi di background
+            }
         }
 
-        // Render awal saat halaman dimuat
-        renderCards(flashcardsData);
+        // Initialize App
+        window.onload = () => {
+            updateFlashcard();
+            generateTulisTable();
+        };
     </script>
-    <!-- Tombol Kembali ke Menu Utama -->
-<div style="text-align: center; width: 100%;">
-    <a href="n4-gatekeeper.html" class="btn-back-global">
-        ⬅ Kembali ke Menu N4
-    </a>
-</div>
 </body>
 </html>
