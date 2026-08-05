@@ -3,22 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nihongo Master | Materi Bab 9</title>
+    <title>Nihongo Master | Bab 9: Suka, Punya, & Alasan</title>
     <style>
-        /* Desain Minimalis, Profesional & Dark Edition */
+        /* Desain Utama & Dark Theme */
         :root {
             --bg-solid: #000000;
-            --panel-bg: rgba(10, 10, 10, 0.9); 
-            --border-color: #222222;
+            --panel-bg: rgba(15, 15, 15, 0.9); 
+            --border-color: #333333;
             --text-main: #ffffff;
             --text-muted: #aaaaaa;
             --accent-japan: #c91f37;
+            
+            /* Warna Khusus Tata Bahasa */
+            --color-subjek: #4fc3f7;   /* Biru Muda */
+            --color-partikel: #ff5252; /* Merah */
+            --color-predikat: #81c784; /* Hijau */
+            --color-akhir: #ffd54f;    /* Kuning */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         
         body { 
-            background-image: url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=2070&auto=format&fit=crop'); 
+            background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
             background-size: cover; 
             background-position: center;
             background-attachment: fixed;
@@ -34,232 +40,433 @@
         .fade-in { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Tombol Back */
+        .btn-back-pojok {
+            position: fixed; top: 20px; left: 20px; background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--border-color); color: var(--text-muted);
+            padding: 10px 20px; border-radius: 30px; cursor: pointer;
+            font-size: 14px; font-weight: bold; transition: 0.3s; z-index: 9999; backdrop-filter: blur(5px);
+        }
+        .btn-back-pojok:hover { border-color: var(--text-main); color: var(--text-main); background: #111; }
+
+        /* Panel Pembelajaran */
         .panel {
             background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
             padding: 40px;
             width: 100%;
-            max-width: 850px;
-            border-top: 3px solid var(--accent-japan);
-            border-radius: 4px;
-            backdrop-filter: blur(8px);
+            max-width: 900px;
+            border-top: 4px solid var(--accent-japan);
+            border-radius: 6px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
         }
 
         h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
-        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px;}
-        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.8rem; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 5px; display: block; text-align: center; letter-spacing: 2px; font-weight: bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 2rem; }
 
-        /* Sistem Tab Navigation */
-        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
+        /* Furigana Styling */
+        ruby { font-size: 1.15rem; }
+        rt { font-size: 0.65rem; color: #bbb; }
+
+        /* Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
         .tab-btn {
             flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
-            border-bottom: 2px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+            border-bottom: 3px solid transparent; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
         }
         .tab-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
-        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); }
+        .tab-btn.active { color: var(--accent-japan); border-bottom-color: var(--accent-japan); background: rgba(201, 31, 55, 0.1);}
 
         .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
         .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
 
         /* Tabel Kosakata */
-        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
-        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); font-weight: 600; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--accent-japan); }
         tr:hover { background-color: rgba(255, 255, 255, 0.05); }
-        .kana { font-weight: bold; font-size: 1.1rem; }
 
-        /* Block Penjelasan Tata Bahasa */
+        /* Kotak Pola Tata Bahasa */
         .grammar-box {
-            background: rgba(0, 0, 0, 0.6); border-left: 4px solid var(--accent-japan);
-            padding: 20px; margin-bottom: 25px; border-radius: 0 4px 4px 0;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--accent-japan);
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 4px;
         }
-        .grammar-box h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
-        .pattern { background: #111; padding: 10px; text-align: center; font-family: monospace; font-size: 1.1rem; color: var(--accent-japan); margin-bottom: 15px; border: 1px solid #333; }
+        .grammar-pattern {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            background: #111;
+            padding: 15px;
+            text-align: center;
+            border-radius: 4px;
+            letter-spacing: 2px;
+        }
         
-        .example-list { list-style: none; margin-top: 15px; }
-        .example-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
-        .example-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .jp-text { font-size: 1.2rem; font-weight: bold; color: #fff; margin-bottom: 5px; }
-        .id-text { color: var(--text-muted); font-size: 0.95rem; }
+        /* Kelas Warna Syntax Highlight */
+        .c-sub { color: var(--color-subjek); }
+        .c-ptc { color: var(--color-partikel); }
+        .c-prd { color: var(--color-predikat); }
+        .c-akh { color: var(--color-akhir); }
 
-        /* Tombol Back */
-        .btn-back {
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            width: 100%; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); color: var(--text-muted);
-            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
-            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
-            margin-top: 40px; position: relative; z-index: 10; transition: all 0.3s ease;
+        .grammar-desc { color: var(--text-muted); margin-bottom: 15px; }
+        .example-sentence { margin-bottom: 10px; border-bottom: 1px dashed #333; padding-bottom: 10px; }
+        .ex-jp { font-size: 1.2rem; margin-bottom: 3px; }
+        .ex-id { color: #888; font-size: 0.95rem; font-style: italic; }
+
+        /* Dialog Box */
+        .dialog-bubble {
+            padding: 15px; border-radius: 8px; margin-bottom: 15px; max-width: 80%;
         }
-        .btn-back:hover {
-            color: #ffffff; background: rgba(20, 20, 20, 0.95); border-color: var(--accent-japan);
-            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        .bubble-a { background: rgba(30, 136, 229, 0.15); border-left: 4px solid var(--accent-blue); align-self: flex-start; }
+        .bubble-b { background: rgba(67, 160, 71, 0.15); border-left: 4px solid var(--accent-green); align-self: flex-end; margin-left: auto;}
+
+        /* Evaluasi / Kuis */
+        .quiz-container { display: flex; flex-direction: column; gap: 15px; }
+        .q-text { font-size: 1.3rem; margin-bottom: 10px; }
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn-opt {
+            background: rgba(0,0,0,0.6); color: #fff; border: 1px solid var(--border-color);
+            padding: 15px; border-radius: 4px; cursor: pointer; font-size: 1.1rem; transition: 0.2s;
         }
-        .btn-back:active { transform: translateY(0); }
+        .btn-opt:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+        .btn-opt.correct { background: rgba(46, 125, 50, 0.4); border-color: var(--accent-success); }
+        .btn-opt.wrong { background: rgba(201, 31, 55, 0.4); border-color: var(--accent-japan); }
+        
+        .btn-next {
+            background: var(--accent-japan); color: #fff; border: none; padding: 15px;
+            font-size: 1.1rem; border-radius: 4px; cursor: pointer; margin-top: 15px;
+            font-weight: bold; display: none; transition: 0.3s;
+        }
+        .btn-next:hover { background: #a0172b; }
+
+        .legend {
+            display: flex; gap: 15px; justify-content: center; margin-bottom: 20px; font-size: 0.9rem;
+            background: #111; padding: 10px; border-radius: 4px; flex-wrap: wrap;
+        }
+        .leg-item { display: flex; align-items: center; gap: 5px; }
+        .box-color { width: 12px; height: 12px; border-radius: 2px; }
     </style>
 </head>
 <body>
 
+    <button class="btn-back-pojok" onclick="window.history.back()">⬅ Kembali</button>
+
     <div class="panel fade-in">
-        <span class="jp-title">第9課 (Bab 9)</span>
-        <h1 class="main-title">Kemampuan, Kesukaan & Alasan</h1>
+        <span class="jp-title">第９課</span>
+        <h1 class="main-title">Bab 9: Suka, Punya, & Alasan</h1>
 
-        <!-- Menu Tab -->
+        <!-- Navigasi Tab -->
         <div class="tabs">
-            <div class="tab-btn active" onclick="openTab('kosakata')">📖 KOSAKATA</div>
-            <div class="tab-btn" onclick="openTab('tatabahasa')">⚙️ TATA BAHASA</div>
-            <div class="tab-btn" onclick="openTab('contoh')">📝 CONTOH KALIMAT</div>
+            <div class="tab-btn active" onclick="openTab('kosakata')">1. 語彙 (Kosakata)</div>
+            <div class="tab-btn" onclick="openTab('bunpou')">2. 文法 (Tata Bahasa)</div>
+            <div class="tab-btn" onclick="openTab('kaiwa')">3. 会話 (Percakapan)</div>
+            <div class="tab-btn" onclick="openTab('evaluasi')">4. 練習 (Evaluasi)</div>
         </div>
 
-        <!-- TAB 1: KOSAKATA -->
+        <!-- =================== TAB 1: KOSAKATA =================== -->
         <div id="kosakata" class="tab-content active">
-            <h3>1. Kata Kerja & Kata Sifat Khusus</h3>
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Di bab ini, kita akan belajar kata sifat dan kata kerja yang mengambil objek dengan partikel <strong>が (ga)</strong> bukan を (o).</p>
             <table>
-                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
-                <tr><td class="kana">わかります</td><td>Wakarimasu</td><td>Mengerti / Paham</td></tr>
-                <tr><td class="kana">あります</td><td>Arimasu</td><td>Ada / Punya (benda mati)</td></tr>
-                <tr><td class="kana">すき（な）</td><td>Suki (na)</td><td>Suka</td></tr>
-                <tr><td class="kana">きらい（な）</td><td>Kirai (na)</td><td>Benci / Tidak suka</td></tr>
-                <tr><td class="kana">じょうず（な）</td><td>Jouzu (na)</td><td>Pintar / Mahir (untuk orang lain)</td></tr>
-                <tr><td class="kana">へた（な）</td><td>Heta (na)</td><td>Bodoh / Payah / Kurang mahir</td></tr>
-            </table>
-
-            <h3>2. Kata Benda</h3>
-            <table>
-                <tr><th>Kana / Kanji</th><th>Romaji</th><th>Arti</th></tr>
-                <tr><td class="kana">りょうり (料理)</td><td>Ryouri</td><td>Masakan</td></tr>
-                <tr><td class="kana">スポーツ</td><td>Supootsu</td><td>Olahraga (～を します)</td></tr>
-                <tr><td class="kana">おんがく (音楽)</td><td>Ongaku</td><td>Musik</td></tr>
-                <tr><td class="kana">うた (歌)</td><td>Uta</td><td>Lagu</td></tr>
-                <tr><td class="kana">え (絵)</td><td>E</td><td>Gambar / Lukisan</td></tr>
-                <tr><td class="kana">じ (字)</td><td>Ji</td><td>Huruf / Karakter</td></tr>
-                <tr><td class="kana">チケット</td><td>Chiketto</td><td>Tiket (konser, bioskop)</td></tr>
-                <tr><td class="kana">じかん (時間)</td><td>Jikan</td><td>Waktu</td></tr>
-                <tr><td class="kana">ようじ (用事)</td><td>Youji</td><td>Urusan</td></tr>
-                <tr><td class="kana">やくそく (約束)</td><td>Yakusoku</td><td>Janji</td></tr>
-            </table>
-
-            <h3>3. Kata Keterangan (Tingkat/Frekuensi)</h3>
-            <table>
-                <tr><th>Kana</th><th>Romaji</th><th>Arti</th></tr>
-                <tr><td class="kana">よく</td><td>Yoku</td><td>Dengan baik / Sering</td></tr>
-                <tr><td class="kana">だいたい</td><td>Daitai</td><td>Kira-kira / Sebagian besar</td></tr>
-                <tr><td class="kana">たくさん</td><td>Takusan</td><td>Banyak</td></tr>
-                <tr><td class="kana">すこし</td><td>Sukoshi</td><td>Sedikit</td></tr>
-                <tr><td class="kana">ぜんぜん</td><td>Zenzen</td><td>Tidak sama sekali (+ kalimat negatif)</td></tr>
-                <tr><td class="kana">どうして</td><td>Doushite</td><td>Kenapa / Mengapa</td></tr>
+                <tr><th>Kanji / Kana</th><th>Romaji</th><th>Arti Bahasa Indonesia</th></tr>
+                <tr><td>すき (な) / <ruby>好<rt>す</rt></ruby>き</td><td>Suki (na)</td><td>Suka</td></tr>
+                <tr><td>きらい (な) / <ruby>嫌<rt>きら</rt></ruby>い</td><td>Kirai (na)</td><td>Tidak suka / Benci</td></tr>
+                <tr><td>じょうず (な) / <ruby>上手<rt>じょうず</rt></ruby></td><td>Jouzu (na)</td><td>Pintar / Mahir (untuk orang lain)</td></tr>
+                <tr><td>へた (な) / <ruby>下手<rt>へた</rt></ruby></td><td>Heta (na)</td><td>Payah / Kurang mahir</td></tr>
+                <tr><td>わかります / <ruby>分<rt>わ</rt></ruby>かります</td><td>Wakarimasu</td><td>Mengerti / Paham</td></tr>
+                <tr><td>あります</td><td>Arimasu</td><td>Ada / Memiliki (Benda mati)</td></tr>
+                <tr><td>りょうり / <ruby>料理<rt>りょうり</rt></ruby></td><td>Ryouri</td><td>Masakan / Memasak</td></tr>
+                <tr><td>スポーツ</td><td>Supootsu</td><td>Olahraga</td></tr>
+                <tr><td>おんがく / <ruby>音楽<rt>おんがく</rt></ruby></td><td>Ongaku</td><td>Musik</td></tr>
+                <tr><td>じかん / <ruby>時間<rt>じかん</rt></ruby></td><td>Jikan</td><td>Waktu</td></tr>
+                <tr><td>やくそく / <ruby>約束<rt>やくそく</rt></ruby></td><td>Yakusoku</td><td>Janji</td></tr>
+                <tr><td>ようじ / <ruby>用事<rt>ようじ</rt></ruby></td><td>Youji</td><td>Urusan</td></tr>
+                <tr><td>どうして</td><td>Doushite</td><td>Kenapa / Mengapa</td></tr>
+                <tr><td>～から</td><td>~Kara</td><td>Karena ~</td></tr>
             </table>
         </div>
 
-        <!-- TAB 2: TATA BAHASA -->
-        <div id="tatabahasa" class="tab-content">
+        <!-- =================== TAB 2: TATA BAHASA =================== -->
+        <div id="bunpou" class="tab-content">
+            <div class="legend">
+                <div class="leg-item"><div class="box-color" style="background: var(--color-subjek);"></div> Subjek Utama</div>
+                <div class="leg-item"><div class="box-color" style="background: var(--color-predikat);"></div> Benda/Hal (Objek)</div>
+                <div class="leg-item"><div class="box-color" style="background: var(--color-partikel);"></div> Partikel</div>
+                <div class="leg-item"><div class="box-color" style="background: var(--color-akhir);"></div> Sifat/Kerja</div>
+            </div>
+
+            <!-- POLA 1 -->
+            <div class="grammar-box">
+                <h3>Pola 1: Menyatakan Kesukaan & Kemahiran</h3>
+                <div class="grammar-pattern">
+                    <span class="c-sub">[Subjek]</span> <span class="c-ptc">は</span> <span class="c-prd">[Benda/Hal]</span> <span class="c-ptc">が</span> <span class="c-akh">すき / じょうず です</span>。
+                </div>
+                <p class="grammar-desc">
+                    Untuk menyatakan Suka, Benci, Pintar, atau Payah terhadap sesuatu, gunakan partikel <strong class="c-ptc">が (ga)</strong> sebelum kata sifat tersebut (jangan gunakan を).
+                </p>
+                <div class="example-sentence">
+                    <div class="ex-jp"><span class="c-sub"><ruby>私<rt>わたし</rt></ruby></span> <span class="c-ptc">は</span> <span class="c-prd">スポーツ</span> <span class="c-ptc">が</span> <span class="c-akh">すきです</span>。</div>
+                    <div class="ex-id">Saya <b>suka</b> olahraga.</div>
+                </div>
+                <div class="example-sentence">
+                    <div class="ex-jp"><span class="c-sub">アリさん</span> <span class="c-ptc">は</span> <span class="c-prd"><ruby>日本語<rt>にほんご</rt></ruby></span> <span class="c-ptc">が</span> <span class="c-akh">じょうずです</span>。</div>
+                    <div class="ex-id">Sdr. Ali <b>pintar</b> bahasa Jepang.</div>
+                </div>
+            </div>
+
+            <!-- POLA 2 -->
+            <div class="grammar-box">
+                <h3>Pola 2: Mengerti & Memiliki (わかります / あります)</h3>
+                <div class="grammar-pattern">
+                    <span class="c-sub">[Subjek]</span> <span class="c-ptc">は</span> <span class="c-prd">[Benda/Hal]</span> <span class="c-ptc">が</span> <span class="c-akh">わかります / あります</span>。
+                </div>
+                <p class="grammar-desc">
+                    Sama seperti di atas, kata kerja <b>わかります (Mengerti)</b> dan <b>あります (Memiliki benda)</b> objeknya ditandai dengan partikel <strong class="c-ptc">が (ga)</strong>.
+                </p>
+                <div class="example-sentence">
+                    <div class="ex-jp"><span class="c-sub"><ruby>私<rt>わたし</rt></ruby></span> <span class="c-ptc">は</span> <span class="c-prd"><ruby>英語<rt>えいご</rt></ruby></span> <span class="c-ptc">が</span> <span class="c-akh">わかります</span>。</div>
+                    <div class="ex-id">Saya <b>mengerti</b> bahasa Inggris.</div>
+                </div>
+                <div class="example-sentence">
+                    <div class="ex-jp"><span class="c-sub"><ruby>私<rt>わたし</rt></ruby></span> <span class="c-ptc">は</span> <span class="c-prd">くるま</span> <span class="c-ptc">が</span> <span class="c-akh">ありません</span>。</div>
+                    <div class="ex-id">Saya <b>tidak punya</b> mobil.</div>
+                </div>
+            </div>
+
+            <!-- POLA 3 -->
+            <div class="grammar-box">
+                <h3>Pola 3: Kalimat Alasan (~から)</h3>
+                <div class="grammar-pattern">
+                    <span class="c-sub">[Kalimat Alasan]</span> <span class="c-akh">から</span>、 <span class="c-prd">[Kalimat Akibat]</span>。
+                </div>
+                <p class="grammar-desc">
+                    Partikel <strong class="c-akh">から (kara)</strong> diletakkan di <u>akhir</u> kalimat yang menjadi alasan (Karena...).
+                </p>
+                <div class="example-sentence">
+                    <div class="ex-jp"><span class="c-sub"><ruby>時間<rt>じかん</rt></ruby>が ありません</span> <span class="c-akh">から</span>、 <span class="c-prd">テレビを <ruby>見<rt>み</rt></ruby>ません</span>。</div>
+                    <div class="ex-id"><b>Karena</b> tidak punya waktu, (saya) tidak menonton TV.</div>
+                </div>
+            </div>
+
+            <!-- POLA 4 -->
+            <div class="grammar-box">
+                <h3>Pola 4: Bertanya Mengapa (どうして)</h3>
+                <div class="grammar-pattern">
+                    <span class="c-sub">どうして</span> <span class="c-prd">[Kalimat]</span> <span class="c-akh">ですか</span>。
+                </div>
+                <p class="grammar-desc">
+                    Gunakan <strong>どうして (Doushite)</strong> untuk menanyakan alasan. Saat menjawab, jangan lupa tambahkan <strong>から (kara)</strong> di akhir kalimat.
+                </p>
+                <div class="example-sentence">
+                    <div class="ex-jp"><span class="c-sub">どうして</span> <span class="c-prd"><ruby>京都<rt>きょうと</rt></ruby>へ <ruby>行<rt>い</rt></ruby>きません</span> <span class="c-akh">か</span>。</div>
+                    <div class="ex-id"><b>Mengapa</b> (Anda) tidak pergi ke Kyoto?</div>
+                </div>
+                <div class="example-sentence">
+                    <div class="ex-jp"><span class="c-prd"><ruby>約束<rt>やくそく</rt></ruby>が あります</span> <span class="c-akh">から</span>。</div>
+                    <div class="ex-id"><b>Karena</b> ada janji.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =================== TAB 3: PERCAKAPAN =================== -->
+        <div id="kaiwa" class="tab-content">
+            <h3 style="text-align: center; margin-bottom: 20px;">どうしてですか (Kenapa?)</h3>
             
-            <div class="grammar-box">
-                <h3>1. Partikel が (ga) untuk Kesukaan & Kemampuan</h3>
-                <p>Objek dari kata sifat seperti <strong>すき (suka), きらい (benci), じょうず (pintar), dan へた (payah)</strong> tidak ditandai dengan partikel を (wo), melainkan dengan partikel <strong>が (ga)</strong>.</p>
-                <div class="pattern">[Subjek] は [Objek] が すき／じょうず です。</div>
-                <ul class="example-list">
-                    <li><div class="jp-text">わたしは イタリアりょうりが すきです。</div><div class="id-text">Saya suka masakan Italia.</div></li>
-                    <li><div class="jp-text">マリアさんは ダンスが じょうずです。</div><div class="id-text">Sdr. Maria pintar menari.</div></li>
-                </ul>
+            <div class="dialog-bubble bubble-a">
+                <div style="font-weight: bold; margin-bottom: 5px; color: var(--accent-blue);">田中 (Tanaka)</div>
+                <div>アリさんは どんな スポーツが すきですか。</div>
+                <div class="ex-id" style="margin-top: 5px;">Sdr. Ali suka olahraga yang seperti apa?</div>
             </div>
 
-            <div class="grammar-box">
-                <h3>2. Partikel が (ga) untuk Kepemilikan & Pemahaman</h3>
-                <p>Kata kerja <strong>わかります (mengerti)</strong> dan <strong>あります (ada/punya)</strong> juga menggunakan partikel <strong>が</strong>, bukan を.</p>
-                <div class="pattern">[Subjek] は [Objek] が あります／わかります。</div>
-                <ul class="example-list">
-                    <li><div class="jp-text">わたしは 日本語が わかります。</div><div class="id-text">Saya mengerti bahasa Jepang.</div></li>
-                    <li><div class="jp-text">わたしは 車が あります。</div><div class="id-text">Saya punya mobil. (Bisa juga berarti "Ada mobil")</div></li>
-                </ul>
+            <div class="dialog-bubble bubble-b">
+                <div style="font-weight: bold; margin-bottom: 5px; color: var(--accent-green);">アリ (Ali)</div>
+                <div>サッカーが すきです。</div>
+                <div class="ex-id" style="margin-top: 5px;">Saya suka sepak bola.</div>
             </div>
 
-            <div class="grammar-box">
-                <h3>3. Kata Keterangan Tingkat/Kualitas</h3>
-                <p>Digunakan untuk menjelaskan seberapa paham atau seberapa banyak barang yang dimiliki. Letaknya tepat di depan kata kerja/kata sifat.</p>
-                <ul class="example-list">
-                    <li><div class="jp-text">英語が <strong>よく</strong> わかります。</div><div class="id-text">Saya <strong>sangat/dengan baik</strong> mengerti bahasa Inggris.</div></li>
-                    <li><div class="jp-text">お金が <strong>ぜんぜん</strong> ありません。</div><div class="id-text">Saya <strong>sama sekali tidak</strong> punya uang. (ぜんぜん harus diikuti negatif)</div></li>
-                </ul>
+            <div class="dialog-bubble bubble-a">
+                <div style="font-weight: bold; margin-bottom: 5px; color: var(--accent-blue);">田中 (Tanaka)</div>
+                <div>そうですか。<ruby>明日<rt>あした</rt></ruby> いっしょに サッカーを しませんか。</div>
+                <div class="ex-id" style="margin-top: 5px;">Begitu ya. Besok maukah bermain sepak bola bersama?</div>
             </div>
-
-            <div class="grammar-box">
-                <h3>4. Kalimat 1 から、Kalimat 2 (Karena...)</h3>
-                <p>Partikel <strong>から (kara)</strong> di akhir kalimat pertama digunakan untuk menyatakan <strong>alasan</strong> dari kalimat kedua.</p>
-                <div class="pattern">[Alasan] から、[Hasil/Kesimpulan]。</div>
-                <ul class="example-list">
-                    <li><div class="jp-text">時間が ありません<strong>から</strong>、新聞を 読みません。</div><div class="id-text"><strong>Karena</strong> tidak punya waktu, saya tidak membaca koran.</div></li>
-                </ul>
-            </div>
-
-            <div class="grammar-box">
-                <h3>5. どうして (Kenapa / Mengapa)</h3>
-                <p>Kata tanya untuk menanyakan alasan. Jawabannya harus selalu diakhiri dengan <strong>～から</strong>.</p>
-                <ul class="example-list">
-                    <li><div class="jp-text"><strong>どうして</strong> 朝ごはんを 食べませんか。</div><div class="id-text"><strong>Kenapa</strong> tidak makan pagi?</div></li>
-                    <li><div class="jp-text">時間が ありません<strong>から</strong>。</div><div class="id-text"><strong>Karena</strong> tidak punya waktu.</div></li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- TAB 3: CONTOH KALIMAT -->
-        <div id="contoh" class="tab-content">
-            <p style="margin-bottom: 20px; color: var(--text-muted);">Berikut adalah percakapan dan kalimat standar yang sering muncul di Bab 9.</p>
             
-            <ul class="example-list">
-                <li>
-                    <div class="jp-text">A: どんな スポーツが すきですか。</div>
-                    <div class="id-text">A: Kamu suka olahraga yang seperti apa?</div>
-                    <div class="jp-text" style="margin-top: 10px;">B: サッカーが すきです。</div>
-                    <div class="id-text">B: Saya suka sepak bola.</div>
-                </li>
-                <li>
-                    <div class="jp-text">A: カリナさんは 絵が 上手ですか。</div>
-                    <div class="id-text">A: Apakah Sdr. Karina pintar menggambar?</div>
-                    <div class="jp-text" style="margin-top: 10px;">B: はい、とても 上手です。</div>
-                    <div class="id-text">B: Ya, sangat pintar.</div>
-                </li>
-                <li>
-                    <div class="jp-text">A: 漢字が わかりますか。</div>
-                    <div class="id-text">A: Apakah kamu mengerti Kanji?</div>
-                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、ぜんぜん わかりません。</div>
-                    <div class="id-text">B: Tidak, tidak mengerti sama sekali.</div>
-                </li>
-                <li>
-                    <div class="jp-text">A: 細かい お金が ありますか。</div>
-                    <div class="id-text">A: Apakah kamu punya uang receh?</div>
-                    <div class="jp-text" style="margin-top: 10px;">B: いいえ、ありません。</div>
-                    <div class="id-text">B: Tidak, tidak punya.</div>
-                </li>
-                <li>
-                    <div class="jp-text">A: どうして 昨日 早く 帰りましたか。</div>
-                    <div class="id-text">A: Kenapa kemarin kamu pulang cepat?</div>
-                    <div class="jp-text" style="margin-top: 10px;">B: 用事が ありましたから。</div>
-                    <div class="id-text">B: Karena ada urusan.</div>
-                </li>
-            </ul>
+            <div class="dialog-bubble bubble-b">
+                <div style="font-weight: bold; margin-bottom: 5px; color: var(--accent-green);">アリ (Ali)</div>
+                <div>すみません。<ruby>明日<rt>あした</rt></ruby>は ちょっと...</div>
+                <div class="ex-id" style="margin-top: 5px;">Maaf. Kalau besok agak... (menolak dengan halus)</div>
+            </div>
+            
+            <div class="dialog-bubble bubble-a">
+                <div style="font-weight: bold; margin-bottom: 5px; color: var(--accent-blue);">田中 (Tanaka)</div>
+                <div>どうしてですか。</div>
+                <div class="ex-id" style="margin-top: 5px;">Kenapa?</div>
+            </div>
+
+            <div class="dialog-bubble bubble-b">
+                <div style="font-weight: bold; margin-bottom: 5px; color: var(--accent-green);">アリ (Ali)</div>
+                <div><ruby>友達<rt>ともだち</rt></ruby>と <ruby>約束<rt>やくそく</rt></ruby>が ありますから。</div>
+                <div class="ex-id" style="margin-top: 5px;">Karena saya ada janji dengan teman.</div>
+            </div>
         </div>
 
-        <!-- TOMBOL KEMBALI -->
-        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+        <!-- =================== TAB 4: EVALUASI (KUIS) =================== -->
+        <div id="evaluasi" class="tab-content">
+            <div id="quiz-area" class="quiz-container">
+                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 10px;">
+                    <h3>Kuis Evaluasi Bab 9</h3>
+                    <div style="font-weight: bold; color: var(--accent-japan);" id="q-counter">Soal 1 / 5</div>
+                </div>
+                
+                <div class="q-text" id="q-text">Memuat soal...</div>
+                <div class="options" id="q-options"></div>
+                <button class="btn-next" id="q-next" onclick="nextQuiz()">Soal Berikutnya ➔</button>
+            </div>
+
+            <div id="quiz-result" style="display: none; text-align: center; padding: 30px 0;">
+                <h2>Evaluasi Selesai!</h2>
+                <div style="font-size: 5rem; color: var(--accent-japan); font-weight: bold; margin: 20px 0;" id="score-text">100</div>
+                <p style="color: #aaa; margin-bottom: 30px;" id="score-desc">Sempurna! Anda sudah menguasai Bab 9.</p>
+                <button class="btn-next" style="display: inline-block; width: auto; padding: 12px 30px;" onclick="resetQuiz()">Ulangi Kuis</button>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        // Logika sederhana untuk berpindah Tab
-        function openTab(tabName) {
-            // Sembunyikan semua konten tab
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
-
-            // Hapus status active dari semua tombol
-            const buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-
-            // Tampilkan tab yang dipilih
-            document.getElementById(tabName).classList.add('active');
+        // --- Sistem Navigasi Tab ---
+        function openTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             
-            // Tambahkan status active pada tombol yang diklik
+            document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
+
+        // --- Sistem Kuis Interaktif ---
+        const quizData = [
+            {
+                q: "わたしは にほんの おんがく (  ) すきです。",
+                options: ["を (o)", "は (wa)", "が (ga)", "に (ni)"],
+                ans: 2
+            },
+            {
+                q: "わたしは にほんご (  ) わかります。",
+                options: ["を (o)", "が (ga)", "は (wa)", "で (de)"],
+                ans: 1
+            },
+            {
+                q: "じかんが ありません (  ) 、テレビを みません。",
+                options: ["から (kara)", "まで (made)", "で (de)", "に (ni)"],
+                ans: 0
+            },
+            {
+                q: "A: (  ) きのう がっこうへ いきませんでしたか。<br>B: びょうき でしたから。",
+                options: ["だれ (Dare)", "なに (Nani)", "いつ (Itsu)", "どうして (Doushite)"],
+                ans: 3
+            },
+            {
+                q: "A: どうして はやく かえりますか。<br>B: ようじが (  ) 。",
+                options: ["あります (arimasu)", "ありますから (arimasu kara)", "ありません (arimasen)", "ありませんから (arimasen kara)"],
+                ans: 1
+            }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+        let answered = false;
+
+        const qText = document.getElementById('q-text');
+        const qOptions = document.getElementById('q-options');
+        const qNextBtn = document.getElementById('q-next');
+        const qCounter = document.getElementById('q-counter');
+
+        function loadQuiz() {
+            answered = false;
+            qNextBtn.style.display = "none";
+            qCounter.innerText = `Soal ${currentQ + 1} / ${quizData.length}`;
+            
+            const data = quizData[currentQ];
+            qText.innerHTML = data.q;
+            qOptions.innerHTML = "";
+
+            data.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "btn-opt";
+                btn.innerHTML = opt;
+                btn.onclick = () => checkQuiz(idx, btn);
+                qOptions.appendChild(btn);
+            });
+        }
+
+        function checkQuiz(selected, btn) {
+            if (answered) return;
+            answered = true;
+
+            const correct = quizData[currentQ].ans;
+            const allBtns = qOptions.querySelectorAll('.btn-opt');
+
+            if (selected === correct) {
+                btn.classList.add('correct');
+                score += 20; // 5 soal x 20 poin = 100
+            } else {
+                btn.classList.add('wrong');
+                allBtns[correct].classList.add('correct');
+            }
+
+            allBtns.forEach(b => b.style.cursor = "default");
+            
+            if (currentQ < quizData.length - 1) {
+                qNextBtn.innerText = "Soal Berikutnya ➔";
+            } else {
+                qNextBtn.innerText = "Lihat Hasil";
+            }
+            qNextBtn.style.display = "block";
+        }
+
+        function nextQuiz() {
+            currentQ++;
+            if (currentQ < quizData.length) {
+                loadQuiz();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-area').style.display = "none";
+            document.getElementById('quiz-result').style.display = "block";
+            
+            document.getElementById('score-text').innerText = score;
+            const desc = document.getElementById('score-desc');
+            
+            if (score === 100) {
+                desc.innerText = "Sempurna! Anda sudah siap lanjut ke Bab 10.";
+                document.getElementById('score-text').style.color = "var(--accent-success)";
+            } else if (score >= 60) {
+                desc.innerText = "Kerja bagus! Ingat-ingat lagi fungsi partikel が dan から ya.";
+                document.getElementById('score-text').style.color = "#4fc3f7";
+            } else {
+                desc.innerText = "Jangan menyerah! Coba baca lagi pola kalimatnya dan ulangi.";
+                document.getElementById('score-text').style.color = "var(--accent-japan)";
+            }
+        }
+
+        function resetQuiz() {
+            currentQ = 0;
+            score = 0;
+            document.getElementById('quiz-area').style.display = "flex";
+            document.getElementById('quiz-result').style.display = "none";
+            document.getElementById('score-text').style.color = "var(--accent-japan)";
+            loadQuiz();
+        }
+
+        // Initialize first question
+        window.onload = loadQuiz;
     </script>
 </body>
 </html>
