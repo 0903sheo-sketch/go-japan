@@ -3,56 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kejutan!</title>
+    <title>Nihongo Master | Kisi-kisi Evaluasi N5</title>
     <style>
+        /* Desain Utama & Dark Theme */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(15, 15, 15, 0.9); 
+            --border-color: #333333;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+            --accent-blue: #1e88e5;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
         body { 
-            margin: 0; 
-            padding: 0; 
-            background-color: black; 
-            overflow: hidden; /* Menghilangkan scrollbar */
+            background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; background-position: center; background-attachment: fixed;
+            background-color: var(--bg-solid); color: var(--text-main); 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; padding: 40px 20px;
         }
 
-        #jumpscare-container {
-            position: fixed;
-            top: 0; 
-            left: 0; 
-            width: 100vw; 
-            height: 100vh;
-            z-index: 9999;
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Tombol Back */
+        .btn-back-pojok {
+            position: fixed; top: 20px; left: 20px; background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--border-color); color: var(--text-muted);
+            padding: 10px 20px; border-radius: 30px; cursor: pointer;
+            font-size: 14px; font-weight: bold; transition: 0.3s; z-index: 9999; backdrop-filter: blur(5px);
+        }
+        .btn-back-pojok:hover { border-color: var(--text-main); color: var(--text-main); background: #111; }
+
+        /* Panel Utama */
+        .panel {
+            background-color: var(--panel-bg); border: 1px solid var(--border-color);
+            padding: 40px; width: 100%; max-width: 900px; border-top: 4px solid var(--accent-blue);
+            border-radius: 6px; backdrop-filter: blur(10px); box-shadow: 0 15px 35px rgba(0,0,0,0.8);
         }
 
-        #jumpscare-container img {
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; /* Memastikan gambar menutupi seluruh layar */
+        h1 { font-weight: 300; letter-spacing: 1px; margin-bottom: 10px; text-align: center;}
+        .jp-title { color: var(--accent-blue); font-size: 1.2rem; margin-bottom: 5px; display: block; text-align: center; letter-spacing: 2px; font-weight:bold;}
+        .desc { text-align: center; color: var(--text-muted); margin-bottom: 30px; font-size: 1.05rem;}
+
+        /* Kategori Heading */
+        .cat-heading {
+            background: rgba(30, 136, 229, 0.2); border-left: 4px solid var(--accent-blue);
+            padding: 15px 20px; font-size: 1.2rem; font-weight: bold; margin-top: 30px; margin-bottom: 15px; border-radius: 4px;
         }
+
+        /* Tabel Kisi-kisi */
+        .table-responsive { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(20, 20, 20, 0.8); color: var(--text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;}
+        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        
+        .hiragana-text { font-size: 1.3rem; font-weight: bold; color: #fff;}
+        .kanji-text { color: #888; font-size: 1rem;}
+        .arti-text { color: var(--accent-japan); font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div id="jumpscare-container">
-        <img src="https://media1.tenor.com/m/FTsvcVV2mDoAAAAC/gugugaga-penguin.gif" alt="Teletubbies">
-        
-        <audio id="suara-kaget" src="https://www.myinstants.com/media/sounds/fnaf-scream.mp3" autoplay></audio>
-    </div>
+    <button class="btn-back-pojok" onclick="window.history.back()">⬅ Kembali</button>
 
-    <script>
-        // Skrip untuk mencoba memaksa audio berputar saat halaman dimuat
-        window.onload = function() {
-            var audio = document.getElementById('suara-kaget');
-            audio.volume = 1.0;
-            
-            // Mencoba memutar audio
-            audio.play().catch(function(error) {
-                console.log("Browser memblokir pemutaran suara otomatis. Korban harus mengklik layar agar suara keluar.");
-            });
-            
-            // Trik tambahan: jika korban terkejut dan mengklik area manapun, suara akan langsung berbunyi
-            document.body.addEventListener('click', function() {
-                audio.play();
-            });
-        };
-    </script>
+    <div class="panel fade-in">
+        <span class="jp-title">試験の準備 (Persiapan Ujian)</span>
+        <h1>Kisi-kisi Evaluasi Bab 1-7</h1>
+        <p class="desc">Hafalkan kosakata di bawah ini sebelum mengerjakan evaluasi (Soal No 1 - 10).</p>
+
+        <!-- KATEGORI 1: WAKTU & KATA TANYA -->
+        <div class="cat-heading">⏰ Waktu & Kata Tanya</div>
+        <div class="table-responsive">
+            <table>
+                <tr><th>Hiragana</th><th>Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="hiragana-text">いま</td><td class="kanji-text">今</td><td>Ima</td><td class="arti-text">Sekarang</td></tr>
+                <tr><td class="hiragana-text">きのう</td><td class="kanji-text">昨日</td><td>Kinou</td><td class="arti-text">Kemarin</td></tr>
+                <tr><td class="hiragana-text">あした</td><td class="kanji-text">明日</td><td>Ashita</td><td class="arti-text">Besok</td></tr>
+                <tr><td class="hiragana-text">まいにち</td><td class="kanji-text">毎日</td><td>Mainichi</td><td class="arti-text">Setiap hari</td></tr>
+                <tr><td class="hiragana-text">どこ</td><td class="kanji-text">-</td><td>Doko</td><td class="arti-text">Di mana / Ke mana</td></tr>
+                <tr><td class="hiragana-text">なんじ</td><td class="kanji-text">何時</td><td>Nan-ji</td><td class="arti-text">Jam berapa</td></tr>
+                <tr><td class="hiragana-text">だれ</td><td class="kanji-text">誰</td><td>Dare</td><td class="arti-text">Siapa</td></tr>
+            </table>
+        </div>
+
+        <!-- KATEGORI 2: TEMPAT & KENDARAAN -->
+        <div class="cat-heading">🏢 Tempat & Kendaraan</div>
+        <div class="table-responsive">
+            <table>
+                <tr><th>Hiragana</th><th>Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="hiragana-text">がっこう</td><td class="kanji-text">学校</td><td>Gakkou</td><td class="arti-text">Sekolah</td></tr>
+                <tr><td class="hiragana-text">かいしゃ</td><td class="kanji-text">会社</td><td>Kaisha</td><td class="arti-text">Perusahaan / Kantor</td></tr>
+                <tr><td class="hiragana-text">こうえん</td><td class="kanji-text">公園</td><td>Kouen</td><td class="arti-text">Taman</td></tr>
+                <tr><td class="hiragana-text">デパート</td><td class="kanji-text">-</td><td>Depaato</td><td class="arti-text">Toserba / Mall</td></tr>
+                <tr><td class="hiragana-text">スーパー</td><td class="kanji-text">-</td><td>Suupaa</td><td class="arti-text">Supermarket</td></tr>
+                <tr><td class="hiragana-text">じてんしゃ</td><td class="kanji-text">自転車</td><td>Jitensha</td><td class="arti-text">Sepeda</td></tr>
+                <tr><td class="hiragana-text">でんしゃ</td><td class="kanji-text">電車</td><td>Densha</td><td class="arti-text">Kereta Listrik</td></tr>
+                <tr><td class="hiragana-text">あるいて</td><td class="kanji-text">歩いて</td><td>Aruite</td><td class="arti-text">Jalan kaki</td></tr>
+            </table>
+        </div>
+
+        <!-- KATEGORI 3: KATA KERJA (AKSI) -->
+        <div class="cat-heading">🏃‍♂️ Kata Kerja (Bentuk Masu)</div>
+        <div class="table-responsive">
+            <table>
+                <tr><th>Hiragana</th><th>Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="hiragana-text">いきます</td><td class="kanji-text">行きます</td><td>Ikimasu</td><td class="arti-text">Pergi</td></tr>
+                <tr><td class="hiragana-text">かいます</td><td class="kanji-text">買います</td><td>Kaimasu</td><td class="arti-text">Membeli</td></tr>
+                <tr><td class="hiragana-text">とります</td><td class="kanji-text">撮ります</td><td>Torimasu</td><td class="arti-text">Mengambil (Foto)</td></tr>
+                <tr><td class="hiragana-text">たべます</td><td class="kanji-text">食べます</td><td>Tabemasu</td><td class="arti-text">Makan</td></tr>
+                <tr><td class="hiragana-text">のみます</td><td class="kanji-text">飲みます</td><td>Nomimasu</td><td class="arti-text">Minum</td></tr>
+            </table>
+        </div>
+
+        <!-- KATEGORI 4: KELUARGA & KONDISI (Benda, Sifat, Satuan) -->
+        <div class="cat-heading">👨‍👩‍👧 Keluarga, Posisi & Satuan Benda</div>
+        <div class="table-responsive">
+            <table>
+                <tr><th>Hiragana</th><th>Kanji</th><th>Romaji</th><th>Arti</th></tr>
+                <tr><td class="hiragana-text">きょうだい</td><td class="kanji-text">兄弟</td><td>Kyoudai</td><td class="arti-text">Saudara kandung</td></tr>
+                <tr><td class="hiragana-text">かぞく</td><td class="kanji-text">家族</td><td>Kazoku</td><td class="arti-text">Keluarga</td></tr>
+                <tr><td class="hiragana-text">あに / いもうと</td><td class="kanji-text">兄 / 妹</td><td>Ani / Imouto</td><td class="arti-text">Kakak laki2 / Adik pr</td></tr>
+                <tr><td class="hiragana-text">つくえ</td><td class="kanji-text">机</td><td>Tsukue</td><td class="arti-text">Meja</td></tr>
+                <tr><td class="hiragana-text">した</td><td class="kanji-text">下</td><td>Shita</td><td class="arti-text">Bawah</td></tr>
+                <tr><td class="hiragana-text">あつい</td><td class="kanji-text">暑い</td><td>Atsui</td><td class="arti-text">Panas (Cuaca)</td></tr>
+                <tr><td class="hiragana-text">なつ</td><td class="kanji-text">夏</td><td>Natsu</td><td class="arti-text">Musim Panas</td></tr>
+                <tr><td class="hiragana-text">みっつ</td><td class="kanji-text">三つ</td><td>Mittsu</td><td class="arti-text">Tiga buah (Benda Umum)</td></tr>
+                <tr><td class="hiragana-text">さんにん</td><td class="kanji-text">三人</td><td>San-nin</td><td class="arti-text">Tiga orang</td></tr>
+            </table>
+        </div>
+
+    </div>
 
 </body>
 </html>
