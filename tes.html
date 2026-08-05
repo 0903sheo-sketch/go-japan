@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nihongo Master | Kisi-kisi Evaluasi N5</title>
+    <title>Nihongo Master | Evaluasi N5 (Bab 1-7)</title>
     <style>
         /* Desain Utama & Dark Theme */
         :root {
@@ -13,7 +13,9 @@
             --text-main: #ffffff;
             --text-muted: #aaaaaa;
             --accent-japan: #c91f37;
+            --accent-success: #2e7d32;
             --accent-blue: #1e88e5;
+            --card-bg: rgba(25, 25, 25, 0.9);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
@@ -23,7 +25,7 @@
             background-size: cover; background-position: center; background-attachment: fixed;
             background-color: var(--bg-solid); color: var(--text-main); 
             display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; padding: 40px 20px;
+            min-height: 100vh; padding: 40px 20px; overflow-x: hidden;
         }
 
         .fade-in { animation: fadeIn 0.4s ease-out forwards; }
@@ -41,103 +43,355 @@
         /* Panel Utama */
         .panel {
             background-color: var(--panel-bg); border: 1px solid var(--border-color);
-            padding: 40px; width: 100%; max-width: 900px; border-top: 4px solid var(--accent-blue);
+            padding: 40px; width: 100%; max-width: 800px; border-top: 4px solid var(--accent-japan);
             border-radius: 6px; backdrop-filter: blur(10px); box-shadow: 0 15px 35px rgba(0,0,0,0.8);
         }
 
-        h1 { font-weight: 300; letter-spacing: 1px; margin-bottom: 10px; text-align: center;}
-        .jp-title { color: var(--accent-blue); font-size: 1.2rem; margin-bottom: 5px; display: block; text-align: center; letter-spacing: 2px; font-weight:bold;}
-        .desc { text-align: center; color: var(--text-muted); margin-bottom: 30px; font-size: 1.05rem;}
+        .header-dash { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
+        .jp-title { color: var(--accent-japan); font-size: 1rem; font-weight: bold; letter-spacing: 2px;}
+        .timer-box { font-size: 1.6rem; font-family: monospace; font-weight: bold; background: rgba(0,0,0,0.6); padding: 5px 15px; border-radius: 4px; border: 1px solid #444; }
+        .timer-box.warning { color: var(--accent-japan); border-color: var(--accent-japan); animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        /* Kategori Heading */
-        .cat-heading {
-            background: rgba(30, 136, 229, 0.2); border-left: 4px solid var(--accent-blue);
-            padding: 15px 20px; font-size: 1.2rem; font-weight: bold; margin-top: 30px; margin-bottom: 15px; border-radius: 4px;
-        }
+        .points-badge { border: 1px solid var(--accent-blue); color: var(--accent-blue); padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem;}
 
-        /* Tabel Kisi-kisi */
-        .table-responsive { width: 100%; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th, td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
-        th { background-color: rgba(20, 20, 20, 0.8); color: var(--text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;}
-        tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+        /* Question Area */
+        .story-context { background: #111; border-left: 4px solid var(--accent-blue); padding: 20px; margin-bottom: 20px; font-size: 1.15rem; line-height: 1.8; color: #ddd; border-radius: 0 4px 4px 0;}
+        .story-context u { color: var(--accent-japan); text-decoration: none; border-bottom: 2px dashed var(--accent-japan); padding: 0 5px; font-weight: bold;}
         
-        .hiragana-text { font-size: 1.3rem; font-weight: bold; color: #fff;}
-        .kanji-text { color: #888; font-size: 1rem;}
-        .arti-text { color: var(--accent-japan); font-weight: bold; }
+        .q-text { font-size: 1.3rem; margin-bottom: 20px; line-height: 1.6; }
+        
+        /* Audio Controls */
+        .audio-controls { display: none; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .audio-btn { background: var(--accent-blue); color: #fff; border: none; padding: 12px 20px; border-radius: 30px; font-size: 1rem; cursor: pointer; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s;}
+        .audio-btn:hover { filter: brightness(1.2); transform: scale(1.05); }
+        .audio-btn:disabled { background: #555; cursor: not-allowed; filter: brightness(1); transform: none; color: #888; }
+        .btn-pause { background: #f57c00; }
+        .btn-stop { background: var(--accent-japan); }
+
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .btn-opt { background: rgba(0,0,0,0.6); color: #fff; border: 1px solid var(--border-color); padding: 18px; border-radius: 4px; cursor: pointer; font-size: 1.1rem; text-align: left; transition: 0.2s; }
+        .btn-opt:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+        .btn-opt.correct { background: rgba(46, 125, 50, 0.4); border-color: var(--accent-success); }
+        .btn-opt.wrong { background: rgba(201, 31, 55, 0.4); border-color: var(--accent-japan); }
+        
+        .btn-next { background: var(--accent-japan); color: #fff; border: none; padding: 15px; font-size: 1.1rem; border-radius: 4px; cursor: pointer; margin-top: 25px; font-weight: bold; display: none; transition: 0.3s; width: 100%; text-transform: uppercase; letter-spacing: 1px;}
+        .btn-next:hover { background: #a0172b; }
+
+        /* ================= POPUP MODALS ================= */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 10000; backdrop-filter: blur(10px); }
+        .modal-card { background: #1a1a1a; padding: 40px; border-radius: 12px; text-align: center; max-width: 500px; width: 90%; border: 2px solid var(--border-color); animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;}
+        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        /* Ticket Design */
+        .ticket { background: linear-gradient(135deg, #1e88e5, #c91f37); padding: 20px; border-radius: 10px; color: white; margin: 25px 0; border: 2px dashed #fff; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,0.5);}
+        .ticket h2 { margin-bottom: 5px; font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);}
+        .ticket p { font-size: 1.1rem; opacity: 0.9; }
+        .ticket::before, .ticket::after { content: ''; position: absolute; top: 50%; width: 20px; height: 20px; background: #1a1a1a; border-radius: 50%; transform: translateY(-50%); }
+        .ticket::before { left: -12px; border-right: 2px dashed #fff; }
+        .ticket::after { right: -12px; border-left: 2px dashed #fff; }
+
+        .btn-modal { background: #fff; color: #000; border: none; padding: 12px 30px; font-size: 1.1rem; border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-modal:hover { transform: scale(1.05); }
+
+        /* Sad Modal Design */
+        #modal-fail1 { border-color: #555; }
+        #modal-fail1 h2 { color: #888; margin-bottom: 10px; }
+
+        /* Prank Modal Design */
+        #modal-fail2 { border-color: var(--accent-japan); background: #220505; }
+        #modal-fail2 h2 { color: #ffeb3b; font-size: 2rem; margin-bottom: 15px; animation: tada 1s infinite;}
+        @keyframes tada { 0% {transform: scale(1);} 10%, 20% {transform: scale(0.9) rotate(-3deg);} 30%, 50%, 70%, 90% {transform: scale(1.1) rotate(3deg);} 40%, 60%, 80% {transform: scale(1.1) rotate(-3deg);} 100% {transform: scale(1) rotate(0);} }
     </style>
 </head>
 <body>
 
     <button class="btn-back-pojok" onclick="window.history.back()">⬅ Kembali</button>
 
-    <div class="panel fade-in">
-        <span class="jp-title">試験の準備 (Persiapan Ujian)</span>
-        <h1>Kisi-kisi Evaluasi Bab 1-7</h1>
-        <p class="desc">Hafalkan kosakata di bawah ini sebelum mengerjakan evaluasi (Soal No 1 - 10).</p>
-
-        <!-- KATEGORI 1: WAKTU & KATA TANYA -->
-        <div class="cat-heading">⏰ Waktu & Kata Tanya</div>
-        <div class="table-responsive">
-            <table>
-                <tr><th>Hiragana</th><th>Kanji</th><th>Romaji</th><th>Arti</th></tr>
-                <tr><td class="hiragana-text">いま</td><td class="kanji-text">今</td><td>Ima</td><td class="arti-text">Sekarang</td></tr>
-                <tr><td class="hiragana-text">きのう</td><td class="kanji-text">昨日</td><td>Kinou</td><td class="arti-text">Kemarin</td></tr>
-                <tr><td class="hiragana-text">あした</td><td class="kanji-text">明日</td><td>Ashita</td><td class="arti-text">Besok</td></tr>
-                <tr><td class="hiragana-text">まいにち</td><td class="kanji-text">毎日</td><td>Mainichi</td><td class="arti-text">Setiap hari</td></tr>
-                <tr><td class="hiragana-text">どこ</td><td class="kanji-text">-</td><td>Doko</td><td class="arti-text">Di mana / Ke mana</td></tr>
-                <tr><td class="hiragana-text">なんじ</td><td class="kanji-text">何時</td><td>Nan-ji</td><td class="arti-text">Jam berapa</td></tr>
-                <tr><td class="hiragana-text">だれ</td><td class="kanji-text">誰</td><td>Dare</td><td class="arti-text">Siapa</td></tr>
-            </table>
+    <div class="panel fade-in" id="quiz-container">
+        <div class="header-dash">
+            <div>
+                <span class="jp-title">そうごう テスト (Evaluasi Bab 1-7)</span>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Mendengarkan, Kosakata, Tata Bahasa & Cerita</div>
+            </div>
+            <div class="timer-box" id="timer-display">45:00</div>
+            <div class="points-badge">SOAL: <span id="progress-text">1/20</span></div>
         </div>
 
-        <!-- KATEGORI 2: TEMPAT & KENDARAAN -->
-        <div class="cat-heading">🏢 Tempat & Kendaraan</div>
-        <div class="table-responsive">
-            <table>
-                <tr><th>Hiragana</th><th>Kanji</th><th>Romaji</th><th>Arti</th></tr>
-                <tr><td class="hiragana-text">がっこう</td><td class="kanji-text">学校</td><td>Gakkou</td><td class="arti-text">Sekolah</td></tr>
-                <tr><td class="hiragana-text">かいしゃ</td><td class="kanji-text">会社</td><td>Kaisha</td><td class="arti-text">Perusahaan / Kantor</td></tr>
-                <tr><td class="hiragana-text">こうえん</td><td class="kanji-text">公園</td><td>Kouen</td><td class="arti-text">Taman</td></tr>
-                <tr><td class="hiragana-text">デパート</td><td class="kanji-text">-</td><td>Depaato</td><td class="arti-text">Toserba / Mall</td></tr>
-                <tr><td class="hiragana-text">スーパー</td><td class="kanji-text">-</td><td>Suupaa</td><td class="arti-text">Supermarket</td></tr>
-                <tr><td class="hiragana-text">じてんしゃ</td><td class="kanji-text">自転車</td><td>Jitensha</td><td class="arti-text">Sepeda</td></tr>
-                <tr><td class="hiragana-text">でんしゃ</td><td class="kanji-text">電車</td><td>Densha</td><td class="arti-text">Kereta Listrik</td></tr>
-                <tr><td class="hiragana-text">あるいて</td><td class="kanji-text">歩いて</td><td>Aruite</td><td class="arti-text">Jalan kaki</td></tr>
-            </table>
-        </div>
+        <div id="quiz-screen">
+            <div id="story-box" class="story-context" style="display: none;"></div>
+            
+            <!-- Kontrol Audio Baru -->
+            <div id="audio-controls" class="audio-controls">
+                <button id="btn-play" class="audio-btn" onclick="playAudio()">▶️ Putar</button>
+                <button id="btn-pause" class="audio-btn btn-pause" onclick="pauseAudio()" disabled>⏸️ Jeda</button>
+                <button id="btn-stop" class="audio-btn btn-stop" onclick="stopAudio()" disabled>⏹️ Reset</button>
+            </div>
 
-        <!-- KATEGORI 3: KATA KERJA (AKSI) -->
-        <div class="cat-heading">🏃‍♂️ Kata Kerja (Bentuk Masu)</div>
-        <div class="table-responsive">
-            <table>
-                <tr><th>Hiragana</th><th>Kanji</th><th>Romaji</th><th>Arti</th></tr>
-                <tr><td class="hiragana-text">いきます</td><td class="kanji-text">行きます</td><td>Ikimasu</td><td class="arti-text">Pergi</td></tr>
-                <tr><td class="hiragana-text">かいます</td><td class="kanji-text">買います</td><td>Kaimasu</td><td class="arti-text">Membeli</td></tr>
-                <tr><td class="hiragana-text">とります</td><td class="kanji-text">撮ります</td><td>Torimasu</td><td class="arti-text">Mengambil (Foto)</td></tr>
-                <tr><td class="hiragana-text">たべます</td><td class="kanji-text">食べます</td><td>Tabemasu</td><td class="arti-text">Makan</td></tr>
-                <tr><td class="hiragana-text">のみます</td><td class="kanji-text">飲みます</td><td>Nomimasu</td><td class="arti-text">Minum</td></tr>
-            </table>
+            <div class="q-text" id="q-text">Memuat soal...</div>
+            
+            <div class="options" id="q-options"></div>
+            <button class="btn-next" id="btn-next" onclick="nextQuestion()">Soal Berikutnya ➔</button>
         </div>
-
-        <!-- KATEGORI 4: KELUARGA & KONDISI (Benda, Sifat, Satuan) -->
-        <div class="cat-heading">👨‍👩‍👧 Keluarga, Posisi & Satuan Benda</div>
-        <div class="table-responsive">
-            <table>
-                <tr><th>Hiragana</th><th>Kanji</th><th>Romaji</th><th>Arti</th></tr>
-                <tr><td class="hiragana-text">きょうだい</td><td class="kanji-text">兄弟</td><td>Kyoudai</td><td class="arti-text">Saudara kandung</td></tr>
-                <tr><td class="hiragana-text">かぞく</td><td class="kanji-text">家族</td><td>Kazoku</td><td class="arti-text">Keluarga</td></tr>
-                <tr><td class="hiragana-text">あに / いもうと</td><td class="kanji-text">兄 / 妹</td><td>Ani / Imouto</td><td class="arti-text">Kakak laki2 / Adik pr</td></tr>
-                <tr><td class="hiragana-text">つくえ</td><td class="kanji-text">机</td><td>Tsukue</td><td class="arti-text">Meja</td></tr>
-                <tr><td class="hiragana-text">した</td><td class="kanji-text">下</td><td>Shita</td><td class="arti-text">Bawah</td></tr>
-                <tr><td class="hiragana-text">あつい</td><td class="kanji-text">暑い</td><td>Atsui</td><td class="arti-text">Panas (Cuaca)</td></tr>
-                <tr><td class="hiragana-text">なつ</td><td class="kanji-text">夏</td><td>Natsu</td><td class="arti-text">Musim Panas</td></tr>
-                <tr><td class="hiragana-text">みっつ</td><td class="kanji-text">三つ</td><td>Mittsu</td><td class="arti-text">Tiga buah (Benda Umum)</td></tr>
-                <tr><td class="hiragana-text">さんにん</td><td class="kanji-text">三人</td><td>San-nin</td><td class="arti-text">Tiga orang</td></tr>
-            </table>
-        </div>
-
     </div>
 
+    <!-- MODAL 1: LULUS (Di Atas 75) -->
+    <div class="modal-overlay" id="modal-success">
+        <div class="modal-card">
+            <h2>🎉 SELAMAT! 🎉</h2>
+            <p>Skor Anda: <strong id="score-success" style="font-size: 1.5rem; color: #4fc3f7;">100</strong></p>
+            <div class="ticket">
+                <h2>TICKET TO JOGJA</h2>
+                <p>✈️ Kelas VIP - Nihongo Master 🏖️</p>
+            </div>
+            <p style="margin-bottom: 20px; color: #aaa;">Anda telah menguasai Bab 1 sampai 7 dengan sangat baik!</p>
+            <button class="btn-modal" onclick="location.reload()">Selesai & Ulangi</button>
+        </div>
+    </div>
+
+    <!-- MODAL 2: GAGAL SEDIH (Di Bawah 75) -->
+    <div class="modal-overlay" id="modal-fail1">
+        <div class="modal-card" id="fail1-content">
+            <h2 style="font-size: 3rem;">😢</h2>
+            <h2>Yahh gagaal ke Jogja...</h2>
+            <p>Skor Anda: <strong id="score-fail" style="font-size: 1.2rem; color: #ff5252;">60</strong></p>
+            <p style="margin: 20px 0; color: #888;">Nilai kamu di bawah 75. Belajar lagii sana.. Jangan malas-malasan.</p>
+            <button class="btn-modal" style="background: #444; color: #fff;" onclick="triggerPrank()">Yaah, oke deh...</button>
+        </div>
+    </div>
+
+    <!-- MODAL 3: SURPRISE PRANK JOGJA -->
+    <div class="modal-overlay" id="modal-fail2">
+        <div class="modal-card">
+            <h2>EH TAPI BOOONG!!!</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 10px;">GAS KE JOGJA MANG EEAAA!!! 🚀</p>
+            <div class="ticket" style="background: linear-gradient(135deg, #f57c00, #ff1493);">
+                <h2>TICKET TO JOGJA</h2>
+                <p>🚌 Kelas Hore-Hore - Liburan Dadakan 🏖️</p>
+            </div>
+            <p style="margin-bottom: 20px; color: #ccc;">Tetap semangat belajarnya ya, hadiah hiburan buat kamu!</p>
+            <button class="btn-modal" onclick="location.reload()">Asiiaapp! ➔</button>
+        </div>
+    </div>
+
+    <script>
+        // Database Soal (20 Soal FULL HIRAGANA & KATAKANA)
+        const quizData = [
+            // --- BAGIAN 1: MENDENGARKAN (1-5) ---
+            { type: "audio", text: "すみません、トイレはどこですか。。。。あそこです。", q: "トイレは どこですか。", options: ["ここ", "そこ", "あそこ", "どこ"], ans: 2 },
+            { type: "audio", text: "いま なんじですか。。。。くじはんです。", q: "いま なんじですか。", options: ["8:30", "9:00", "9:30", "10:30"], ans: 2 },
+            { type: "audio", text: "きのう、どこへ いきましたか。。。。どこへも いきませんでした。", q: "おとこのひとは どこへ いきましたか。", options: ["デパート", "かいしゃ", "がっこう", "どこへも いきませんでした"], ans: 3 },
+            { type: "audio", text: "まいにち、なんで がっこうへ いきますか。。。。じてんしゃで いきます。", q: "なんで がっこうへ いきますか。", options: ["バス", "でんしゃ", "じてんしゃ", "あるいて"], ans: 2 },
+            { type: "audio", text: "あした、いっしょに きょうとへ いきませんか。。。。いいですね。いきましょう。", q: "あした どこへ いきますか。", options: ["とうきょう", "きょうと", "おおさか", "びょういん"], ans: 1 },
+            
+            // --- BAGIAN 2: KOSAKATA (6-10) -> Diubah menjadi logika kosakata N5 dasar ---
+            { type: "text", q: "スーパーで りんごを <u>  __  </u> かいました。", options: ["みっつ", "さんまい", "さんにん", "さんほん"], ans: 0 },
+            { type: "text", q: "にほんの なつは とても <u> __   </u> です。", options: ["さむい", "あつい", "ひろい", "たかい"], ans: 1 },
+            { type: "text", q: "きのう、こうえんで しゃしんを <u> __   </u>。", options: ["かきました", "とりました", "きました", "しました"], ans: 1 },
+            { type: "text", q: "わたしには <u> __   </u> が ふたり います。あにと いもうと です。", options: ["かぞく", "きょうだい", "りょうしん", "ともだち"], ans: 1 },
+            { type: "text", q: "つくえの <u>  __  </u> に ねこが います。", options: ["した", "だれ", "どこ", "いつ"], ans: 0 },
+            
+            // --- BAGIAN 3: BUNPOU / TATA BAHASA (11-15) ---
+            { type: "text", q: "マリアさん（  ）アメリカじんです。", options: ["は", "が", "を", "に"], ans: 0 },
+            { type: "text", q: "けさ、ろくじ（  ）おきました。", options: ["は", "に", "で", "へ"], ans: 1 },
+            { type: "text", q: "わたしは じてんしゃ（  ）スーパーへ いきます。", options: ["に", "で", "と", "を"], ans: 1 },
+            { type: "text", q: "きのう、テレビを（  ）。", options: ["みます", "みました", "みません", "みましょう"], ans: 1 },
+            { type: "text", q: "ミラーさん（  ）いっしょに ごはんを たべます。", options: ["に", "を", "と", "で"], ans: 2 },
+
+            // --- BAGIAN 4: CERITA PANJANG / DOKKAI BLANKS (16-20) ---
+            { type: "story", story: "わたしは アリです。インドネシアから <u>( 16 )</u>。<br>まいにち、あさ しちじ<u>( 17 )</u> おきます。<br>あさごはんを たべてから、バス<u>( 18 )</u> かいしゃへ いきます。<br>かいしゃは くじから ごじ<u>( 19 )</u> です。<br>きのうは にちようび でした。わたしは どこ<u>( 20 )</u> いきませんでした。", q: "( 16 ) に なにが はいりますか。", options: ["きます", "きました", "きません", "きましょう"], ans: 1 },
+            { type: "story", story: "わたしは アリです。インドネシアから きました。<br>まいにち、あさ しちじ<u>( 17 )</u> おきます。<br>あさごはんを たべてから、バス<u>( 18 )</u> かいしゃへ いきます。<br>かいしゃは くじから ごじ<u>( 19 )</u> です。<br>きのうは にちようび でした。わたしは どこ<u>( 20 )</u> いきませんでした。", q: "( 17 ) に なにが はいりますか。", options: ["は", "を", "に", "で"], ans: 2 },
+            { type: "story", story: "わたしは アリです。インドネシアから きました。<br>まいにち、あさ しちじに おきます。<br>あさごはんを たべてから、バス<u>( 18 )</u> かいしゃへ いきます。<br>かいしゃは くじから ごじ<u>( 19 )</u> です。<br>きのうは にちようび でした。わたしは どこ<u>( 20 )</u> いきませんでした。", q: "( 18 ) に なにが はいりますか。", options: ["で", "に", "を", "と"], ans: 0 },
+            { type: "story", story: "わたしは アリです。インドネシアから きました。<br>まいにち、あさ しちじに おきます。<br>あさごはんを たべてから、バスで かいしゃへ いきます。<br>かいしゃは くじから ごじ<u>( 19 )</u> です。<br>きのうは にちようび でした。わたしは どこ<u>( 20 )</u> いきませんでした。", q: "( 19 ) に なにが はいりますか。", options: ["から", "まで", "ぐらい", "ごろ"], ans: 1 },
+            { type: "story", story: "わたしは アリです。インドネシアから きました。<br>まいにち、あさ しちじに おきます。<br>あさごはんを たべてから、バスで かいしゃへ いきます。<br>かいしゃは くじから ごじまで です。<br>きのうは にちようび でした。わたしは どこ<u>( 20 )</u> いきませんでした。", q: "( 20 ) に なにが はいりますか。", options: ["へも", "にも", "をも", "がも"], ans: 0 }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+        let answered = false;
+        let currentUtterance = null;
+        
+        // Timer (45 minutes = 2700 seconds)
+        let timeLeft = 45 * 60; 
+        let timerInterval;
+
+        const qText = document.getElementById('q-text');
+        const qOptions = document.getElementById('q-options');
+        const btnNext = document.getElementById('btn-next');
+        const progText = document.getElementById('progress-text');
+        const audioControls = document.getElementById('audio-controls');
+        const storyBox = document.getElementById('story-box');
+        const timerDisplay = document.getElementById('timer-display');
+        
+        const btnPlay = document.getElementById('btn-play');
+        const btnPause = document.getElementById('btn-pause');
+        const btnStop = document.getElementById('btn-stop');
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "00:00";
+                    alert("Waktu Habis!");
+                    showFinalResult();
+                } else {
+                    timeLeft--;
+                    let m = Math.floor(timeLeft / 60);
+                    let s = timeLeft % 60;
+                    timerDisplay.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                    if(timeLeft < 300) timerDisplay.classList.add('warning'); // sisa 5 menit merah
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            answered = false;
+            btnNext.style.display = "none";
+            progText.textContent = `${currentQ + 1}/${quizData.length}`;
+            
+            const data = quizData[currentQ];
+            qText.innerHTML = data.q;
+            qOptions.innerHTML = "";
+            
+            // Stop Audio sepenuhnya tiap pindah soal
+            if(window.speechSynthesis) window.speechSynthesis.cancel();
+            resetAudioButtons();
+
+            // Cek Tipe Soal
+            if (data.type === "audio") {
+                audioControls.style.display = "flex";
+                storyBox.style.display = "none";
+            } else if (data.type === "story") {
+                audioControls.style.display = "none";
+                storyBox.style.display = "block";
+                storyBox.innerHTML = data.story;
+            } else {
+                audioControls.style.display = "none";
+                storyBox.style.display = "none";
+            }
+
+            data.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "btn-opt";
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(idx, btn);
+                qOptions.appendChild(btn);
+            });
+        }
+
+        // --- SISTEM AUDIO PLAY/PAUSE/STOP ---
+        function resetAudioButtons() {
+            btnPlay.disabled = false;
+            btnPause.disabled = true;
+            btnStop.disabled = true;
+        }
+
+        function playAudio() {
+            if (!window.speechSynthesis) return alert("Browser tidak mendukung Text-to-Speech.");
+
+            // Jika dalam keadaan di-pause, lanjutkan (resume)
+            if (window.speechSynthesis.paused) {
+                window.speechSynthesis.resume();
+                return;
+            }
+
+            // Mencegah klik play berulang saat masih berjalan
+            if (window.speechSynthesis.speaking) return;
+
+            window.speechSynthesis.cancel();
+            const text = quizData[currentQ].text;
+            currentUtterance = new SpeechSynthesisUtterance(text);
+            currentUtterance.lang = 'ja-JP';
+            currentUtterance.rate = 0.85; // Kecepatan lambat untuk pemula
+            
+            currentUtterance.onstart = () => {
+                btnPlay.disabled = true;
+                btnPause.disabled = false;
+                btnStop.disabled = false;
+            };
+            currentUtterance.onresume = () => {
+                btnPlay.disabled = true;
+                btnPause.disabled = false;
+            };
+            currentUtterance.onpause = () => {
+                btnPlay.disabled = false;
+                btnPause.disabled = true;
+            };
+            currentUtterance.onend = () => {
+                resetAudioButtons();
+            };
+            currentUtterance.onerror = () => {
+                resetAudioButtons();
+            };
+
+            window.speechSynthesis.speak(currentUtterance);
+        }
+
+        function pauseAudio() {
+            if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+                window.speechSynthesis.pause();
+            }
+        }
+
+        function stopAudio() {
+            window.speechSynthesis.cancel();
+            resetAudioButtons();
+        }
+
+        function checkAnswer(selected, btn) {
+            if (answered) return; 
+            answered = true;
+            if(window.speechSynthesis) window.speechSynthesis.cancel();
+
+            const correct = quizData[currentQ].ans;
+            const allBtns = qOptions.querySelectorAll('.btn-opt');
+
+            if (selected === correct) {
+                btn.classList.add('correct');
+                score += 5; // 20 soal * 5 poin = 100
+            } else {
+                btn.classList.add('wrong');
+                allBtns[correct].classList.add('correct');
+            }
+
+            allBtns.forEach(b => b.style.cursor = "default");
+            btnNext.style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQ++;
+            if (currentQ < quizData.length) {
+                loadQuestion();
+            } else {
+                showFinalResult();
+            }
+        }
+
+        function showFinalResult() {
+            clearInterval(timerInterval);
+            if(window.speechSynthesis) window.speechSynthesis.cancel();
+            
+            if (score >= 75) {
+                // LULUS (Dapat Tiket)
+                document.getElementById('score-success').innerText = score;
+                document.getElementById('modal-success').style.display = "flex";
+            } else {
+                // GAGAL (Kena Prank)
+                document.getElementById('score-fail').innerText = score;
+                document.getElementById('modal-fail1').style.display = "flex";
+            }
+        }
+
+        function triggerPrank() {
+            // Sembunyikan modal sedih, tampilkan modal prank
+            document.getElementById('modal-fail1').style.display = "none";
+            document.getElementById('modal-fail2').style.display = "flex";
+        }
+
+        window.onload = () => {
+            loadQuestion();
+            startTimer();
+        };
+    </script>
 </body>
 </html>
