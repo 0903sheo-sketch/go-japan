@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Latihan Membaca Hiragana</title>
+    <style>
+        /* Desain Minimalis, Profesional & Dark Edition dengan Animasi Sakura */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: rgba(15, 15, 15, 0.85); 
+            --border-color: #333333;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-japan: #c91f37;
+            --accent-blue: #1e88e5;
+            --accent-green: #43a047;
+            --card-bg: rgba(25, 25, 25, 0.9);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        /* Animasi Bunga Sakura */
+        .sakura-petal {
+            position: fixed;
+            top: -10px;
+            background-color: #ffb7c5;
+            border-radius: 15px 0px 15px 0px;
+            width: 12px;
+            height: 16px;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 999;
+            box-shadow: 0 0 5px rgba(255, 183, 197, 0.4);
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg) translateX(50px); opacity: 0; }
+        }
+
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Panel Utama */
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            border-top: 3px solid var(--accent-japan);
+            border-radius: 6px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 { font-weight: 300; letter-spacing: 1px; margin-bottom: 5px; text-align: center; }
+        .jp-title { color: var(--accent-japan); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 4px; font-weight: bold;}
+        .subtitle { text-align: center; color: var(--text-muted); margin-bottom: 30px; font-size: 0.95rem; }
+
+        /* Story Reader Box */
+        .reading-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .story-title {
+            color: #ffb7c5;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .hiragana-text {
+            font-size: 1.8rem;
+            line-height: 2.2;
+            color: #ffffff;
+            letter-spacing: 1px;
+            text-align: justify;
+        }
+
+        .romaji-text {
+            font-size: 1.1rem;
+            color: var(--accent-blue);
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed #333;
+            line-height: 1.6;
+            display: none;
+            font-style: italic;
+        }
+
+        .translation-text {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-top: 15px;
+            line-height: 1.6;
+            display: none;
+        }
+
+        /* Action Buttons */
+        .tools-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn-tool {
+            flex: 1;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        .btn-tool:hover, .btn-tool.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--text-main);
+        }
+
+        /* Navigation Buttons */
+        .nav-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .btn-nav {
+            background: var(--accent-japan);
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-nav:hover { background: #a0172b; transform: scale(1.05); }
+        .btn-nav:disabled { background: #444; cursor: not-allowed; transform: scale(1); }
+
+        .progress-indicator { color: var(--text-muted); font-weight: bold; letter-spacing: 2px;}
+
+        /* Tombol Back Pojok Kiri Atas */
+        .btn-back-pojok {
+            position: fixed; top: 20px; left: 20px; background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--border-color); color: var(--text-muted);
+            padding: 10px 20px; border-radius: 30px; cursor: pointer;
+            font-size: 14px; font-weight: bold; transition: 0.3s; z-index: 9999; backdrop-filter: blur(5px);
+        }
+        .btn-back-pojok:hover { border-color: var(--text-main); color: var(--text-main); background: #111; }
+    </style>
+</head>
+<body>
+
+    <!-- Tombol Back -->
+    <button class="btn-back-pojok" onclick="window.history.back()">⬅ Kembali</button>
+
+    <div class="panel fade-in">
+        <span class="jp-title">読解 (Dokkai)</span>
+        <h1>Latihan Membaca Hiragana</h1>
+        <p class="subtitle">Kalimat menggunakan spasi (Wakachigaki) agar mudah dipelajari pemula.</p>
+
+        <div class="reading-card" id="reader-card">
+            <div class="story-title" id="title-display">Memuat cerita...</div>
+            <div class="hiragana-text" id="hiragana-display"></div>
+            <div class="romaji-text fade-in" id="romaji-display"></div>
+            <div class="translation-text fade-in" id="translation-display"></div>
+        </div>
+
+        <div class="tools-group">
+            <button class="btn-tool" id="btn-romaji" onclick="toggleRomaji()">👁️ Tampilkan Romaji</button>
+            <button class="btn-tool" id="btn-arti" onclick="toggleArti()">📖 Tampilkan Terjemahan</button>
+        </div>
+
+        <div class="nav-group">
+            <button class="btn-nav" id="btn-prev" onclick="changeStory(-1)">⬅ Sebelumnya</button>
+            <span class="progress-indicator" id="progress-text">1 / 5</span>
+            <button class="btn-nav" id="btn-next" onclick="changeStory(1)">Selanjutnya ➔</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Animasi Sakura ---
+        function createSakura() {
+            const petal = document.createElement('div');
+            petal.classList.add('sakura-petal');
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animationDuration = Math.random() * 5 + 4 + 's'; 
+            const size = Math.random() * 0.4 + 0.6;
+            petal.style.transform = `scale(${size})`;
+            document.body.appendChild(petal);
+            setTimeout(() => { petal.remove(); }, 8000);
+        }
+        setInterval(createSakura, 500);
+
+        // --- Database Cerita ---
+        const stories = [
+            {
+                title: "1. じこしょうかい (Perkenalan Diri)",
+                hiragana: "わたしは なつみです。にほんから きました。まいにち にほんごを べんきょう して います。にほんの たべものが だいすきです。とくに すしと ラーメンが すきです。",
+                romaji: "Watashi wa Natsumi desu. Nihon kara kimashita. Mainichi nihongo o benkyou shite imasu. Nihon no tabemono ga daisuki desu. Tokuni sushi to raamen ga suki desu.",
+                arti: "Saya Natsumi. Saya datang dari Jepang. Setiap hari saya belajar bahasa Jepang. Saya sangat suka makanan Jepang. Secara khusus, saya suka sushi dan ramen."
+            },
+            {
+                title: "2. まいにちの せいかつ (Kehidupan Sehari-hari)",
+                hiragana: "あさ ろくじに おきます。あさごはんを たべてから、がっこうへ いきます。がっこうは はちじはんに はじまります。ごご さんじに おわります。そのあと、ともだちと こうえんで あそびます。",
+                romaji: "Asa rokuji ni okimasu. Asagohan o tabete kara, gakkou e ikimasu. Gakkou wa hachiji han ni hajimarimasu. Gogo sanji ni owarimasu. Sono ato, tomodachi to kouen de asobimasu.",
+                arti: "Saya bangun pagi jam 6. Setelah makan sarapan, saya pergi ke sekolah. Sekolah dimulai jam setengah 9. Selesai jam 3 sore. Setelah itu, saya bermain di taman bersama teman."
+            },
+            {
+                title: "3. しゅうまつの りょこう (Liburan Akhir Pekan)",
+                hiragana: "しゅうまつは かぞくと いっしょに うみへ いきました。てんきが とても よくて、きもちが よかったです。うみで およいだり、かいがらを あつめたり しました。とても たのしかったです。",
+                romaji: "Shuumatsu wa kazoku to issho ni umi e ikimashita. Tenki ga totemo yokute, kimochi ga yokatta desu. Umi de oyoidari, kaigara o atsumetari shimashita. Totemo tanoshikatta desu.",
+                arti: "Akhir pekan saya pergi ke laut bersama keluarga. Cuacanya sangat bagus dan rasanya sangat menyenangkan. Di laut kami berenang, mengumpulkan kerang, dan lain-lain. Sangat menyenangkan."
+            },
+            {
+                title: "4. あたらしい くるま (Mobil Baru)",
+                hiragana: "ちちは あたらしい くるまを かいました。くるまの いろは あかです。とても はやくて かっこいいです。あした、かぞく みんなで その くるまに のって、おばあさんの いえへ いきます。",
+                romaji: "Chichi wa atarashii kuruma o kaimashita. Kuruma no iro wa aka desu. Totemo hayakute kakkoii desu. Ashita, kazoku minna de sono kuruma ni notte, obaasan no ie e ikimasu.",
+                arti: "Ayah membeli mobil baru. Warna mobilnya merah. Sangat cepat dan keren. Besok, seluruh keluarga akan naik mobil itu dan pergi ke rumah nenek."
+            },
+            {
+                title: "5. ももたろう (Cerita Rakyat: Momotaro)",
+                hiragana: "むかし むかし、ある ところに、おじいさんと おばあさんが すんで いました。おじいさんは やまへ しばかりに、おばあさんは かわへ せんたくに いきました。すると、おおきな ももが ながれて きました。",
+                romaji: "Mukashi mukashi, aru tokoro ni, ojiisan to obaasan ga sunde imashita. Ojiisan wa yama e shibakari ni, obaasan wa kawa e sentaku ni ikimashita. Suruto, ookina momo ga nagarete kimashita.",
+                arti: "Pada zaman dahulu kala, di suatu tempat, hiduplah seorang kakek dan nenek. Kakek pergi ke gunung untuk mencari kayu bakar, nenek pergi ke sungai untuk mencuci pakaian. Tiba-tiba, sebuah buah persik (momo) raksasa mengalir mendekat."
+            },
+            {
+                title: "1. じこしょうかい (Perkenalan Diri)",
+                hiragana: "わたしは なつみです。にほんから きました。まいにち にほんごを べんきょう して います。にほんの たべものが だいすきです。とくに すしと ラーメンが すきです。",
+                romaji: "Watashi wa Natsumi desu. Nihon kara kimashita. Mainichi nihongo o benkyou shite imasu. Nihon no tabemono ga daisuki desu. Tokuni sushi to raamen ga suki desu.",
+                arti: "Saya Natsumi. Saya datang dari Jepang. Setiap hari saya belajar bahasa Jepang. Saya sangat suka makanan Jepang. Secara khusus, saya suka sushi dan ramen."
+            },
+            {
+                title: "2. まいにちの せいかつ (Kehidupan Sehari-hari)",
+                hiragana: "あさ ろくじに おきます。あさごはんを たべてから、がっこうへ いきます。がっこうは はちじはんに はじまります。ごご さんじに おわります。そのあと、ともだちと こうえんで あそびます。",
+                romaji: "Asa rokuji ni okimasu. Asagohan o tabete kara, gakkou e ikimasu. Gakkou wa hachiji han ni hajimarimasu. Gogo sanji ni owarimasu. Sono ato, tomodachi to kouen de asobimasu.",
+                arti: "Saya bangun pagi jam 6. Setelah makan sarapan, saya pergi ke sekolah. Sekolah dimulai jam setengah 9. Selesai jam 3 sore. Setelah itu, saya bermain di taman bersama teman."
+            },
+            {
+                title: "3. しゅうまつの りょこう (Liburan Akhir Pekan)",
+                hiragana: "しゅうまつは かぞくと いっしょに うみへ いきました。てんきが とても よくて、きもちが よかったです。うみで およいだり、かいがらを あつめたり しました。とても たのしかったです。",
+                romaji: "Shuumatsu wa kazoku to issho ni umi e ikimashita. Tenki ga totemo yokute, kimochi ga yokatta desu. Umi de oyoidari, kaigara o atsumetari shimashita. Totemo tanoshikatta desu.",
+                arti: "Akhir pekan saya pergi ke laut bersama keluarga. Cuacanya sangat bagus dan rasanya sangat menyenangkan. Di laut kami berenang, mengumpulkan kerang, dan lain-lain. Sangat menyenangkan."
+            },
+            {
+                title: "4. あたらしい くるま (Mobil Baru)",
+                hiragana: "ちちは あたらしい くるまを かいました。くるまの いろは あかです。とても はやくて かっこいいです。あした、かぞく みんなで その くるまに のって、おばあさんの いえへ いきます。",
+                romaji: "Chichi wa atarashii kuruma o kaimashita. Kuruma no iro wa aka desu. Totemo hayakute kakkoii desu. Ashita, kazoku minna de sono kuruma ni notte, obaasan no ie e ikimasu.",
+                arti: "Ayah membeli mobil baru. Warna mobilnya merah. Sangat cepat dan keren. Besok, seluruh keluarga akan naik mobil itu dan pergi ke rumah nenek."
+            },
+            {
+                title: "5. ももたろう (Cerita Rakyat: Momotaro)",
+                hiragana: "むかし むかし、ある ところに、おじいさんと おばあさんが すんで いました。おじいさんは やまへ しばかりに、おばあさんは かわへ せんたくに いきました。すると、おおきな ももが ながれて きました。",
+                romaji: "Mukashi mukashi, aru tokoro ni, ojiisan to obaasan ga sunde imashita. Ojiisan wa yama e shibakari ni, obaasan wa kawa e sentaku ni ikimashita. Suruto, ookina momo ga nagarete kimashita.",
+                arti: "Pada zaman dahulu kala, di suatu tempat, hiduplah seorang kakek dan nenek. Kakek pergi ke gunung untuk mencari kayu bakar, nenek pergi ke sungai untuk mencuci pakaian. Tiba-tiba, sebuah buah persik (momo) raksasa mengalir mendekat."
+            },
+            
+            // --- 20 Soal Baru Tambahan ---
+            {
+                title: "6. スーパーでの かいもの (Belanja di Supermarket)",
+                hiragana: "きょうは ははと いっしょに スーパーへ いきました。ぎゅうにゅうと パンと りんごを かいました。ぜんぶで にせんえんでした。",
+                romaji: "Kyou wa haha to issho ni suupaa e ikimashita. Gyuunyuu to pan to ringo o kaimashita. Zenbu de nisen en deshita.",
+                arti: "Hari ini saya pergi ke supermarket bersama ibu. Saya membeli susu, roti, dan apel. Semuanya berharga 2000 yen."
+            },
+            {
+                title: "7. はるの てんき (Cuaca Musim Semi)",
+                hiragana: "にほんの はるは とても あたたかいです。さくらの はなが さきます。たくさんの ひとが こうえんで おはなみを します。",
+                romaji: "Nihon no haru wa totemo atatakai desu. Sakura no hana ga sakimasu. Takusan no hito ga kouen de ohanami o shimasu.",
+                arti: "Musim semi di Jepang sangat hangat. Bunga sakura mekar. Banyak orang melakukan ohanami (melihat bunga sakura) di taman."
+            },
+            {
+                title: "8. わたしの しゅみ (Hobi Saya)",
+                hiragana: "わたしの しゅみは しゃしんを とる ことです。やすみの ひに よく やまや うみへ いきます。きれいな けしきを とるのが すきです。",
+                romaji: "Watashi no shumi wa shashin o toru koto desu. Yasumi no hi ni yoku yama ya umi e ikimasu. Kirei na keshiki o toru no ga suki desu.",
+                arti: "Hobi saya adalah mengambil foto. Pada hari libur, saya sering pergi ke gunung atau laut. Saya suka memotret pemandangan yang indah."
+            },
+            {
+                title: "9. でんしゃの なかで (Di Dalam Kereta)",
+                hiragana: "まいにち でんしゃで がっこうへ いきます。でんしゃの なかで ほんを よんだり、おんがくを きいたり します。えきから がっこうまで あるいて じゅっぷんです。",
+                romaji: "Mainichi densha de gakkou e ikimasu. Densha no naka de hon o yondari, ongaku o kiitari shimasu. Eki kara gakkou made aruite juppun desu.",
+                arti: "Setiap hari saya pergi ke sekolah dengan kereta. Di dalam kereta, saya membaca buku atau mendengarkan musik. Dari stasiun ke sekolah berjalan kaki 10 menit."
+            },
+            {
+                title: "10. レストラン (Restoran)",
+                hiragana: "きのうの よる、ともだちと レストランで ばんごはんを たべました。わたしは カレーライスを たのみました。とても おいしかったです。",
+                romaji: "Kinou no yoru, tomodachi to resutoran de bangohan o tabemashita. Watashi wa kareeraisu o tanomimashita. Totemo oishikatta desu.",
+                arti: "Tadi malam, saya makan malam di restoran bersama teman. Saya memesan nasi kari. Sangat lezat."
+            },
+            {
+                title: "11. かぜを ひきました (Masuk Angin / Flu)",
+                hiragana: "きのうから あたまが いたいです。ねつも あります。きょうは がっこうを やすんで、びょういんへ いきます。くすりを のんで、はやく ねます。",
+                romaji: "Kinou kara atama ga itai desu. Netsu mo arimasu. Kyou wa gakkou o yasunde, byouin e ikimasu. Kusuri o nonde, hayaku nemasu.",
+                arti: "Sejak kemarin kepala saya sakit. Saya juga demam. Hari ini saya libur sekolah dan pergi ke rumah sakit. Saya akan minum obat dan tidur lebih awal."
+            },
+            {
+                title: "12. たんじょうび (Ulang Tahun)",
+                hiragana: "あしたは わたしの たんじょうびです。ははが ケーキを つくって くれます。ちちは あたらしい じてんしゃを 買って くれると いいました。たのしみです。",
+                romaji: "Ashita wa watashi no tanjoubi desu. Haha ga keeki o tsukutte kuremasu. Chichi wa atarashii jitensha o katte kureru to iimashita. Tanoshimi desu.",
+                arti: "Besok adalah hari ulang tahun saya. Ibu akan membuatkan kue untuk saya. Ayah bilang akan membelikan sepeda baru. Saya sangat menantikannya."
+            },
+            {
+                title: "13. としょかん (Perpustakaan)",
+                hiragana: "わたしは ほんを よむのが すきです。としょかんへ いつも いきます。としょかんは しずかですから、べんきょうも できます。",
+                romaji: "Watashi wa hon o yomu no ga suki desu. Toshokan e itsumo ikimasu. Toshokan wa shizuka desu kara, benkyou mo dekimasu.",
+                arti: "Saya suka membaca buku. Saya selalu pergi ke perpustakaan. Karena perpustakaan sepi, saya juga bisa belajar."
+            },
+            {
+                title: "14. わたしの いぬ (Anjing Saya)",
+                hiragana: "わたしの いえに クロという いぬが います。クロは くろくて げんきな いぬです。まいにち ゆうがたに こうえんを さんぽ します。",
+                romaji: "Watashi no ie ni Kuro to iu inu ga imasu. Kuro wa kurokute genki na inu desu. Mainichi yuugata ni kouen o sanpo shimasu.",
+                arti: "Di rumah saya ada anjing bernama Kuro. Kuro adalah anjing yang hitam dan ceria. Setiap hari pada sore hari kami jalan-jalan di taman."
+            },
+            {
+                title: "15. ゆうびんきょく (Kantor Pos)",
+                hiragana: "いまから ゆうびんきょくへ いきます。くにの かぞくに てがみと にもつを おくります。それから、きっても かいます。",
+                romaji: "Ima kara yuubinkyoku e ikimasu. Kuni no kazoku ni tegami to nimotsu o okurimasu. Sorekara, kitte mo kaimasu.",
+                arti: "Mulai sekarang saya akan pergi ke kantor pos. Saya akan mengirim surat dan paket ke keluarga di negara asal. Setelah itu, saya juga akan membeli perangko."
+            },
+            {
+                title: "16. わすれもの (Barang yang Tertinggal)",
+                hiragana: "きょう でんしゃの なかに かさを わすれました。くろくて おおきい かさです。えきの ひとに ききましたが、ありませんでした。ざんねんです。",
+                romaji: "Kyou densha no naka ni kasa o wasuremashita. Kurokute ookii kasa desu. Eki no hito ni kikimashita ga, arimasen deshita. Zannen desu.",
+                arti: "Hari ini saya meninggalkan payung di dalam kereta. Payungnya besar dan berwarna hitam. Saya sudah bertanya kepada petugas stasiun, tetapi tidak ada. Sayang sekali."
+            },
+            {
+                title: "17. かんじの べんきょう (Belajar Kanji)",
+                hiragana: "にほんごの べんきょうで かんじが いちばん むずかしいです。でも、おぼえると、ほんや しんぶんが よめるように なります。だから、まいにち れんしゅう します。",
+                romaji: "Nihongo no benkyou de kanji ga ichiban muzukashii desu. Demo, oboeru to, hon ya shinbun ga yomeru you ni narimasu. Dakara, mainichi renshuu shimasu.",
+                arti: "Dalam belajar bahasa Jepang, Kanji adalah yang paling sulit. Tetapi, jika menghapalnya, kita akan bisa membaca buku dan koran. Karena itu, saya berlatih setiap hari."
+            },
+            {
+                title: "18. ふゆの きせつ (Musim Dingin)",
+                hiragana: "ふゆは ゆきが ふりますから、とても さむいです。でも、わたしは ふゆが すきです。ゆきだるまを つくったり、スキーを したり する ことが できるからです。",
+                romaji: "Fuyu wa yuki ga furimasu kara, totemo samui desu. Demo, watashi wa fuyu ga suki desu. Yukidaruma o tsukuttari, sukii o shitari suru koto ga dekiru kara desu.",
+                arti: "Karena turun salju, musim dingin sangat dingin. Tapi, saya suka musim dingin. Karena saya bisa membuat boneka salju dan bermain ski."
+            },
+            {
+                title: "19. ともだちとの やくそく (Janji dengan Teman)",
+                hiragana: "どようびに ともだちと えいがを みる やくそくを しました。えきの まえで じゅうじに あいます。えいがの あとで、いっしょに ひるごはんを たべます。",
+                romaji: "Doyoubi ni tomodachi to eiga o miru yakusoku o shimashita. Eki no mae de juuji ni aimasu. Eiga no ato de, issho ni hirugohan o tabemasu.",
+                arti: "Saya membuat janji untuk menonton film bersama teman pada hari Sabtu. Kami akan bertemu di depan stasiun jam 10. Setelah film selesai, kami akan makan siang bersama."
+            },
+            {
+                title: "20. しょうらいの ゆめ (Mimpi Masa Depan)",
+                hiragana: "わたしの ゆめは いしゃに なる ことです。びょうきの ひとを たすけたいです。その ために、いま いっしょうけんめい べんきょう して います。",
+                romaji: "Watashi no yume wa isha ni naru koto desu. Byouki no hito o tasuketai desu. Sono tame ni, ima isshoukenmei benkyou shite imasu.",
+                arti: "Mimpi saya adalah menjadi dokter. Saya ingin menolong orang yang sakit. Untuk itu, sekarang saya belajar dengan sungguh-sungguh."
+            },
+            {
+                title: "21. りょうり (Memasak)",
+                hiragana: "わたしは りょうりを つくるのが じょうずです。よく ほんを よんで、あたらしい りょうりを つくります。きのうは スープを つくりました。",
+                romaji: "Watashi wa ryouri o tsukuru no ga jouzu desu. Yoku hon o yonde, atarashii ryouri o tsukurimasu. Kinou wa suupu o tsukurimashita.",
+                arti: "Saya pintar memasak. Saya sering membaca buku resep dan membuat masakan baru. Kemarin saya membuat sup."
+            },
+            {
+                title: "22. みちに まよいました (Tersesat)",
+                hiragana: "はじめて とうきょうへ いきました。ひとが おおくて、みちに まよって しまいました。けいかんの ひとに みちを きいて、やっと ホテルに つきました。",
+                romaji: "Hajimete Toukyou e ikimashita. Hito ga ookute, michi ni mayotte shimaimashita. Keikan no hito ni michi o kiite, yatto hoteru ni tsukimashita.",
+                arti: "Saya pertama kali pergi ke Tokyo. Orangnya banyak, dan saya tersesat. Saya bertanya jalan kepada polisi, dan akhirnya sampai di hotel."
+            },
+            {
+                title: "23. かぞく りょこう (Wisata Keluarga)",
+                hiragana: "らいげつ、かぞく みんなで きょうとへ りょこうに いきます。ひこうきの きっぷと ホテルは もう よやく しました。とても たのしみに して います。",
+                romaji: "Raigetsu, kazoku minna de Kyouto e ryokou ni ikimasu. Hikouki no kippu to hoteru wa mou yoyaku shimashita. Totemo tanoshimi ni shite imasu.",
+                arti: "Bulan depan, seluruh keluarga akan berwisata ke Kyoto. Tiket pesawat dan hotel sudah dipesan. Saya sangat menantikannya."
+            },
+            {
+                title: "24. ははへの てがみ (Surat untuk Ibu)",
+                hiragana: "おかあさん、おげんきですか。わたしは とても げんきです。にほんの せいかつに なれました。らいねんの ふゆやすみに くにへ かえります。",
+                romaji: "Okaasan, ogenki desu ka. Watashi wa totemo genki desu. Nihon no seikatsu ni naremashita. Rainen no fuyuyasumi ni kuni e kaerimasu.",
+                arti: "Ibu, apa kabar? Saya sangat sehat. Saya sudah terbiasa dengan kehidupan di Jepang. Liburan musim dingin tahun depan saya akan pulang ke kampung halaman."
+            },
+            {
+                title: "25. そうじ (Bersih-bersih)",
+                hiragana: "きょうは にちようびです。あさから へやの そうじを しました。まどを あけて、あたらしい くうきを いれました。へやが きれいに なって、きもちが いいです。",
+                romaji: "Kyou wa nichiyoubi desu. Asa kara heya no souji o shimashita. Mado o akete, atarashii kuuki o iremashita. Heya ga kirei ni natte, kimochi ga ii desu.",
+                arti: "Hari ini hari Minggu. Dari pagi saya membersihkan kamar. Saya membuka jendela dan memasukkan udara segar. Kamar menjadi bersih, perasaan saya menjadi baik."
+            }
+    
+        ];
+
+        let currentIndex = 0;
+        let isRomajiVisible = false;
+        let isArtiVisible = false;
+
+        // Elements
+        const titleDisplay = document.getElementById('title-display');
+        const hiraganaDisplay = document.getElementById('hiragana-display');
+        const romajiDisplay = document.getElementById('romaji-display');
+        const translationDisplay = document.getElementById('translation-display');
+        const progressText = document.getElementById('progress-text');
+        
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const btnRomaji = document.getElementById('btn-romaji');
+        const btnArti = document.getElementById('btn-arti');
+
+        function renderStory() {
+            const story = stories[currentIndex];
+            titleDisplay.textContent = story.title;
+            hiraganaDisplay.textContent = story.hiragana;
+            romajiDisplay.textContent = story.romaji;
+            translationDisplay.textContent = story.arti;
+
+            progressText.textContent = `${currentIndex + 1} / ${stories.length}`;
+
+            // Handle Buttons Status
+            btnPrev.disabled = currentIndex === 0;
+            btnNext.disabled = currentIndex === stories.length - 1;
+
+            // Reset visibilitas saat pindah cerita
+            isRomajiVisible = false;
+            isArtiVisible = false;
+            romajiDisplay.style.display = "none";
+            translationDisplay.style.display = "none";
+            btnRomaji.classList.remove('active');
+            btnArti.classList.remove('active');
+        }
+
+        function changeStory(direction) {
+            currentIndex += direction;
+            renderStory();
+        }
+
+        function toggleRomaji() {
+            isRomajiVisible = !isRomajiVisible;
+            romajiDisplay.style.display = isRomajiVisible ? "block" : "none";
+            if(isRomajiVisible) btnRomaji.classList.add('active');
+            else btnRomaji.classList.remove('active');
+        }
+
+        function toggleArti() {
+            isArtiVisible = !isArtiVisible;
+            translationDisplay.style.display = isArtiVisible ? "block" : "none";
+            if(isArtiVisible) btnArti.classList.add('active');
+            else btnArti.classList.remove('active');
+        }
+
+        // Initialize first story
+        window.onload = renderStory;
+
+    </script>
+</body>
+</html>

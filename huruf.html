@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minna no Nihongo | Panduan Huruf Lanjutan</title>
+    <style>
+        /* Desain Minimalis & Hitam Solid */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #0a0a0a;
+            --border-color: #222222;
+            --text-main: #f0f0f0;
+            --text-muted: #888888;
+            --accent-japan: #c91f37;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-solid);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Dashboard */
+        .sidebar {
+            width: 280px;
+            background-color: var(--panel-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            border-bottom: 2px solid var(--accent-japan);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .jp-text {
+            font-size: 0.9rem;
+            color: var(--accent-japan);
+            margin-top: 5px;
+            letter-spacing: 4px;
+        }
+
+        .nav-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: var(--bg-solid);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-item.active {
+            border-left: 4px solid var(--accent-japan);
+            font-weight: bold;
+        }
+
+        .nav-item:hover {
+            background-color: #111;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            z-index: 1;
+        }
+
+        .header-title {
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .header-title h2 {
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        .badge {
+            background-color: var(--bg-solid);
+            border: 1px solid var(--accent-japan);
+            color: var(--accent-japan);
+            padding: 5px 15px;
+            font-size: 0.8rem;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+
+        /* Panel Styling */
+        .panel-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            position: relative;
+            margin-bottom: 30px;
+            border-left: 3px solid var(--accent-japan);
+        }
+
+        .panel-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-desc {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Table Styling */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+            background-color: var(--bg-solid);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #111111;
+            color: var(--accent-japan);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        td {
+            font-size: 0.95rem;
+        }
+
+        tr:hover td {
+            background-color: #151515;
+        }
+
+        .jp-char {
+            font-size: 1.2rem;
+            color: #ffffff;
+        }
+
+        .highlight-text {
+            color: var(--accent-japan);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Dashboard -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Nihongo</h1>
+            <div class="jp-text">みんなの日本語</div>
+        </div>
+       
+        <div class="nav-item active">Panduan Huruf Lanjutan</div>
+    </aside>
+
+    <!-- Konten Utama -->
+    <main class="main-content">
+        <div class="header-title">
+            <h2>Modifikasi Huruf (Kana)</h2>
+            <span class="badge">TINGKAT DASAR (N5)</span>
+        </div>
+
+        <!-- Section 1: Dakuten -->
+        <div class="panel-card">
+            <div class="panel-title">1. Dakuten (Tanda Petik Dua / Tenten ゛)</div>
+            <p class="panel-desc">Berfungsi menebalkan bunyi konsonan. Aturan perubahannya adalah: <strong>K → G</strong>, <strong>S → Z</strong>, <strong>T → D</strong>, dan <strong>H → B</strong>.</p>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Perubahan</th>
+                            <th>Hiragana</th>
+                            <th>Katakana</th>
+                            <th>Romaji</th>
+                            <th>Contoh Kata</th>
+                            <th>Cara Baca</th>
+                            <th>Arti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>K → G</strong></td>
+                            <td class="jp-char">が, ぎ, ぐ, げ, ご</td>
+                            <td class="jp-char">ガ, ギ, グ, ゲ, ゴ</td>
+                            <td>ga, gi, gu, ge, go</td>
+                            <td class="jp-char">か<span class="highlight-text">ぎ</span></td>
+                            <td>Ka<span class="highlight-text">gi</span></td>
+                            <td>Kunci</td>
+                        </tr>
+                        <tr>
+                            <td><strong>S → Z</strong></td>
+                            <td class="jp-char">ざ, じ, ず, ぜ, ぞ</td>
+                            <td class="jp-char">ザ, ジ, ズ, ゼ, ゾ</td>
+                            <td>za, ji, zu, ze, zo</td>
+                            <td class="jp-char">か<span class="highlight-text">ぜ</span></td>
+                            <td>Ka<span class="highlight-text">ze</span></td>
+                            <td>Angin / Flu</td>
+                        </tr>
+                        <tr>
+                            <td><strong>T → D</strong></td>
+                            <td class="jp-char">だ, ぢ, づ, で, ど</td>
+                            <td class="jp-char">ダ, ヂ, ヅ, デ, ド</td>
+                            <td>da, ji, zu, de, do</td>
+                            <td class="jp-char"><span class="highlight-text">で</span>んわ</td>
+                            <td><span class="highlight-text">De</span>nwa</td>
+                            <td>Telepon</td>
+                        </tr>
+                        <tr>
+                            <td><strong>H → B</strong></td>
+                            <td class="jp-char">ば, び, ぶ, べ, ぼ</td>
+                            <td class="jp-char">バ, ビ, ブ, ベ, ボ</td>
+                            <td>ba, bi, bu, be, bo</td>
+                            <td class="jp-char">か<span class="highlight-text">ば</span>ん</td>
+                            <td>Ka<span class="highlight-text">ba</span>n</td>
+                            <td>Tas</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">*Catatan: じ/ジ dan ぢ/ヂ dibaca "ji". ず/ズ dan づ/ヅ dibaca "zu". (じ dan ず lebih sering digunakan).</p>
+        </div>
+
+        <!-- Section 2: Handakuten -->
+        <div class="panel-card">
+            <div class="panel-title">2. Handakuten (Tanda Lingkaran / Maru ゜)</div>
+            <p class="panel-desc">Tanda "lingkaran kecil" di kanan atas ini <strong>hanya berlaku untuk deret H</strong>. Tanda ini mengubah bunyi <strong>H menjadi P</strong>.</p>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Perubahan</th>
+                            <th>Hiragana</th>
+                            <th>Katakana</th>
+                            <th>Romaji</th>
+                            <th>Contoh Kata</th>
+                            <th>Cara Baca</th>
+                            <th>Arti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>H → P</strong></td>
+                            <td class="jp-char">ぱ, ぴ, ぷ, ぺ, ぽ</td>
+                            <td class="jp-char">パ, ピ, プ, ペ, ポ</td>
+                            <td>pa, pi, pu, pe, po</td>
+                            <td class="jp-char">えん<span class="highlight-text">ぴ</span>つ</td>
+                            <td>En<span class="highlight-text">pi</span>tsu</td>
+                            <td>Pensil</td>
+                        </tr>
+                        <tr>
+                            <td><strong>H → P</strong></td>
+                            <td class="jp-char">-</td>
+                            <td class="jp-char">-</td>
+                            <td>-</td>
+                            <td class="jp-char"><span class="highlight-text">パ</span>ソコン</td>
+                            <td><span class="highlight-text">Pa</span>sokon</td>
+                            <td>Komputer / PC</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 3: Chouonpu -->
+        <div class="panel-card">
+            <div class="panel-title">3. Chouonpu (Tanda Strip / Vokal Panjang)</div>
+            <p class="panel-desc">Digunakan untuk memanjangkan bunyi vokal (ditahan 2 ketukan). Katakana menggunakan strip (ー), sedangkan Hiragana menggunakan huruf vokal bantu.</p>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aturan Pemanjangan</th>
+                            <th>Contoh Penulisan</th>
+                            <th>Romaji</th>
+                            <th>Penjelasan Cara Baca</th>
+                            <th>Arti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Katakana (Tanda Strip)</td>
+                            <td class="jp-char">コ<span class="highlight-text">ー</span>ヒ<span class="highlight-text">ー</span></td>
+                            <td>Kōhī</td>
+                            <td>K<strong>oo</strong>-h<strong>ii</strong> (O & I ditahan)</td>
+                            <td>Kopi</td>
+                        </tr>
+                        <tr>
+                            <td>Hiragana (Akhiran A/I/U)</td>
+                            <td class="jp-char">おか<span class="highlight-text">あ</span>さん</td>
+                            <td>Okāsan</td>
+                            <td>Oka<strong>a</strong>-san (A ditahan)</td>
+                            <td>Ibu</td>
+                        </tr>
+                        <tr>
+                            <td>Hiragana (Akhiran E + I)</td>
+                            <td class="jp-char">せんせ<span class="highlight-text">い</span></td>
+                            <td>Sensei</td>
+                            <td>Sens<strong>ee</strong> (E ditahan, bukan ei)</td>
+                            <td>Guru</td>
+                        </tr>
+                        <tr>
+                            <td>Hiragana (Akhiran O + U)</td>
+                            <td class="jp-char">ありがと<span class="highlight-text">う</span></td>
+                            <td>Arigatō</td>
+                            <td>Arigat<strong>oo</strong> (O ditahan, bukan ou)</td>
+                            <td>Terima kasih</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 4 & 5: Modifikasi Ukuran -->
+        <div class="panel-card">
+            <div class="panel-title">4. Sokuon (っ) & Yoon (ゃ, ゅ, ょ)</div>
+            <p class="panel-desc">Huruf yang ditulis lebih kecil dari ukuran normal untuk mengubah struktur pembacaan kata.</p>
+            
+            <h4 style="color: #fff; margin-bottom: 10px; margin-top: 20px;">A. Sokuon (Tsu Kecil / Konsonan Ganda)</h4>
+            <p class="panel-desc">Menahan suara selama satu ketukan (menghasilkan konsonan ganda pada huruf berikutnya).</p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Huruf</th>
+                            <th>Penulisan</th>
+                            <th>Romaji</th>
+                            <th>Cara Baca (Pengejaan)</th>
+                            <th>Arti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Hiragana</td>
+                            <td class="jp-char">き<span class="highlight-text">っ</span>ぷ</td>
+                            <td>Ki<strong>pp</strong>u</td>
+                            <td>Kip-pu (Berhenti di P)</td>
+                            <td>Tiket</td>
+                        </tr>
+                        <tr>
+                            <td>Katakana</td>
+                            <td class="jp-char">ベ<span class="highlight-text">ッ</span>ド</td>
+                            <td>Be<strong>dd</strong>o</td>
+                            <td>Bed-do (Berhenti di D)</td>
+                            <td>Kasur</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4 style="color: #fff; margin-bottom: 10px; margin-top: 30px;">B. Yoon (Ya, Yu, Yo Kecil)</h4>
+            <p class="panel-desc">Hanya bisa ditempelkan pada huruf berakhiran <strong>"i"</strong> (ki, shi, chi, ni, dll) untuk menghasilkan bunyi gabungan.</p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Gabungan</th>
+                            <th>Penulisan Huruf</th>
+                            <th>Romaji</th>
+                            <th>Contoh Kata</th>
+                            <th>Arti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ki + ya</td>
+                            <td class="jp-char">き<span class="highlight-text">ゃ</span> / キ<span class="highlight-text">ャ</span></td>
+                            <td><strong>kya</strong></td>
+                            <td class="jp-char"><strong>きゃ</strong>く (Kyaku)</td>
+                            <td>Tamu</td>
+                        </tr>
+                        <tr>
+                            <td>shi + yu</td>
+                            <td class="jp-char">し<span class="highlight-text">ゅ</span> / シ<span class="highlight-text">ュ</span></td>
+                            <td><strong>shu</strong></td>
+                            <td class="jp-char"><strong>しゅ</strong>くだい (Shukudai)</td>
+                            <td>PR (Tugas)</td>
+                        </tr>
+                        <tr>
+                            <td>chi + yo</td>
+                            <td class="jp-char">ち<span class="highlight-text">ょ</span> / チ<span class="highlight-text">ョ</span></td>
+                            <td><strong>cho</strong></td>
+                            <td class="jp-char"><strong>ちょ</strong>っと (Chotto)</td>
+                            <td>Sedikit / Sebentar</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>
