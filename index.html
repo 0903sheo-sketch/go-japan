@@ -194,6 +194,11 @@
             <div class="card-title">GAME</div>
             <div class="card-desc">Bermain sambil<br><b>Mengingat Kosakata</b></div>
         </div>
+         <div class="card" onclick="openModule('N5')">
+            <div class="card-icon">🥋</div>
+            <div class="card-title">GAME</div>
+            <div class="card-desc">Belajar Dasar<br><b>BAHASA JEPANG</b></div>
+        </div>
     </div>
 </div>
 
@@ -321,6 +326,9 @@
             } 
             else if (moduleName === 'game') {
                 window.location.href = 'dasboardkuis.html';
+            }
+             else if (moduleName === 'N5') {
+                window.location.href = 'dasarN5.html';
             }
         }, 400);
     }
