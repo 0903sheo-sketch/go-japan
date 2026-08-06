@@ -16,6 +16,7 @@
             text-align: center;
             min-height: 100vh;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         /* Hujan Sakura */
@@ -45,6 +46,24 @@
             background-color: rgba(26, 8, 15, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             border: 1px solid rgba(255, 183, 197, 0.2); position: relative; z-index: 10;
+        }
+
+        /* LOGO BESAR BERANIMASI */
+        .main-logo-container {
+            margin-bottom: 20px;
+            animation: floating 3s ease-in-out infinite;
+        }
+        .main-logo {
+            font-size: 100px;
+            text-shadow: 0 0 30px rgba(255, 183, 197, 0.8), 0 0 60px rgba(255, 183, 197, 0.5);
+            display: inline-block;
+            margin: 0;
+            line-height: 1;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
         }
 
         /* GATEKEEPER / DASHBOARD STYLE */
@@ -141,12 +160,131 @@
             box-shadow: 0 0 15px rgba(255, 183, 197, 0.6); width: 100%;
         }
         .btn-modal:hover { background: #fff; transform: scale(1.05); box-shadow: 0 0 25px rgba(255, 255, 255, 0.8); }
+
+        /* ROADMAP STYLES */
+        .roadmap-wrapper {
+            margin-top: 60px;
+            padding: 40px 20px;
+            width: 100%;
+            position: relative;
+        }
+        .roadmap-title {
+            font-size: 36px;
+            color: #fff;
+            margin-bottom: 50px;
+            text-shadow: 0 0 20px rgba(255, 183, 197, 0.8);
+        }
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        /* Garis vertikal timeline */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: rgba(255, 183, 197, 0.4);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(255, 183, 197, 0.5);
+        }
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background: inherit;
+            width: 50%;
+            box-sizing: border-box;
+            opacity: 0; /* Untuk animasi scroll */
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .timeline-item:nth-child(odd) { left: 0; }
+        .timeline-item:nth-child(even) { left: 50%; }
+        
+        /* Lingkaran penanda */
+        .timeline-item::after {
+            content: '🌸';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            right: -20px;
+            background-color: #2b0f19;
+            border: 4px solid #ffb7c5;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 0 15px #ffb7c5;
+            animation: pulse-node 2s infinite;
+        }
+        .timeline-item:nth-child(even)::after {
+            left: -20px;
+        }
+        @keyframes pulse-node {
+            0% { box-shadow: 0 0 0 0 rgba(255, 183, 197, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 183, 197, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 183, 197, 0); }
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background: rgba(43, 15, 25, 0.8);
+            border: 2px solid #ffb7c5;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            position: relative;
+            transition: 0.3s;
+        }
+        .timeline-content:hover {
+            transform: scale(1.05);
+            background: rgba(74, 28, 42, 0.9);
+            box-shadow: 0 10px 25px rgba(255, 183, 197, 0.5);
+        }
+        .timeline-content h3 {
+            margin-top: 0;
+            color: #ffb7c5;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        .timeline-content p {
+            color: #ddd;
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Responsif Timeline untuk Layar Kecil */
+        @media screen and (max-width: 768px) {
+            .timeline::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-item:nth-child(even) { left: 0%; }
+            .timeline-item::after { left: 11px; right: auto; }
+            .timeline-item:nth-child(even)::after { left: 11px; }
+        }
     </style>
 </head>
 <body>
 
 <!-- TAMPILAN DASHBOARD -->
 <div id="gatekeeper" class="container fade-in">
+    
+    <!-- LOGO DITAMBAHKAN DI SINI -->
+   <div class="main-logo-container">
+        <img src="logo.png" alt="Logo" style="width: 400px; height: auto; filter: drop-shadow(0 0 15px rgba(255,183,197,0.8));">
+    </div>
+
     <div class="dashboard-header">
         <h1 style="font-size: 42px; margin-bottom: 5px;">🌸 Nihongo Dashboard 🌸</h1>
         <p style="font-size: 18px; color: #ddd;">Silakan pilih modul pembelajaran Anda hari ini</p>
@@ -189,6 +327,50 @@
             <div class="card-desc">Bermain sambil<br><b>Mengingat Kosakata</b></div>
         </div>
     </div>
+
+    <!-- ROADMAP DITAMBAHKAN DI SINI -->
+    <div class="roadmap-wrapper">
+        <h2 class="roadmap-title">🗺️ Roadmap Belajar: Dari Nol Sampai N4</h2>
+        <div class="timeline">
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Tahap 1: Penguasaan Kana (Nol) 🎌</h3>
+                    <p>Fondasi utama Anda. Di tahap ini, fokuslah menghafal bentuk dan cara baca <b>Hiragana</b> & <b>Katakana</b>. Jangan melangkah ke tahap selanjutnya sebelum Anda bisa membaca kata tanpa huruf alfabet (Romaji).</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Tahap 2: Pondasi Tata Bahasa N5 📚</h3>
+                    <p>Mulai pelajari tata bahasa dasar seperti partikel (wa, ga, o, ni) dan pola kalimat sederhana (desu, masu). Gunakan modul <b>DASAR N5</b> untuk memahami struktur kalimat dasar bahasa Jepang.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Tahap 3: Kosakata & Kanji N5 📝</h3>
+                    <p>Sambil belajar tata bahasa, mulailah menghafal sekitar 80-100 Kanji dasar dan 800 kosakata yang sering muncul dalam kehidupan sehari-hari. Bermain <b>GAME</b> di dashboard sangat membantu mengingat!</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Tahap 4: Transisi ke Menengah (N4) ⛩️</h3>
+                    <p>Waktunya naik level! Pelajari perubahan kata kerja (Bentuk Te, Ta, Nai, Jisho) dan tata bahasa yang lebih kompleks seperti memberikan alasan, keharusan, dan kalimat pasif-kausatif.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Tahap 5: Simulasi JLPT / JFT N4 🎓</h3>
+                    <p>Tahap akhir sebelum ujian. Latih kemampuan <i>Choukai</i> (Mendengar) dan <i>Dokkai</i> (Membaca). Kerjakan modul <b>JLPT/JFT N4</b> berulang kali dengan timer untuk membiasakan diri dengan tekanan ujian sesungguhnya.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
 <!-- RUANG BELAJAR KANA (Tetap Dipertahankan Dalam 1 Halaman) -->
@@ -540,6 +722,22 @@
             }
         });
     }
+
+    // ANIMASI SCROLL UNTUK ROADMAP TIMELINE
+    document.addEventListener("DOMContentLoaded", function() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        timelineItems.forEach(item => {
+            observer.observe(item);
+        });
+    });
 </script>
 </body>
 </html>
