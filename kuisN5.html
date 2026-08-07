@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Kana - Pusat Pembelajaran</title>
+    <style>
+        /* TEMA & ANIMASI DASAR */
+        body {
+            background: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff0f5; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 20px;
+            text-align: center; min-height: 100vh; overflow-x: hidden;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        .container {
+            max-width: 600px; width: 100%;
+            background-color: rgba(26, 8, 15, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 183, 197, 0.2); position: relative; z-index: 10;
+        }
+
+        h1 { color: #ffb7c5; font-size: 32px; margin-top: 0; }
+        
+        /* FORM & INPUT */
+        input[type="text"] {
+            width: 80%; padding: 15px; border-radius: 30px; border: 2px solid #ffb7c5;
+            background: rgba(0,0,0,0.5); color: #fff; font-size: 18px; text-align: center;
+            margin-bottom: 20px; outline: none; transition: 0.3s;
+        }
+        input[type="text"]:focus { box-shadow: 0 0 15px rgba(255, 183, 197, 0.8); }
+        
+        button {
+            background: #ffb7c5; color: #12040a; border: none; padding: 15px 30px;
+            border-radius: 30px; font-size: 18px; font-weight: bold; cursor: pointer;
+            transition: all 0.3s; box-shadow: 0 0 15px rgba(255, 183, 197, 0.5);
+            margin: 5px;
+        }
+        button:hover { transform: translateY(-3px); box-shadow: 0 0 25px rgba(255, 183, 197, 0.9); }
+
+        /* AREA KUIS & WAKTU */
+        #kana-display { font-size: 80px; font-weight: bold; margin: 20px 0; color: #fff; text-shadow: 0 0 20px rgba(255,183,197,0.8); }
+        .score-box { font-size: 20px; margin-bottom: 10px; color: #ddd; }
+        .timer-box { font-size: 24px; font-weight: bold; color: #ffb7c5; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255,183,197,0.5); }
+
+        /* HASIL OVERVIEW */
+        .overview-box {
+            max-height: 250px; overflow-y: auto; background: rgba(0,0,0,0.5);
+            border-radius: 10px; padding: 15px; margin-bottom: 20px; text-align: left;
+            border: 1px solid rgba(255, 183, 197, 0.3);
+        }
+        .overview-item {
+            display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed rgba(255,255,255,0.2);
+            font-size: 16px;
+        }
+        .correct-text { color: #48ff00; }
+        .wrong-text { color: #ff4d4d; }
+
+        /* LEADERBOARD ANIMASI BORDER (HANYA OUTLINE) */
+        .leaderboard-list { text-align: left; margin-top: 20px; }
+        .lb-item {
+            position: relative; 
+            background: rgba(26, 8, 15, 0.6); 
+            margin-bottom: 15px; padding: 15px 20px; border-radius: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 18px; font-weight: bold; z-index: 1;
+            border: 2px solid transparent; 
+        }
+        
+        .lb-item::before {
+            content: ''; position: absolute; inset: 0;
+            border-radius: 10px; 
+            padding: 3px; 
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: -1;
+        }
+
+        .rank-1::before {
+            background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            background-size: 400%; animation: chromewave 5s linear infinite;
+        }
+        .rank-2::before {
+            background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            background-size: 200%; animation: chromewave 3s linear infinite;
+        }
+        .rank-3::before {
+            background: linear-gradient(90deg, #8a8a8a, #c0c0c0, #ffffff, #c0c0c0, #8a8a8a);
+            background-size: 200%; animation: chromewave 3s linear infinite;
+        }
+        .rank-other { border: 2px solid rgba(255,183,197,0.3); }
+        .rank-other::before { display: none; } 
+
+        @keyframes chromewave { 0% { background-position: 0 0; } 100% { background-position: 400% 0; } }
+
+        /* PENGATURAN LAYAR (INI YANG SEMPAT HILANG YAAA) */
+        .screen { display: none; }
+        .screen.active { display: block; animation: fadeIn 0.5s forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- LAYAR 1: INPUT NAMA -->
+    <div id="screen-login" class="screen active">
+        <h1>🌸 Time Attack Kana 🌸</h1>
+        <p>Jawab sebanyak-banyaknya dalam <b>3 Menit!</b></p>
+        <input type="text" id="playerName" placeholder="Nama Player..." autocomplete="off">
+        <br>
+        <button onclick="startGame()">Mulai Kuis 🚀</button>
+    </div>
+
+    <!-- LAYAR 2: KUIS (DENGAN WAKTU) -->
+    <div id="screen-quiz" class="screen">
+        <div class="timer-box">Waktu: <span id="time-display">03:00</span></div>
+        <div class="score-box">Menjawab: <span id="q-num">0</span> | Skor: <span id="score">0</span></div>
+        <div id="kana-display">あ</div>
+        <input type="text" id="answerInput" placeholder="Ketik romaji lalu Enter (misal: a)" autocomplete="off" onkeypress="handleEnter(event)">
+        <br>
+        <button onclick="checkAnswer()">Jawab</button>
+        <button onclick="finishQuiz()" style="background: rgba(0,0,0,0.5); color: #fff; border: 1px solid #ffb7c5;">Nyerah / Selesai</button>
+    </div>
+
+    <!-- LAYAR 3: OVERVIEW HASIL JAWABAN -->
+    <div id="screen-overview" class="screen">
+        <h1>📝 Hasil Kuis</h1>
+        <h2>Skor Akhir: <span id="final-score" style="color: #ffb7c5;">0</span> Pts</h2>
+        <p>Akurasi: <span id="accuracy-display">0</span>%</p>
+        
+        <div class="overview-box" id="overview-list">
+            <!-- List jawaban benar/salah akan muncul di sini -->
+        </div>
+        
+        <button onclick="submitToLeaderboard()">Kirim Skor ke Leaderboard 🏆</button>
+    </div>
+
+    <!-- LAYAR 4: LEADERBOARD -->
+    <div id="screen-leaderboard" class="screen">
+        <h1>🏆 Leaderboard 🏆</h1>
+        <p id="loading-msg">Menyimpan skormu dan mengambil data...</p>
+        <div class="leaderboard-list" id="lb-container">
+            <!-- Data Leaderboard -->
+        </div>
+        <br>
+        <button onclick="location.reload()">Main Lagi</button>
+    </div>
+
+</div>
+
+<script>
+    // --- KONFIGURASI GOOGLE SCRIPT ---
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvFAVo9rxkc9i_x86NR_TFSp_pG2ZIAUBCcUW5okBAa49Uq2dAb5pWbBwJW9mfnCRyfg/exec'; 
+
+    // DATA LENGKAP HIRAGANA & KATAKANA DASAR
+    const kanaList = [
+        { kana: 'あ', romaji: 'a' }, { kana: 'い', romaji: 'i' }, { kana: 'う', romaji: 'u' }, { kana: 'え', romaji: 'e' }, { kana: 'お', romaji: 'o' },
+        { kana: 'か', romaji: 'ka' }, { kana: 'き', romaji: 'ki' }, { kana: 'く', romaji: 'ku' }, { kana: 'け', romaji: 'ke' }, { kana: 'こ', romaji: 'ko' },
+        { kana: 'さ', romaji: 'sa' }, { kana: 'し', romaji: 'shi' }, { kana: 'す', romaji: 'su' }, { kana: 'せ', romaji: 'se' }, { kana: 'そ', romaji: 'so' },
+        { kana: 'た', romaji: 'ta' }, { kana: 'ち', romaji: 'chi' }, { kana: 'つ', romaji: 'tsu' }, { kana: 'て', romaji: 'te' }, { kana: 'と', romaji: 'to' },
+        { kana: 'な', romaji: 'na' }, { kana: 'に', romaji: 'ni' }, { kana: 'ぬ', romaji: 'nu' }, { kana: 'ね', romaji: 'ne' }, { kana: 'の', romaji: 'no' },
+        { kana: 'は', romaji: 'ha' }, { kana: 'ひ', romaji: 'hi' }, { kana: 'ふ', romaji: 'fu' }, { kana: 'へ', romaji: 'he' }, { kana: 'ほ', romaji: 'ho' },
+        { kana: 'ま', romaji: 'ma' }, { kana: 'み', romaji: 'mi' }, { kana: 'む', romaji: 'mu' }, { kana: 'め', romaji: 'me' }, { kana: 'も', romaji: 'mo' },
+        { kana: 'や', romaji: 'ya' }, { kana: 'ゆ', romaji: 'yu' }, { kana: 'よ', romaji: 'yo' },
+        { kana: 'ら', romaji: 'ra' }, { kana: 'り', romaji: 'ri' }, { kana: 'る', romaji: 'ru' }, { kana: 'れ', romaji: 're' }, { kana: 'ろ', romaji: 'ro' },
+        { kana: 'わ', romaji: 'wa' }, { kana: 'を', romaji: 'wo' }, { kana: 'ん', romaji: 'n' },
+        { kana: 'ア', romaji: 'a' }, { kana: 'イ', romaji: 'i' }, { kana: 'ウ', romaji: 'u' }, { kana: 'エ', romaji: 'e' }, { kana: 'オ', romaji: 'o' },
+        { kana: 'カ', romaji: 'ka' }, { kana: 'キ', romaji: 'ki' }, { kana: 'ク', romaji: 'ku' }, { kana: 'ケ', romaji: 'ke' }, { kana: 'コ', romaji: 'ko' },
+        { kana: 'サ', romaji: 'sa' }, { kana: 'シ', romaji: 'shi' }, { kana: 'ス', romaji: 'su' }, { kana: 'セ', romaji: 'se' }, { kana: 'ソ', romaji: 'so' },
+        { kana: 'タ', romaji: 'ta' }, { kana: 'チ', romaji: 'chi' }, { kana: 'ツ', romaji: 'tsu' }, { kana: 'テ', romaji: 'te' }, { kana: 'ト', romaji: 'to' },
+        { kana: 'ナ', romaji: 'na' }, { kana: 'ニ', romaji: 'ni' }, { kana: 'ヌ', romaji: 'nu' }, { kana: 'ネ', romaji: 'ne' }, { kana: 'ノ', romaji: 'no' },
+        { kana: 'ハ', romaji: 'ha' }, { kana: 'ヒ', romaji: 'hi' }, { kana: 'フ', romaji: 'fu' }, { kana: 'ヘ', romaji: 'he' }, { kana: 'ホ', romaji: 'ho' },
+        { kana: 'マ', romaji: 'ma' }, { kana: 'ミ', romaji: 'mi' }, { kana: 'ム', romaji: 'mu' }, { kana: 'メ', romaji: 'me' }, { kana: 'モ', romaji: 'mo' },
+        { kana: 'ヤ', romaji: 'ya' }, { kana: 'ユ', romaji: 'yu' }, { kana: 'ヨ', romaji: 'yo' },
+        { kana: 'ラ', romaji: 'ra' }, { kana: 'リ', romaji: 'ri' }, { kana: 'ル', romaji: 'ru' }, { kana: 'レ', romaji: 're' }, { kana: 'ロ', romaji: 'ro' },
+        { kana: 'ワ', romaji: 'wa' }, { kana: 'ヲ', romaji: 'wo' }, { kana: 'ン', romaji: 'n' }
+    ];
+
+    let playerName = "";
+    let score = 0;
+    let questionsAnswered = 0;
+    let correctAnswers = 0;
+    let currentKana = {};
+    let answerHistory = [];
+    
+    let timeLeft = 180; 
+    let timerInterval;
+
+    function switchScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+    }
+
+    function startGame() {
+        const nameInput = document.getElementById('playerName').value.trim();
+        if (nameInput === "") {
+            alert("Isi nama dulu ya!");
+            return;
+        }
+        
+        playerName = nameInput;
+        score = 0;
+        questionsAnswered = 0;
+        correctAnswers = 0;
+        answerHistory = [];
+        timeLeft = 180; 
+        
+        document.getElementById('score').innerText = score;
+        document.getElementById('q-num').innerText = questionsAnswered;
+        
+        switchScreen('screen-quiz');
+        nextQuestion();
+        
+        clearInterval(timerInterval);
+        timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+        timeLeft--;
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+        
+        if(seconds < 10) seconds = "0" + seconds;
+        document.getElementById('time-display').innerText = `0${minutes}:${seconds}`;
+        
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            finishQuiz(); 
+        }
+    }
+
+    function nextQuestion() {
+        const randomIndex = Math.floor(Math.random() * kanaList.length);
+        currentKana = kanaList[randomIndex];
+        document.getElementById('kana-display').innerText = currentKana.kana;
+        
+        document.getElementById('answerInput').value = "";
+        document.getElementById('answerInput').focus();
+    }
+
+    function checkAnswer() {
+        const userAnswer = document.getElementById('answerInput').value.trim().toLowerCase();
+        
+        if(userAnswer === "") return; 
+
+        questionsAnswered++;
+        let isCorrect = false;
+
+        if (userAnswer === currentKana.romaji) {
+            score += 10;
+            correctAnswers++;
+            isCorrect = true;
+        } else {
+            score -= 5; 
+            if (score < 0) score = 0; 
+        }
+        
+        document.getElementById('score').innerText = score;
+        document.getElementById('q-num').innerText = questionsAnswered;
+
+        answerHistory.push({
+            kana: currentKana.kana,
+            correctRomaji: currentKana.romaji,
+            userRomaji: userAnswer,
+            isCorrect: isCorrect
+        });
+
+        nextQuestion();
+    }
+
+    function handleEnter(e) {
+        if (e.key === 'Enter') checkAnswer();
+    }
+
+    function finishQuiz() {
+        clearInterval(timerInterval);
+        switchScreen('screen-overview');
+        
+        document.getElementById('final-score').innerText = score;
+        
+        let accuracy = 0;
+        if(questionsAnswered > 0) {
+            accuracy = Math.round((correctAnswers / questionsAnswered) * 100);
+        }
+        document.getElementById('accuracy-display').innerText = accuracy;
+
+        const overviewList = document.getElementById('overview-list');
+        overviewList.innerHTML = "";
+        
+        if (answerHistory.length === 0) {
+            overviewList.innerHTML = "<p style='text-align:center;'>Kamu belum menjawab soal satupun.</p>";
+        }
+
+        answerHistory.reverse().forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = "overview-item";
+            
+            if (item.isCorrect) {
+                div.innerHTML = `<span>${item.kana} = ${item.userRomaji}</span> <span class="correct-text">✅ Benar</span>`;
+            } else {
+                div.innerHTML = `<span>${item.kana} (Benar: ${item.correctRomaji})</span> <span class="wrong-text">❌ Jawab: ${item.userRomaji}</span>`;
+            }
+            overviewList.appendChild(div);
+        });
+    }
+
+    function submitToLeaderboard() {
+        switchScreen('screen-leaderboard');
+        const lbContainer = document.getElementById('lb-container');
+        lbContainer.innerHTML = ""; 
+        document.getElementById('loading-msg').style.display = "block";
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8',
+            },
+            body: JSON.stringify({ nama: playerName, skor: score })
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('loading-msg').style.display = "none";
+            renderLeaderboard(data);
+        })
+        .catch(error => {
+            document.getElementById('loading-msg').innerText = "Gagal mengirim data. Pastikan koneksi internet stabil.";
+            console.error("Error:", error);
+        });
+    }
+
+    function renderLeaderboard(data) {
+        const lbContainer = document.getElementById('lb-container');
+        lbContainer.innerHTML = "";
+
+        data.forEach((player, index) => {
+            let rankClass = "rank-other";
+            let medal = "🏅";
+            
+            if (index === 0) { rankClass = "rank-1"; medal = "👑"; }
+            else if (index === 1) { rankClass = "rank-2"; medal = "🥈"; }
+            else if (index === 2) { rankClass = "rank-3"; medal = "🥉"; }
+
+            const div = document.createElement('div');
+            div.className = `lb-item ${rankClass}`;
+            div.innerHTML = `<span>${medal} ${index + 1}. ${player.nama}</span> <span>${player.skor} Pts</span>`;
+            lbContainer.appendChild(div);
+        });
+    }
+</script>
+</body>
+</html>
