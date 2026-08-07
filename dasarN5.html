@@ -31,15 +31,15 @@
         }
 
         /* ANIMASI GLOBAL UNTUK SEMUA TOMBOL */
-        button, .btn-action, .btn-toggle, .btn-zoom, .btn-game, .kana-card {
+        button, .btn-action, .btn-toggle, .btn-zoom, .btn-game, .btn-wa, .btn-download, .kana-card {
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             cursor: pointer;
         }
-        button:hover:not(:disabled), .btn-zoom:not(.disabled):hover, .btn-game:hover, .btn-toggle:hover {
+        button:hover:not(:disabled), .btn-zoom:not(.disabled):hover, .btn-game:hover, .btn-wa:hover, .btn-download:hover, .btn-toggle:hover {
             transform: translateY(-4px) scale(1.03);
             box-shadow: 0 8px 20px var(--primary-glow);
         }
-        button:active:not(:disabled), .btn-zoom:not(.disabled):active, .btn-game:active, .btn-toggle:active {
+        button:active:not(:disabled), .btn-zoom:not(.disabled):active, .btn-game:active, .btn-wa:active, .btn-download:active, .btn-toggle:active {
             transform: translateY(2px) scale(0.97);
         }
 
@@ -136,11 +136,55 @@
         .btn-toggle:hover { background: var(--primary); color: #000; }
 
         .action-buttons { display: flex; flex-direction: column; gap: 15px; margin-top: 20px;}
-        @media(min-width:600px){ .action-buttons { flex-direction: row; } .action-buttons > * { flex: 1; margin: 0 !important;} }
+        /* Modifikasi flex untuk menampung 4 tombol dengan rapi (menjadi grid di layar besar) */
+        @media(min-width:768px){ 
+            .action-buttons { 
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            } 
+        }
         
-        .btn-zoom { display: block; background: linear-gradient(45deg, #1e88e5, #42a5f5); color: #fff; padding: 18px; text-align: center; font-weight: bold; font-size: 18px; border-radius: 15px; text-decoration: none; border:none;}
+        .btn-zoom { display: block; background: linear-gradient(45deg, #1e88e5, #42a5f5); color: #fff; padding: 18px; text-align: center; font-weight: bold; font-size: 16px; border-radius: 15px; text-decoration: none; border:none;}
         .btn-zoom.disabled { background: rgba(255,255,255,0.1); color: #777; pointer-events: none; box-shadow: none;}
-        .btn-game { display: block; background: linear-gradient(45deg, #ff5e62, #ff9966); color: #fff; padding: 18px; text-align: center; font-weight: bold; font-size: 18px; border-radius: 15px; text-decoration: none; border:none;}
+        .btn-game { display: block; background: linear-gradient(45deg, #ff5e62, #ff9966); color: #fff; padding: 18px; text-align: center; font-weight: bold; font-size: 16px; border-radius: 15px; text-decoration: none; border:none;}
+        
+        /* TOMBOL WA BARU & ANIMASI */
+        .btn-wa { 
+            display: block; 
+            background: linear-gradient(45deg, #25D366, #128C7E); 
+            color: #fff; 
+            padding: 18px; 
+            text-align: center; 
+            font-weight: bold; 
+            font-size: 16px; 
+            border-radius: 15px; 
+            text-decoration: none; 
+            border: none;
+            animation: pulseWA 2s infinite; 
+        }
+        .btn-wa:hover {
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6) !important;
+        }
+
+        @keyframes pulseWA {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* TOMBOL DOWNLOAD PDF (BARU) */
+        .btn-download { 
+            display: block; 
+            background: linear-gradient(45deg, #9c27b0, #e91e63); 
+            color: #fff; 
+            padding: 18px; 
+            text-align: center; 
+            font-weight: bold; 
+            font-size: 16px; 
+            border-radius: 15px; 
+            text-decoration: none; 
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -228,8 +272,14 @@
 
             <!-- Bawah: Action Buttons (Full Width) -->
             <div class="full-width action-buttons">
+                <!-- Tombol Join Grup WA -->
+                <a href="https://chat.whatsapp.com/LXaLC4gXmRCFLEDYUXjWoQ?s=cl&p=a&mlu=4" target="_blank" class="btn-wa">💬 Join Grup WA N5 Dasar</a>
+                
+                <!-- Tombol Download PDF Latihan (BARU) -->
+                <a href="menulis.pdf" target="_blank" class="btn-download" download>📥 Download PDF Latihan</a>
+                
                 <a href="#" id="btn-zoom" class="btn-zoom disabled">⏳ Zoom Coming Soon</a>
-                <button class="btn-game" onclick="alert('Fitur Game akan segera hadir! Kumpulkan poinmu.')">🎮 Mainkan Game Hafalan!</button>
+                <button class="btn-game" onclick="alert('Fitur Game akan segera hadir! Kumpulkan poinmu.')">🎮 KUIS / GAME (latihan) </button>
             </div>
 
         </div>
