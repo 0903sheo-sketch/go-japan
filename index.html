@@ -93,6 +93,72 @@
         .card-title { font-size: 24px; font-weight: bold; color: #ffb7c5; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .card-desc { font-size: 15px; color: #ddd; line-height: 1.5; }
 
+        /* CUSTOM VIP CARD - CHROMA WAVE EFFECT */
+        @keyframes chromaWave {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .card.vip-card {
+            position: relative;
+            background: rgba(43, 15, 25, 0.9);
+            border: none;
+            overflow: visible;
+            z-index: 1;
+        }
+        
+        .card.vip-card::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            background-size: 400%;
+            z-index: -1;
+            animation: chromaWave 20s linear infinite;
+            border-radius: 22px;
+        }
+
+        .card.vip-card::after {
+            content: '';
+            position: absolute;
+            top: 0px; left: 0px; right: 0px; bottom: 0px;
+            background: rgba(30, 8, 15, 0.95); /* Warna dasar dalam card VIP */
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        .card.vip-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(0, 255, 213, 0.5);
+        }
+
+        .vip-badge {
+            position: absolute;
+            top: -15px;
+            right: -10px;
+            background: #ffb7c5;
+            color: #12040a;
+            padding: 5px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 20px;
+            box-shadow: 0 0 15px #ffb7c5;
+            animation: pulse-node 2s infinite;
+            z-index: 2;
+        }
+
+        .vip-content-desc {
+            font-size: 13px;
+            color: #a8ffb2;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(255, 183, 197, 0.4);
+            text-align: left;
+            line-height: 1.6;
+            width: 100%;
+        }
+
         /* AREA RUANG BELAJAR (KANA) */
         #main-app { display: none; }
         .btn-home { position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.5); border: 1px solid #ffb7c5; color: #ffb7c5; padding: 8px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s; z-index: 15; }
@@ -229,7 +295,7 @@
             box-shadow: 0 0 15px #ffb7c5;
             animation: pulse-node 2s infinite;
         }
-        .timeline-item:nth-child(even)::after {
+        .timeline-item:nth-child(even):after {
             left: -20px;
         }
         @keyframes pulse-node {
@@ -326,6 +392,21 @@
             <div class="card-title">GAME</div>
             <div class="card-desc">Bermain sambil<br><b>Mengingat Kosakata</b></div>
         </div>
+        
+        <!-- CARD VIP EKSKLUSIF BERBAYAR -->
+        <div class="card vip-card" onclick="openModule('vip')">
+            <div class="vip-badge">💎 BERBAYAR</div>
+            <div class="card-icon">👑</div>
+            <div class="card-title">VIP AKSES</div>
+            <div class="card-desc">Modul Premium Lengkap</div>
+            <div class="vip-content-desc">
+                ✔️ Irodori 1-54<br>
+                ✔️ Kanji Full JLPT N4<br>
+                ✔️ Materi N3<br>
+                ✔️ Quiz JLPT Terupdate
+            </div>
+        </div>
+
     </div>
 
     <!-- ROADMAP DITAMBAHKAN DI SINI -->
@@ -495,6 +576,10 @@
             else if (moduleName === 'game') {
                 window.location.href = 'https://0903sheo-sketch.github.io/simulasi/';
             }  
+             else if (moduleName === 'vip') {
+                window.location.href = 'dasboardvip.html';
+            }  
+         
             
         }, 400);
     }
