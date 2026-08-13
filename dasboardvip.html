@@ -4,23 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIP Access - Nihongo Premium</title>
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* TEMA PREMIUM EKSKLUSIF */
         :root {
-            --bg-dark: #0a0508;
+            --bg-dark: #0f0a0d;
             --gold-primary: #d4af37;
-            --gold-light: #f3e5ab;
-            --rose-gold: #ffb7c5;
-            --glass-bg: rgba(20, 10, 15, 0.6);
-            --glass-border: rgba(212, 175, 55, 0.3);
+            --gold-hover: #ebd575;
+            --gold-light: #f9f1d8;
+            --rose-gold: #e8a5b2;
+            --glass-bg: rgba(25, 15, 20, 0.45);
+            --glass-border: rgba(212, 175, 55, 0.25);
+            --text-main: #f4f4f4;
+            --text-muted: #a09d9e;
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #050204 0%, #1a0b12 50%, #050204 100%);
-            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #080406 0%, #1a0b12 50%, #080406 100%);
+            color: var(--text-main);
             min-height: 100vh;
             overflow-x: hidden;
             display: flex;
@@ -32,16 +37,16 @@
         .bg-animation {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; pointer-events: none;
-            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, rgba(0,0,0,0) 70%);
-            animation: pulse-bg 8s infinite alternate;
+            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, rgba(0,0,0,0) 60%);
+            animation: pulse-bg 8s infinite alternate ease-in-out;
         }
-        @keyframes pulse-bg { 0% { opacity: 0.5; transform: scale(1); } 100% { opacity: 1; transform: scale(1.1); } }
+        @keyframes pulse-bg { 0% { opacity: 0.6; transform: scale(1); } 100% { opacity: 1; transform: scale(1.15); } }
 
         /* KELAS ANIMASI UMUM */
         .fade-in { animation: fadeIn 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
-        .slide-up { animation: slideUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
+        .slide-up { animation: slideUp 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; opacity: 0; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ===== GATEKEEPER / HALAMAN LOGIN ===== */
         #gatekeeper-section {
@@ -51,122 +56,131 @@
 
         .login-box {
             background: var(--glass-bg);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 40px 30px;
-            width: 100%; max-width: 400px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(212,175,55,0.05);
+            border-radius: 24px;
+            padding: 45px 35px;
+            width: 100%; max-width: 420px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 0 20px rgba(212,175,55,0.05);
             text-align: center;
             position: relative;
         }
 
-        /* Aksen Emas di atas form login */
         .login-box::before {
             content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 100px; height: 4px; background: var(--gold-primary);
+            width: 120px; height: 5px; background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
             border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;
-            box-shadow: 0 0 15px var(--gold-primary);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
         }
 
-        .premium-icon { font-size: 50px; margin-bottom: 10px; display: block; animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .premium-icon { font-size: 45px; margin-bottom: 5px; display: block; animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 
-        .login-box h1 { color: var(--gold-primary); margin: 0 0 10px 0; font-size: 28px; font-weight: 600; letter-spacing: 1px; }
-        .login-box p { color: #aaa; font-size: 14px; margin-bottom: 25px; line-height: 1.5; }
+        .login-box h1 { color: var(--gold-light); margin: 0 0 8px 0; font-size: 26px; font-weight: 600; letter-spacing: 1.5px; }
+        .login-box p { color: var(--text-muted); font-size: 14px; margin-bottom: 30px; font-weight: 300; }
 
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 8px; color: var(--gold-light); font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+        .form-group { margin-bottom: 22px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--gold-primary); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; }
         .form-control {
-            width: 100%; padding: 12px 15px; box-sizing: border-box;
-            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);
-            color: #fff; border-radius: 8px; font-size: 15px; outline: none; transition: 0.3s;
+            width: 100%; padding: 14px 16px; box-sizing: border-box;
+            background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
+            color: #fff; border-radius: 12px; font-size: 14px; font-family: 'Poppins', sans-serif;
+            outline: none; transition: all 0.3s ease;
         }
-        .form-control:focus { border-color: var(--gold-primary); box-shadow: 0 0 10px rgba(212,175,55,0.3); }
+        .form-control:focus { border-color: var(--gold-primary); background: rgba(0,0,0,0.6); box-shadow: 0 0 15px rgba(212,175,55,0.2); }
+        .form-control::placeholder { color: rgba(255,255,255,0.3); }
 
         .btn-login {
-            width: 100%; padding: 14px; border: none; border-radius: 8px;
-            background: linear-gradient(90deg, #b8860b, var(--gold-primary), #b8860b);
+            width: 100%; padding: 15px; border: none; border-radius: 12px;
+            background: linear-gradient(135deg, #b8860b, var(--gold-primary), #dfc566);
             background-size: 200% auto;
-            color: #000; font-size: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
-            cursor: pointer; transition: 0.5s; margin-top: 10px; box-shadow: 0 5px 15px rgba(212,175,55,0.4);
+            color: #111; font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;
+            cursor: pointer; transition: 0.4s; margin-top: 10px; font-family: 'Poppins', sans-serif;
+            box-shadow: 0 8px 20px rgba(212,175,55,0.25);
+            display: flex; justify-content: center; align-items: center; gap: 10px;
         }
-        .btn-login:hover { background-position: right center; transform: scale(1.02); }
+        .btn-login:hover { background-position: right center; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(212,175,55,0.4); }
+        .btn-login:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
         /* Notice Pembayaran */
         .payment-notice {
-            margin-top: 30px; padding: 15px; border-radius: 12px;
-            background: rgba(255, 183, 197, 0.05); border: 1px dashed var(--rose-gold);
+            margin-top: 35px; padding: 20px; border-radius: 16px;
+            background: rgba(232, 165, 178, 0.03); border: 1px solid rgba(232, 165, 178, 0.15);
+            position: relative; overflow: hidden;
         }
-        .payment-notice h4 { color: var(--rose-gold); margin: 0 0 8px 0; font-size: 16px; }
-        .payment-notice p { color: #ddd; font-size: 13px; margin: 0 0 15px 0; }
+        .payment-notice h4 { color: var(--rose-gold); margin: 0 0 10px 0; font-size: 15px; font-weight: 500; }
+        .payment-notice p { color: var(--text-muted); font-size: 13px; margin: 0 0 20px 0; font-weight: 300; line-height: 1.6; }
         .btn-wa {
-            display: inline-flex; align-items: center; justify-content: center;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
             background: #25D366; color: #fff; text-decoration: none;
-            padding: 10px 20px; border-radius: 30px; font-size: 14px; font-weight: bold;
-            transition: 0.3s; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+            padding: 12px 24px; border-radius: 30px; font-size: 13px; font-weight: 600;
+            transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2);
         }
-        .btn-wa:hover { background: #1ebe5d; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(37, 211, 102, 0.5); }
-        .btn-wa img { width: 18px; margin-right: 8px; filter: brightness(0) invert(1); }
-
-        /* Loader */
-        #loader { display: none; color: var(--gold-primary); font-size: 14px; margin-top: 15px; }
+        .btn-wa:hover { background: #1ebe5d; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4); }
+        
+        /* Spinner */
+        .spinner {
+            display: none; width: 20px; height: 20px;
+            border: 3px solid rgba(0,0,0,0.1); border-top-color: #111;
+            border-radius: 50%; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         /* ===== VIP DASHBOARD SECTION ===== */
         #vip-dashboard {
-            display: none; width: 100%; max-width: 1100px; padding: 30px 20px; box-sizing: border-box;
+            display: none; width: 100%; max-width: 1100px; padding: 40px 20px; box-sizing: border-box;
         }
 
         .dashboard-header {
             display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--glass-border); padding-bottom: 20px; margin-bottom: 40px;
-            flex-wrap: wrap; gap: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 25px; margin-bottom: 40px;
+            flex-wrap: wrap; gap: 20px;
         }
-        .header-title h2 { margin: 0; color: var(--gold-primary); font-size: 32px; letter-spacing: 1px; }
-        .header-title p { margin: 5px 0 0 0; color: #aaa; font-size: 15px; }
+        .header-title h2 { margin: 0; color: var(--gold-light); font-size: 28px; font-weight: 600; letter-spacing: 0.5px; }
+        .header-title p { margin: 8px 0 0 0; color: var(--text-muted); font-size: 15px; font-weight: 300; }
 
         .btn-back {
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
-            color: #fff; padding: 10px 20px; border-radius: 30px; cursor: pointer;
-            text-decoration: none; font-size: 14px; transition: 0.3s;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted); padding: 10px 24px; border-radius: 30px; cursor: pointer;
+            text-decoration: none; font-size: 13px; font-weight: 500; transition: all 0.3s;
             display: inline-flex; align-items: center; gap: 8px;
         }
-        .btn-back:hover { background: rgba(255,255,255,0.1); border-color: var(--rose-gold); color: var(--rose-gold); }
+        .btn-back:hover { background: rgba(255,255,255,0.1); border-color: var(--text-main); color: var(--text-main); }
 
         /* Grid Kartu VIP */
         .vip-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px;
         }
 
         .vip-card-item {
-            background: var(--glass-bg); backdrop-filter: blur(10px);
+            background: var(--glass-bg); backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.05); border-radius: 20px;
-            padding: 30px 25px; text-align: center; cursor: pointer;
-            position: relative; overflow: hidden; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 35px 25px; text-align: center; cursor: pointer;
+            position: relative; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-decoration: none; color: inherit; display: block;
         }
         
         .vip-card-item::before {
             content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(0,0,0,0) 70%);
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(0,0,0,0) 70%);
             opacity: 0; transition: 0.5s; z-index: 0;
         }
 
         .vip-card-item:hover {
-            transform: translateY(-10px); border-color: var(--gold-primary);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.8), 0 0 20px rgba(212,175,55,0.2);
+            transform: translateY(-10px); border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 20px rgba(212,175,55,0.15);
         }
         .vip-card-item:hover::before { opacity: 1; transform: rotate(15deg); }
 
-        .vip-card-icon { font-size: 55px; margin-bottom: 15px; position: relative; z-index: 1; text-shadow: 0 0 20px rgba(212,175,55,0.4); }
-        .vip-card-title { font-size: 22px; font-weight: bold; color: var(--gold-light); margin-bottom: 10px; position: relative; z-index: 1; }
-        .vip-card-desc { font-size: 14px; color: #bbb; line-height: 1.5; position: relative; z-index: 1; }
+        .vip-card-icon { font-size: 50px; margin-bottom: 20px; position: relative; z-index: 1; text-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .vip-card-title { font-size: 20px; font-weight: 600; color: var(--gold-light); margin-bottom: 12px; position: relative; z-index: 1; }
+        .vip-card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; font-weight: 300; position: relative; z-index: 1; }
 
         /* Responsif untuk HP */
         @media (max-width: 600px) {
             .dashboard-header { flex-direction: column; align-items: flex-start; }
-            .login-box { padding: 30px 20px; }
-            .vip-card-item { padding: 25px 20px; }
+            .login-box { padding: 40px 25px; border-radius: 20px; }
+            .vip-card-item { padding: 30px 20px; }
         }
     </style>
 </head>
@@ -190,119 +204,116 @@
                     <label>Password</label>
                     <input type="password" id="password" class="form-control" required placeholder="Masukkan password">
                 </div>
-                <button type="submit" class="btn-login">Masuk ke VIP</button>
-                <div id="loader">Verifikasi data ke server... ⏳</div>
+                <button type="submit" class="btn-login" id="submitBtn">
+                    <span id="btn-text">Masuk ke VIP</span>
+                    <div class="spinner" id="spinner"></div>
+                </button>
             </form>
 
             <div class="payment-notice">
                 <h4>Belum Punya Akses?</h4>
-                <p>Buka seluruh materi Premium (Irodori, JLPT, N3, Kanji Lengkap) hanya dengan <b>Rp 35.000</b> (Full Akses Selamanya).</p>
+                <p>Buka seluruh materi Premium (Irodori, JLPT, N3, Kanji Lengkap) hanya dengan <b>Rp 35.000</b> (Akses Penuh Selamanya).</p>
                 <a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20ingin%20mendaftar%20Premium%20Access%20Nihongo%20Dashboard." target="_blank" class="btn-wa">
-                    <svg style="width: 18px; height:18px; margin-right:8px; fill:currentColor;" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    <svg style="width: 18px; height:18px; fill:currentColor;" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                     Hubungi Admin
                 </a>
             </div>
         </div>
     </div>
 
-
     <!-- ================= SECTION VIP DASHBOARD ================= -->
     <div id="vip-dashboard">
         <div class="dashboard-header slide-up">
             <div class="header-title">
                 <h2>💎 Ruang Eksklusif VIP</h2>
-                <p>Selamat datang, <span id="user-display" style="color:var(--gold-primary); font-weight:bold;">Member</span>!</p>
+                <p>Selamat datang, <span id="user-display" style="color:var(--gold-primary); font-weight:600;">Member</span>!</p>
             </div>
-            <!-- Tombol kembali ke HTML utama -->
-            <a href="index.html" class="btn-back">⬅ Kembali ke Beranda</a>
+            <a href="index.html" class="btn-back">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/></svg>
+                Kembali ke Beranda
+            </a>
         </div>
 
-        <div class="vip-grid slide-up" style="animation-delay: 0.2s;">
-            
-            <a href="https://anons.biz.id/irodori" class="vip-card-item">
+        <div class="vip-grid">
+            <a href="https://anons.biz.id/irodori" class="vip-card-item slide-up" style="animation-delay: 0.1s;">
                 <div class="vip-card-icon">📘</div>
                 <div class="vip-card-title">Irodori Lengkap</div>
                 <div class="vip-card-desc">Akses penuh materi Irodori Bab 1 hingga 54 untuk komunikasi praktis bahasa Jepang.</div>
             </a>
-
-            <a href="kanji-n4.html" class="vip-card-item">
+            <a href="kanji-n4.html" class="vip-card-item slide-up" style="animation-delay: 0.2s;">
                 <div class="vip-card-icon">⛩️</div>
                 <div class="vip-card-title">Kanji Full N4</div>
                 <div class="vip-card-desc">Database lengkap Kanji JLPT N4 beserta coretan, kunyomi, onyomi, dan contoh kalimat.</div>
             </a>
-
-            <a href="materi-n3.html" class="vip-card-item">
+            <a href="materi-n3.html" class="vip-card-item slide-up" style="animation-delay: 0.3s;">
                 <div class="vip-card-icon">🗻</div>
                 <div class="vip-card-title">Materi N3</div>
                 <div class="vip-card-desc">Langkah menuju Advance. Pelajari Bunpou (Tata Bahasa) dan Kosakata level JLPT N3.</div>
             </a>
-
-            <a href="quiz-jlpt.html" class="vip-card-item">
+            <a href="quiz-jlpt.html" class="vip-card-item slide-up" style="animation-delay: 0.4s;">
                 <div class="vip-card-icon">⏱️</div>
                 <div class="vip-card-title">Quiz JLPT Terupdate</div>
                 <div class="vip-card-desc">Simulasi Choukai & Dokkai dengan soal-soal standar ujian terbaru (Timer & Skoring).</div>
             </a>
-
         </div>
     </div>
 
 <script>
-    // MASUKKAN URL GOOGLE APPS SCRIPT BARU DI SINI (Pastikan berakhiran /exec)
-    const googleAppsScriptURL = 'https://script.google.com/macros/s/AKfycbyfSOyBimwiGHo5251nH_O4p007tcD26GytmSCp-l897_S4nUg3E_jO-9oOAAqnBoBO/exec'; 
+    // MASUKKAN URL GOOGLE APPS SCRIPT BARU DI SINI
+    // Pastikan URL diakhiri dengan /exec
+    const googleAppsScriptURL = 'https://script.google.com/macros/s/AKfycby-3aOX4uK2PRsi3Ks1o3dXzmiyVr8XQiXT8bp1m9-0dZZSNFE0ee595y2RfDmRpOeZ/exec'; 
 
     function handleLogin(event) {
         event.preventDefault();
         
         const user = document.getElementById('username').value;
         const pass = document.getElementById('password').value;
-        const loader = document.getElementById('loader');
-        const btn = document.querySelector('.btn-login');
+        const btnText = document.getElementById('btn-text');
+        const spinner = document.getElementById('spinner');
+        const submitBtn = document.getElementById('submitBtn');
 
-        // Tampilkan loading
-        loader.style.display = 'block';
-        btn.style.opacity = '0.5';
-        btn.disabled = true;
+        // UI Loading State
+        btnText.style.display = 'none';
+        spinner.style.display = 'block';
+        submitBtn.disabled = true;
 
-        if (googleAppsScriptURL === '') {
-            alert("URL API belum dimasukkan.");
-            loader.style.display = 'none';
-            btn.style.opacity = '1';
-            btn.disabled = false;
+        if (googleAppsScriptURL === 'URL_DEPLOY_GOOGLE_APP_SCRIPT_ANDA_DISINI' || googleAppsScriptURL === '') {
+            alert("⚠️ URL API Google Apps Script belum dimasukkan. Silakan edit file HTML dan masukkan URL.");
+            resetBtn();
             return;
         }
 
-        // FETCH KE GOOGLE SHEETS DENGAN TEXT/PLAIN (Bypass Strict CORS)
+        // FETCH KE GOOGLE SHEETS DENGAN TEXT/PLAIN
         fetch(googleAppsScriptURL, {
             method: 'POST',
             headers: {
-                // Gunakan text/plain agar tidak memicu Preflight Request CORS bawaan browser
                 'Content-Type': 'text/plain;charset=utf-8', 
             },
             body: JSON.stringify({ action: "login", username: user, password: pass })
         })
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Jaringan bermasalah atau Server merespons HTML/Error.');
-            }
+            if (!response.ok) throw new Error('Jaringan bermasalah atau Server merespons HTML/Error.');
             return response.json();
         })
         .then(data => {
             if (data.status === 'success') {
                 showDashboard(user);
             } else {
-                alert('Gagal Masuk: Username atau Password salah, atau masa aktif habis.');
-                loader.style.display = 'none';
-                btn.style.opacity = '1';
-                btn.disabled = false;
+                alert('Gagal Masuk: ' + (data.message || 'Username atau Password salah.'));
+                resetBtn();
             }
         })
         .catch(error => {
             console.error('Error!', error);
             alert('Gagal menghubungi server. Pastikan URL benar dan Akses Deploy disetel ke "Anyone".');
-            loader.style.display = 'none';
-            btn.style.opacity = '1';
-            btn.disabled = false;
+            resetBtn();
         });
+    }
+
+    function resetBtn() {
+        document.getElementById('btn-text').style.display = 'block';
+        document.getElementById('spinner').style.display = 'none';
+        document.getElementById('submitBtn').disabled = false;
     }
 
     function showDashboard(username) {
@@ -312,13 +323,13 @@
         document.getElementById('user-display').innerText = username.toUpperCase();
 
         gatekeeper.style.opacity = '0';
-        gatekeeper.style.transition = 'opacity 0.5s ease';
+        gatekeeper.style.transition = 'opacity 0.6s ease';
         
         setTimeout(() => {
             gatekeeper.style.display = 'none';
             dashboard.style.display = 'block';
-            window.scrollTo(0, 0); 
-        }, 500);
+            window.scrollTo({ top: 0, behavior: 'smooth' }); 
+        }, 600);
     }
 </script>
 </body>
