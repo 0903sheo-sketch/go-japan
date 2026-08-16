@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering Verb Jepang: Bentuk Te, Ta, & Kamus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff7675;
+            --secondary: #ff9ff3;
+            --dark: #2d3436;
+            --light: #fff0f5; /* Sentuhan pink yang sangat lembut untuk background */
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(255, 118, 117, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito', 'Noto Sans JP', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .animate-on-load {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: -30px auto 40px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--secondary);
+            display: inline-block;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #f1f2f6;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        tr:hover {
+            background-color: #fff9fa;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Example Sentences */
+        .example-box {
+            background: #fff9fa;
+            border-left: 5px solid var(--secondary);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .example-box:hover {
+            background: #ffeef2;
+            transform: scale(1.02);
+        }
+
+        .jp-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        /* Converter Section */
+        .converter-card {
+            background: linear-gradient(to bottom right, #ffffff, #fff0f5);
+            text-align: center;
+        }
+
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        input, select, button {
+            padding: 12px 20px;
+            border: 2px solid #ffb8b8;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(255, 118, 117, 0.3);
+        }
+
+        button {
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 800;
+            cursor: pointer;
+            border: none;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        button:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+            animation: none;
+        }
+
+        /* Result Box */
+        .result-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--white);
+            border: 2px dashed var(--primary);
+            border-radius: 20px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .result-box.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="animate-on-load">
+        <h1>✨ Master Perubahan Kata Kerja ✨</h1>
+        <p>Panduan Lengkap Bentuk Te, Ta, & Kamus (Jisho-kei)</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Tabel Perubahan -->
+        <section class="card animate-on-load delay-1">
+            <h2>Tabel Aturan Perubahan</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Golongan</th>
+                            <th>Akhiran (Bentuk ~Masu)</th>
+                            <th>Bentuk TE (Tolong/Sedang)</th>
+                            <th>Bentuk TA (Lampau)</th>
+                            <th>Bentuk KAMUS (Kasual)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Golongan 1 -->
+                        <tr>
+                            <td rowspan="5"><span class="badge">Group 1</span> Godan</td>
+                            <td>~i, ~chi, ~ri (machi-masu)</td>
+                            <td class="highlight">~tte (matte)</td>
+                            <td class="highlight">~tta (matta)</td>
+                            <td class="highlight">~u, ~tsu, ~ru (matsu)</td>
+                        </tr>
+                        <tr>
+                            <td>~mi, ~ni, ~bi (nomi-masu)</td>
+                            <td class="highlight">~nde (nonde)</td>
+                            <td class="highlight">~nda (nonda)</td>
+                            <td class="highlight">~mu, ~nu, ~bu (nomu)</td>
+                        </tr>
+                        <tr>
+                            <td>~ki (kaki-masu)</td>
+                            <td class="highlight">~ite (kaite)</td>
+                            <td class="highlight">~ita (kaita)</td>
+                            <td class="highlight">~ku (kaku)</td>
+                        </tr>
+                        <tr>
+                            <td>~gi (oyogi-masu)</td>
+                            <td class="highlight">~ide (oyoide)</td>
+                            <td class="highlight">~ida (oyoida)</td>
+                            <td class="highlight">~gu (oyogu)</td>
+                        </tr>
+                        <tr>
+                            <td>~shi (hanashi-masu)</td>
+                            <td class="highlight">~shite (hanashite)</td>
+                            <td class="highlight">~shita (hanashita)</td>
+                            <td class="highlight">~su (hanasu)</td>
+                        </tr>
+                        <!-- Pengecualian -->
+                        <tr>
+                            <td><span class="badge" style="background:#e17055;">Pengecualian</span></td>
+                            <td>ikimasu (pergi)</td>
+                            <td class="highlight">itte</td>
+                            <td class="highlight">itta</td>
+                            <td class="highlight">iku</td>
+                        </tr>
+                        <!-- Golongan 2 -->
+                        <tr>
+                            <td><span class="badge">Group 2</span> Ichidan</td>
+                            <td>Hapus ~masu (tabe-masu)</td>
+                            <td class="highlight">+ te (tabete)</td>
+                            <td class="highlight">+ ta (tabeta)</td>
+                            <td class="highlight">+ ru (taberu)</td>
+                        </tr>
+                        <!-- Golongan 3 -->
+                        <tr>
+                            <td rowspan="2"><span class="badge">Group 3</span> Irregular</td>
+                            <td>shimasu (melakukan)</td>
+                            <td class="highlight">shite</td>
+                            <td class="highlight">shita</td>
+                            <td class="highlight">suru</td>
+                        </tr>
+                        <tr>
+                            <td>kimasu (datang)</td>
+                            <td class="highlight">kite</td>
+                            <td class="highlight">kita</td>
+                            <td class="highlight">kuru</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Contoh Kalimat -->
+        <section class="card animate-on-load delay-2">
+            <h2>Contoh Penggunaan dalam Kalimat</h2>
+            
+            <h3>Bentuk Te (Menyambung/Sedang/Minta tolong)</h3>
+            <div class="example-box">
+                <div class="jp-text">ちょっと待って。(Chotto matte.)</div>
+                <div class="id-text">Tolong tunggu sebentar.</div>
+            </div>
+            <div class="example-box">
+                <div class="jp-text">今、アニメを見ています。(Ima, anime o mite imasu.)</div>
+                <div class="id-text">Sekarang sedang menonton anime.</div>
+            </div>
+            <div class="example-box">
+                <div class="jp-text">ご飯を食べて、寝ます。(Gohan o tabete, nemasu.)</div>
+                <div class="id-text">Makan nasi, lalu tidur.</div>
+            </div>
+
+            <h3 style="margin-top: 20px;">Bentuk Ta (Bentuk Lampau)</h3>
+            <div class="example-box">
+                <div class="jp-text">昨日、ラーメンを食べた。(Kinou, raamen o tabeta.)</div>
+                <div class="id-text">Kemarin, (sudah) makan ramen.</div>
+            </div>
+            <div class="example-box">
+                <div class="jp-text">日本へ行ったことがあります。(Nihon e itta koto ga arimasu.)</div>
+                <div class="id-text">Pernah pergi ke Jepang.</div>
+            </div>
+            <div class="example-box">
+                <div class="jp-text">もう宿題をした？(Mou shukudai o shita?)</div>
+                <div class="id-text">Apakah sudah mengerjakan PR?</div>
+            </div>
+
+            <h3 style="margin-top: 20px;">Bentuk Kamus (Bentuk Dasar/Kasual)</h3>
+            <div class="example-box">
+                <div class="jp-text">私は毎日りんごを食べる。(Watashi wa mainichi ringo o taberu.)</div>
+                <div class="id-text">Saya makan apel setiap hari.</div>
+            </div>
+            <div class="example-box">
+                <div class="jp-text">明日、東京へ行く。(Ashita, Tokyo e iku.)</div>
+                <div class="id-text">Besok, pergi ke Tokyo.</div>
+            </div>
+            <div class="example-box">
+                <div class="jp-text">日本語を勉強する。(Nihongo o benkyou suru.)</div>
+                <div class="id-text">Belajar bahasa Jepang.</div>
+            </div>
+        </section>
+
+        <!-- Interactive Converter -->
+        <section class="card converter-card animate-on-load delay-3">
+            <h2>🌸 Konverter Otomatis 🌸</h2>
+            <p style="margin-bottom: 20px;">Ketik kata kerja bentuk ~masu dalam <strong>Romaji</strong>, pilih golongannya, lalu lihat keajaibannya!</p>
+            
+            <div class="input-group">
+                <input type="text" id="verbInput" placeholder="Contoh: yarimasu" autocomplete="off">
+                
+                <select id="groupSelect">
+                    <option value="1">Golongan 1 (Godan)</option>
+                    <option value="2">Golongan 2 (Ichidan)</option>
+                    <option value="3">Golongan 3 (Irregular)</option>
+                </select>
+
+                <select id="formSelect">
+                    <option value="kamus">Ubah ke Bentuk Kamus</option>
+                    <option value="te">Ubah ke Bentuk TE</option>
+                    <option value="ta">Ubah ke Bentuk TA</option>
+                </select>
+
+                <button onclick="processConversion()">Ubah Sekarang! 💫</button>
+            </div>
+
+            <div id="resultBox" class="result-box">
+                Hasil akan muncul di sini...
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        function processConversion() {
+            const verbInput = document.getElementById('verbInput').value.trim().toLowerCase();
+            const group = document.getElementById('groupSelect').value;
+            const targetForm = document.getElementById('formSelect').value;
+            const resultBox = document.getElementById('resultBox');
+
+            // Reset animation
+            resultBox.classList.remove('show');
+
+            setTimeout(() => {
+                let result = "";
+
+                if (!verbInput.endsWith("masu")) {
+                    result = "⚠️ Masukkan bentuk ~masu (contoh: tabemasu)";
+                } else {
+                    let stem = verbInput.slice(0, -4); // Potong "masu"
+                    let base = "";
+                    let kamus = "", te = "", ta = "";
+
+                    if (group === "3") {
+                        if (verbInput === "shimasu") {
+                            kamus = "suru"; te = "shite"; ta = "shita";
+                        } else if (verbInput === "kimasu") {
+                            kamus = "kuru"; te = "kite"; ta = "kita";
+                        } else if (verbInput.endsWith("shimasu")) {
+                            base = verbInput.slice(0, -7);
+                            kamus = base + "suru"; te = base + "shite"; ta = base + "shita";
+                        } else {
+                            result = "⚠️ Golongan 3 biasanya berakhiran shimasu/kimasu";
+                        }
+                    } 
+                    else if (group === "2") {
+                        kamus = stem + "ru";
+                        te = stem + "te";
+                        ta = stem + "ta";
+                    } 
+                    else if (group === "1") {
+                        if (verbInput === "ikimasu") {
+                            kamus = "iku"; te = "itte"; ta = "itta";
+                        } 
+                        else if (stem.endsWith("chi")) {
+                            base = stem.slice(0, -3);
+                            kamus = base + "tsu"; te = base + "tte"; ta = base + "tta";
+                        } 
+                        else if (stem.endsWith("shi")) {
+                            base = stem.slice(0, -3);
+                            kamus = base + "su"; te = base + "shite"; ta = base + "shita";
+                        } 
+                        else if (stem.endsWith("ri")) {
+                            base = stem.slice(0, -2);
+                            kamus = base + "ru"; te = base + "tte"; ta = base + "tta";
+                        } 
+                        else if (stem.endsWith("mi")) {
+                            base = stem.slice(0, -2);
+                            kamus = base + "mu"; te = base + "nde"; ta = base + "nda";
+                        } 
+                        else if (stem.endsWith("ni")) {
+                            base = stem.slice(0, -2);
+                            kamus = base + "nu"; te = base + "nde"; ta = base + "nda";
+                        } 
+                        else if (stem.endsWith("bi")) {
+                            base = stem.slice(0, -2);
+                            kamus = base + "bu"; te = base + "nde"; ta = base + "nda";
+                        } 
+                        else if (stem.endsWith("ki")) {
+                            base = stem.slice(0, -2);
+                            kamus = base + "ku"; te = base + "ite"; ta = base + "ita";
+                        } 
+                        else if (stem.endsWith("gi")) {
+                            base = stem.slice(0, -2);
+                            kamus = base + "gu"; te = base + "ide"; ta = base + "ida";
+                        } 
+                        else if (stem.endsWith("i")) {
+                            base = stem.slice(0, -1);
+                            kamus = base + "u"; te = base + "tte"; ta = base + "tta";
+                        } 
+                        else {
+                            result = "⚠️ Format romaji tidak sesuai untuk Golongan 1";
+                        }
+                    }
+
+                    // Tentukan output berdasarkan pilihan form
+                    if (result === "") {
+                        if (targetForm === "kamus") result = kamus;
+                        if (targetForm === "te") result = te;
+                        if (targetForm === "ta") result = ta;
+                    }
+                }
+
+                resultBox.innerHTML = result;
+                resultBox.classList.add('show');
+            }, 100);
+        }
+        
+        // Memungkinkan trigger dengan tombol Enter
+        document.getElementById('verbInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                processConversion();
+            }
+        });
+    </script>
+</body>
+</html>
