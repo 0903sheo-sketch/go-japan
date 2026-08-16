@@ -50,11 +50,37 @@
         .delay-2 { animation-delay: 0.4s; }
         .delay-3 { animation-delay: 0.6s; }
 
+        /* Tombol Back Pojok Kiri Atas */
+        .btn-back-pojok {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--white);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 800;
+            transition: all 0.3s ease;
+            z-index: 9999;
+            box-shadow: 0 4px 10px rgba(255, 118, 117, 0.2);
+            font-family: inherit;
+        }
+
+        .btn-back-pojok:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 118, 117, 0.4);
+        }
+
         /* Header */
         header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--white);
-            padding: 4rem 2rem;
+            padding: 5rem 2rem 4rem; /* Padding atas ditambah agar tidak tertutup tombol back */
             text-align: center;
             border-bottom-left-radius: 50px;
             border-bottom-right-radius: 50px;
@@ -173,7 +199,7 @@
             margin-bottom: 20px;
         }
 
-        input, select, button {
+        input, select, button.btn-ubah {
             padding: 12px 20px;
             border: 2px solid #ffb8b8;
             border-radius: 50px;
@@ -188,7 +214,7 @@
             box-shadow: 0 0 10px rgba(255, 118, 117, 0.3);
         }
 
-        button {
+        button.btn-ubah {
             background: var(--primary);
             color: var(--white);
             font-weight: 800;
@@ -197,7 +223,7 @@
             animation: float 3s ease-in-out infinite;
         }
 
-        button:hover {
+        button.btn-ubah:hover {
             background: var(--secondary);
             transform: scale(1.05);
             animation: none;
@@ -241,6 +267,9 @@
     </style>
 </head>
 <body>
+
+    <!-- Tombol Back -->
+    <button class="btn-back-pojok" onclick="window.history.back()">⬅ Kembali</button>
 
     <header class="animate-on-load">
         <h1>✨ Master Perubahan Kata Kerja ✨</h1>
@@ -398,7 +427,7 @@
                     <option value="ta">Ubah ke Bentuk TA</option>
                 </select>
 
-                <button onclick="processConversion()">Ubah Sekarang! 💫</button>
+                <button class="btn-ubah" onclick="processConversion()">Ubah Sekarang! 💫</button>
             </div>
 
             <div id="resultBox" class="result-box">
