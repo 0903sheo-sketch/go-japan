@@ -162,6 +162,37 @@
             border-color: var(--accent-japan);
         }
 
+        /* Desain Tombol Perubahan Bentuk */
+        .btn-perubahan-container {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px dashed var(--border-color);
+            text-align: center;
+        }
+
+        .btn-perubahan {
+            display: inline-block;
+            background: transparent;
+            color: var(--text-main);
+            border: 2px solid var(--accent-japan);
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(201, 31, 55, 0.1);
+        }
+
+        .btn-perubahan:hover {
+            background: var(--accent-japan);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(201, 31, 55, 0.5);
+            transform: translateY(-3px);
+        }
+
     </style>
 </head>
 <body>
@@ -180,6 +211,12 @@
         <!-- Wadah Grid yang akan diisi oleh JavaScript -->
         <div class="chapter-grid" id="chapter-container">
             <!-- Kartu Bab akan di-render di sini -->
+        </div>
+
+        <!-- Tombol Perubahan Bentuk -->
+        <div class="btn-perubahan-container">
+            <!-- Sesuaikan href dengan nama file web perubahan bentuk Anda -->
+            <a href="perubahan.html" class="btn-perubahan">🔄 Perubahan Bentuk</a>
         </div>
 
     </div>
