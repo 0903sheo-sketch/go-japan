@@ -176,488 +176,1000 @@
         // Data disusun dalam bentuk skenario (dialog) dengan flag speaker: 'F' (Female) dan 'M' (Male)
         const originalQuestionsDB = [
                 {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。男の人は何を買いますか。' },
-                        { speaker: 'F', text: 'スーパーへ行くなら、牛乳を買ってきて。' },
-                        { speaker: 'M', text: 'うん、わかった。卵もいる？' },
-                        { speaker: 'F', text: '卵はまだあるから、いいわ。あ、やっぱりパンもお願い。' },
-                        { speaker: 'M', text: 'わかった。' }
-                    ],
-                    options: ["<ruby>牛乳<rt>ぎゅうにゅう</rt></ruby>だけ", "<ruby>卵<rt>たまご</rt></ruby>だけ", "<ruby>牛乳<rt>ぎゅうにゅう</rt></ruby>とパン", "<ruby>卵<rt>たまご</rt></ruby>とパン"],
-                    answer: 2
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '女の人が話しています。明日の天気はどうなりますか。' },
-                        { speaker: 'F', text: '明日の天気予報です。午前中は晴れますが、午後から急に雲が多くなり、夕方には雨が降るでしょう。お出かけの際は傘をお持ちください。' }
-                    ],
-                    options: ["<ruby>一日中晴<rt>いちにちじゅうは</rt></ruby>れ", "<ruby>午前<rt>ごぜん</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>で、<ruby>午後<rt>ごご</rt></ruby>は<ruby>晴<rt>は</rt></ruby>れ", "<ruby>午前<rt>ごぜん</rt></ruby>は<ruby>晴<rt>は</rt></ruby>れで、<ruby>夕方<rt>ゆうがた</rt></ruby>から<ruby>雨<rt>あめ</rt></ruby>", "<ruby>一日中雨<rt>いちにちじゅうあめ</rt></ruby>"],
-                    answer: 2
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '会社で男の人と女の人が話しています。男の人は明日、何時に来ますか。' },
-                        { speaker: 'M', text: '明日の会議は9時からですね。' },
-                        { speaker: 'F', text: 'はい。でも、その前に資料のコピーをお願いしたいので、30分早く来てください。' },
-                        { speaker: 'M', text: 'わかりました。' }
-                    ],
-                    options: ["8<ruby>時<rt>じ</rt></ruby>30<ruby>分<rt>ぷん</rt></ruby>", "9<ruby>時<rt>じ</rt></ruby>", "9<ruby>時<rt>じ</rt></ruby>30<ruby>分<rt>ぷん</rt></ruby>", "10<ruby>時<rt>じ</rt></ruby>"],
-                    answer: 0
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '先生が話しています。学生は明日、何を持っていきますか。' },
-                        { speaker: 'M', text: '明日はスポーツ大会です。お弁当は学校で用意しますから、飲み物とタオルを忘れないでください。靴は運動靴で来てください。' }
-                    ],
-                    options: ["お<ruby>弁当<rt>べんとう</rt></ruby>と<ruby>飲<rt>の</rt></ruby>み<ruby>物<rt>もの</rt></ruby>", "<ruby>飲<rt>の</rt></ruby>み<ruby>物<rt>もの</rt></ruby>とタオル", "タオルとお<ruby>弁当<rt>べんとう</rt></ruby>", "<ruby>運動靴<rt>うんどうぐつ</rt></ruby>だけ"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が電話で話しています。男の人は今どこにいますか。' },
-                        { speaker: 'M', text: 'もしもし、今駅の南口に着いたよ。' },
-                        { speaker: 'F', text: 'ごめん、北口のカフェで待っているんだけど、来られる？' },
-                        { speaker: 'M', text: 'うん、すぐ行く。' }
-                    ],
-                    options: ["<ruby>駅<rt>えき</rt></ruby>の<ruby>南口<rt>みなみぐち</rt></ruby>", "<ruby>駅<rt>えき</rt></ruby>の<ruby>北口<rt>きたぐち</rt></ruby>", "カフェの<ruby>中<rt>なか</rt></ruby>", "<ruby>電車<rt>でんしゃ</rt></ruby>の<ruby>中<rt>なか</rt></ruby>"],
-                    answer: 0
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '女の人が病院で話しています。次に来るのはいつですか。' },
-                        { speaker: 'M', text: '薬は一週間分出します。来週の火曜日にまた来てください。' },
-                        { speaker: 'F', text: '火曜日は仕事があるので、水曜日でもいいですか。' },
-                        { speaker: 'M', text: 'いいですよ。では、来週お待ちしています。' }
-                    ],
-                    options: ["<ruby>今週<rt>こんしゅう</rt></ruby>の<ruby>火曜日<rt>かようび</rt></ruby>", "<ruby>今週<rt>こんしゅう</rt></ruby>の<ruby>水曜日<rt>すいようび</rt></ruby>", "<ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>火曜日<rt>かようび</rt></ruby>", "<ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>水曜日<rt>すいようび</rt></ruby>"],
-                    answer: 3
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人がレストランで注文しています。男の人は何を頼みますか。' },
-                        { speaker: 'M', text: 'すみません、ハンバーグとサラダをお願いします。' },
-                        { speaker: 'F', text: 'お飲み物はいかがですか。' },
-                        { speaker: 'M', text: 'あ、じゃあ、オレンジジュースを。食後にお願いします。' }
-                    ],
-                    options: ["ハンバーグだけ", "ハンバーグとサラダ", "ハンバーグとジュース", "ハンバーグとサラダとジュース"],
-                    answer: 3
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。二人はどうやって映画館へ行きますか。' },
-                        { speaker: 'F', text: '映画館までバスで行く？それとも地下鉄？' },
-                        { speaker: 'M', text: 'バスは時間がかかるから、地下鉄で行こう。' },
-                        { speaker: 'F', text: 'でも、駅から少し歩くよ。' },
-                        { speaker: 'M', text: '大丈夫だよ。歩こう。' }
-                    ],
-                    options: ["バス", "<ruby>地下鉄<rt>ちかてつ</rt></ruby>", "タクシー", "<ruby>自転車<rt>じてんしゃ</rt></ruby>"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '学校で女の学生と男の学生が話しています。男の学生は何を借りますか。' },
-                        { speaker: 'F', text: 'あ、辞書を忘れた。貸してくれない？' },
-                        { speaker: 'M', text: 'いいよ。僕は電子辞書があるから、この本を貸すよ。' },
-                        { speaker: 'F', text: 'ありがとう。あ、ペンもない。' },
-                        { speaker: 'M', text: 'ごめん、ペンは一本しかないんだ。' }
-                    ],
-                    options: ["<ruby>辞書<rt>じしょ</rt></ruby>", "<ruby>電子辞書<rt>でんしじしょ</rt></ruby>", "ペン", "<ruby>何<rt>なに</rt></ruby>も<ruby>借<rt>か</rt></ruby>りない"],
-                    answer: 0
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人が友達に電話しています。男の人はどうして遅れますか。' },
-                        { speaker: 'M', text: 'ごめん、約束の時間に遅れそう。今、道がすごく混んでいて車が動かないんだ。' },
-                        { speaker: 'F', text: 'わかった。気をつけて来てね。' }
-                    ],
-                    options: ["<ruby>道<rt>みち</rt></ruby>が<ruby>混<rt>こ</rt></ruby>んでいるから", "<ruby>寝坊<rt>ねぼう</rt></ruby>したから", "<ruby>電車<rt>でんしゃ</rt></ruby>が<ruby>遅<rt>おく</rt></ruby>れたから", "<ruby>道<rt>みち</rt></ruby>を<ruby>間違<rt>まちが</rt></ruby>えたから"],
-                    answer: 0
-                },
-
-                // --- SET 2: SITUASI KERJA & LOKASI (11-20) ---
-                {
-                    dialog: [
-                        { speaker: 'F', text: '会社で男の人と女の人が話しています。男の人はこれから何をしますか。' },
-                        { speaker: 'F', text: '鈴木さん、この荷物を会議室に運んでくれない？' },
-                        { speaker: 'M', text: 'はい。その前に、部長に呼ばれているので、行ってきてもいいですか。' },
-                        { speaker: 'F', text: 'ええ、わかった。' }
-                    ],
-                    options: ["<ruby>荷物<rt>にもつ</rt></ruby>を<ruby>運<rt>はこ</rt></ruby>ぶ", "<ruby>会議室<rt>かいぎしつ</rt></ruby>を<ruby>掃除<rt>そうじ</rt></ruby>する", "<ruby>部長<rt>ぶちょう</rt></ruby>のところへ<ruby>行<rt>い</rt></ruby>く", "<ruby>帰<rt>かえ</rt></ruby>る"],
-                    answer: 2
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '女の人が道を聞いています。郵便局はどこですか。' },
-                        { speaker: 'F', text: 'すみません、郵便局はどこですか。' },
-                        { speaker: 'M', text: 'あそこの交差点を左に曲がってください。銀行の隣にありますよ。' },
-                        { speaker: 'F', text: '左ですね。ありがとうございます。' }
-                    ],
-                    options: ["<ruby>交差点<rt>こうさてん</rt></ruby>を<ruby>右<rt>みぎ</rt></ruby>に<ruby>曲<rt>ま</rt></ruby>がる", "<ruby>交差点<rt>こうさてん</rt></ruby>を<ruby>左<rt>ひだり</rt></ruby>に<ruby>曲<rt>ま</rt></ruby>がる", "まっすぐ<ruby>行<rt>い</rt></ruby>く", "<ruby>銀行<rt>ぎんこう</rt></ruby>の<ruby>中<rt>なか</rt></ruby>にある"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。女の人はどんな家を探していますか。' },
-                        { speaker: 'M', text: '引越しの準備はできた？どんな部屋がいい？' },
-                        { speaker: 'F', text: '駅から近くて、スーパーがあるところがいいな。部屋は狭くてもいいの。' }
-                    ],
-                    options: ["<ruby>駅<rt>えき</rt></ruby>から<ruby>近<rt>ちか</rt></ruby>くて<ruby>広<rt>ひろ</rt></ruby>い<ruby>部屋<rt>へや</rt></ruby>", "<ruby>駅<rt>えき</rt></ruby>から<ruby>遠<rt>とお</rt></ruby>くて<ruby>静<rt>しず</rt></ruby>かな<ruby>部屋<rt>へや</rt></ruby>", "<ruby>駅<rt>えき</rt></ruby>から<ruby>近<rt>ちか</rt></ruby>くてスーパーがある<ruby>部屋<rt>へや</rt></ruby>", "<ruby>部屋<rt>へや</rt></ruby>が<ruby>広<rt>ひろ</rt></ruby>くてスーパーがないところ"],
-                    answer: 2
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人が留守番電話を聞いています。女の人は何をお願いしましたか。' },
-                        { speaker: 'F', text: 'もしもし、田中です。明日返す約束をしていた本ですが、まだ読み終わっていません。来週まで借りてもいいですか。また電話します。' }
-                    ],
-                    options: ["<ruby>本<rt>ほん</rt></ruby>を<ruby>貸<rt>か</rt></ruby>してほしい", "<ruby>本<rt>ほん</rt></ruby>を<ruby>返<rt>かえ</rt></ruby>すのを<ruby>遅<rt>おく</rt></ruby>らせてほしい", "<ruby>電話<rt>でんわ</rt></ruby>をしてほしい", "<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>図書館<rt>としょかん</rt></ruby>へ<ruby>行<rt>い</rt></ruby>ってほしい"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '会社で男の人と女の人が話しています。パーティーの飲み物は誰が買いますか。' },
-                        { speaker: 'M', text: '明日のパーティーの飲み物、誰か買ってきてくれる？' },
-                        { speaker: 'F', text: '私は食べ物を作ります。山田さんは？' },
-                        { speaker: 'M', text: '僕は忙しいから、佐藤さんに頼もう。' },
-                        { speaker: 'F', text: 'そうですね。' }
-                    ],
-                    options: ["<ruby>男<rt>おとこ</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>", "<ruby>女<rt>おんな</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>", "山田さん", "佐藤さん"],
-                    answer: 3
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。男の人はどうして仕事を辞めますか。' },
-                        { speaker: 'F', text: '仕事、辞めるそうですね。寂しくなります。' },
-                        { speaker: 'M', text: 'ええ。実は、国へ帰って父の会社を手伝うことになったんです。' },
-                        { speaker: 'F', text: 'そうなんですか。頑張ってください。' }
-                    ],
-                    options: ["<ruby>病気<rt>びょうき</rt></ruby>になったから", "<ruby>他<rt>ほか</rt></ruby>の<ruby>会社<rt>かいしゃ</rt></ruby>に<ruby>入<rt>はい</rt></ruby>るから", "<ruby>国<rt>くに</rt></ruby>で<ruby>父<rt>ちち</rt></ruby>の<ruby>仕事<rt>しごと</rt></ruby>を<ruby>手伝<rt>てつだ</rt></ruby>うから", "<ruby>結婚<rt>けっこん</rt></ruby>するから"],
-                    answer: 2
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '女の人が話しています。女の人の趣味は何ですか。' },
-                        { speaker: 'F', text: '休みの日はよく写真を撮りに出かけます。花や山の写真が好きです。絵をかくのも好きですが、最近は忙しくてあまりしていません。' }
-                    ],
-                    options: ["<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ること", "<ruby>絵<rt>え</rt></ruby>をかくこと", "<ruby>山<rt>やま</rt></ruby>に<ruby>登<rt>のぼ</rt></ruby>ること", "<ruby>花<rt>はな</rt></ruby>を<ruby>育<rt>そだ</rt></ruby>てること"],
-                    answer: 0
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。どうしてエアコンを消しましたか。' },
-                        { speaker: 'M', text: 'あれ、エアコン消したの？' },
-                        { speaker: 'F', text: 'うん、窓を開けたら涼しい風が入ってきたから。' },
-                        { speaker: 'M', text: 'そうだね。気持ちがいいね。' }
-                    ],
-                    options: ["エアコンが<ruby>壊<rt>こわ</rt></ruby>れたから", "<ruby>寒<rt>さむ</rt></ruby>かったから", "<ruby>電気代<rt>でんきだい</rt></ruby>が<ruby>高<rt>たか</rt></ruby>いから", "<ruby>涼<rt>すず</rt></ruby>しい<ruby>風<rt>かぜ</rt></ruby>が<ruby>入<rt>はい</rt></ruby>ってきたから"],
-                    answer: 3
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '空港でアナウンスを聞いています。飛行機は何時に出発しますか。' },
-                        { speaker: 'F', text: '皆様にお知らせいたします。10時出発の東京行きは、雪のため30分遅れて出発いたします。ご迷惑をおかけします。' }
-                    ],
-                    options: ["9<ruby>時<rt>じ</rt></ruby>30<ruby>分<rt>ぷん</rt></ruby>", "10<ruby>時<rt>じ</rt></ruby>", "10<ruby>時<rt>じ</rt></ruby>30<ruby>分<rt>ぷん</rt></ruby>", "11<ruby>時<rt>じ</rt></ruby>"],
-                    answer: 2
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。男の人は週末、何をしましたか。' },
-                        { speaker: 'F', text: '週末はどこかへ行きましたか。' },
-                        { speaker: 'M', text: '本当は海へ行くつもりでしたが、熱が出てしまったので、ずっと家で寝ていました。' }
-                    ],
-                    options: ["<ruby>海<rt>うみ</rt></ruby>へ<ruby>行<rt>い</rt></ruby>った", "<ruby>山<rt>やま</rt></ruby>へ<ruby>行<rt>い</rt></ruby>った", "<ruby>病院<rt>びょういん</rt></ruby>へ<ruby>行<rt>い</rt></ruby>った", "<ruby>家<rt>いえ</rt></ruby>で<ruby>寝<rt>ね</rt></ruby>ていた"],
-                    answer: 3
-                },
-
-                // --- SET 3: KEGIATAN SEHARI-HARI (21-30) ---
-                {
-                    dialog: [
-                        { speaker: 'F', text: '女の人がホテルで話しています。朝ごはんはどこで食べますか。' },
-                        { speaker: 'M', text: '朝ごはんは1階のレストランか、お客様の部屋でお召し上がりいただけます。' },
-                        { speaker: 'F', text: '部屋に持ってきてもらうことはできますか。' },
-                        { speaker: 'M', text: 'はい、可能です。' },
-                        { speaker: 'F', text: 'じゃあ、それでお願いします。' }
-                    ],
-                    options: ["1<ruby>階<rt>かい</rt></ruby>のレストラン", "<ruby>部屋<rt>へや</rt></ruby>", "<ruby>外<rt>そと</rt></ruby>のカフェ", "<ruby>食堂<rt>しょくどう</rt></ruby>"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。女の人は何を買いますか。' },
-                        { speaker: 'M', text: 'これからコンビニに行くけど、何か買ってくる？' },
-                        { speaker: 'F', text: 'ありがとう。コーヒーをお願い。あ、甘いやつね。' },
-                        { speaker: 'M', text: 'ケーキもいる？' },
-                        { speaker: 'F', text: 'ううん、ダイエット中だからいらない。' }
-                    ],
-                    options: ["<ruby>甘<rt>あま</rt></ruby>いコーヒー", "<ruby>苦<rt>にが</rt></ruby>いコーヒー", "ケーキとコーヒー", "<ruby>水<rt>みず</rt></ruby>"],
-                    answer: 0
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '駅で女の人が駅員と話しています。女の人はいくら払いますか。' },
-                        { speaker: 'F', text: 'すみません、切符を間違えて買ってしまいました。200円の切符を買ったんですが、本当は350円でした。' },
-                        { speaker: 'M', text: 'では、足りない分をこちらでお支払いください。' },
-                        { speaker: 'F', text: 'はい。' }
-                    ],
-                    options: ["100<ruby>円<rt>えん</rt></ruby>", "150<ruby>円<rt>えん</rt></ruby>", "200<ruby>円<rt>えん</rt></ruby>", "350<ruby>円<rt>えん</rt></ruby>"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '学校で先生が話しています。レポートはいつまでに出しますか。' },
-                        { speaker: 'M', text: 'このレポートは来週の金曜日までに書いてください。でも、木曜日は学校が休みですから、水曜日か金曜日に出してください。' }
-                    ],
-                    options: ["<ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>水曜日<rt>すいようび</rt></ruby>か<ruby>金曜日<rt>きんようび</rt></ruby>", "<ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>木曜日<rt>もくようび</rt></ruby>", "<ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>金曜日<rt>きんようび</rt></ruby>だけ", "<ruby>今週<rt>こんしゅう</rt></ruby>の<ruby>金曜日<rt>きんようび</rt></ruby>"],
-                    answer: 0
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。男の人はどうして新しい靴を買いましたか。' },
-                        { speaker: 'F', text: 'あ、新しい靴ですね。かっこいい。' },
-                        { speaker: 'M', text: 'ありがとう。安かったから買ったんじゃないんだ。前の靴は走ると足が痛くなってしまって。' },
-                        { speaker: 'F', text: 'そうですか。サイズが合わなかったんですね。' }
-                    ],
-                    options: ["<ruby>安<rt>やす</rt></ruby>かったから", "<ruby>前<rt>まえ</rt></ruby>の<ruby>靴<rt>くつ</rt></ruby>で<ruby>走<rt>はし</rt></ruby>ると<ruby>足<rt>あし</rt></ruby>が<ruby>痛<rt>いた</rt></ruby>かったから", "<ruby>前<rt>まえ</rt></ruby>の<ruby>靴<rt>くつ</rt></ruby>が<ruby>古<rt>ふる</rt></ruby>くなったから", "かっこいいから"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人が美容院で話しています。男の人はどうやって髪を切ってもらいますか。' },
-                        { speaker: 'F', text: '今日はどのようにしましょうか。' },
-                        { speaker: 'M', text: '短くしてください。でも、前髪はあまり切らないでください。' },
-                        { speaker: 'F', text: 'かしこまりました。' }
-                    ],
-                    options: ["ぜんぶ<ruby>長<rt>なが</rt></ruby>くする", "ぜんぶ<ruby>短<rt>みじか</rt></ruby>くする", "<ruby>前髪<rt>まえがみ</rt></ruby>だけ<ruby>短<rt>みじか</rt></ruby>くする", "<ruby>全体<rt>ぜんたい</rt></ruby>は<ruby>短<rt>みじか</rt></ruby>くして、<ruby>前髪<rt>まえがみ</rt></ruby>はあまり<ruby>切<rt>き</rt></ruby>らない"],
-                    answer: 3
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '女の人と男の人が話しています。二人は何をプレゼントしますか。' },
-                        { speaker: 'F', text: '山田さんの結婚祝い、何にする？' },
-                        { speaker: 'M', text: 'お皿やコップはどう？' },
-                        { speaker: 'F', text: 'それは他の人があげると思う。時計はどうかな。' },
-                        { speaker: 'M', text: 'いいね、それにしよう。' }
-                    ],
-                    options: ["お<ruby>皿<rt>さら</rt></ruby>", "コップ", "<ruby>時計<rt>とけい</rt></ruby>", "<ruby>花<rt>はな</rt></ruby>"],
-                    answer: 2
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '図書館で男の人が話しています。男の人は何の本を探していますか。' },
-                        { speaker: 'M', text: 'すみません、日本の歴史についての本を探しているんですが。' },
-                        { speaker: 'F', text: '歴史ですね。2階の右側の棚にありますよ。' },
-                        { speaker: 'M', text: 'ありがとうございます。' }
-                    ],
-                    options: ["<ruby>料理<rt>りょうり</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>", "<ruby>旅行<rt>りょこう</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>", "<ruby>歴史<rt>れきし</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>", "<ruby>科学<rt>かがく</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>"],
-                    answer: 2
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。ゴミ箱はどこにありますか。' },
-                        { speaker: 'M', text: 'このゴミ、どこに捨てればいいですか。' },
-                        { speaker: 'F', text: 'あ、ゴミ箱はコピー機の隣にあります。' },
-                        { speaker: 'M', text: 'ドアの横ですか。' },
-                        { speaker: 'F', text: 'いいえ、窓の近くです。' }
-                    ],
-                    options: ["ドアの<ruby>横<rt>よこ</rt></ruby>", "コピー<ruby>機<rt>き</rt></ruby>の<ruby>隣<rt>となり</rt></ruby>", "机の<ruby>下<rt>した</rt></ruby>", "トイレの<ruby>中<rt>なか</rt></ruby>"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '先生が話しています。学生はテストの後、どうしますか。' },
-                        { speaker: 'M', text: 'テストが終わったら、紙を裏返して机の上に置いてください。それから、静かに教室を出て帰ってもいいです。' }
-                    ],
-                    options: ["<ruby>紙<rt>かみ</rt></ruby>を<ruby>先生<rt>せんせい</rt></ruby>に<ruby>出<rt>だ</rt></ruby>す", "<ruby>紙<rt>かみ</rt></ruby>を<ruby>裏返<rt>うらがえ</rt></ruby>して<ruby>机<rt>つくえ</rt></ruby>に<ruby>置<rt>お</rt></ruby>き、<ruby>帰<rt>かえ</rt></ruby>る", "そのまま<ruby>座<rt>すわ</rt></ruby>って<ruby>待<rt>ま</rt></ruby>つ", "<ruby>友達<rt>ともだち</rt></ruby>と<ruby>話<rt>はな</rt></ruby>す"],
-                    answer: 1
-                },
-
-                // --- SET 4: KENDALA & KOMUNIKASI (31-40) ---
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。パソコンはどうして動きませんか。' },
-                        { speaker: 'M', text: 'あれ？パソコンが動かない。壊れたのかな。' },
-                        { speaker: 'F', text: 'コンセントは入ってる？' },
-                        { speaker: 'M', text: 'あ、抜けてた。掃除の時に抜いたんだった。' }
-                    ],
-                    options: ["<ruby>壊<rt>こわ</rt></ruby>れたから", "コンセントが<ruby>抜<rt>ぬ</rt></ruby>けていたから", "インターネットがないから", "<ruby>古<rt>ふる</rt></ruby>いから"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '病院で男の人と女の人が話しています。男の人はどうしましたか。' },
-                        { speaker: 'F', text: 'どうしましたか。風邪ですか。' },
-                        { speaker: 'M', text: 'いいえ、昨日から歯が痛くて、ご飯が食べられないんです。' },
-                        { speaker: 'F', text: 'そうですか。では、口を開けてください。' }
-                    ],
-                    options: ["<ruby>風邪<rt>かぜ</rt></ruby>をひいた", "<ruby>頭<rt>あたま</rt></ruby>が<ruby>痛<rt>いた</rt></ruby>い", "<ruby>歯<rt>は</rt></ruby>が<ruby>痛<rt>いた</rt></ruby>い", "お<ruby>腹<rt>なか</rt></ruby>が<ruby>痛<rt>いた</rt></ruby>い"],
-                    answer: 2
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '女の人が電話で話しています。女の人はどのボタンを押しますか。' },
-                        { speaker: 'M', text: 'はい、サービスセンターです。ご用件の番号を押してください。予約は1、キャンセルは2、その他のお問い合わせは3を押してください。' },
-                        { speaker: 'F', text: '予約をキャンセルしたいから...これね。' }
-                    ],
-                    options: ["1", "2", "3", "0"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。男の人は何を忘れましたか。' },
-                        { speaker: 'M', text: 'あ、しまった！' },
-                        { speaker: 'F', text: 'どうしたの？' },
-                        { speaker: 'M', text: '財布は持ってきたけど、携帯電話を家に忘れてきた。' },
-                        { speaker: 'F', text: '取りに帰る？' },
-                        { speaker: 'M', text: '時間がないから、いいや。' }
-                    ],
-                    options: ["<ruby>財布<rt>さいふ</rt></ruby>", "<ruby>鍵<rt>かぎ</rt></ruby>", "<ruby>携帯電話<rt>けいたいでんわ</rt></ruby>", "<ruby>切符<rt>きっぷ</rt></ruby>"],
-                    answer: 2
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '学校で先生が話しています。学生は作文をどうやって書きますか。' },
-                        { speaker: 'M', text: '作文はボールペンで書いてください。鉛筆は使わないでください。間違えたら、消しゴムではなく、新しい紙に書いてください。' }
-                    ],
-                    options: ["<ruby>鉛筆<rt>えんぴつ</rt></ruby>で<ruby>書<rt>か</rt></ruby>く", "ボールペンで<ruby>書<rt>か</rt></ruby>く", "パソコンで<ruby>書<rt>か</rt></ruby>く", "スマホで<ruby>打<rt>う</rt></ruby>つ"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。女の人はどうして泣いていますか。' },
-                        { speaker: 'M', text: 'どうしたの？泣いてるの？' },
-                        { speaker: 'F', text: 'さっき、ずっと大切にしていた指輪を落としてしまったの。どこを探してもないの。' }
-                    ],
-                    options: ["<ruby>指輪<rt>ゆびわ</rt></ruby>をなくしたから", "<ruby>痛<rt>いた</rt></ruby>いから", "<ruby>映画<rt>えいが</rt></ruby>を<ruby>見<rt>み</rt></ruby>て<ruby>感動<rt>かんどう</rt></ruby>したから", "<ruby>友達<rt>ともだち</rt></ruby>とケンカしたから"],
-                    answer: 0
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '駅のアナウンスを聞いています。パスポートを落とした人はどこへ行きますか。' },
-                        { speaker: 'F', text: 'お客様にお知らせします。赤いパスポートを拾いました。心当たりのある方は、1階の駅長室までお越しください。' }
-                    ],
-                    options: ["1<ruby>階<rt>かい</rt></ruby>の<ruby>駅長室<rt>えきちょうしつ</rt></ruby>", "2<ruby>階<rt>かい</rt></ruby>の<ruby>受付<rt>うけつけ</rt></ruby>", "<ruby>警察<rt>けいさつ</rt></ruby>", "トイレ"],
-                    answer: 0
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '女の人が話しています。女の人は毎日どうやって日本語を勉強していますか。' },
-                        { speaker: 'F', text: '私は毎日日本語を勉強しています。教科書を読むのはつまらないので、日本のドラマを見ながら新しい言葉を覚えています。' }
-                    ],
-                    options: ["<ruby>教科書<rt>きょうかしょ</rt></ruby>を<ruby>読<rt>よ</rt></ruby>む", "ドラマを<ruby>見<rt>み</rt></ruby>る", "<ruby>友達<rt>ともだち</rt></ruby>と<ruby>話<rt>はな</rt></ruby>す", "<ruby>音楽<rt>おんがく</rt></ruby>を<ruby>聞<rt>き</rt></ruby>く"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。男の人はどのスポーツが一番得意ですか。' },
-                        { speaker: 'F', text: '太郎さんはスポーツが上手ですね。何が一番得意ですか。' },
-                        { speaker: 'M', text: 'うーん、テニスも好きだけど、子供の時からずっとやっている水泳が一番自信があるよ。' }
-                    ],
-                    options: ["テニス", "サッカー", "<ruby>水泳<rt>すいえい</rt></ruby>", "野球"],
-                    answer: 2
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '女の人が話しています。女の人の部屋はどうですか。' },
-                        { speaker: 'F', text: '私の部屋は南向きなので、とても明るいです。でも、隣に大きなマンションが建ったので、風があまり入らなくなりました。' }
-                    ],
-                    options: ["<ruby>暗<rt>くら</rt></ruby>くて、<ruby>風<rt>かぜ</rt></ruby>が<ruby>入<rt>はい</rt></ruby>る", "<ruby>明<rt>あか</rt></ruby>るくて、<ruby>風<rt>かぜ</rt></ruby>が<ruby>入<rt>はい</rt></ruby>る", "<ruby>明<rt>あか</rt></ruby>るいが、<ruby>風<rt>かぜ</rt></ruby>が<ruby>入<rt>はい</rt></ruby>らない", "<ruby>暗<rt>くら</rt></ruby>くて、<ruby>風<rt>かぜ</rt></ruby>が<ruby>入<rt>はい</rt></ruby>らない"],
-                    answer: 2
-                },
-
-                // --- SET 5: CAMPURAN (41-50) ---
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。女の人はどうして怒っていますか。' },
-                        { speaker: 'M', text: 'ごめん、待った？' },
-                        { speaker: 'F', text: '1時間も待ったよ！どうして電話してくれなかったの？' },
-                        { speaker: 'M', text: '本当にごめん。寝坊してしまって。' }
-                    ],
-                    options: ["<ruby>男<rt>おとこ</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>が<ruby>道<rt>みち</rt></ruby>に<ruby>迷<rt>まよ</rt></ruby>ったから", "<ruby>男<rt>おとこ</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>が<ruby>寝坊<rt>ねぼう</rt></ruby>して<ruby>電話<rt>でんわ</rt></ruby>しなかったから", "<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>ってきたから", "<ruby>財布<rt>さいふ</rt></ruby>を<ruby>忘<rt>わす</rt></ruby>れたから"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: 'スーパーのアナウンスを聞いています。今、何が安いですか。' },
-                        { speaker: 'M', text: 'お客様にお知らせします。ただいまの時間、タイムセールを行っております。お肉と魚がレジで半額になります。野菜は明日安くなります。' }
-                    ],
-                    options: ["お<ruby>肉<rt>にく</rt></ruby>と<ruby>野菜<rt>やさい</rt></ruby>", "<ruby>魚<rt>さかな</rt></ruby>と<ruby>野菜<rt>やさい</rt></ruby>", "お<ruby>肉<rt>にく</rt></ruby>と<ruby>魚<rt>さかな</rt></ruby>", "<ruby>全部<rt>ぜんぶ</rt></ruby>"],
-                    answer: 2
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。二人は何を飲みますか。' },
-                        { speaker: 'F', text: '喉が渇いたね。何か飲まない？' },
-                        { speaker: 'M', text: '自販機があるよ。お茶かジュースはどう？' },
-                        { speaker: 'F', text: '私は温かいお茶がいい。' },
-                        { speaker: 'M', text: 'じゃあ、僕も同じものにするよ。' }
-                    ],
-                    options: ["<ruby>温<rt>あたた</rt></ruby>かいお<ruby>茶<rt>ちゃ</rt></ruby>", "<ruby>冷<rt>つめ</rt></ruby>たいお<ruby>茶<rt>ちゃ</rt></ruby>", "ジュース", "<ruby>水<rt>みず</rt></ruby>"],
-                    answer: 0
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '会社で男の人と女の人が話しています。男の人はどうして急いでいますか。' },
-                        { speaker: 'F', text: '山田さん、走ってどうしたんですか。' },
-                        { speaker: 'M', text: '実は、今からお客さんが来るんですが、資料のコピーを忘れていたんです。' },
-                        { speaker: 'F', text: '私が手伝いましょうか。' }
-                    ],
-                    options: ["トイレに<ruby>行<rt>い</rt></ruby>きたいから", "<ruby>資料<rt>しりょう</rt></ruby>のコピーを<ruby>忘<rt>わす</rt></ruby>れていたから", "<ruby>電車<rt>でんしゃ</rt></ruby>に<ruby>遅<rt>おく</rt></ruby>れそうだから", "<ruby>帰<rt>かえ</rt></ruby>る<ruby>時間<rt>じかん</rt></ruby>だから"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。女の人はどのケーキを選びますか。' },
-                        { speaker: 'M', text: 'デザートはどうする？イチゴのケーキとチョコレートケーキがあるよ。' },
-                        { speaker: 'F', text: 'チョコレートは昨日食べたから、イチゴにするわ。' }
-                    ],
-                    options: ["チョコレートケーキ", "イチゴのケーキ", "チーズケーキ", "アイスクリーム"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '学校で先生が話しています。来週のテストはどこまでですか。' },
-                        { speaker: 'M', text: '来週のテストは、教科書の50ページから65ページまでです。漢字のテストは今回はありません。' }
-                    ],
-                    options: ["50ページから60ページまで", "50ページから65ページまで", "<ruby>漢字<rt>かんじ</rt></ruby>のテストだけ", "<ruby>全部<rt>ぜんぶ</rt></ruby>"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。二人は日曜日、何をしますか。' },
-                        { speaker: 'M', text: '日曜日は天気がいいみたいだね。ピクニックに行かない？' },
-                        { speaker: 'F', text: 'いいね。じゃあ、お弁当を作っていくね。' },
-                        { speaker: 'M', text: 'ありがとう。楽しみだな。' }
-                    ],
-                    options: ["<ruby>映画<rt>えいが</rt></ruby>を<ruby>見<rt>み</rt></ruby>る", "<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>に<ruby>行<rt>い</rt></ruby>く", "ピクニックに<ruby>行<rt>い</rt></ruby>く", "<ruby>家<rt>いえ</rt></ruby>で<ruby>休<rt>やす</rt></ruby>む"],
-                    answer: 2
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '女の人が話しています。女の人は旅行で何が一番楽しかったですか。' },
-                        { speaker: 'F', text: '北海道への旅行はとても楽しかったです。雪祭りもきれいでしたが、一番の思い出は美味しいカニを食べたことです。温泉も気持ちよかったです。' }
-                    ],
-                    options: ["<ruby>雪祭<rt>ゆきまつ</rt></ruby>り", "<ruby>美味<rt>おい</rt></ruby>しいカニを<ruby>食<rt>た</rt></ruby>べたこと", "<ruby>温泉<rt>おんせん</rt></ruby>", "<ruby>飛行機<rt>ひこうき</rt></ruby>に<ruby>乗<rt>の</rt></ruby>ったこと"],
-                    answer: 1
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '男の人と女の人が話しています。男の人はどうして困っていますか。' },
-                        { speaker: 'M', text: '困ったな...。' },
-                        { speaker: 'F', text: 'どうしたの？' },
-                        { speaker: 'M', text: '自転車の鍵をなくしてしまって、家に帰れないんだ。' },
-                        { speaker: 'F', text: '一緒に探してあげるよ。' }
-                    ],
-                    options: ["<ruby>道<rt>みち</rt></ruby>に<ruby>迷<rt>まよ</rt></ruby>ったから", "<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>っているから", "<ruby>自転車<rt>じてんしゃ</rt></ruby>の<ruby>鍵<rt>かぎ</rt></ruby>をなくしたから", "<ruby>財布<rt>さいふ</rt></ruby>をなくしたから"],
-                    answer: 2
-                },
-                {
-                    dialog: [
-                        { speaker: 'F', text: '先生が話しています。学生は教室を出る時、何をしなければなりませんか。' },
-                        { speaker: 'M', text: '授業はこれで終わります。教室を出る時は、必ず電気とエアコンを消してください。窓は私が閉めます。' }
-                    ],
-                    options: ["<ruby>電気<rt>でんき</rt></ruby>とエアコンを<ruby>消<rt>け</rt></ruby>す", "<ruby>窓<rt>まど</rt></ruby>を<ruby>閉<rt>し</rt></ruby>める", "<ruby>黒板<rt>こくばん</rt></ruby>を<ruby>消<rt>け</rt></ruby>す", "<ruby>掃除<rt>そうじ</rt></ruby>をする"],
-                    answer: 0
-                }
+        "dialog": [
+            { "speaker": "F", "text": "会社で男の人と女の人が話しています。男の人はこれからまず何をしますか。" },
+            { "speaker": "M", "text": "部長、来週の出張のホテル、予約しておきました。" },
+            { "speaker": "F", "text": "ありがとう。飛行機のチケットはどうなった？" },
+            { "speaker": "M", "text": "あ、まだです。これからすぐインターネットで調べます。" },
+            { "speaker": "F", "text": "そう。じゃあ、それをお願いね。それが終わったら、会議の資料をコピーしてね。" },
+            { "speaker": "M", "text": "はい、わかりました。" }
+        ],
+        "options": [
+            "ホテルの<ruby>予約<rt>よやく</rt></ruby>をする",
+            "<ruby>飛行機<rt>ひこうき</rt></ruby>のチケットを<ruby>調<rt>しら</rt></ruby>べる",
+            "<ruby>会議<rt>かいぎ</rt></ruby>の<ruby>資料<rt>しりょう</rt></ruby>をコピーする",
+            "<ruby>出張<rt>しゅっちょう</rt></ruby>に<ruby>行<rt>い</rt></ruby>く"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。女の人は誰にパソコンをもらいましたか。" },
+            { "speaker": "M", "text": "あ、新しいパソコンだね。自分で買ったの？" },
+            { "speaker": "F", "text": "ううん、兄が新しいのを買ったから、古いのを私にくれたの。" },
+            { "speaker": "M", "text": "へえ、いいね。僕も父に買ってもらいたいな。" },
+            { "speaker": "F", "text": "お父さんに頼んでみたら？" }
+        ],
+        "options": [
+            "<ruby>自分<rt>じぶん</rt></ruby>",
+            "<ruby>兄<rt>あに</rt></ruby>",
+            "<ruby>父<rt>ちち</rt></ruby>",
+            "<ruby>男<rt>おとこ</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "学校で先生が話しています。学生は明日、何時にどこへ集まらなければなりませんか。" },
+            { "speaker": "M", "text": "明日は工場へ見学に行きます。学校の出発は9時ですが、バスに乗る前に説明がありますから、8時半までに体育館に集まってください。教室ではありませんよ。遅れないようにしてください。" }
+        ],
+        "options": [
+            "8<ruby>時半<rt>じはん</rt></ruby>に<ruby>体育館<rt>たいいくかん</rt></ruby>",
+            "8<ruby>時半<rt>じはん</rt></ruby>に<ruby>教室<rt>きょうしつ</rt></ruby>",
+            "9<ruby>時<rt>じ</rt></ruby>に<ruby>体育館<rt>たいいくかん</rt></ruby>",
+            "9<ruby>時<rt>じ</rt></ruby>に<ruby>教室<rt>きょうしつ</rt></ruby>"
+        ],
+        "answer": 0
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人がレストランで話しています。女の人は何を食べますか。" },
+            { "speaker": "M", "text": "僕はカレーにするよ。君はどうする？" },
+            { "speaker": "F", "text": "うーん、お腹があまり空いていないから、サラダだけでいいわ。" },
+            { "speaker": "M", "text": "それだけで足りる？スープも頼んだら？" },
+            { "speaker": "F", "text": "そうね。じゃあ、スープもお願いするわ。" }
+        ],
+        "options": [
+            "カレーとサラダ",
+            "サラダだけ",
+            "スープだけ",
+            "サラダとスープ"
+        ],
+        "answer": 3
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "電話で女の人と男の人が話しています。男の人はどうしてパーティーに行けませんか。" },
+            { "speaker": "F", "text": "もしもし、山田さん？今日のパーティー、来られる？" },
+            { "speaker": "M", "text": "ごめん、行けなくなったんだ。" },
+            { "speaker": "F", "text": "どうして？仕事が忙しいの？" },
+            { "speaker": "M", "text": "いや、仕事は終わったんだけど、さっき母から電話があって、急に国から弟が来ることになったんだ。今から空港へ迎えに行かなくちゃいけなくて。" },
+            { "speaker": "F", "text": "そうなの。残念ね。" }
+        ],
+        "options": [
+            "<ruby>仕事<rt>しごと</rt></ruby>が<ruby>忙<rt>いそが</rt></ruby>しいから",
+            "<ruby>母<rt>はは</rt></ruby>に<ruby>会<rt>あ</rt></ruby>いに<ruby>行<rt>い</rt></ruby>くから",
+            "<ruby>弟<rt>おとうと</rt></ruby>を<ruby>迎<rt>むか</rt></ruby>えに<ruby>行<rt>い</rt></ruby>くから",
+            "<ruby>病気<rt>びょうき</rt></ruby>になったから"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。男の人はどうして眼鏡をかけていますか。" },
+            { "speaker": "F", "text": "あれ？今日は眼鏡をかけているんですね。コンタクトレンズはどうしたんですか。" },
+            { "speaker": "M", "text": "実は、昨日コンタクトレンズを落としてしまって、見つからないんです。" },
+            { "speaker": "F", "text": "ええ、大変ですね。新しいのを買わないんですか。" },
+            { "speaker": "M", "text": "明日、買いに行くつもりです。それまでは眼鏡で我慢します。" }
+        ],
+        "options": [
+            "<ruby>目<rt>め</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>くなったから",
+            "コンタクトレンズをなくしたから",
+            "<ruby>眼鏡<rt>めがね</rt></ruby>のほうが<ruby>好<rt>す</rt></ruby>きだから",
+            "<ruby>目<rt>め</rt></ruby>の<ruby>病気<rt>びょうき</rt></ruby>になったから"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "女の人がデパートで店員と話しています。女の人はどの靴を買いますか。" },
+            { "speaker": "F", "text": "すみません、この黒い靴、はいてみてもいいですか。" },
+            { "speaker": "M", "text": "はい、どうぞ。いかがですか。" },
+            { "speaker": "F", "text": "うーん、少し小さいです。もう一つ大きいサイズはありますか。" },
+            { "speaker": "M", "text": "申し訳ありません、黒はもう売り切れてしまいました。同じデザインで茶色ならございますが。" },
+            { "speaker": "F", "text": "茶色ですか。じゃあ、それをお願いします。" }
+        ],
+        "options": [
+            "<ruby>小<rt>ちい</rt></ruby>さいサイズの<ruby>黒<rt>くろ</rt></ruby>い<ruby>靴<rt>くつ</rt></ruby>",
+            "<ruby>大<rt>おお</rt></ruby>きいサイズの<ruby>黒<rt>くろ</rt></ruby>い<ruby>靴<rt>くつ</rt></ruby>",
+            "<ruby>小<rt>ちい</rt></ruby>さいサイズの<ruby>茶色<rt>ちゃいろ</rt></ruby>い<ruby>靴<rt>くつ</rt></ruby>",
+            "<ruby>大<rt>おお</rt></ruby>きいサイズの<ruby>茶色<rt>ちゃいろ</rt></ruby>い<ruby>靴<rt>くつ</rt></ruby>"
+        ],
+        "answer": 3
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "病院で女の人と医者が話しています。女の人はいつまた病院に来ますか。" },
+            { "speaker": "M", "text": "薬は３日分出しておきます。これを全部飲み終わったら、また来てください。" },
+            { "speaker": "F", "text": "はい。今日が月曜日だから、木曜日に来ればいいですね。" },
+            { "speaker": "M", "text": "木曜日は休みですので、金曜日に来てください。" },
+            { "speaker": "F", "text": "わかりました。" }
+        ],
+        "options": [
+            "<ruby>火曜日<rt>かようび</rt></ruby>",
+            "<ruby>水曜日<rt>すいようび</rt></ruby>",
+            "<ruby>木曜日<rt>もくようび</rt></ruby>",
+            "<ruby>金曜日<rt>きんようび</rt></ruby>"
+        ],
+        "answer": 3
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "会社で男の人と女の人が話しています。女の人はこれから何をしますか。" },
+            { "speaker": "M", "text": "山田さん、お客さんに出すお茶を入れてくれない？" },
+            { "speaker": "F", "text": "はい。あ、でも、お茶の葉がもうありません。" },
+            { "speaker": "M", "text": "えっ、本当？じゃあ、悪いけど、下のコンビニで買ってきてくれる？" },
+            { "speaker": "F", "text": "はい、すぐに行ってきます。" }
+        ],
+        "options": [
+            "お<ruby>茶<rt>ちゃ</rt></ruby>を<ruby>入<rt>い</rt></ruby>れる",
+            "お<ruby>客<rt>きゃく</rt></ruby>さんと<ruby>話<rt>はな</rt></ruby>す",
+            "コンビニへお<ruby>茶<rt>ちゃ</rt></ruby>の<ruby>葉<rt>は</rt></ruby>を<ruby>買<rt>か</rt></ruby>いに<ruby>行<rt>い</rt></ruby>く",
+            "<ruby>下<rt>した</rt></ruby>の<ruby>階<rt>かい</rt></ruby>へお<ruby>茶<rt>ちゃ</rt></ruby>をもらいに<ruby>行<rt>い</rt></ruby>く"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。二人は明日、どうやって動物園へ行きますか。" },
+            { "speaker": "M", "text": "明日は動物園だね。車で行く？それとも電車？" },
+            { "speaker": "F", "text": "車は便利だけど、道が混むかもしれないわ。" },
+            { "speaker": "M", "text": "そうだね。じゃあ、電車にしよう。駅からバスに乗ればすぐだし。" },
+            { "speaker": "F", "text": "うん、そうしましょう。" }
+        ],
+        "options": [
+            "<ruby>車<rt>くるま</rt></ruby>だけ",
+            "<ruby>電車<rt>でんしゃ</rt></ruby>とバス",
+            "<ruby>車<rt>くるま</rt></ruby>とバス",
+            "<ruby>電車<rt>でんしゃ</rt></ruby>だけ"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "図書館で男の人と係の人が話しています。男の人は本をいつまでに返さなければなりませんか。" },
+            { "speaker": "M", "text": "すみません、この本を借りたいんですが。" },
+            { "speaker": "F", "text": "はい。貸出期間は２週間ですので、20日までに返してください。" },
+            { "speaker": "M", "text": "あの、もう少し長く借りることはできませんか。レポートを書くのに使いたいんです。" },
+            { "speaker": "F", "text": "次にお待ちの方がいらっしゃらないので、１ヶ月借りられます。では、来月の6日までにお願いします。" },
+            { "speaker": "M", "text": "ありがとうございます。" }
+        ],
+        "options": [
+            "2<ruby>週間後<rt>しゅうかんご</rt></ruby>まで",
+            "20<ruby>日<rt>か</rt></ruby>まで",
+            "<ruby>来月<rt>らいげつ</rt></ruby>の6<ruby>日<rt>むいか</rt></ruby>まで",
+            "1<ruby>週間後<rt>しゅうかんご</rt></ruby>まで"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "女の人が留守番電話のメッセージを聞いています。男の人は何をお願いしましたか。" },
+            { "speaker": "M", "text": "あ、太郎です。明日の映画の約束なんだけど、急にアルバイトが入っちゃって、行けなくなったんだ。チケットは僕が買っておいたから、今日、君の家のポストに入れておくよ。誰か他の友達と行ってね。本当にごめん。" }
+        ],
+        "options": [
+            "<ruby>映画<rt>えいが</rt></ruby>のチケットを<ruby>買<rt>か</rt></ruby>ってほしいこと",
+            "<ruby>明日<rt>あした</rt></ruby>の<ruby>約束<rt>やくそく</rt></ruby>の<ruby>時間<rt>じかん</rt></ruby>を<ruby>変<rt>か</rt></ruby>えてほしいこと",
+            "<ruby>家<rt>いえ</rt></ruby>のポストを<ruby>見<rt>み</rt></ruby>てほしいこと",
+            "<ruby>他<rt>ほか</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>と<ruby>映画<rt>えいが</rt></ruby>に<ruby>行<rt>い</rt></ruby>ってほしいこと"
+        ],
+        "answer": 3
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "先生が教室で話しています。学生はこれからまず何をしますか。" },
+            { "speaker": "M", "text": "ええと、今からテストを返しますが、その前に宿題を集めます。名前が書いてあるか確認して、前の机に出してください。テストを返すのはその後です。" }
+        ],
+        "options": [
+            "テストを<ruby>受<rt>う</rt></ruby>ける",
+            "テストをもらう",
+            "<ruby>宿題<rt>しゅくだい</rt></ruby>に<ruby>名前<rt>なまえ</rt></ruby>を<ruby>書<rt>か</rt></ruby>く",
+            "<ruby>宿題<rt>しゅくだい</rt></ruby>を<ruby>出<rt>だ</rt></ruby>す"
+        ],
+        "answer": 3
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。女の人は今、何を勉強していますか。" },
+            { "speaker": "M", "text": "マリアさん、日本語がとても上手になったね。毎日勉強しているの？" },
+            { "speaker": "F", "text": "ありがとう。でも最近は、来週の英語のテストの準備が忙しくて、日本語は全然勉強していないの。" },
+            { "speaker": "M", "text": "そうなんだ。英語のテストが終わったら、また日本語を勉強するの？" },
+            { "speaker": "F", "text": "うん、来月からは中国語も始めるつもり。" }
+        ],
+        "options": [
+            "<ruby>日本語<rt>にほんご</rt></ruby>",
+            "<ruby>英語<rt>えいご</rt></ruby>",
+            "<ruby>中国語<rt>ちゅうごくご</rt></ruby>",
+            "<ruby>何<rt>なに</rt></ruby>も<ruby>勉強<rt>べんきょう</rt></ruby>していない"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "会社で女の人と男の人が話しています。男の人はどうして遅刻しましたか。" },
+            { "speaker": "F", "text": "田中さん、遅かったですね。寝坊したんですか。" },
+            { "speaker": "M", "text": "いえ、いつもと同じ時間に家を出たんですが、途中で事故があって、電車が止まってしまったんです。" },
+            { "speaker": "F", "text": "そうですか。大変でしたね。" },
+            { "speaker": "M", "text": "ええ、駅で１時間も待ちましたよ。" }
+        ],
+        "options": [
+            "<ruby>寝坊<rt>ねぼう</rt></ruby>したから",
+            "<ruby>道<rt>みち</rt></ruby>に<ruby>迷<rt>まよ</rt></ruby>ったから",
+            "<ruby>事故<rt>じこ</rt></ruby>で<ruby>電車<rt>でんしゃ</rt></ruby>が<ruby>止<rt>と</rt></ruby>まったから",
+            "<ruby>時計<rt>とけい</rt></ruby>が<ruby>壊<rt>こわ</rt></ruby>れていたから"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人がカレンダーを見ながら話しています。二人はいつ映画を見に行きますか。" },
+            { "speaker": "M", "text": "新しい映画、見に行かない？今週の土曜日はどう？" },
+            { "speaker": "F", "text": "ごめん、土曜日はアルバイトがあるの。日曜日は休みなんだけど。" },
+            { "speaker": "M", "text": "日曜日は僕が用事があるんだ。来週の水曜日なら二人とも授業が早く終わるよね。" },
+            { "speaker": "F", "text": "そうね。じゃあ、その日にしましょう。" }
+        ],
+        "options": [
+            "<ruby>今週<rt>こんしゅう</rt></ruby>の<ruby>土曜日<rt>どようび</rt></ruby>",
+            "<ruby>今週<rt>こんしゅう</rt></ruby>の<ruby>日曜日<rt>にちようび</rt></ruby>",
+            "<ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>水曜日<rt>すいようび</rt></ruby>",
+            "<ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>土曜日<rt>どようび</rt></ruby>"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "女の人が店で話しています。女の人はどの花を買いますか。" },
+            { "speaker": "F", "text": "すみません、母の誕生日に花を贈りたいんですが。" },
+            { "speaker": "M", "text": "こちらの赤いバラはいかがですか。人気がありますよ。" },
+            { "speaker": "F", "text": "うーん、バラもいいですが、母は黄色い花が好きなので、この黄色いチューリップと、白い百合を少し混ぜて花束にしてもらえますか。" },
+            { "speaker": "M", "text": "かしこまりました。" }
+        ],
+        "options": [
+            "<ruby>赤<rt>あか</rt></ruby>いバラ",
+            "<ruby>黄<rt>き</rt></ruby>色いチューリップだけ",
+            "<ruby>黄<rt>き</rt></ruby>色いチューリップと<ruby>白<rt>しろ</rt></ruby>い<ruby>百合<rt>ゆり</rt></ruby>",
+            "<ruby>赤<rt>あか</rt></ruby>いバラと<ruby>白<rt>しろ</rt></ruby>い<ruby>百合<rt>ゆり</rt></ruby>"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。男の人はどうして引っ越しをしますか。" },
+            { "speaker": "F", "text": "山田さん、来月引っ越しするそうですね。今の部屋、駅から近くて便利なのに、どうしてですか。" },
+            { "speaker": "M", "text": "うーん、便利なんですけど、隣の人が夜遅くまで音楽をかけていて、うるさいんです。" },
+            { "speaker": "F", "text": "それは困りますね。新しい部屋は静かですか。" },
+            { "speaker": "M", "text": "ええ、少し駅から遠くなりますが、静かでいいところです。" }
+        ],
+        "options": [
+            "<ruby>部屋<rt>へや</rt></ruby>が<ruby>狭<rt>せま</rt></ruby>いから",
+            "<ruby>駅<rt>えき</rt></ruby>から<ruby>遠<rt>とお</rt></ruby>いから",
+            "<ruby>隣<rt>となり</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>がうるさいから",
+            "<ruby>家賃<rt>やちん</rt></ruby>が<ruby>高<rt>たか</rt></ruby>いから"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "天気予報を聞いています。明日の午後の天気はどうなりますか。" },
+            { "speaker": "M", "text": "明日の天気をお伝えします。明日は朝からよく晴れて、暖かくなるでしょう。しかし、午後になると急に黒い雲が出てきて、夕方まで雨が降る見込みです。お帰りの際は傘をお忘れなく。" }
+        ],
+        "options": [
+            "<ruby>晴<rt>は</rt></ruby>れ",
+            "<ruby>曇<rt>くも</rt></ruby>り",
+            "<ruby>雨<rt>あめ</rt></ruby>",
+            "<ruby>雪<rt>ゆき</rt></ruby>"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。女の人はこれから何をしなければなりませんか。" },
+            { "speaker": "M", "text": "あ、もうこんな時間。そろそろ夕ご飯を作らなくちゃ。" },
+            { "speaker": "F", "text": "私が手伝うわ。野菜を切ろうか？" },
+            { "speaker": "M", "text": "ありがとう。野菜はもう切ってあるから、お皿を並べてくれない？" },
+            { "speaker": "F", "text": "わかった。お箸も出しておくね。" }
+        ],
+        "options": [
+            "<ruby>夕飯<rt>ゆうはん</rt></ruby>を<ruby>作<rt>つく</rt></ruby>る",
+            "<ruby>野菜<rt>やさい</rt></ruby>を<ruby>切<rt>き</rt></ruby>る",
+            "お<ruby>皿<rt>さら</rt></ruby>を<ruby>並<rt>なら</rt></ruby>べる",
+            "<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>に<ruby>行<rt>い</rt></ruby>く"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人が店でカバンを見ています。男の人はどのカバンを買いますか。" },
+            { "speaker": "M", "text": "すみません、パソコンが入るカバンを探しているんですが。" },
+            { "speaker": "F", "text": "こちらはいかがですか。四角くて、ポケットがたくさんついています。" },
+            { "speaker": "M", "text": "いいですね。でも、少し大きすぎます。もう少し小さくて、丸い形のはありませんか。" },
+            { "speaker": "F", "text": "それでしたら、こちらになります。" },
+            { "speaker": "M", "text": "あ、これ、ちょうどいいですね。これにします。" }
+        ],
+        "options": [
+            "<ruby>大<rt>おお</rt></ruby>きくて<ruby>四角<rt>しかく</rt></ruby>いカバン",
+            "<ruby>小<rt>ちい</rt></ruby>さくて<ruby>四角<rt>しかく</rt></ruby>いカバン",
+            "<ruby>大<rt>おお</rt></ruby>きくて<ruby>丸<rt>まる</rt></ruby>いカバン",
+            "<ruby>小<rt>ちい</rt></ruby>さくて<ruby>丸<rt>まる</rt></ruby>いカバン"
+        ],
+        "answer": 3
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。男の人はどうして怒られましたか。" },
+            { "speaker": "F", "text": "どうしたの？元気がないね。" },
+            { "speaker": "M", "text": "うん、さっき部長に怒られたんだ。" },
+            { "speaker": "F", "text": "遅刻でもしたの？" },
+            { "speaker": "M", "text": "ううん、会議の時間を間違えて、会議に出られなかったんだよ。" },
+            { "speaker": "F", "text": "それはあなたが悪いわね。次から気をつけてね。" }
+        ],
+        "options": [
+            "<ruby>遅刻<rt>ちこく</rt></ruby>したから",
+            "<ruby>会議<rt>かいぎ</rt></ruby>の<ruby>時間<rt>じかん</rt></ruby>を<ruby>間違<rt>まちが</rt></ruby>えたから",
+            "<ruby>会議<rt>かいぎ</rt></ruby>で<ruby>寝<rt>ね</rt></ruby>ていたから",
+            "<ruby>仕事<rt>しごと</rt></ruby>を<ruby>忘<rt>わす</rt></ruby>れたから"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "会社で女の人と男の人が話しています。男の人は明日、何時に出社しますか。" },
+            { "speaker": "F", "text": "田中さん、明日は社長がいらっしゃるので、朝礼をいつもより30分早く、8時半から行います。" },
+            { "speaker": "M", "text": "わかりました。じゃあ、8時までには来ないといけませんね。" },
+            { "speaker": "F", "text": "いいえ、そこまで早くなくても大丈夫です。8時15分に来てくれれば十分ですよ。" },
+            { "speaker": "M", "text": "はい、わかりました。" }
+        ],
+        "options": [
+            "8<ruby>時<rt>じ</rt></ruby>",
+            "8<ruby>時<rt>じ</rt></ruby>15<ruby>分<rt>ふん</rt></ruby>",
+            "8<ruby>時<rt>じ</rt></ruby>30<ruby>分<rt>ふん</rt></ruby>",
+            "9<ruby>時<rt>じ</rt></ruby>"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人が駅員と話しています。男の人はいくら払いますか。" },
+            { "speaker": "M", "text": "すみません、切符をなくしてしまったんですが…。" },
+            { "speaker": "F", "text": "どこから乗りましたか。" },
+            { "speaker": "M", "text": "東京駅からです。350円の切符を買ったことは覚えているんですが。" },
+            { "speaker": "F", "text": "申し訳ありませんが、もう一度ここから東京駅までの料金、350円をお支払いください。もし後で切符が見つかったら、お金はお返しします。" },
+            { "speaker": "M", "text": "わかりました。" }
+        ],
+        "options": [
+            "0<ruby>円<rt>えん</rt></ruby>",
+            "300<ruby>円<rt>えん</rt></ruby>",
+            "350<ruby>円<rt>えん</rt></ruby>",
+            "700<ruby>円<rt>えん</rt></ruby>"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。男の人は休みの日に何をしていますか。" },
+            { "speaker": "F", "text": "山田さんは休みの日はいつも何をしているんですか。スポーツとか？" },
+            { "speaker": "M", "text": "昔はよくテニスをしていましたが、最近は疲れるのでやっていません。" },
+            { "speaker": "F", "text": "じゃあ、家でテレビを見ているんですか。" },
+            { "speaker": "M", "text": "いいえ、庭で野菜を育てています。自分で作った野菜は美味しいですよ。" },
+            { "speaker": "F", "text": "へえ、いいですね。" }
+        ],
+        "options": [
+            "テニスをしている",
+            "テレビを<ruby>見<rt>み</rt></ruby>ている",
+            "<ruby>野菜<rt>やさい</rt></ruby>を<ruby>作<rt>つく</rt></ruby>っている",
+            "<ruby>料理<rt>りょうり</rt></ruby>をしている"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "女の人がホテルで話しています。朝食は何時からですか。" },
+            { "speaker": "M", "text": "お客様、朝食付きのプランですね。朝食は１階のレストランでご用意しております。" },
+            { "speaker": "F", "text": "はい、何時からですか。" },
+            { "speaker": "M", "text": "平日は朝6時半からですが、明日は日曜日ですので、30分遅く始まります。9時半までにお入りください。" },
+            { "speaker": "F", "text": "わかりました。ありがとうございます。" }
+        ],
+        "options": [
+            "6<ruby>時<rt>じ</rt></ruby>",
+            "6<ruby>時半<rt>じはん</rt></ruby>",
+            "7<ruby>時<rt>じ</rt></ruby>",
+            "9<ruby>時半<rt>じはん</rt></ruby>"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "学校で男の学生と女の学生が話しています。男の学生はどうしてテストができませんでしたか。" },
+            { "speaker": "F", "text": "今日の漢字のテスト、どうだった？" },
+            { "speaker": "M", "text": "全然できなかったよ。勉強する時間がなかったんだ。" },
+            { "speaker": "F", "text": "アルバイトが忙しかったの？" },
+            { "speaker": "M", "text": "ううん、昨日友達の部屋で夜までゲームをしてて、そのまま寝ちゃったんだ。" },
+            { "speaker": "F", "text": "もう、また？" }
+        ],
+        "options": [
+            "<ruby>難<rt>むずか</rt></ruby>しかったから",
+            "アルバイトが<ruby>忙<rt>いそが</rt></ruby>しかったから",
+            "<ruby>友達<rt>ともだち</rt></ruby>とゲームをして<ruby>寝<rt>ね</rt></ruby>てしまったから",
+            "<ruby>病気<rt>びょうき</rt></ruby>だったから"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。女の人は誰と旅行に行きましたか。" },
+            { "speaker": "M", "text": "北海道旅行、どうだった？楽しかった？" },
+            { "speaker": "F", "text": "うん、すごく綺麗だった！家族で行ったの？って聞かれるけど、今回は違うの。" },
+            { "speaker": "M", "text": "じゃあ、大学の友達と？" },
+            { "speaker": "F", "text": "いいえ、高校の時の友達二人と一緒に行ったの。久しぶりに会えて嬉しかったわ。" }
+        ],
+        "options": [
+            "<ruby>一人<rt>ひとり</rt></ruby>で",
+            "<ruby>家族<rt>かぞく</rt></ruby>と",
+            "<ruby>大学<rt>だいがく</rt></ruby>の<ruby>友達<rt>ともだち</rt></ruby>と",
+            "<ruby>高校<rt>こうこう</rt></ruby>の<ruby>友達<rt>ともだち</rt></ruby>と"
+        ],
+        "answer": 3
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "会社で男の人と女の人が話しています。男の人はこれから何をしますか。" },
+            { "speaker": "M", "text": "すみません、コピー機の使い方がわからないんですが、教えてもらえませんか。" },
+            { "speaker": "F", "text": "いいですよ。まずここに紙を置いて、このボタンを押すんです。" },
+            { "speaker": "M", "text": "あ、紙が詰まってしまいました。" },
+            { "speaker": "F", "text": "本当ですね。私が直しますから、山田さんはその間にこの書類にハンコを押しておいてください。" },
+            { "speaker": "M", "text": "わかりました。" }
+        ],
+        "options": [
+            "コピー<ruby>機<rt>き</rt></ruby>を<ruby>直<rt>なお</rt></ruby>す",
+            "コピーをとる",
+            "<ruby>書類<rt>しょるい</rt></ruby>にハンコを<ruby>押<rt>お</rt></ruby>す",
+            "お<ruby>茶<rt>ちゃ</rt></ruby>を<ruby>入<rt>い</rt></ruby>れる"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "女の人が電話で話しています。女の人はどのボタンを押しますか。" },
+            { "speaker": "M", "text": "お電話ありがとうございます。さくら銀行です。カードをなくした方は１を、住所を変更する方は２を、パスワードを忘れた方は３を押してください。" },
+            { "speaker": "F", "text": "ええと、引っ越しをしたから、これね。" }
+        ],
+        "options": [
+            "1",
+            "2",
+            "3",
+            "0"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人が歯医者と話しています。男の人は今日、お風呂に入れますか。" },
+            { "speaker": "F", "text": "今日は歯を抜きましたから、熱いお風呂に入ってはいけません。シャワーだけにしてください。" },
+            { "speaker": "M", "text": "はい。明日はどうですか。" },
+            { "speaker": "F", "text": "明日ならお風呂に入っても大丈夫ですよ。それから、固いものは食べないでくださいね。" }
+        ],
+        "options": [
+            "<ruby>今日<rt>きょう</rt></ruby>もお<ruby>風呂<rt>ふろ</rt></ruby>に<ruby>入<rt>はい</rt></ruby>れる",
+            "<ruby>今日<rt>きょう</rt></ruby>はシャワーだけ、<ruby>明日<rt>あした</rt></ruby>はお<ruby>風呂<rt>ふろ</rt></ruby>に<ruby>入<rt>はい</rt></ruby>れる",
+            "<ruby>明日<rt>あした</rt></ruby>もシャワーだけにしなければならない",
+            "<ruby>今日<rt>きょう</rt></ruby>も<ruby>明日<rt>あした</rt></ruby>もお<ruby>風呂<rt>ふろ</rt></ruby>に<ruby>入<rt>はい</rt></ruby>ってはいけない"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "女の人と男の人が話しています。男の人の子供は今、何をしていますか。" },
+            { "speaker": "F", "text": "鈴木さんの息子さん、今年は小学生ですね。学校は楽しいと言っていますか。" },
+            { "speaker": "M", "text": "ええ、毎日元気に通っています。でも、家に帰るとすぐテレビをつけて、全然勉強しないんですよ。" },
+            { "speaker": "F", "text": "男の子はそんなものですよ。今はテレビを見ているんですか。" },
+            { "speaker": "M", "text": "いや、今日は珍しく、自分の部屋で本を読んでいますよ。" }
+        ],
+        "options": [
+            "<ruby>学校<rt>がっこう</rt></ruby>に<ruby>行<rt>い</rt></ruby>っている",
+            "テレビを<ruby>見<rt>み</rt></ruby>ている",
+            "<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>んでいる",
+            "<ruby>勉強<rt>べんきょう</rt></ruby>している"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。女の人はこれからどうしますか。" },
+            { "speaker": "M", "text": "雨が降ってきちゃったね。傘、持ってる？" },
+            { "speaker": "F", "text": "ううん、持ってない。どうしよう。バス停まで走る？" },
+            { "speaker": "M", "text": "濡れると風邪をひくよ。僕は傘を持っているから、駅まで一緒に入れてあげるよ。" },
+            { "speaker": "F", "text": "本当に？ありがとう。助かるわ。" }
+        ],
+        "options": [
+            "バス<ruby>停<rt>てい</rt></ruby>まで<ruby>走<rt>はし</rt></ruby>る",
+            "<ruby>男<rt>おとこ</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>の<ruby>傘<rt>かさ</rt></ruby>に<ruby>入<rt>はい</rt></ruby>って<ruby>駅<rt>えき</rt></ruby>まで<ruby>行<rt>い</rt></ruby>く",
+            "ここで<ruby>雨<rt>あめ</rt></ruby>が<ruby>止<rt>や</rt></ruby>むのを<ruby>待<rt>ま</rt></ruby>つ",
+            "コンビニで<ruby>傘<rt>かさ</rt></ruby>を<ruby>買<rt>か</rt></ruby>う"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "大学で先生が話しています。学生はレポートをどうやって出しますか。" },
+            { "speaker": "M", "text": "この授業のレポートについて説明します。来週の金曜日までに書いてください。書いたレポートは、紙に印刷して私の部屋に持ってくるのではなく、メールで送ってください。ファイルの名前には自分の番号と名前を忘れずに書いてくださいね。" }
+        ],
+        "options": [
+            "<ruby>紙<rt>かみ</rt></ruby>に<ruby>印刷<rt>いんさつ</rt></ruby>して<ruby>先生<rt>せんせい</rt></ruby>の<ruby>部屋<rt>へや</rt></ruby>へ<ruby>持<rt>も</rt></ruby>っていく",
+            "メールで<ruby>先生<rt>せんせい</rt></ruby>に<ruby>送<rt>おく</rt></ruby>る",
+            "<ruby>授業<rt>じゅぎょう</rt></ruby>のときに<ruby>先生<rt>せんせい</rt></ruby>に<ruby>渡<rt>わた</rt></ruby>す",
+            "ポストに<ruby>入<rt>い</rt></ruby>れる"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。男の人はどうして車を買いませんか。" },
+            { "speaker": "F", "text": "田中さん、毎日電車で通うのは大変でしょう。車を買わないんですか。" },
+            { "speaker": "M", "text": "欲しいんですけどね。車のお金はなんとかなるんですが、アパートに車を置く場所がないんです。" },
+            { "speaker": "F", "text": "近くの駐車場を借りたらどうですか。" },
+            { "speaker": "M", "text": "毎月の駐車場の値段が高すぎて、払えないんですよ。" }
+        ],
+        "options": [
+            "<ruby>車<rt>くるま</rt></ruby>が<ruby>高<rt>たか</rt></ruby>いから",
+            "<ruby>運転<rt>うんてん</rt></ruby>ができないから",
+            "<ruby>車<rt>くるま</rt></ruby>を<ruby>置<rt>お</rt></ruby>く<ruby>場所<rt>ばしょ</rt></ruby>の<ruby>お金<rt>かね</rt></ruby>が<ruby>払<rt>はら</rt></ruby>えないから",
+            "<ruby>電車<rt>でんしゃ</rt></ruby>のほうが<ruby>便利<rt>べんり</rt></ruby>だから"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "女の人がテレビのニュースを聞いています。今、台風はどこにいますか。" },
+            { "speaker": "M", "text": "台風のニュースをお伝えします。台風は昨日、沖縄を通って、現在は九州の西の海をゆっくり北へ進んでいます。明日の朝には四国に近づくでしょう。" }
+        ],
+        "options": [
+            "<ruby>沖縄<rt>おきなわ</rt></ruby>",
+            "<ruby>九州<rt>きゅうしゅう</rt></ruby>の<ruby>西<rt>にし</rt></ruby>",
+            "<ruby>四国<rt>しこく</rt></ruby>",
+            "<ruby>東京<rt>とうきょう</rt></ruby>"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人が病院の受付で話しています。男の人は保険証をどうしますか。" },
+            { "speaker": "M", "text": "すみません、初めてなんですが。" },
+            { "speaker": "F", "text": "はい。では、こちらの紙にお名前と住所を書いてください。保険証はお持ちですか。" },
+            { "speaker": "M", "text": "あ、忘れました。家に取りに帰ったほうがいいですか。" },
+            { "speaker": "F", "text": "今日は結構ですよ。次回、来るときに見せてください。" },
+            { "speaker": "M", "text": "わかりました。" }
+        ],
+        "options": [
+            "<ruby>家<rt>いえ</rt></ruby>に<ruby>取<rt>と</rt></ruby>りに<ruby>帰<rt>かえ</rt></ruby>る",
+            "<ruby>今<rt>いま</rt></ruby>すぐ<ruby>見<rt>み</rt></ruby>せる",
+            "<ruby>次<rt>つぎ</rt></ruby>に<ruby>来<rt>く</rt></ruby>るときに<ruby>持<rt>も</rt></ruby>ってくる",
+            "<ruby>新<rt>あたら</rt></ruby>しい<ruby>保険証<rt>ほけんしょう</rt></ruby>を<ruby>作<rt>つく</rt></ruby>る"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "会社で男の人と女の人が話しています。男の人は誰に電話をかけますか。" },
+            { "speaker": "M", "text": "鈴木さん、山田部長はどこにいるか知っていますか。" },
+            { "speaker": "F", "text": "部長なら、先ほど銀行に行かれましたよ。" },
+            { "speaker": "M", "text": "そうですか。急いで伝えたいことがあるんですが。" },
+            { "speaker": "F", "text": "部長は携帯電話を持っていませんから、一緒に行った佐藤さんに電話してみたらどうですか。" },
+            { "speaker": "M", "text": "そうですね。そうします。" }
+        ],
+        "options": [
+            "<ruby>鈴木<rt>すずき</rt></ruby>さん",
+            "山田<ruby>部長<rt>ぶちょう</rt></ruby>",
+            "<ruby>銀行<rt>ぎんこう</rt></ruby>",
+            "<ruby>佐藤<rt>さとう</rt></ruby>さん"
+        ],
+        "answer": 3
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "女の人と男の人が話しています。男の人はどうしてケーキを食べませんか。" },
+            { "speaker": "F", "text": "これ、昨日作ったケーキです。どうぞ食べてください。" },
+            { "speaker": "M", "text": "ありがとうございます。あ、でも、イチゴが入っていますね。" },
+            { "speaker": "F", "text": "はい。嫌いですか。" },
+            { "speaker": "M", "text": "嫌いじゃないんですが、食べるとアレルギーで体がかゆくなるんです。" },
+            { "speaker": "F", "text": "あ、ごめんなさい。じゃあ、無理しないでくださいね。" }
+        ],
+        "options": [
+            "<ruby>甘<rt>あま</rt></ruby>いものが<ruby>嫌<rt>きら</rt></ruby>いだから",
+            "イチゴが<ruby>嫌<rt>きら</rt></ruby>いだから",
+            "アレルギーがあるから",
+            "ダイエットしているから"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "お店で男の人と女の人が話しています。女の人はどの色のシャツを買いますか。" },
+            { "speaker": "M", "text": "その青いシャツ、よく似合っているよ。" },
+            { "speaker": "F", "text": "そう？でも、青い服はたくさん持っているのよね。赤いのはどうかな。" },
+            { "speaker": "M", "text": "ちょっと派手すぎるんじゃない？白いのもあるよ。" },
+            { "speaker": "F", "text": "白は汚れやすいから嫌。やっぱり持っている服に合わせて、これにするわ。" }
+        ],
+        "options": [
+            "<ruby>青<rt>あお</rt></ruby>",
+            "<ruby>赤<rt>あか</rt></ruby>",
+            "<ruby>白<rt>しろ</rt></ruby>",
+            "<ruby>黒<rt>くろ</rt></ruby>"
+        ],
+        "answer": 0
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "大学で女の学生と先生が話しています。女の学生は明日、何時に来ますか。" },
+            { "speaker": "F", "text": "先生、明日の面接の練習ですが、午後３時からでよろしいでしょうか。" },
+            { "speaker": "M", "text": "３時は会議が入ってしまったんだ。１時間早く来られる？" },
+            { "speaker": "F", "text": "はい、大丈夫です。では、その時間にお伺いします。" }
+        ],
+        "options": [
+            "2<ruby>時<rt>じ</rt></ruby>",
+            "3<ruby>時<rt>じ</rt></ruby>",
+            "4<ruby>時<rt>じ</rt></ruby>",
+            "1<ruby>時<rt>じ</rt></ruby>"
+        ],
+        "answer": 0
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が道で話しています。二人はこれからどうしますか。" },
+            { "speaker": "M", "text": "あ、見て。あそこのレストラン、すごく並んでいるね。" },
+            { "speaker": "F", "text": "本当だ。新しいお店ができたのね。私たちも食べてみない？" },
+            { "speaker": "M", "text": "でも、30分ぐらい待ちそうだよ。お腹が空いているから、いつものラーメン屋にしようよ。" },
+            { "speaker": "F", "text": "えー、せっかくだから待とうよ。" },
+            { "speaker": "M", "text": "わかったよ。じゃあ、後ろに並ぼう。" }
+        ],
+        "options": [
+            "<ruby>新<rt>あたら</rt></ruby>しいレストランに<ruby>並<rt>なら</rt></ruby>ぶ",
+            "ラーメン<ruby>屋<rt>や</rt></ruby>に<ruby>行<rt>い</rt></ruby>く",
+            "<ruby>帰<rt>かえ</rt></ruby>る",
+            "<ruby>他<rt>ほか</rt></ruby>の店を<ruby>探<rt>さが</rt></ruby>す"
+        ],
+        "answer": 0
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "ラジオを聞いています。アナウンサーは何について話していますか。" },
+            { "speaker": "M", "text": "皆さん、最近は夜でも暑くて眠れない日が続いていますね。エアコンをつけたまま寝ると風邪をひくと言う人がいますが、つけないで寝ると病気になる危険があります。タイマーを使って、上手にエアコンを使いましょう。" }
+        ],
+        "options": [
+            "<ruby>風邪<rt>かぜ</rt></ruby>の<ruby>治<rt>なお</rt></ruby>し<ruby>方<rt>かた</rt></ruby>",
+            "エアコンの<ruby>買<rt>か</rt></ruby>い<ruby>方<rt>かた</rt></ruby>",
+            "<ruby>暑<rt>あつ</rt></ruby>い<ruby>夜<rt>よる</rt></ruby>のエアコンの<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>",
+            "タイマーの<ruby>直<rt>なお</rt></ruby>し<ruby>方<rt>かた</rt></ruby>"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。男の人はどうして日本語を勉強していますか。" },
+            { "speaker": "F", "text": "トムさんはどうして日本へ来たんですか。アニメが好きだからですか。" },
+            { "speaker": "M", "text": "アニメも好きですが、それだけじゃありません。将来、日本の会社で働きたいと思っているんです。" },
+            { "speaker": "F", "text": "そうですか。日本の文化に興味があるのかと思っていました。" },
+            { "speaker": "M", "text": "もちろん文化も好きですよ。でも一番の理由は仕事ですね。" }
+        ],
+        "options": [
+            "アニメが<ruby>好<rt>す</rt></ruby>きだから",
+            "<ruby>日本<rt>にほん</rt></ruby>の<ruby>文化<rt>ぶんか</rt></ruby>を<ruby>研究<rt>けんきゅう</rt></ruby>したいから",
+            "<ruby>日本<rt>にほん</rt></ruby>の<ruby>会社<rt>かいしゃ</rt></ruby>で<ruby>働<rt>はたら</rt></ruby>きたいから",
+            "<ruby>日本<rt>にほん</rt></ruby>の<ruby>大学<rt>だいがく</rt></ruby>に<ruby>入<rt>はい</rt></ruby>りたいから"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "女の人と男の人が電話で話しています。男の人はこれから何をしますか。" },
+            { "speaker": "F", "text": "もしもし、今駅に着いたよ。" },
+            { "speaker": "M", "text": "ごめん、まだ家にいるんだ。今からすぐに出るよ。" },
+            { "speaker": "F", "text": "えっ、まだ家なの？外は寒いから、駅の近くの喫茶店に入って待っているね。" },
+            { "speaker": "M", "text": "うん、わかった。急いで行くね。" }
+        ],
+        "options": [
+            "<ruby>駅<rt>えき</rt></ruby>で<ruby>待<rt>ま</rt></ruby>つ",
+            "<ruby>喫茶店<rt>きっさてん</rt></ruby>に<ruby>行<rt>い</rt></ruby>く",
+            "<ruby>家<rt>いえ</rt></ruby>を<ruby>出<rt>で</rt></ruby>る",
+            "<ruby>電話<rt>でんわ</rt></ruby>をかける"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "会社で男の人と女の人が話しています。女の人はこれから誰に連絡しますか。" },
+            { "speaker": "M", "text": "田中さん、明日の会議のことだけど、社長は急に出張になって来られないそうだよ。" },
+            { "speaker": "F", "text": "そうですか。では、参加するのは部長と私たちだけですね。" },
+            { "speaker": "M", "text": "うん。部長には僕から伝えておくから、君は他のメンバーにメールで知らせておいて。" },
+            { "speaker": "F", "text": "わかりました。" }
+        ],
+        "options": [
+            "<ruby>社長<rt>しゃちょう</rt></ruby>",
+            "<ruby>部長<rt>ぶちょう</rt></ruby>",
+            "<ruby>他<rt>ほか</rt></ruby>のメンバー",
+            "<ruby>男<rt>おとこ</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "お店で男の人と女の人が話しています。男の人はどのプレゼントを選びますか。" },
+            { "speaker": "M", "text": "母の誕生日に何をあげようか迷っているんだ。" },
+            { "speaker": "F", "text": "そうね、エプロンなんかどう？お母さん、よく料理をするんでしょう？" },
+            { "speaker": "M", "text": "うーん、エプロンは去年あげたんだ。今年はいつも身につけられるものがいいな。" },
+            { "speaker": "F", "text": "じゃあ、このスカーフはどう？これからの季節にぴったりよ。" },
+            { "speaker": "M", "text": "あ、色もきれいだね。これにしよう。" }
+        ],
+        "options": [
+            "エプロン",
+            "スカーフ",
+            "<ruby>時計<rt>とけい</rt></ruby>",
+            "<ruby>料理<rt>りょうり</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。女の人はどうして仕事を辞めましたか。" },
+            { "speaker": "M", "text": "えっ、仕事辞めたの？どうして？給料が安かったから？" },
+            { "speaker": "F", "text": "ううん、お給料はよかったんだけど、毎日残業で家に帰るのが夜遅くて。" },
+            { "speaker": "M", "text": "そうなんだ。人間関係はうまくいってたの？" },
+            { "speaker": "F", "text": "ええ、みんな親切だったわ。でも、体がもたなくて。" }
+        ],
+        "options": [
+            "<ruby>給料<rt>きゅうりょう</rt></ruby>が<ruby>安<rt>やす</rt></ruby>かったから",
+            "<ruby>人間関係<rt>にんげんかんけい</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>かったから",
+            "<ruby>残業<rt>ざんぎょう</rt></ruby>が<ruby>多<rt>おお</rt></ruby>くて<ruby>疲<rt>つか</rt></ruby>れたから",
+            "<ruby>結婚<rt>けっこん</rt></ruby>したから"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人が図書館の受付で話しています。男の人はどうやって本を探しますか。" },
+            { "speaker": "M", "text": "すみません、日本の歴史についての本を探しているんですが、どこにありますか。" },
+            { "speaker": "F", "text": "歴史の本は２階の棚にありますが、たくさんあるので、あちらのパソコンで検索して番号を調べてから行くことをお勧めします。" },
+            { "speaker": "M", "text": "なるほど。じゃあ、まずそっちを使ってみます。" }
+        ],
+        "options": [
+            "2<ruby>階<rt>かい</rt></ruby>の<ruby>棚<rt>たな</rt></ruby>をすぐ<ruby>見<rt>み</rt></ruby>に<ruby>行<rt>い</rt></ruby>く",
+            "パソコンで<ruby>番号<rt>ばんごう</rt></ruby>を<ruby>調<rt>しら</rt></ruby>べる",
+            "<ruby>受付<rt>うけつけ</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>に<ruby>探<rt>さが</rt></ruby>してもらう",
+            "<ruby>本屋<rt>ほんや</rt></ruby>に<ruby>行<rt>い</rt></ruby>く"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。女の人は昨日の夜、何をしましたか。" },
+            { "speaker": "M", "text": "昨日の夜は、あのドラマ見た？すごく面白かったよ。" },
+            { "speaker": "F", "text": "ううん、見なかった。昨日は友達と食事に行ってたの。" },
+            { "speaker": "M", "text": "そうなんだ。いいなあ。" },
+            { "speaker": "F", "text": "でも、帰ってから録画しておいたのを見たわよ。" }
+        ],
+        "options": [
+            "<ruby>友達<rt>ともだち</rt></ruby>と<ruby>食事<rt>しょくじ</rt></ruby>をして、<ruby>寝<rt>ね</rt></ruby>た",
+            "テレビでドラマを<ruby>見<rt>み</rt></ruby>た",
+            "<ruby>友達<rt>ともだち</rt></ruby>と<ruby>食事<rt>しょくじ</rt></ruby>をしてから、ドラマを<ruby>見<rt>み</rt></ruby>た",
+            "<ruby>何<rt>なに</rt></ruby>もしなかった"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "スーパーで男の人と女の人が話しています。男の人は何を買いますか。" },
+            { "speaker": "M", "text": "カレーを作るから、じゃがいもと人参を買おう。" },
+            { "speaker": "F", "text": "お肉はどうする？牛肉にする？" },
+            { "speaker": "M", "text": "ううん、今日は鶏肉にしよう。あ、玉ねぎは家にあったよね。" },
+            { "speaker": "F", "text": "玉ねぎ、昨日全部使っちゃったわよ。" },
+            { "speaker": "M", "text": "そうか、じゃあ玉ねぎも買わないと。" }
+        ],
+        "options": [
+            "じゃがいも、<ruby>人参<rt>にんじん</rt></ruby>、<ruby>牛肉<rt>ぎゅうにく</rt></ruby>、<ruby>玉<rt>たま</rt></ruby>ねぎ",
+            "じゃがいも、<ruby>人参<rt>にんじん</rt></ruby>、<ruby>鶏肉<rt>とりにく</rt></ruby>",
+            "じゃがいも、<ruby>人参<rt>にんじん</rt></ruby>、<ruby>牛肉<rt>ぎゅうにく</rt></ruby>",
+            "じゃがいも、<ruby>人参<rt>にんじん</rt></ruby>、<ruby>鶏肉<rt>とりにく</rt></ruby>、<ruby>玉<rt>たま</rt></ruby>ねぎ"
+        ],
+        "answer": 3
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "女の人が話しています。明日の朝ごはんは何ですか。" },
+            { "speaker": "F", "text": "明日の朝ごはんはパンと卵です。いつもはコーヒーを飲みますが、明日は牛乳を飲みます。ヨーグルトはありません。" }
+        ],
+        "options": [
+            "パンと<ruby>卵<rt>たまご</rt></ruby>とコーヒー",
+            "パンと<ruby>卵<rt>たまご</rt></ruby>と<ruby>牛乳<rt>ぎゅうにゅう</rt></ruby>",
+            "パンと<ruby>卵<rt>たまご</rt></ruby>とヨーグルト",
+            "<ruby>卵<rt>たまご</rt></ruby>と<ruby>牛乳<rt>ぎゅうにゅう</rt></ruby>とコーヒー"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。男の人はどうして仕事を休みましたか。" },
+            { "speaker": "F", "text": "山田さん、昨日はお休みでしたね。風邪ですか。" },
+            { "speaker": "M", "text": "いいえ、実は階段から落ちて、足を怪我してしまったんです。" },
+            { "speaker": "F", "text": "ええっ、大丈夫ですか。病院へ行きましたか。" },
+            { "speaker": "M", "text": "はい。骨には問題ありませんでしたが、痛くて歩けなかったので。" }
+        ],
+        "options": [
+            "<ruby>風邪<rt>かぜ</rt></ruby>をひいたから",
+            "<ruby>足<rt>あし</rt></ruby>を<ruby>怪我<rt>けが</rt></ruby>したから",
+            "<ruby>骨<rt>ほね</rt></ruby>が<ruby>折<rt>お</rt></ruby>れたから",
+            "<ruby>病院<rt>びょういん</rt></ruby>の<ruby>先生<rt>せんせい</rt></ruby>に<ruby>会<rt>あ</rt></ruby>いに行ったから"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "会社で女の人と男の人が話しています。男の人はこれから何をしますか。" },
+            { "speaker": "F", "text": "会議室の準備、終わった？" },
+            { "speaker": "M", "text": "はい、机と椅子は並べました。ホワイトボードもきれいにしました。" },
+            { "speaker": "F", "text": "じゃあ、エアコンをつけておいてくれる？" },
+            { "speaker": "M", "text": "わかりました。あ、資料のコピーは私がやりましょうか。" },
+            { "speaker": "F", "text": "それはもう私がやったからいいわ。" }
+        ],
+        "options": [
+            "<ruby>机<rt>つくえ</rt></ruby>と<ruby>椅子<rt>いす</rt></ruby>を<ruby>並<rt>なら</rt></ruby>べる",
+            "ホワイトボードをきれいにする",
+            "エアコンをつける",
+            "<ruby>資料<rt>しりょう</rt></ruby>をコピーする"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "駅でアナウンスを聞いています。パスポートを落とした人はどうしますか。" },
+            { "speaker": "M", "text": "お客様にお知らせいたします。青いパスポートを拾いました。お心当たりのある方は、改札口の駅員までお知らせください。駅長室ではありませんのでご注意ください。" }
+        ],
+        "options": [
+            "<ruby>改札口<rt>かいさつぐち</rt></ruby>へ<ruby>行<rt>い</rt></ruby>く",
+            "<ruby>駅長室<rt>えきちょうしつ</rt></ruby>へ<ruby>行<rt>い</rt></ruby>く",
+            "<ruby>警察<rt>けいさつ</rt></ruby>へ<ruby>行<rt>い</rt></ruby>く",
+            "<ruby>電話<rt>でんわ</rt></ruby>をかける"
+        ],
+        "answer": 0
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の学生と女の学生が話しています。男の学生はどうして遅れましたか。" },
+            { "speaker": "F", "text": "遅いよ！もう映画が始まっちゃうよ。" },
+            { "speaker": "M", "text": "ごめんごめん。家を出る時は間に合うと思ったんだけど、自転車がパンクしちゃって。" },
+            { "speaker": "F", "text": "それで歩いてきたの？" },
+            { "speaker": "M", "text": "ううん、走ってきたよ。" }
+        ],
+        "options": [
+            "<ruby>家<rt>いえ</rt></ruby>を<ruby>出<rt>で</rt></ruby>るのが<ruby>遅<rt>おそ</rt></ruby>かったから",
+            "<ruby>道<rt>みち</rt></ruby>に<ruby>迷<rt>まよ</rt></ruby>ったから",
+            "<ruby>自転車<rt>じてんしゃ</rt></ruby>がパンクしたから",
+            "<ruby>歩<rt>ある</rt></ruby>いてきたから"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人が電話で話しています。男の人は今、何をしていますか。" },
+            { "speaker": "M", "text": "もしもし、今どこ？僕はもう着いて、本屋で立ち読みしてるよ。あ、急がなくていいよ。ここで本を見ながら待ってるから。" }
+        ],
+        "options": [
+            "<ruby>本<rt>ほん</rt></ruby>を<ruby>買<rt>か</rt></ruby>っている",
+            "<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>んでいる",
+            "<ruby>走<rt>はし</rt></ruby>っている",
+            "<ruby>喫茶店<rt>きっさてん</rt></ruby>にいる"
+        ],
+        "answer": 1
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "病院で女の人と医者が話しています。女の人は１日に何回薬を飲みますか。" },
+            { "speaker": "M", "text": "この薬は朝と夜の２回、ご飯の後に飲んでください。" },
+            { "speaker": "F", "text": "昼ご飯の後は飲まなくていいんですね。" },
+            { "speaker": "M", "text": "はい、昼は必要ありません。それから、寝る前にこの白い薬を１回のんでくださいね。" },
+            { "speaker": "F", "text": "わかりました。" }
+        ],
+        "options": [
+            "1<ruby>回<rt>かい</rt></ruby>",
+            "2<ruby>回<rt>かい</rt></ruby>",
+            "3<ruby>回<rt>かい</rt></ruby>",
+            "4<ruby>回<rt>かい</rt></ruby>"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "会社で男の人と女の人が話しています。男の人はどのパソコンを使いますか。" },
+            { "speaker": "M", "text": "すみません、このパソコン、使ってもいいですか。" },
+            { "speaker": "F", "text": "あ、それは今から私が使うので、窓のそばにあるのを使ってください。" },
+            { "speaker": "M", "text": "窓のそばですね。２つありますが、どちらでもいいですか。" },
+            { "speaker": "F", "text": "右のは壊れているので、左のを使ってください。" },
+            { "speaker": "M", "text": "はい、わかりました。" }
+        ],
+        "options": [
+            "<ruby>女<rt>おんな</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>にあるパソコン",
+            "<ruby>窓<rt>まど</rt></ruby>のそばの<ruby>右<rt>みぎ</rt></ruby>のパソコン",
+            "<ruby>窓<rt>まど</rt></ruby>のそばの<ruby>左<rt>ひだり</rt></ruby>のパソコン",
+            "ドアのそばのパソコン"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の学生と女の学生が話しています。男の学生は夏休みにどこへ行きますか。" },
+            { "speaker": "F", "text": "来週から夏休みだね。どこかへ行くの？" },
+            { "speaker": "M", "text": "うん、海へ行って泳ぎたいんだけど、海はお金がかかるから。" },
+            { "speaker": "F", "text": "じゃあ、山に登る？" },
+            { "speaker": "M", "text": "山は疲れるから嫌だな。結局、ずっと家でゲームをしていると思うよ。" },
+            { "speaker": "F", "text": "えー、つまらないわね。" }
+        ],
+        "options": [
+            "<ruby>海<rt>うみ</rt></ruby>",
+            "<ruby>山<rt>やま</rt></ruby>",
+            "<ruby>家<rt>いえ</rt></ruby>",
+            "<ruby>外国<rt>がいこく</rt></ruby>"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "デパートで女の人が店員と話しています。女の人はどのカバンを買いますか。" },
+            { "speaker": "F", "text": "すみません、旅行に持っていくカバンを探しているんですが。" },
+            { "speaker": "M", "text": "こちらはいかがですか。とても軽くて、色が赤と黒の２種類あります。" },
+            { "speaker": "F", "text": "黒は暗いから、明るい色がいいわ。あ、でもこの赤いのは少し小さいですね。もっと大きいのはありませんか。" },
+            { "speaker": "M", "text": "大きいサイズでしたら、こちらの青いカバンになりますが。" },
+            { "speaker": "F", "text": "じゃあ、それにします。" }
+        ],
+        "options": [
+            "<ruby>小<rt>ちい</rt></ruby>さい<ruby>赤<rt>あか</rt></ruby>いカバン",
+            "<ruby>小<rt>ちい</rt></ruby>さい<ruby>黒<rt>くろ</rt></ruby>いカバン",
+            "<ruby>大<rt>おお</rt></ruby>きい<ruby>青<rt>あお</rt></ruby>いカバン",
+            "<ruby>大<rt>おお</rt></ruby>きい<ruby>黒<rt>くろ</rt></ruby>いカバン"
+        ],
+        "answer": 2
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "男の人と女の人が話しています。二人は何時にどこで会いますか。" },
+            { "speaker": "M", "text": "明日の約束だけど、午後１時に駅の東口でいい？" },
+            { "speaker": "F", "text": "１時はちょっと早いな。２時でもいい？" },
+            { "speaker": "M", "text": "うん、いいよ。場所は東口だね？" },
+            { "speaker": "F", "text": "東口は人が多いから、西口の交番の前にしない？" },
+            { "speaker": "M", "text": "わかった。じゃあ明日ね。" }
+        ],
+        "options": [
+            "1<ruby>時<rt>じ</rt></ruby>に<ruby>東口<rt>ひがしぐち</rt></ruby>",
+            "1<ruby>時<rt>じ</rt></ruby>に<ruby>西口<rt>にしぐち</rt></ruby>",
+            "2<ruby>時<rt>じ</rt></ruby>に<ruby>東口<rt>ひがしぐち</rt></ruby>",
+            "2<ruby>時<rt>じ</rt></ruby>に<ruby>西口<rt>にしぐち</rt></ruby>"
+        ],
+        "answer": 3
+    },
+    {
+        "dialog": [
+            { "speaker": "F", "text": "会社で男の人と女の人が話しています。男の人はこれから何をしますか。" },
+            { "speaker": "M", "text": "お弁当、買ってこようか。何か欲しいものある？" },
+            { "speaker": "F", "text": "ありがとう。じゃあ、サンドイッチをお願い。" },
+            { "speaker": "M", "text": "飲み物もいる？" },
+            { "speaker": "F", "text": "コーヒーは自分でお茶を入れるから、いらないわ。" },
+            { "speaker": "M", "text": "わかった。じゃあ行ってくるよ。" }
+        ],
+        "options": [
+            "お<ruby>弁当<rt>べんとう</rt></ruby>とコーヒーを<ruby>買<rt>か</rt></ruby>う",
+            "お<ruby>弁当<rt>べんとう</rt></ruby>だけ<ruby>買<rt>か</rt></ruby>う",
+            "サンドイッチとコーヒーを<ruby>買<rt>か</rt></ruby>う",
+            "サンドイッチだけ<ruby>買<rt>か</rt></ruby>う"
+        ],
+        "answer": 3
+    }
         ];
 
         let questionsDB = [...originalQuestionsDB];
