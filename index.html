@@ -93,6 +93,16 @@
         .card-title { font-size: 24px; font-weight: bold; color: #ffb7c5; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .card-desc { font-size: 15px; color: #ddd; line-height: 1.5; }
 
+        /* CUSTOM WA CARD - EFEK HIJAU WHATSAPP */
+        .card.wa-card { border-color: #25D366; }
+        .card.wa-card:hover { 
+            border-color: #25D366; 
+            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4); 
+            background: rgba(18, 40, 25, 0.8);
+        }
+        .wa-card .card-icon { text-shadow: 0 0 20px rgba(37, 211, 102, 0.5); }
+        .wa-card .card-title { color: #25D366; }
+
         /* CUSTOM VIP CARD - CHROMA WAVE EFFECT */
         @keyframes chromaWave {
             0% { background-position: 0% 50%; }
@@ -346,9 +356,11 @@
 <!-- TAMPILAN DASHBOARD -->
 <div id="gatekeeper" class="container fade-in">
     
-    <!-- LOGO DITAMBAHKAN DI SINI -->
+   <!-- LOGO DITAMBAHKAN DI SINI -->
    <div class="main-logo-container">
-        <img src="logo.png" alt="Logo" style="width: 400px; height: auto; filter: drop-shadow(0 0 15px rgba(255,183,197,0.8));">
+        <!-- Jika Anda punya gambar logo.png, akan tampil disini -->
+        <!-- <img src="logo.png" alt="Logo" style="width: 400px; height: auto; filter: drop-shadow(0 0 15px rgba(255,183,197,0.8));"> -->
+        <h1 class="main-logo">🌸</h1> <!-- Placeholder Icon -->
     </div>
 
     <div class="dashboard-header">
@@ -391,6 +403,13 @@
             <div class="card-icon">🎮</div>
             <div class="card-title">GAME</div>
             <div class="card-desc">Bermain sambil<br><b>Mengingat Kosakata</b></div>
+        </div>
+
+        <!-- WA GROUP MENU -->
+        <div class="card wa-card" onclick="window.open('https://chat.whatsapp.com/HgZ1Bcsog9XGgvi4OzSmJm?s=cl&p=a&ilr=4')">
+            <div class="card-icon">💬</div>
+            <div class="card-title">GRUP WA</div>
+            <div class="card-desc">Diskusi & Tanya Jawab<br><b>Komunitas Belajar Bersama</b></div>
         </div>
         
         <!-- CARD VIP EKSKLUSIF BERBAYAR -->
