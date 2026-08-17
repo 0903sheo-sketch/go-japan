@@ -2,570 +2,532 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluasi Bab 1-10 | Nihongo Master</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JLPT N5 Premium Grammar Test</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Poppins:wght@300;400;600&display=swap');
+
         :root {
-            --primary: #ff6b81; /* Sentuhan Pink Modern */
-            --primary-light: #ffb7c5;
-            --dark-text: #2d3436;
-            --light-bg: #ffffff;
-            --gold: #f1c40f;
-            --silver: #bdc3c7;
-            --bronze: #cd7f32;
-            --glass: rgba(255, 255, 255, 0.85);
+            --bg-body: #f4f7f6;
+            --bg-card: #ffffff;
+            --text-main: #2d3436;
+            --text-muted: #636e72;
+            --border-color: #dfe6e9;
+            --primary: #0984e3;
+            --primary-hover: #74b9ff;
+            --success: #00b894;
+            --danger: #d63031;
+            --furigana-color: #0984e3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent; /* Hilangkan highlight biru di HP */
         }
 
         body {
-            margin: 0; 
-            font-family: 'Poppins', sans-serif;
-            background: radial-gradient(circle at top right, #fff0f3, #ffffff);
-            color: var(--dark-text); 
-            min-height: 100vh; 
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             overflow-x: hidden;
+            padding: 20px;
         }
 
-        /* Animasi Sakura Jatuh */
-        .sakura {
-            position: fixed; top: -10%; z-index: -1;
-            width: 12px; height: 12px; background: var(--primary-light);
-            border-radius: 50% 0 50% 50%;
-            animation: fall linear infinite;
-            box-shadow: 0 0 8px rgba(255, 183, 197, 0.6);
-            opacity: 0.7;
-        }
-        @keyframes fall {
-            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.8; }
-            100% { transform: translate(100px, 100vh) rotate(360deg); opacity: 0.1; }
+        /* Container & Cards */
+        .container {
+            width: 100%;
+            max-width: 750px;
+            position: relative;
         }
 
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
         .hidden { display: none !important; }
 
-        /* UI Panel Kaca */
-        .glass-panel {
-            background: var(--glass); 
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 107, 129, 0.2);
-            border-radius: 24px; 
-            padding: 40px; 
+        /* Typography */
+        h1 { font-weight: 700; font-size: 28px; text-align: center; margin-bottom: 10px; color: var(--text-main); }
+        h2, h3 { text-align: center; color: var(--text-main); margin-bottom: 20px; }
+        p { text-align: center; color: var(--text-muted); margin-bottom: 30px; font-size: 15px; }
+        
+        /* Japanese Text Styling */
+        .jp-text {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 2;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
-            animation: slideUp 0.6s ease-out;
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
+            margin-bottom: 30px;
         }
 
-        h1, h2 { font-family: 'Noto Sans JP', 'Poppins', sans-serif; letter-spacing: 1px; color: var(--dark-text); }
-        .text-accent { color: var(--primary); }
-        
+        ruby { ruby-align: center; }
+        rt { font-size: 11px; color: var(--furigana-color); font-weight: 400; transform: translateY(-3px); }
+
+        /* Mode Pro menyembunyikan furigana */
+        .pro-mode rt { opacity: 0; visibility: hidden; display: none; }
+
+        /* Inputs */
         input[type="text"] {
-            width: 80%; padding: 15px; border-radius: 12px; 
-            border: 2px solid rgba(255, 107, 129, 0.3);
-            font-size: 16px; text-align: center; font-weight: 600;
-            background: #fff; outline: none; margin: 20px 0;
-            color: var(--dark-text);
-            transition: 0.3s;
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            text-align: center;
+            background: #fdfdfd;
         }
         input[type="text"]:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(255, 107, 129, 0.2);
+            box-shadow: 0 0 0 4px rgba(9, 132, 227, 0.1);
+            background: #fff;
         }
-        
-        button.btn-main {
-            background: linear-gradient(45deg, var(--primary), #ff4757);
-            color: white; border: none; padding: 15px 40px; font-size: 18px;
-            border-radius: 30px; font-weight: bold; cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
-            box-shadow: 0 8px 20px rgba(255, 107, 129, 0.4);
-            font-family: 'Poppins', sans-serif;
-            margin: 5px;
-        }
-        button.btn-main:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 25px rgba(255, 107, 129, 0.6); }
-        button.btn-blue {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
-        }
-        button.btn-blue:hover { box-shadow: 0 12px 25px rgba(52, 152, 219, 0.6); }
 
-        /* Tombol Audio Choukai */
-        .btn-audio {
-            background-color: var(--primary-light); 
-            color: #fff;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 20px;
-            font-size: 14px;
+        /* Buttons & Hover Animations */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             margin-bottom: 15px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(255, 183, 197, 0.5);
-            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Noto Sans JP', 'Poppins', sans-serif;
         }
-        .btn-audio:hover {
-            transform: scale(1.05);
+
+        /* Hover efek desktop */
+        @media (hover: hover) {
+            .btn:hover {
+                border-color: var(--primary);
+                color: var(--primary);
+                transform: translateY(-4px);
+                box-shadow: 0 10px 20px rgba(9, 132, 227, 0.1);
+            }
+            .btn-primary:hover, .btn-mode:hover {
+                background-color: var(--primary-hover);
+                border-color: var(--primary-hover);
+                color: white;
+                box-shadow: 0 10px 20px rgba(9, 132, 227, 0.3);
+            }
+        }
+
+        /* Sentuhan mobile (Tap/Active) */
+        .btn:active {
+            transform: translateY(2px) scale(0.98);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
             background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            margin-top: 10px;
         }
 
-        /* Quiz UI */
-        #timer-bar {
-            position: sticky; top: 15px; background: rgba(255,255,255,0.95);
-            padding: 15px; border-radius: 15px; font-size: 22px; font-weight: 800;
-            color: var(--primary); border: 2px solid var(--primary-light); z-index: 100;
-            text-align: center; margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            backdrop-filter: blur(5px);
+        .mode-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .btn-mode {
+            flex: 1;
+            background: #fdfdfd;
+            border-color: var(--border-color);
+            color: var(--text-muted);
+            padding: 20px 10px;
+        }
+        .btn-mode i { display: block; font-size: 24px; margin-bottom: 8px; color: var(--primary); }
+
+        /* Timer UI */
+        #timer-container {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-card);
+            padding: 10px 25px;
+            border-radius: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10;
+            transition: color 0.3s;
+        }
+        .timer-danger {
+            color: var(--danger) !important;
+            animation: pulse 1s infinite;
         }
 
-        .question-card {
-            background: #ffffff; 
-            border-left: 6px solid var(--primary);
-            padding: 25px; margin-bottom: 25px; border-radius: 12px; text-align: left;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-            transition: transform 0.3s ease;
-        }
-        .question-card:hover { transform: translateY(-2px); }
-        .question-card h3 { margin-top: 0; color: #ff9f43; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
-        .question-text { font-size: 18px; margin-bottom: 20px; line-height: 1.6; font-family: 'Noto Sans JP', sans-serif; font-weight: 600; }
-        
-        ruby { font-size: 1.2em; }
-        rt { font-size: 0.5em; color: #8395a7; }
-
-        .options-grid { display: grid; gap: 12px; }
-        .option-label {
-            background: #f8f9fa; padding: 15px; border-radius: 10px;
-            cursor: pointer; transition: 0.2s; border: 2px solid transparent;
-            display: flex; align-items: center; gap: 12px; font-family: 'Noto Sans JP', sans-serif;
-            font-weight: 500;
-        }
-        .option-label:hover { background: #fff0f3; border-color: var(--primary-light); }
-        input[type="radio"] { accent-color: var(--primary); width: 20px; height: 20px; cursor: pointer; }
-
-        /* Rekap Hasil UI */
-        .summary-wrapper {
-            margin-top: 30px;
-            text-align: left;
-            background: rgba(248, 249, 250, 0.9);
-            border-radius: 12px;
-            padding: 20px;
-            max-height: 500px;
-            overflow-y: auto;
-            border: 1px solid #e1e8ed;
-            display: none; 
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
-        }
-        .summary-item {
-            padding: 18px;
-            margin-bottom: 15px;
+        /* Quiz Layout */
+        #progress-container {
+            width: 100%;
+            height: 6px;
+            background: var(--border-color);
             border-radius: 10px;
-            border-left: 6px solid;
-            background: #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            margin-bottom: 30px;
+            overflow: hidden;
         }
-        .summary-item.correct { border-color: #2ecc71; }
-        .summary-item.wrong { border-color: #e74c3c; }
-        .summary-q { font-size: 16px; margin-bottom: 12px; font-weight: 600; font-family: 'Noto Sans JP', sans-serif;}
-        .summary-ans { font-size: 15px; font-family: 'Noto Sans JP', sans-serif; background: #f8f9fa; padding: 10px; border-radius: 8px;}
-        .user-ans.correct-text { color: #27ae60; font-weight: bold;}
-        .user-ans.wrong-text { color: #c0392b; font-weight: bold;}
-        .correct-ans { color: #27ae60; font-weight: bold; margin-top: 8px; border-top: 1px dashed #ccc; padding-top: 8px;}
+        #progress-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
 
-        /* Leaderboard */
-        .rank-item {
-            display: flex; justify-content: space-between; padding: 18px 20px;
-            margin: 12px 0; border-radius: 12px; background: #ffffff;
-            align-items: center; font-weight: bold;
+        .question-number {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        /* Result Layout */
+        .status-badge {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 20px;
+            color: white;
+            margin: 20px auto;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .status-pass { background-color: var(--success); }
+        .status-fail { background-color: var(--danger); }
+
+        .mistake-list {
+            text-align: left;
+            margin-top: 30px;
+            max-height: 450px;
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+        .mistake-item {
+            background: #fff;
+            border-left: 5px solid var(--danger);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid #f1f2f6;
+            border: 1px solid var(--border-color);
         }
-        .rank-1 { border: 2px solid var(--gold); background: linear-gradient(to right, #fffdf0, #ffffff); }
-        .rank-2 { border: 2px solid var(--silver); background: linear-gradient(to right, #f8f9fa, #ffffff); }
-        .rank-3 { border: 2px solid var(--bronze); background: linear-gradient(to right, #fff5eb, #ffffff); }
-        .badge { font-size: 26px; }
+        .mistake-q { font-size: 18px; margin-bottom: 10px; }
+        .mistake-ans { color: var(--danger); font-size: 14px; margin-bottom: 5px; font-weight: 500;}
+        .mistake-corr { color: var(--success); font-weight: bold; font-size: 14px; margin-bottom: 10px;}
+        .mistake-ex { font-size: 13px; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 10px;}
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #ced6e0; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a4b0be; }
+
+        /* Animations */
+        .fade-in { animation: fadeIn 0.5s forwards; }
+        .slide-up { animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
         
-        .exclusive-rights {
-            margin-top: 25px; text-align: left; background: rgba(241, 196, 15, 0.05);
-            padding: 20px; border-radius: 12px; border: 2px dashed var(--gold);
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.05); } 100% { transform: translateX(-50%) scale(1); } }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .card { padding: 30px 20px; border-radius: 20px; }
+            .jp-text { font-size: 20px; }
+            .btn { font-size: 15px; padding: 14px; }
+            #timer-container { top: -50px; font-size: 16px; padding: 8px 20px; }
         }
-        .exclusive-rights h4 { color: #d4af37; margin-top: 0; font-size: 18px; }
-        .exclusive-rights ul { margin: 10px 0 0 0; padding-left: 20px; color: #576574; line-height: 1.8; }
     </style>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- Area Animasi Sakura -->
-    <div id="sakura-container"></div>
-
     <div class="container">
-        <!-- 1. LOGIN SCREEN -->
-        <div id="login-screen" class="glass-panel">
-            <h1>🌸 Ujian Evaluasi <span class="text-accent">Jepang</span> 🌸</h1>
-            <p style="color: #576574; font-weight: 500;">Minna no Nihongo Bab 1 - 10 | 30 Soal | 20 Menit</p>
-            <input type="text" id="playerName" placeholder="Masukkan Nama Anda (Cth: Sasuke)" required>
-            <br>
-            <button class="btn-main" onclick="startQuiz()">⛩️ MULAI UJIAN</button>
+        
+        <!-- Timer (Hidden initially) -->
+        <div id="timer-container" class="hidden">
+            <i class="fa-regular fa-clock"></i> <span id="time-display">20:00</span>
         </div>
 
-        <!-- 2. QUIZ SCREEN -->
-        <div id="quiz-screen" class="hidden">
-            <div id="timer-bar">Waktu: <span id="time-display">20:00</span></div>
-            <div id="questions-container"></div>
-            <div style="text-align: center; margin: 40px 0;">
-                <button class="btn-main" onclick="submitQuiz()">KIRIM JAWABAN</button>
-            </div>
-        </div>
-
-        <!-- 3. RESULT & LEADERBOARD SCREEN -->
-        <div id="result-screen" class="glass-panel hidden">
-            <h2>UJIAN SELESAI! 💮</h2>
-            <h1 id="final-score" style="font-size: 56px; color: var(--primary); margin: 10px 0;">0</h1>
-            <p style="color: #576574;">Poin Anda telah disimpan.</p>
+        <!-- Start Screen -->
+        <div id="start-screen" class="card fade-in">
+            <h1>JLPT N5 模擬試験</h1>
+            <p>Latihan Grammar Premium • 40 Soal • Waktu 20 Menit</p>
             
-            <button class="btn-main btn-blue" id="btn-toggle-summary" onclick="toggleSummary()">📋 Lihat Rekap Jawaban</button>
-            <button class="btn-main" onclick="location.reload()">🔄 KEMBALI KE AWAL</button>
-
-            <!-- Container Rekap Hasil -->
-            <div id="summary-container" class="summary-wrapper"></div>
+            <input type="text" id="username" placeholder="Masukkan nama Anda..." autocomplete="off">
             
-            <div class="exclusive-rights">
-                <h4>👑 Hak Eksklusif Top 3</h4>
-                <ul>
-                    <li><b>Peringkat 1:</b> Hak akses materi N4 Premium + Tiket Konsultasi VIP.</li>
-                    <li><b>Peringkat 2:</b> Modul Kanji Lengkap PDF.</li>
-                    <li><b>Peringkat 3:</b> E-Book Latihan Choukai Khusus.</li>
-                </ul>
-            </div>
-
-            <h3 style="margin-top: 40px; color: var(--dark-text);">🏆 LEADERBOARD GLOBAL</h3>
-            <div id="leaderboard-container">
-                <i style="color: #8395a7;">Memuat data dari server...</i>
+            <div class="mode-container">
+                <button class="btn btn-mode" onclick="startQuiz('pemula')">
+                    <i class="fa-solid fa-seedling" style="color: #00b894;"></i>
+                    Mode Pemula<br><small style="font-size:11px; font-weight:400;">(Dengan Furigana)</small>
+                </button>
+                <button class="btn btn-mode" onclick="startQuiz('pro')">
+                    <i class="fa-solid fa-fire" style="color: #d63031;"></i>
+                    Mode Pro<br><small style="font-size:11px; font-weight:400;">(Tanpa Furigana)</small>
+                </button>
             </div>
         </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="card hidden">
+            <div id="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+            <span class="question-number" id="question-indicator">Soal 1 / 40</span>
+            <div id="question-text" class="jp-text slide-up"></div>
+            <div id="options-container" class="slide-up" style="animation-delay: 0.1s;">
+                <!-- Options JS -->
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="card hidden">
+            <h2 id="result-name" style="margin-bottom: 5px;">Nama</h2>
+            <p id="result-mode" style="margin-bottom: 20px; font-weight: 600;"></p>
+            
+            <h1 id="result-score" style="font-size: 56px; color: var(--primary);">0/40</h1>
+            <p>Total Skor Anda</p>
+            
+            <div style="text-align: center;">
+                <div id="result-status" class="status-badge">LULUS</div>
+            </div>
+
+            <button class="btn btn-primary" onclick="location.reload()" style="margin-top: 10px;">
+                <i class="fa-solid fa-rotate-right"></i> Coba Lagi
+            </button>
+
+            <div id="review-section" class="hidden">
+                <h3 style="margin-top: 40px; text-align: left; font-size: 18px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">
+                    <i class="fa-solid fa-book-open"></i> Evaluasi Kesalahan:
+                </h3>
+                <div id="mistake-container" class="mistake-list">
+                    <!-- Mistakes JS -->
+                </div>
+            </div>
+        </div>
+
     </div>
 
-<script>
-    // GANTI DENGAN URL GOOGLE APPS SCRIPT ANDA
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyFGK0vd2DcjUu_qO-oAVCXoqmUGnS3zc2UMi-WlUoEhgYSLMH9wGUW3FQWes2Fq1e39Q/exec'; 
+    <script>
+        // Database 40 Soal Grammar N5 dengan Ruby (Furigana)
+        const quizData = [
+            { q: "<ruby>私<rt>わたし</rt></ruby> ___ <ruby>学生<rt>がくせい</rt></ruby>です。", o: ["が", "は", "を", "に"], a: 1, ex: "Partikel 'は' (wa) digunakan untuk menandai subjek topik." },
+            { q: "<ruby>机<rt>つくえ</rt></ruby>の <ruby>上<rt>うえ</rt></ruby> ___ ペンが あります。", o: ["に", "で", "へ", "を"], a: 0, ex: "Partikel 'に' menunjukkan letak keberadaan suatu benda." },
+            { q: "<ruby>昨日<rt>きのう</rt></ruby>、デパート ___ <ruby>買<rt>か</rt></ruby>いものを しました。", o: ["に", "で", "へ", "と"], a: 1, ex: "Partikel 'で' menunjukkan tempat terjadinya suatu aksi." },
+            { q: "<ruby>毎日<rt>まいにち</rt></ruby> ８<ruby>時<rt>じ</rt></ruby> ___ ねます。", o: ["から", "まで", "に", "で"], a: 2, ex: "Partikel 'に' digunakan untuk menunjukkan waktu yang spesifik." },
+            { q: "これは <ruby>私<rt>わたし</rt></ruby> ___ <ruby>本<rt>ほん</rt></ruby>です。", o: ["の", "が", "は", "も"], a: 0, ex: "Partikel 'の' menunjukkan kepemilikan (Buku milik saya)." },
+            { q: "<ruby>今日<rt>きょう</rt></ruby>は <ruby>雨<rt>あめ</rt></ruby> ___ ふって います。", o: ["を", "に", "が", "で"], a: 2, ex: "Fenomena alam selalu menggunakan partikel 'が' (あめがふります)." },
+            { q: "<ruby>明日<rt>あした</rt></ruby>、<ruby>東京<rt>とうきょう</rt></ruby> ___ <ruby>行<rt>い</rt></ruby>きます。", o: ["を", "が", "で", "へ"], a: 3, ex: "Partikel 'へ' (e) atau 'に' menunjukkan arah/tujuan perpindahan." },
+            { q: "りんご ___ みかんを <ruby>買<rt>か</rt></ruby>いました。", o: ["と", "や", "から", "まで"], a: 0, ex: "Partikel 'と' digunakan untuk menggabungkan kata benda spesifik (dan)." },
+            { q: "パン ___ <ruby>食<rt>た</rt></ruby>べません。", o: ["が", "を", "は", "も"], a: 2, ex: "Dalam kalimat negatif, partikel 'を' sering diganti menjadi 'は' untuk penekanan." },
+            { q: "この カメラは だれ ___ ですか。", o: ["の", "に", "が", "で"], a: 0, ex: "だれの berarti 'milik siapa'." },
+            { q: "いっしょに おちゃを ___。", o: ["<ruby>飲<rt>の</rt></ruby>みます", "<ruby>飲<rt>の</rt></ruby>みませんか", "<ruby>飲<rt>の</rt></ruby>みました", "<ruby>飲<rt>の</rt></ruby>んで"], a: 1, ex: "～ませんか digunakan untuk mengajak dengan sopan (Maukah minum...?)." },
+            { q: "ここに なまえを ___ ください。", o: ["<ruby>書<rt>か</rt></ruby>く", "<ruby>書<rt>か</rt></ruby>いて", "<ruby>書<rt>か</rt></ruby>き", "<ruby>書<rt>か</rt></ruby>かない"], a: 1, ex: "Pola meminta tolong (～てください) menggunakan kata kerja bentuk-Te." },
+            { q: "<ruby>明日<rt>あした</rt></ruby>は <ruby>休<rt>やす</rt></ruby>み ___。", o: ["です", "でした", "ではありません", "ではありませんでした"], a: 0, ex: "Membicarakan masa depan (besok) menggunakan bentuk masa kini/positif (です)." },
+            { q: "<ruby>昨日<rt>きのう</rt></ruby>の テストは ___。", o: ["むずかしいです", "むずかしいでした", "むずかしくないです", "むずかしかったです"], a: 3, ex: "Bentuk lampau (kemarin) dari kata sifat-i (むずかしい) adalah ～かったです." },
+            { q: "この <ruby>町<rt>まち</rt></ruby>は ___ です。", o: ["しずか", "しずかな", "しずかに", "しずかだ"], a: 0, ex: "Di akhir kalimat bersanding dengan です, kata sifat-na membuang akhiran 'な'." },
+            { q: "えいがを ___ たいです。", o: ["<ruby>見<rt>み</rt></ruby>る", "<ruby>見<rt>み</rt></ruby>て", "<ruby>見<rt>み</rt></ruby>", "<ruby>見<rt>み</rt></ruby>ます"], a: 2, ex: "Pola ～たい (ingin) menggabungkan bentuk Masu (masu dibuang) + たい." },
+            { q: "あの <ruby>人<rt>ひと</rt></ruby>は ___ ないです。", o: ["<ruby>元気<rt>げんき</rt></ruby>", "<ruby>元気<rt>げんき</rt></ruby>な", "<ruby>元気<rt>げんき</rt></ruby>では", "<ruby>元気<rt>げんき</rt></ruby>だ"], a: 2, ex: "Bentuk negatif dari kata sifat-na adalah ～ではありません atau ～ではないです." },
+            { q: "<ruby>車<rt>くるま</rt></ruby>の <ruby>中<rt>なか</rt></ruby>に だれか ___ か。", o: ["あります", "います", "します", "なります"], a: 1, ex: "Untuk keberadaan manusia/hewan (benda hidup), gunakan います." },
+            { q: "<ruby>本<rt>ほん</rt></ruby>を ___ ながら ごはんを <ruby>食<rt>た</rt></ruby>べます。", o: ["<ruby>読<rt>よ</rt></ruby>む", "<ruby>読<rt>よ</rt></ruby>み", "<ruby>読<rt>よ</rt></ruby>んで", "<ruby>読<rt>よ</rt></ruby>まない"], a: 1, ex: "Pola ～ながら (sambil) menggunakan bentuk Masu (masu dibuang) + ながら." },
+            { q: "もう しゅくだいを ___ か。", o: ["します", "しました", "して", "しません"], a: 1, ex: "'もう' (sudah) jika bermakna penyelesaian, diikuti kata kerja bentuk lampau (ました)." },
+            { q: "としょかんで <ruby>本<rt>ほん</rt></ruby>を ___ は いけません。", o: ["<ruby>読<rt>よ</rt></ruby>む", "<ruby>読<rt>よ</rt></ruby>んで", "<ruby>読<rt>よ</rt></ruby>んでは", "<ruby>読<rt>よ</rt></ruby>まなくて"], a: 2, ex: "Pola melarang melakukan sesuatu adalah kata kerja bentuk-Te + はいけません." },
+            { q: "<ruby>明日<rt>あした</rt></ruby>は ___ いいです。", o: ["はれると", "はれた", "はれる", "はれるから"], a: 0, ex: "Pola ～といいです menyatakan harapan (Semoga besok cerah)." },
+            { q: "くつを ___ まま、へやに <ruby>入<rt>はい</rt></ruby>りました。", o: ["はく", "はいた", "はいて", "はかない"], a: 1, ex: "Pola ～まま (membiarkan dalam keadaan) menggunakan kata kerja bentuk-Ta." },
+            { q: "<ruby>私<rt>わたし</rt></ruby>は ギターを ___ ことが できます。", o: ["ひく", "ひきます", "ひいて", "ひいた"], a: 0, ex: "Pola bisa melakukan sesuatu: Kata kerja bentuk Kamus (ひく) + ことができます." },
+            { q: "えきまで バスで ３０<ruby>分<rt>ぷん</rt></ruby> ___ かかります。", o: ["ごろ", "ぐらい", "しか", "だけ"], a: 1, ex: "'ぐらい' digunakan untuk perkiraan durasi/jumlah (sekitar 30 menit). 'ごろ' untuk waktu yang ditunjuk." },
+            { q: "スミスさんは <ruby>日本語<rt>にほんご</rt></ruby>が ___ なりました。", o: ["じょうず", "じょうずな", "じょうずに", "じょうずく"], a: 2, ex: "Perubahan keadaan dengan kata sifat-na menggunakan 'に' + なります." },
+            { q: "さむいから、まどを ___ ください。", o: ["あけないで", "あけなくて", "あけない", "あける"], a: 0, ex: "Pola tolong JANGAN lakukan: Kata kerja bentuk-Nai + でください." },
+            { q: "かぜを ___ から、がっこうを <ruby>休<rt>やす</rt></ruby>みます。", o: ["ひく", "ひいた", "ひいて", "ひきます"], a: 1, ex: "Menyatakan alasan atas hal yang sudah terjadi (sudah masuk angin), gunakan bentuk Ta." },
+            { q: "この カレーは ___ すぎます。", o: ["からい", "から", "からく", "からかった"], a: 1, ex: "Pola ～すぎます (terlalu): kata sifat-i membuang akhiran 'い'." },
+            { q: "ラジオを ___ ながら べんきょうします。", o: ["きく", "きき", "きいて", "きかない"], a: 1, ex: "Sama seperti no.19, bentuk Masu (tanpa masu) + ながら." },
+            { q: "<ruby>日曜日<rt>にちようび</rt></ruby>、どこへ ___ <ruby>行<rt>い</rt></ruby>きませんでした。", o: ["も", "か", "は", "が"], a: 0, ex: "Kata tanya (どこ) + も + kata kerja negatif berarti 'tidak ke mana-mana'." },
+            { q: "コーヒー ___ こうちゃ、どちらが いいですか。", o: ["と", "や", "から", "より"], a: 0, ex: "Menanyakan pilihan dari dua benda menggunakan pola A と B と." },
+            { q: "<ruby>私<rt>わたし</rt></ruby>は いぬ ___ ねこが すきです。", o: ["より", "から", "ほど", "まで"], a: 0, ex: "Menyatakan perbandingan 'A lebih disukai dari B' menggunakan B より A がすきです." },
+            { q: "あの かばんは ___ ないです。", o: ["たかい", "たかく", "たかくて", "たか"], a: 1, ex: "Bentuk negatif kata sifat-i: akhiran 'い' diubah menjadi 'くない'." },
+            { q: "へやを ___ しましょう。", o: ["きれいに", "きれいな", "きれいく", "きれいだ"], a: 0, ex: "Membuat menjadi suatu keadaan (kata sifat-na): ～に します." },
+            { q: "じしょは かばんの <ruby>中<rt>なか</rt></ruby>に ___。", o: ["あります", "います", "します", "なります"], a: 0, ex: "Untuk benda mati/tidak bernyawa, gunakan あります." },
+            { q: "<ruby>昨日<rt>きのう</rt></ruby>、ともだち ___ えいがを <ruby>見<rt>み</rt></ruby>ました。", o: ["と", "に", "を", "へ"], a: 0, ex: "Melakukan aksi 'bersama' seseorang menggunakan partikel 'と'." },
+            { q: "あの ケーキは ___ そうです。", o: ["おいしい", "おいし", "おいしく", "おいしかった"], a: 1, ex: "Pola 'kelihatannya' (～そうです): pada kata sifat-i membuang huruf terakhir 'い'." },
+            { q: "<ruby>電車<rt>でんしゃ</rt></ruby>が ___ います。", o: ["くる", "き", "きて", "こない"], a: 2, ex: "Keadaan yang sedang berlangsung menggunakan kata kerja bentuk-Te + います." },
+            { q: "もう すこし ___ はなして ください。", o: ["ゆっくり", "ゆっくりと", "ゆっくりに", "ゆっくりな"], a: 0, ex: "'ゆっくり' (perlahan) adalah adverbia yang bisa langsung diletakkan sebelum kata kerja." }
+        ];
 
-    const dbQuestions = [
-        // --- KOSAKATA (1-10) ---
-        { type: "Kosakata", q: "Apa arti dari <ruby>辞書<rt>じしょ</rt></ruby>?", options: ["Buku catatan", "Kamus", "Majalah", "Koran"], ans: 1 },
-        { type: "Kosakata", q: "Apa arti dari <ruby>家族<rt>かぞく</rt></ruby>?", options: ["Keluarga", "Teman", "Pacar", "Guru"], ans: 0 },
-        { type: "Kosakata", q: "Mana kata yang berarti 'Besok'?", options: ["<ruby>今日<rt>きょう</rt></ruby>", "<ruby>昨日<rt>きのう</rt></ruby>", "<ruby>明日<rt>あした</rt></ruby>", "<ruby>毎日<rt>まいにち</rt></ruby>"], ans: 2 },
-        { type: "Kosakata", q: "Apa arti dari <ruby>切手<rt>きって</rt></ruby>?", options: ["Tiket", "Karcis", "Perangko", "Amplop"], ans: 2 },
-        { type: "Kosakata", q: "Bahasa Jepangnya 'Dingin (untuk cuaca)' adalah?", options: ["<ruby>暑い<rt>あつい</rt></ruby>", "<ruby>冷たい<rt>つめたい</rt></ruby>", "<ruby>寒い<rt>さむい</rt></ruby>", "<ruby>高い<rt>たかい</rt></ruby>"], ans: 2 },
-        { type: "Kosakata", q: "Apa arti dari <ruby>飛行機<rt>ひこうき</rt></ruby>?", options: ["Kereta Listrik", "Pesawat Terbang", "Kapal Laut", "Mobil"], ans: 1 },
-        { type: "Kosakata", q: "Lawan kata dari <ruby>新しい<rt>あたらしい</rt></ruby> (Baru) adalah?", options: ["<ruby>古い<rt>ふるい</rt></ruby>", "<ruby>安い<rt>やすい</rt></ruby>", "<ruby>悪い<rt>わるい</rt></ruby>", "<ruby>高い<rt>たかい</rt></ruby>"], ans: 0 },
-        { type: "Kosakata", q: "Apa arti dari <ruby>静か<rt>しずか</rt></ruby>?", options: ["Ramai", "Tenang/Sepi", "Bersih", "Terkenal"], ans: 1 },
-        { type: "Kosakata", q: "Mana yang merupakan kata kerja 'Makan'?", options: ["<ruby>飲みます<rt>のみます</rt></ruby>", "<ruby>見ます<rt>みます</rt></ruby>", "<ruby>食べます<rt>たべます</rt></ruby>", "<ruby>買います<rt>かいます</rt></ruby>"], ans: 2 },
-        { type: "Kosakata", q: "Apa arti <ruby>写真<rt>しゃしん</rt></ruby>?", options: ["Kamera", "Foto", "Gambar", "Lukisan"], ans: 1 },
+        let currentQuestion = 0;
+        let score = 0;
+        let userName = "";
+        let userMistakes = [];
+        let timeRemaining = 20 * 60; // 20 Menit dalam detik
+        let timerInterval;
 
-        // --- POLA KALIMAT (11-20) ---
-        { type: "Pola Kalimat", q: "Lengkapi: <ruby>私<rt>わたし</rt></ruby> (...) <ruby>学生<rt>がくせい</rt></ruby> です。", options: ["が", "は", "の", "を"], ans: 1 },
-        { type: "Pola Kalimat", q: "Lengkapi: これは <ruby>私<rt>わたし</rt></ruby> (...) <ruby>傘<rt>かさ</rt></ruby> です。", options: ["は", "に", "の", "が"], ans: 2 },
-        { type: "Pola Kalimat", q: "Lengkapi: <ruby>部屋<rt>へや</rt></ruby> に <ruby>犬<rt>いぬ</rt></ruby> が (...)。", options: ["あります", "います", "します", "なります"], ans: 1 },
-        { type: "Pola Kalimat", q: "Lengkapi: <ruby>明日<rt>あした</rt></ruby>、<ruby>京都<rt>きょうと</rt></ruby> (...) <ruby>行きます<rt>いきます</rt></ruby>。", options: ["へ", "を", "で", "が"], ans: 0 },
-        { type: "Pola Kalimat", q: "Lengkapi: <ruby>箸<rt>はし</rt></ruby> (...) ご飯を <ruby>食べます<rt>たべます</rt></ruby>。", options: ["に", "で", "を", "と"], ans: 1 },
-        { type: "Pola Kalimat", q: "Ubah ke bentuk negatif lampau: <ruby>忙しい<rt>いそがしい</rt></ruby>です。", options: ["忙しくないです", "忙しかったです", "忙しくなかったです", "忙しいではありません"], ans: 2 },
-        { type: "Pola Kalimat", q: "Lengkapi: <ruby>公園<rt>こうえん</rt></ruby> (...) <ruby>写真<rt>しゃしん</rt></ruby> を <ruby>撮ります<rt>とります</rt></ruby>。", options: ["に", "へ", "で", "から"], ans: 2 },
-        { type: "Pola Kalimat", q: "Ubah ke bentuk lampau: <ruby>暇<rt>ひま</rt></ruby>です。", options: ["暇でした", "暇くないです", "暇かったです", "暇じゃありません"], ans: 0 },
-        { type: "Pola Kalimat", q: "Lengkapi: ミラーさんは <ruby>親切<rt>しんせつ</rt></ruby> (...) <ruby>元気<rt>げんき</rt></ruby> な <ruby>人<rt>ひと</rt></ruby> です。", options: ["くて", "で", "と", "や"], ans: 1 },
-        { type: "Pola Kalimat", q: "A: その かばんは いくらですか。B: (...) は 5000<ruby>円<rt>えん</rt></ruby> です。", options: ["これ", "それ", "あれ", "どれ"], ans: 0 },
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const progressBar = document.getElementById('progress-bar');
+        const questionIndicator = document.getElementById('question-indicator');
+        const timerContainer = document.getElementById('timer-container');
+        const timeDisplay = document.getElementById('time-display');
 
-        // --- MENDENGARKAN (Audio Asli AI Browser + Furigana Options) (21-30) ---
-        { 
-            type: "Mendengarkan (Audio)", 
-            q: `<button type="button" class="btn-audio" onclick="playJapaneseAudio('お国はどちらですか。')">🔊 Putar Audio 1</button><br>Apa respons yang tepat untuk pertanyaan pada audio di atas?`, 
-            options: [
-                "サントスです。", 
-                "インドネシアです。", 
-                "<ruby>会社員<rt>かいしゃいん</rt></ruby>です。", 
-                "はい、そうです。"
-            ], 
-            ans: 1 
-        },
-        { 
-            type: "Mendengarkan (Audio)", 
-            q: `<button type="button" class="btn-audio" onclick="playJapaneseAudio('トイレはどこですか。')">🔊 Putar Audio 2</button><br>Apa respons yang tepat?`, 
-            options: [
-                "あそこです。", 
-                "これです。", 
-                "９<ruby>時<rt>じ</rt></ruby>です。", 
-                "<ruby>月曜日<rt>げつようび</rt></ruby>です。"
-            ], 
-            ans: 0 
-        },
-        { 
-            type: "Mendengarkan (Audio)", 
-            q: `<button type="button" class="btn-audio" onclick="playJapaneseAudio('昨日の晩、勉強しましたか。')">🔊 Putar Audio 3</button><br>Pilih jawaban yang benar secara tata bahasa!`, 
-            options: [
-                "いいえ、しませんでした。", 
-                "いいえ、しません。", 
-                "はい、<ruby>勉強<rt>べんきょう</rt></ruby>します。", 
-                "はい、<ruby>勉強<rt>べんきょう</rt></ruby>でした。"
-            ], 
-            ans: 0 
-        },
-        { 
-            type: "Mendengarkan (Audio)", 
-            q: `<button type="button" class="btn-audio" onclick="playJapaneseAudio('いっしょに京都へ行きませんか。')">🔊 Putar Audio 4</button><br>Bagaimana cara menerima ajakan tersebut?`, 
-            options: [
-                "ええ、<ruby>行<rt>い</rt></ruby>きます。", 
-                "ええ、<ruby>行<rt>い</rt></ruby>きましょう。", 
-                "いいえ、<ruby>行<rt>い</rt></ruby>きません。", 
-                "ええ、<ruby>行<rt>い</rt></ruby>きました。"
-            ], 
-            ans: 1 
-        },
-        { 
-            type: "Mendengarkan (Audio)", 
-            q: `<button type="button" class="btn-audio" onclick="playJapaneseAudio('それは辞書ですか。')">🔊 Putar Audio 5</button><br>Pilih jawaban yang tepat!`, 
-            options: [
-                "はい、<ruby>違<rt>ちが</rt></ruby>います。", 
-                "いいえ、そうです。", 
-                "いいえ、<ruby>違<rt>ちが</rt></ruby>います。", 
-                "はい、<ruby>辞書<rt>じしょ</rt></ruby>ではありません。"
-            ], 
-            ans: 2 
-        },
-        { 
-            type: "Mendengarkan (Audio)", 
-            q: `<button type="button" class="btn-audio" onclick="playJapaneseAudio('誕生日はいつですか。')">🔊 Putar Audio 6</button><br>Apa yang ditanyakan pada audio tersebut?`, 
-            options: [
-                "Berapa umurnya?", 
-                "Tanggal berapa ulang tahunnya?", 
-                "Kapan liburnya?", 
-                "Jam berapa sekarang?"
-            ], 
-            ans: 1 
-        },
-        { 
-            type: "Mendengarkan (Audio)", 
-            q: `<button type="button" class="btn-audio" onclick="playJapaneseAudio('どんなスポーツが好きですか。')">🔊 Putar Audio 7</button><br>Apa respons yang paling sesuai?`, 
-            options: [
-                "サッカーが<ruby>好<rt>す</rt></ruby>きです。", 
-                "とても<ruby>好<rt>す</rt></ruby>きです。", 
-                "はい、<ruby>好<rt>す</rt></ruby>きです。", 
-                "スポーツです。"
-            ], 
-            ans: 0 
-        },
-        { 
-            type: "Mendengarkan (Audio)", 
-            q: `<button type="button" class="btn-audio" onclick="playJapaneseAudio('週末はどこへ行きましたか。')">🔊 Putar Audio 8</button><br>Jika Anda tidak pergi ke mana-mana, apa jawabannya?`, 
-            options: [
-                "どこも<ruby>行<rt>い</rt></ruby>きません。", 
-                "だれも<ruby>行<rt>い</rt></ruby>きませんでした。", 
-                "なにも<ruby>行<rt>い</rt></ruby>きませんでした。", 
-                "どこも<ruby>行<rt>い</rt></ruby>きませんでした。"
-            ], 
-            ans: 3 
-        },
-        { 
-            type: "Mendengarkan (Audio)", 
-            q: `<button type="button" class="btn-audio" onclick="playJapaneseAudio('スーパーの隣に何がありますか。')">🔊 Putar Audio 9</button><br>Apa respons yang sesuai?`, 
-            options: [
-                "<ruby>銀行<rt>ぎんこう</rt></ruby>があります。", 
-                "<ruby>銀行<rt>ぎんこう</rt></ruby>にあります。", 
-                "<ruby>銀行<rt>ぎんこう</rt></ruby>がいます。", 
-                "スーパーです。"
-            ], 
-            ans: 0 
-        },
-        { 
-            type: "Mendengarkan (Audio)", 
-            q: `<button type="button" class="btn-audio" onclick="playJapaneseAudio('りんごをいくつ買いましたか。')">🔊 Putar Audio 10</button><br>Pilih jawaban yang tepat!`, 
-            options: [
-                "みっつ<ruby>買<rt>か</rt></ruby>いました。", 
-                "３<ruby>人<rt>にん</rt></ruby><ruby>買<rt>か</rt></ruby>いました。", 
-                "３<ruby>番<rt>ばん</rt></ruby><ruby>買<rt>か</rt></ruby>いました。", 
-                "３<ruby>枚<rt>まい</rt></ruby><ruby>買<rt>か</rt></ruby>いました。"
-            ], 
-            ans: 0 
-        }
-    ];
-
-    let playerName = "";
-    let timeRemaining = 20 * 60; 
-    let timerInterval;
-
-    function playJapaneseAudio(text) {
-        if ('speechSynthesis' in window) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'ja-JP'; 
-            utterance.rate = 0.9;     
-            utterance.pitch = 1.0;
-            window.speechSynthesis.speak(utterance);
-        } else {
-            alert("Maaf, browser Anda tidak mendukung fitur pemutar suara otomatis.");
-        }
-    }
-
-    function createSakura() {
-        const container = document.getElementById('sakura-container');
-        for(let i=0; i<25; i++){
-            let sakura = document.createElement('div');
-            sakura.className = 'sakura';
-            sakura.style.left = Math.random() * 100 + 'vw';
-            sakura.style.animationDuration = (Math.random() * 3 + 6) + 's';
-            sakura.style.animationDelay = Math.random() * 5 + 's';
-            container.appendChild(sakura);
-        }
-    }
-    createSakura();
-
-    function startQuiz() {
-        const nameInput = document.getElementById('playerName').value.trim();
-        if(!nameInput) { alert('Silakan masukkan nama Anda!'); return; }
-        playerName = nameInput;
-        
-        document.getElementById('login-screen').classList.add('hidden');
-        document.getElementById('quiz-screen').classList.remove('hidden');
-        
-        renderQuestions();
-        
-        timerInterval = setInterval(() => {
-            timeRemaining--;
-            let m = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
-            let s = (timeRemaining % 60).toString().padStart(2, '0');
-            document.getElementById('time-display').innerText = `${m}:${s}`;
+        function startQuiz(mode) {
+            const nameInput = document.getElementById('username').value.trim();
+            userName = nameInput === "" ? "Peserta Anonim" : nameInput;
             
-            if(timeRemaining <= 0) {
-                clearInterval(timerInterval);
-                submitQuiz();
-            }
-        }, 1000);
-    }
-
-    function renderQuestions() {
-        const container = document.getElementById('questions-container');
-        let html = '';
-        dbQuestions.forEach((q, index) => {
-            html += `
-            <div class="question-card">
-                <h3>Bagian: ${q.type} | Soal ${index + 1}</h3>
-                <div class="question-text">${q.q}</div>
-                <div class="options-grid">
-                    ${q.options.map((opt, i) => `
-                        <label class="option-label">
-                            <input type="radio" name="q${index}" value="${i}"> 
-                            <span style="flex:1;">${opt}</span>
-                        </label>
-                    `).join('')}
-                </div>
-            </div>`;
-        });
-        container.innerHTML = html;
-    }
-
-    function submitQuiz() {
-        clearInterval(timerInterval);
-        let correctAnswers = 0;
-        let summaryHTML = '<h3>Detail Jawaban Anda:</h3>';
-        
-        dbQuestions.forEach((q, index) => {
-            const selectedElement = document.querySelector(`input[name="q${index}"]:checked`);
-            let userAnsIndex = selectedElement ? parseInt(selectedElement.value) : -1;
-            let isCorrect = (userAnsIndex === q.ans);
-            
-            if(isCorrect) {
-                correctAnswers++;
+            // Atur Mode Furigana
+            if(mode === 'pro') {
+                document.body.classList.add('pro-mode');
+                document.getElementById('result-mode').innerText = "Mode Pro (Tanpa Furigana)";
+            } else {
+                document.body.classList.remove('pro-mode');
+                document.getElementById('result-mode').innerText = "Mode Pemula (Dengan Furigana)";
             }
 
-            // Membangun tampilan Rekap Jawaban
-            let userText = userAnsIndex >= 0 ? q.options[userAnsIndex] : "<i>Tidak dijawab</i>";
-            let correctText = q.options[q.ans];
+            startScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            timerContainer.classList.remove('hidden');
             
-            // Bersihkan tombol audio dari teks soal untuk rekap (agar terlihat rapi)
-            let cleanQuestion = q.q.replace(/<button.*?<\/button><br>/g, "🔊 [Audio] ");
-
-            summaryHTML += `
-                <div class="summary-item ${isCorrect ? 'correct' : 'wrong'}">
-                    <div class="summary-q"><strong>${index + 1}.</strong> ${cleanQuestion}</div>
-                    <div class="summary-ans">
-                        <div class="user-ans ${isCorrect ? 'correct-text' : 'wrong-text'}">
-                            Jawaban Anda: ${userText} ${isCorrect ? '✅' : '❌'}
-                        </div>
-                        ${!isCorrect ? `<div class="correct-ans">Jawaban Benar: ${correctText}</div>` : ''}
-                    </div>
-                </div>
-            `;
-        });
-
-        document.getElementById('summary-container').innerHTML = summaryHTML;
-
-        const finalScore = Math.round((correctAnswers / 30) * 100);
-        
-        document.getElementById('quiz-screen').classList.add('hidden');
-        document.getElementById('result-screen').classList.remove('hidden');
-        document.getElementById('final-score').innerText = `${finalScore} Poin`;
-
-        saveScoreToSheets(playerName, finalScore);
-    }
-
-    // Fungsi Toggle Buka/Tutup Rekap
-    function toggleSummary() {
-        const summary = document.getElementById('summary-container');
-        const btn = document.getElementById('btn-toggle-summary');
-        
-        if (summary.style.display === 'none' || summary.style.display === '') {
-            summary.style.display = 'block';
-            btn.innerHTML = 'Tutup Rekap Jawaban';
-        } else {
-            summary.style.display = 'none';
-            btn.innerHTML = '📋 Lihat Rekap Jawaban';
-        }
-    }
-
-    function saveScoreToSheets(name, score) {
-        if(SCRIPT_URL === 'URL_WEB_APP_GOOGLE_SCRIPT_ANDA_DISINI') {
-            document.getElementById('leaderboard-container').innerHTML = "<p style='color:#e74c3c;'>URL Script belum disetel! Hubungkan ke Apps Script agar Leaderboard aktif.</p>";
-            return;
+            startTimer();
+            loadQuestion();
         }
 
-        fetch(SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify({ name: name, score: score })
-        })
-        .then(response => response.json())
-        .then(data => {
-            fetchLeaderboard();
-        })
-        .catch(error => {
-            document.getElementById('leaderboard-container').innerHTML = "<p style='color:#e74c3c;'>Gagal menyimpan skor ke server.</p>";
-        });
-    }
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                let m = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+                let s = (timeRemaining % 60).toString().padStart(2, '0');
+                timeDisplay.innerText = `${m}:${s}`;
 
-    function fetchLeaderboard() {
-        fetch(SCRIPT_URL)
-        .then(response => response.json())
-        .then(data => {
-            let html = '';
-            data.forEach((user, index) => {
-                let rankClass = ''; let badge = '';
-                if(index === 0) { rankClass = 'rank-1'; badge = '🥇'; }
-                else if(index === 1) { rankClass = 'rank-2'; badge = '🥈'; }
-                else if(index === 2) { rankClass = 'rank-3'; badge = '🥉'; }
-                else { rankClass = 'rank-normal'; badge = `#${index+1}`; }
+                if(timeRemaining <= 180) { // Sisa 3 Menit
+                    timerContainer.classList.add('timer-danger');
+                }
 
-                html += `
-                <div class="rank-item ${rankClass}">
-                    <span><span class="badge" style="margin-right:10px;">${badge}</span> ${user.name}</span>
-                    <span style="color:var(--primary); font-size:20px;">${user.score}</span>
-                </div>`;
+                if(timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    showResults();
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            // Reset Animasi
+            questionText.classList.remove('slide-up');
+            optionsContainer.classList.remove('slide-up');
+            void questionText.offsetWidth; 
+            questionText.classList.add('slide-up');
+            optionsContainer.classList.add('slide-up');
+
+            const current = quizData[currentQuestion];
+            questionIndicator.innerText = `Soal ${currentQuestion + 1} / ${quizData.length}`;
+            questionText.innerHTML = current.q; // Menggunakan innerHTML agar tag <ruby> terbaca
+            optionsContainer.innerHTML = "";
+
+            current.o.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.classList.add('btn');
+                button.innerHTML = option;
+                button.onclick = () => selectAnswer(index);
+                optionsContainer.appendChild(button);
             });
-            document.getElementById('leaderboard-container').innerHTML = html;
-        })
-        .catch(error => {
-            document.getElementById('leaderboard-container').innerHTML = "Gagal memuat Leaderboard.";
-        });
-    }
-</script>
+
+            const progress = ((currentQuestion) / quizData.length) * 100;
+            progressBar.style.width = progress + '%';
+        }
+
+        function selectAnswer(selectedIndex) {
+            const current = quizData[currentQuestion];
+            
+            if (selectedIndex === current.a) {
+                score++;
+            } else {
+                userMistakes.push({
+                    q: current.q,
+                    wrong: current.o[selectedIndex],
+                    correct: current.o[current.a],
+                    explanation: current.ex
+                });
+            }
+
+            currentQuestion++;
+
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            clearInterval(timerInterval);
+            timerContainer.classList.add('hidden');
+            quizScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+            
+            // Animasi Fade-in hasil
+            resultScreen.classList.add('fade-in');
+            progressBar.style.width = '100%';
+
+            document.getElementById('result-name').innerText = userName;
+            document.getElementById('result-score').innerText = `${score}/${quizData.length}`;
+
+            const statusBadge = document.getElementById('result-status');
+            // Sistem Lulus >= 50% (20 soal benar)
+            if (score >= 20) {
+                statusBadge.innerHTML = '<i class="fa-solid fa-check"></i> LULUS (合格)';
+                statusBadge.className = "status-badge status-pass";
+            } else {
+                statusBadge.innerHTML = '<i class="fa-solid fa-xmark"></i> TIDAK LULUS (不合格)';
+                statusBadge.className = "status-badge status-fail";
+            }
+
+            if (userMistakes.length > 0) {
+                document.getElementById('review-section').classList.remove('hidden');
+                const mistakeContainer = document.getElementById('mistake-container');
+                
+                userMistakes.forEach(mistake => {
+                    const div = document.createElement('div');
+                    div.className = 'mistake-item';
+                    div.innerHTML = `
+                        <div class="mistake-q jp-text" style="font-size:20px; text-align:left; margin-bottom: 15px;">${mistake.q}</div>
+                        <div class="mistake-ans"><i class="fa-solid fa-xmark"></i> Jawaban Anda: ${mistake.wrong}</div>
+                        <div class="mistake-corr"><i class="fa-solid fa-check"></i> Jawaban Benar: ${mistake.correct}</div>
+                        <div class="mistake-ex">💡 <b>Penjelasan:</b> ${mistake.explanation}</div>
+                    `;
+                    mistakeContainer.appendChild(div);
+                });
+            }
+        }
+    </script>
 </body>
 </html>
