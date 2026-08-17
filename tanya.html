@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Master | Kata Tanya Lengkap (Gimonshi)</title>
+    <style>
+        /* Desain Minimalis, Solid Black, Flat Pink Accent (Tanpa Efek Glow) */
+        :root {
+            --bg-solid: #000000;
+            --panel-bg: #0a0a0a; 
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-pink: #ff1493; /* Flat Pink */
+            --highlight-bg: #1a050f; 
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-solid);
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 40px 20px;
+        }
+
+        .fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            width: 100%;
+            max-width: 950px;
+            border-top: 3px solid var(--accent-pink);
+            border-radius: 2px;
+        }
+
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; margin-bottom: 15px; }
+        .jp-title { color: var(--accent-pink); font-size: 1.2rem; margin-bottom: 10px; display: block; text-align: center; letter-spacing: 2px; font-weight: bold;}
+        .main-title { text-align: center; margin-bottom: 30px; font-size: 1.7rem; }
+
+        /* Sistem Tab Navigation */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; flex-wrap: wrap;}
+        .tab-btn {
+            flex: 1; text-align: center; padding: 15px; cursor: pointer; color: var(--text-muted);
+            border-bottom: 2px solid transparent; transition: all 0.2s; font-weight: bold; letter-spacing: 1px;
+            min-width: 120px;
+        }
+        .tab-btn:hover { color: var(--text-main); background: #111111; }
+        .tab-btn.active { color: var(--accent-pink); border-bottom-color: var(--accent-pink); }
+
+        .tab-content { display: none; line-height: 1.7; font-size: 1.05rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-out; }
+
+        /* Desain Grid Tabel */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;}
+        th, td { padding: 10px 12px; text-align: left; border: 1px solid var(--border-color); }
+        th { background-color: #111111; color: var(--accent-pink); font-weight: 600; text-align: center;}
+        tr:nth-child(even) { background-color: #0d0d0d; }
+        
+        /* Highlight Pengecualian / Bentuk Sopan */
+        .irr { color: var(--accent-pink); font-weight: bold; }
+        .irr-row { background-color: var(--highlight-bg) !important; }
+
+        /* Tanya Box */
+        .question-box {
+            background-color: #111;
+            border-left: 4px solid var(--accent-pink);
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .q-word { color: var(--accent-pink); font-weight: bold; font-size: 1.3rem; margin-left: 10px;}
+
+        /* Tombol Back */
+        .btn-back {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 15px 20px; background: #0a0a0a; color: var(--text-muted);
+            border: 1px solid var(--border-color); border-radius: 2px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;
+            margin-top: 40px; transition: all 0.2s ease;
+        }
+        .btn-back:hover {
+            color: #ffffff; background: #111111; border-color: var(--accent-pink);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="panel fade-in">
+        <span class="jp-title">疑問詞 (Gimonshi)</span>
+        <h1 class="main-title">Panduan Lengkap Kata Tanya</h1>
+
+        <p style="text-align: center; margin-bottom: 30px; color: var(--text-muted);">Baris yang berwarna <span style="color: var(--accent-pink); font-weight: bold;">pink</span> adalah bentuk sopan (Formal) atau variasi khusus.</p>
+
+        <!-- Menu Tab -->
+        <div class="tabs">
+            <div class="tab-btn active" onclick="openTab('tab1')">👤 DASAR (5W)</div>
+            <div class="tab-btn" onclick="openTab('tab2')">🔄 PILIHAN & KONDISI</div>
+            <div class="tab-btn" onclick="openTab('tab3')">💰 KUANTITAS & WAKTU</div>
+            <div class="tab-btn" onclick="openTab('tab4')">✨ GABUNGAN PARTIKEL</div>
+        </div>
+
+        <!-- TAB 1: DASAR (5W) -->
+        <div id="tab1" class="tab-content active">
+            <div class="grid-container">
+                <!-- Tabel Benda & Orang -->
+                <div>
+                    <h3 style="text-align: center;">Benda & Subjek</h3>
+                    <div class="question-box">Akhiran tanya kalimat: <span class="q-word">～か (Ka)</span></div>
+                    <table>
+                        <tr><th>Arti (Indonesia)</th><th>Jepang (Kana/Kanji)</th><th>Romaji</th></tr>
+                        <tr><td>Apa</td><td>何 (なに / なん)</td><td>Nani / Nan</td></tr>
+                        <tr><td>Tentang apa / Benda apa</td><td>何の (なんの)</td><td>Nan no</td></tr>
+                        <tr><td>Siapa (Biasa)</td><td>誰 (だれ)</td><td>Dare</td></tr>
+                        <tr><td>Milik siapa</td><td>誰の (だれの)</td><td>Dare no</td></tr>
+                        <tr class="irr-row"><td class="irr">Siapa (Sopan)</td><td class="irr">どなた</td><td class="irr">Donata</td></tr>
+                    </table>
+                </div>
+
+                <!-- Tabel Waktu, Tempat, Alasan -->
+                <div>
+                    <h3 style="text-align: center;">Waktu, Tempat & Alasan</h3>
+                    <div class="question-box">Tanya keberadaan: <span class="q-word">どこですか (Doko desu ka)</span></div>
+                    <table>
+                        <tr><th>Arti (Indonesia)</th><th>Jepang (Kana/Kanji)</th><th>Romaji</th></tr>
+                        <tr><td>Kapan</td><td>いつ</td><td>Itsu</td></tr>
+                        <tr><td>Di mana</td><td>どこ</td><td>Doko</td></tr>
+                        <tr><td>Ke mana</td><td>どこへ / どこに</td><td>Doko e / Doko ni</td></tr>
+                        <tr><td>Kenapa (Biasa)</td><td>どうして</td><td>Doushite</td></tr>
+                        <tr class="irr-row"><td class="irr">Kenapa (Formal)</td><td class="irr">なぜ</td><td class="irr">Naze</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: PILIHAN & KONDISI -->
+        <div id="tab2" class="tab-content">
+            <p style="text-align:center; color:var(--text-muted); margin-bottom: 20px;">Gunakan kata tanya ini saat menanyakan keadaan suatu hal, cara melakukan sesuatu, atau memilih opsi.</p>
+            <div class="grid-container">
+                <!-- Tabel Keadaan -->
+                <div>
+                    <h3 style="text-align: center;">Kondisi / Keadaan & Cara</h3>
+                    <div class="question-box">Bagaimana kabarnya? <span class="q-word">どうですか (Dou desu ka)</span></div>
+                    <table>
+                        <tr><th>Arti (Indonesia)</th><th>Jepang (Kana/Kanji)</th><th>Romaji</th></tr>
+                        <tr><td>Bagaimana (Biasa)</td><td>どう</td><td>Dou</td></tr>
+                        <tr class="irr-row"><td class="irr">Bagaimana (Sopan)</td><td class="irr">いかが</td><td class="irr">Ikaga</td></tr>
+                        <tr><td>Macam apa / Yang seperti apa</td><td>どんな (Diikuti kata benda)</td><td>Donna...</td></tr>
+                        <tr><td>Bagaimana caranya</td><td>どうやって</td><td>Dou yatte</td></tr>
+                    </table>
+                </div>
+
+                <!-- Tabel Memilih -->
+                <div>
+                    <h3 style="text-align: center;">Memilih Opsi</h3>
+                    <div class="question-box">Pilih arah/pihak: <span class="q-word">どちら (Dochira)</span></div>
+                    <table>
+                        <tr><th>Arti (Indonesia)</th><th>Jepang (Kana/Kanji)</th><th>Romaji</th></tr>
+                        <tr><td>Yang mana (3 pilihan/lebih)</td><td>どれ</td><td>Dore</td></tr>
+                        <tr><td>Yang mana (Antara 2 pilihan)</td><td>どっち</td><td>Dotchi</td></tr>
+                        <tr class="irr-row"><td class="irr">Yang mana (Lebih Sopan / Arah)</td><td class="irr">どちら</td><td class="irr">Dochira</td></tr>
+                        <tr><td>(Benda) yang mana</td><td>どの (Diikuti kata benda)</td><td>Dono...</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: KUANTITAS & WAKTU -->
+        <div id="tab3" class="tab-content">
+            <p style="text-align:center; color:var(--text-muted); margin-bottom: 20px;">Berisi kata tanya yang berkaitan dengan jumlah, harga, durasi, dan penggabungan dengan satuan hitung.</p>
+            <div class="grid-container">
+                <!-- Tabel Kuantitas & Harga -->
+                <div>
+                    <h3 style="text-align: center;">Kuantitas, Harga & Frekuensi</h3>
+                    <div class="question-box">Berapa harganya? <span class="q-word">いくらですか (Ikura desu ka)</span></div>
+                    <table>
+                        <tr><th>Arti (Indonesia)</th><th>Jepang (Kana/Kanji)</th><th>Romaji</th></tr>
+                        <tr><td>Berapa harganya</td><td>いくら</td><td>Ikura</td></tr>
+                        <tr><td>Berapa banyak (Umum) / Umur</td><td>いくつ</td><td>Ikutsu</td></tr>
+                        <tr class="irr-row"><td class="irr">Berapa Umur (Sopan)</td><td class="irr">おいくつ</td><td class="irr">O-ikutsu</td></tr>
+                        <tr><td>Seberapa banyak / Lama durasi</td><td>どのくらい / どのぐらい</td><td>Dono kurai / gurai</td></tr>
+                        <tr><td>Berapa kali</td><td>何回 (なんかい)</td><td>Nan-kai</td></tr>
+                    </table>
+                </div>
+
+                <!-- Tabel Waktu Kombinasi Nan -->
+                <div>
+                    <h3 style="text-align: center;">Waktu (Kombinasi "Nan")</h3>
+                    <div class="question-box">Jam berapa sekarang? <span class="q-word">今、何時ですか (Ima, nanji desu ka)</span></div>
+                    <table>
+                        <tr><th>Arti (Indonesia)</th><th>Jepang (Kana/Kanji)</th><th>Romaji</th></tr>
+                        <tr><td>Jam berapa</td><td>何時 (なんじ)</td><td>Nan-ji</td></tr>
+                        <tr><td>Berapa menit</td><td>何分 (なんぷん)</td><td>Nan-pun</td></tr>
+                        <tr><td>Berapa jam (Durasi)</td><td>何時間 (なんじかん)</td><td>Nan-jikan</td></tr>
+                        <tr><td>Hari apa</td><td>何曜日 (なんようび)</td><td>Nan-youbi</td></tr>
+                        <tr><td>Tanggal berapa</td><td>何日 (なんにち)</td><td>Nan-nichi</td></tr>
+                        <tr><td>Bulan apa</td><td>何月 (なんがつ)</td><td>Nan-gatsu</td></tr>
+                        <tr><td>Tahun berapa</td><td>何年 (なんねん)</td><td>Nan-nen</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: GABUNGAN PARTIKEL (TAMBAHAN BARU) -->
+        <div id="tab4" class="tab-content">
+            <p style="text-align:center; color:var(--text-muted); margin-bottom: 20px;">Kata tanya sering digabung dengan partikel <strong>~KA</strong>, <strong>~MO</strong>, atau <strong>~DEMO</strong> untuk merubah maknanya.</p>
+            <div class="grid-container">
+                <!-- Tabel + KA -->
+                <div>
+                    <h3 style="text-align: center;">Tanya + か (Ketidakpastian)</h3>
+                    <div class="question-box">Sesuatu / Seseorang / Dll</div>
+                    <table>
+                        <tr><th>Arti (Indonesia)</th><th>Jepang (Kana/Kanji)</th><th>Romaji</th></tr>
+                        <tr><td>Sesuatu</td><td>何か (なにか)</td><td>Nani-ka</td></tr>
+                        <tr><td>Seseorang</td><td>誰か (だれか)</td><td>Dare-ka</td></tr>
+                        <tr><td>Suatu tempat</td><td>どこか</td><td>Doko-ka</td></tr>
+                        <tr><td>Suatu hari nanti / Kapan-kapan</td><td>いつか</td><td>Itsu-ka</td></tr>
+                        <tr><td>Salah satu (dari 2)</td><td>どっちか</td><td>Dotchi-ka</td></tr>
+                    </table>
+                </div>
+
+                <!-- Tabel + MO & DEMO -->
+                <div>
+                    <h3 style="text-align: center;">Tanya + も / でも (Totalitas)</h3>
+                    <div class="question-box">Tidak satupun (<span class="q-word">~mo</span>) / Apapun (<span class="q-word">~demo</span>)</div>
+                    <table>
+                        <tr><th>Arti (Indonesia)</th><th>Jepang (Kana/Kanji)</th><th>Romaji</th></tr>
+                        <tr class="irr-row"><td class="irr">Tidak apa-apa / Kosong (+ Negatif)</td><td class="irr">何も (なにも)</td><td class="irr">Nani-mo</td></tr>
+                        <tr><td>Apa saja / Apapun</td><td>何でも (なんでも)</td><td>Nan-demo</td></tr>
+                        <tr class="irr-row"><td class="irr">Tak seorang pun (+ Negatif)</td><td class="irr">誰も (だれも)</td><td class="irr">Dare-mo</td></tr>
+                        <tr><td>Siapa saja / Siapapun</td><td>誰でも (だれでも)</td><td>Dare-demo</td></tr>
+                        <tr class="irr-row"><td class="irr">Tidak ke mana-mana (+ Negatif)</td><td class="irr">どこも / どこへも</td><td class="irr">Doko-mo</td></tr>
+                        <tr><td>Di mana saja / Ke mana pun</td><td>どこでも</td><td>Doko-demo</td></tr>
+                        <tr><td>Kapan saja / Kapanpun</td><td>いつでも</td><td>Itsu-demo</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <button class="btn-back" onclick="window.history.back()">⬅ Kembali ke Menu Utama</button>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
