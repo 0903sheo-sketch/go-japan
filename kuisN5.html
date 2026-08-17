@@ -25,7 +25,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            -webkit-tap-highlight-color: transparent; /* Hilangkan highlight biru di HP */
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -37,6 +37,35 @@
             min-height: 100vh;
             overflow-x: hidden;
             padding: 20px;
+        }
+
+        /* Tombol Back Floating */
+        .btn-back-floating {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border: 2px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .btn-back-floating:hover {
+            background-color: var(--danger);
+            border-color: var(--danger);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(214, 48, 49, 0.2);
         }
 
         /* Container & Cards */
@@ -261,6 +290,14 @@
         @keyframes pulse { 0% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.05); } 100% { transform: translateX(-50%) scale(1); } }
 
         /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .btn-back-floating {
+                top: 15px;
+                left: 15px;
+                padding: 8px 15px;
+                font-size: 13px;
+            }
+        }
         @media (max-width: 600px) {
             .card { padding: 30px 20px; border-radius: 20px; }
             .jp-text { font-size: 20px; }
@@ -272,6 +309,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+
+    <!-- Tombol Back Global -->
+    <button class="btn-back-floating" onclick="goBack()">
+        <i class="fa-solid fa-arrow-left"></i> Kembali
+    </button>
 
     <div class="container">
         
@@ -340,6 +382,30 @@
     </div>
 
     <script>
+        // Logika Tombol Back
+        function goBack() {
+            const startScreen = document.getElementById('start-screen');
+            const quizScreen = document.getElementById('quiz-screen');
+            const resultScreen = document.getElementById('result-screen');
+            
+            // Jika sedang mengerjakan kuis
+            if (!quizScreen.classList.contains('hidden')) {
+                const confirmBatal = confirm("Ujian sedang berjalan. Yakin ingin membatalkan dan keluar?");
+                if (confirmBatal) {
+                    clearInterval(timerInterval);
+                    location.reload(); // Reset kembali ke halaman awal
+                }
+            } 
+            // Jika sedang melihat hasil ujian
+            else if (!resultScreen.classList.contains('hidden')) {
+                location.reload(); // Kembali ke halaman awal
+            } 
+            // Jika berada di halaman awal
+            else {
+                window.history.back(); // Kembali ke dashboard menu sebelumnya
+            }
+        }
+
         // Database 40 Soal Grammar N5 dengan Ruby (Furigana)
         const quizData = [
             { q: "<ruby>私<rt>わたし</rt></ruby> ___ <ruby>学生<rt>がくせい</rt></ruby>です。", o: ["が", "は", "を", "に"], a: 1, ex: "Partikel 'は' (wa) digunakan untuk menandai subjek topik." },
