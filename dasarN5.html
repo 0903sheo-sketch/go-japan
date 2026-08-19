@@ -3,217 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard N5 (Dasar) - </title>
-    <!-- Font Kuas Kaligrafi -->
-    <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&display=swap" rel="stylesheet">
+    <title>Dashboard N5 (Dasar) - GoJapanTogether</title>
+    <!-- Font Noto Sans/Serif & Klee One untuk huruf Jepang -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <style>
+        /* ── TOKENS WARNA JEJEPANGAN ── */
         :root {
-            --primary: #ffb7c5;
-            --primary-glow: rgba(255, 183, 197, 0.6);
-            --bg-dark: #12040a;
-            --box-bg: rgba(20, 5, 10, 0.75);
+            --sumi:     #1a0a0a;
+            --washi:    #f7f2ec;
+            --torii:    #c9363e;
+            --torii-dk: #9b1f25;
+            --sakura:   #e8b4b8;
+            --sakura-lt:#f9eaeb;
+            --matcha:   #6b8f71;
+            --gold:     #c8a45a;
+            --smoke:    #ede8e0;
+            --ink:      #2d1b1b;
+            --muted:    #7a6a6a;
+
+            --radius-card: 16px;
+            --radius-btn:  8px;
+            --shadow-card: 0 8px 40px rgba(26,10,10,.08), 0 2px 8px rgba(26,10,10,.04);
+            --transition:  .3s cubic-bezier(.4,0,.2,1);
         }
         
         body { 
             margin: 0; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            color: #fff; 
-            background: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1920&q=80') center/cover fixed;
+            font-family: 'Noto Sans JP', sans-serif; 
+            color: var(--ink); 
+            background: var(--washi);
             min-height: 100vh; 
+            overflow-x: hidden;
+            position: relative;
         }
         
+        /* Tekstur Kertas Washi */
         body::before {
             content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(18, 4, 10, 0.85), rgba(61, 21, 37, 0.95));
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+            pointer-events: none;
             z-index: -1;
         }
 
-        /* ANIMASI GLOBAL UNTUK SEMUA TOMBOL */
-        button, .btn-action, .btn-toggle, .btn-zoom, .btn-game, .btn-wa, .btn-download, .kana-card {
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        /* Sakura Jatuh */
+        .petal {
+            position: fixed; width: 10px; height: 12px;
+            background: radial-gradient(ellipse at 40% 35%, #f0c0c4, #d9858b);
+            border-radius: 100% 0 100% 0; opacity: 0;
+            animation: fall linear infinite; pointer-events: none; z-index: 0;
+        }
+        @keyframes fall {
+            0%   { transform: translateY(-60px) rotate(0deg); opacity:.7; }
+            100% { transform: translateY(110vh) rotate(540deg); opacity:0; }
+        }
+
+        /* ANIMASI GLOBAL TOMBOL */
+        button, .btn-primary, .btn-secondary, .kana-card, .btn-link {
+            transition: var(--transition);
             cursor: pointer;
         }
-        button:hover:not(:disabled), .btn-zoom:not(.disabled):hover, .btn-game:hover, .btn-wa:hover, .btn-download:hover, .btn-toggle:hover {
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 8px 20px var(--primary-glow);
+        button:hover:not(:disabled), .btn-link:not(.disabled):hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(201, 54, 62, 0.15);
         }
-        button:active:not(:disabled), .btn-zoom:not(.disabled):active, .btn-game:active, .btn-wa:active, .btn-download:active, .btn-toggle:active {
-            transform: translateY(2px) scale(0.97);
+        button:active:not(:disabled), .btn-link:not(.disabled):active {
+            transform: translateY(1px);
         }
 
         /* HEADER DASHBOARD */
         .dash-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(10, 2, 5, 0.85);
-            backdrop-filter: blur(12px);
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 252, 248, 0.92);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             padding: 15px 30px;
-            border-bottom: 2px solid var(--primary);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border-bottom: 1.5px solid var(--smoke);
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 4px 15px rgba(26, 10, 10, 0.05);
         }
         
         .dash-header-left { display: flex; align-items: center; gap: 15px; }
         .btn-back-home {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 14px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
+            background: transparent; color: var(--muted);
+            border: 1.5px solid var(--smoke);
+            padding: 8px 16px; border-radius: 20px;
+            font-weight: 500; font-size: 13px; text-decoration: none;
+            display: inline-flex; align-items: center;
+            transition: var(--transition);
         }
-        .btn-back-home:hover { background: var(--primary); color: #000; }
+        .btn-back-home:hover { background: var(--sakura-lt); border-color: var(--torii); color: var(--torii); }
         
         .point-badge {
-            background: rgba(255, 183, 197, 0.2);
-            border: 1px solid var(--primary);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            display: none; 
-            box-shadow: 0 0 10px rgba(255,183,197,0.3);
+            background: #fffdfa; border: 1.5px solid var(--gold); color: var(--gold);
+            padding: 6px 14px; border-radius: 20px;
+            font-weight: 700; font-size: 14px; display: none; 
+            box-shadow: 0 2px 10px rgba(200, 164, 90, 0.1);
         }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; position: relative; z-index: 1; }
+
+        /* Komponen Card Universal */
+        .card {
+            background: rgba(255, 252, 248, 0.95);
+            border: 1px solid rgba(200, 164, 90, 0.25);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-card);
+            padding: 30px;
+            backdrop-filter: blur(6px);
+        }
 
         /* AUTH SECTION */
         #auth-section { display: flex; flex-direction: column; align-items: center; margin-top: 5vh; }
-        .auth-box { background: var(--box-bg); backdrop-filter: blur(10px); border: 1px solid var(--primary); padding: 35px; border-radius: 20px; width: 100%; max-width: 400px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); text-align: center; }
-        .auth-box input { width: 90%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid rgba(255,183,197,0.3); outline: none; background: rgba(0,0,0,0.5); color: #fff; font-size: 15px; }
-        .auth-box input:focus { border-color: var(--primary); box-shadow: 0 0 8px var(--primary-glow); }
-        .auth-box button { width: 96%; background: linear-gradient(45deg, #ffeb3b, var(--primary)); color: #000; font-weight: bold; padding: 14px; border: none; border-radius: 10px; font-size: 16px; margin-top: 15px; }
-        .toggle-auth { color: var(--primary); cursor: pointer; font-size: 14px; margin-top: 15px; display: inline-block; text-decoration: underline; }
+        .auth-logo { font-family: 'Noto Serif JP', serif; font-size: 46px; color: var(--torii); margin-bottom: 5px; font-weight: 700;}
+        .auth-sub { color: var(--muted); margin-bottom: 30px; font-size: 15px; letter-spacing: 0.05em;}
+        
+        .auth-box { width: 100%; max-width: 400px; text-align: center; }
+        .auth-box h2 { font-family: 'Noto Serif JP', serif; color: var(--ink); margin-top: 0; margin-bottom: 20px;}
+        .auth-box input { 
+            width: 90%; padding: 14px 18px; margin: 10px 0; border-radius: var(--radius-btn); 
+            border: 2px solid var(--smoke); outline: none; background: #fff; 
+            color: var(--ink); font-size: 15px; font-family: 'Noto Sans JP', sans-serif;
+            transition: var(--transition);
+        }
+        .auth-box input:focus { border-color: var(--torii); box-shadow: 0 0 0 3px rgba(201, 54, 62, 0.1); }
+        .auth-box button { 
+            width: 100%; background: var(--torii); color: #fff; font-weight: 600; 
+            padding: 14px; border: none; border-radius: var(--radius-btn); 
+            font-size: 15px; margin-top: 15px; font-family: 'Noto Sans JP', sans-serif; letter-spacing: 0.05em;
+        }
+        .auth-box button:hover { background: var(--torii-dk); }
+        .toggle-auth { color: var(--muted); cursor: pointer; font-size: 13px; margin-top: 20px; display: inline-block; font-weight: 500;}
+        .toggle-auth:hover { color: var(--torii); }
 
         /* MAIN CONTENT SECTION */
         #main-content { display: none; }
-        .header-title { text-align: center; color: var(--primary); font-size: 36px; text-shadow: 0 0 20px var(--primary-glow); margin-bottom: 5px; }
-        .welcome-text { text-align: center; font-size: 18px; color: #ddd; margin-bottom: 30px; }
+        .header-title { font-family: 'Noto Serif JP', serif; text-align: center; color: var(--ink); font-size: 32px; margin-bottom: 5px; }
+        .welcome-text { text-align: center; font-size: 15px; color: var(--muted); margin-bottom: 30px; }
         
         .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 25px; }
         @media (min-width: 768px) { .dashboard-grid { grid-template-columns: 1fr 1fr; } .full-width { grid-column: 1 / -1; } }
 
-        .section-box { background: var(--box-bg); backdrop-filter: blur(10px); border-top: 4px solid var(--primary); padding: 25px; border-radius: 15px; overflow-x: auto; box-shadow: 0 8px 25px rgba(0,0,0,0.4); display: flex; flex-direction: column; }
-        .section-box h3 { margin-top: 0; color: #ffb7c5; font-size: 24px; border-bottom: 1px dashed rgba(255,183,197,0.3); padding-bottom: 10px;}
+        .section-box { display: flex; flex-direction: column; }
+        .section-box h3 { margin-top: 0; font-family: 'Noto Serif JP', serif; color: var(--ink); font-size: 20px; border-bottom: 1px solid var(--smoke); padding-bottom: 12px;}
 
         /* KANA GRID */
         .kana-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 15px; }
-        .kana-card { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,183,197,0.3); border-radius: 10px; padding: 15px 5px; text-align: center; }
-        .kana-card:hover { background: var(--primary); color: #000; transform: translateY(-5px); box-shadow: 0 5px 15px var(--primary-glow); border-color: transparent;}
-        .kana-card .jp { font-size: 32px; font-weight: bold; font-family: 'Klee One', serif; }
-        .kana-card .rm { font-size: 13px; opacity: 0.9; }
+        .kana-card { 
+            background: #fff; border: 1.5px solid var(--smoke); border-radius: var(--radius-btn); 
+            padding: 15px 5px; text-align: center; color: var(--ink);
+        }
+        .kana-card:hover { 
+            background: var(--sakura-lt); color: var(--torii); border-color: var(--torii); 
+            transform: translateY(-3px); box-shadow: 0 5px 15px rgba(201,54,62,0.1); 
+        }
+        .kana-card .jp { font-size: 32px; font-weight: bold; font-family: 'Klee One', serif; line-height: 1.2;}
+        .kana-card .rm { font-size: 12px; color: var(--muted); letter-spacing: 0.05em;}
+        .kana-card:hover .rm { color: var(--torii); }
 
         /* TABEL BUNYI */
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: rgba(0,0,0,0.4); text-align: center; border-radius: 8px; overflow: hidden; }
-        th { background: rgba(255,183,197,0.2); color: var(--primary); padding: 12px; }
-        td { padding: 12px; border-bottom: 1px solid rgba(255,183,197,0.1); font-size: 18px; font-family: 'Klee One', serif; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #fff; text-align: center; border-radius: var(--radius-btn); overflow: hidden; border: 1px solid var(--smoke); }
+        th { background: var(--sakura-lt); color: var(--torii-dk); padding: 12px; font-weight: 600; font-size: 14px;}
+        td { padding: 12px; border-bottom: 1px solid var(--smoke); font-size: 20px; font-family: 'Klee One', serif; color: var(--ink);}
+        tr:last-child td { border-bottom: none; }
 
         /* MODAL ANIMASI NULIS */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 999; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .modal-content { background: #151515; padding: 40px; border-radius: 20px; border: 2px solid var(--primary); text-align: center; position: relative; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; box-shadow: 0 0 40px var(--primary-glow); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(26,10,10,0.6); z-index: 999; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
+        .modal-content { background: var(--washi); padding: 40px; border-radius: var(--radius-card); border: 1px solid rgba(200,164,90,0.3); text-align: center; position: relative; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; box-shadow: 0 24px 80px rgba(26,10,10,.3); max-width: 350px; width: 90%;}
         @keyframes popIn { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
-        .close-modal { position: absolute; top: 12px; right: 18px; color: #fff; font-size: 28px; cursor: pointer; transition: 0.2s; }
-        .close-modal:hover { color: var(--primary); transform: rotate(90deg); }
+        .close-modal { position: absolute; top: 15px; right: 20px; color: var(--muted); font-size: 28px; cursor: pointer; transition: 0.2s; line-height: 1;}
+        .close-modal:hover { color: var(--torii); transform: rotate(90deg); }
         
-        .draw-area { width: 250px; height: 250px; background: #eee; border-radius: 12px; margin: 20px auto; position: relative; display: flex; justify-content: center; align-items: center; font-family: 'Klee One', serif; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);}
-        #draw-base { font-size: 180px; color: #cccccc; position: absolute; }
-        .draw-anim { font-size: 180px; color: #000000; position: absolute; clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+        .draw-area { width: 220px; height: 220px; background: #fff; border: 1px solid var(--smoke); border-radius: 12px; margin: 20px auto; position: relative; display: flex; justify-content: center; align-items: center; font-family: 'Klee One', serif; box-shadow: inset 0 0 10px rgba(0,0,0,0.03);}
+        #draw-base { font-size: 160px; color: var(--smoke); position: absolute; }
+        .draw-anim { font-size: 160px; color: var(--ink); position: absolute; clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
         .animate-stroke .draw-anim { animation: writeStroke 1.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards; }
         @keyframes writeStroke { 0% { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); } 100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); } }
 
-        .btn-replay { background: var(--primary); color: #000; border: none; padding: 12px 25px; border-radius: 30px; font-weight: bold; font-size: 1rem; margin-top: 15px; }
+        .btn-replay { background: var(--washi); color: var(--ink); border: 1.5px solid var(--smoke); padding: 10px 20px; border-radius: 25px; font-weight: 500; font-size: 14px; margin-top: 15px; font-family: 'Noto Sans JP', sans-serif;}
+        .btn-replay:hover { border-color: var(--matcha); color: var(--matcha); background: #eaf5eb;}
         
-        /* Menu Tambahan Buttons */
-        .btn-toggle { background: transparent; border: 2px solid var(--primary); color: var(--primary); padding: 15px 20px; border-radius: 12px; font-weight: bold; display: block; text-decoration: none; font-size: 16px; text-align: center;}
-        .btn-toggle:hover { background: var(--primary); color: #000; }
+        /* Menu Tambahan & Tombol Spesifik */
+        .btn-secondary { background: transparent; border: 1.5px solid var(--smoke); color: var(--ink); padding: 12px 15px; border-radius: 25px; font-weight: 500; font-family: 'Noto Sans JP', sans-serif;}
+        .btn-secondary:hover { background: var(--sakura-lt); color: var(--torii); border-color: var(--torii); }
+        .btn-secondary.active { background: var(--torii); color: #fff; border-color: var(--torii); }
 
-        .action-buttons { display: flex; flex-direction: column; gap: 15px; margin-top: 20px;}
-        /* Modifikasi flex untuk menampung 4 tombol dengan rapi (menjadi grid di layar besar) */
-        @media(min-width:768px){ 
-            .action-buttons { 
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-            } 
-        }
+        .btn-link { display: flex; align-items: center; justify-content: center; padding: 16px; border-radius: 12px; font-weight: 600; font-size: 14px; text-decoration: none; border: 1.5px solid transparent; text-align: center;}
         
-        .btn-zoom { display: block; background: linear-gradient(45deg, #1e88e5, #42a5f5); color: #fff; padding: 18px; text-align: center; font-weight: bold; font-size: 16px; border-radius: 15px; text-decoration: none; border:none;}
-        .btn-zoom.disabled { background: rgba(255,255,255,0.1); color: #777; pointer-events: none; box-shadow: none;}
-        .btn-game { display: block; background: linear-gradient(45deg, #ff5e62, #ff9966); color: #fff; padding: 18px; text-align: center; font-weight: bold; font-size: 16px; border-radius: 15px; text-decoration: none; border:none;}
+        /* Modifikasi Layout Tombol Aksi */
+        .action-buttons { display: grid; gap: 15px; margin-top: 20px; grid-template-columns: 1fr; }
+        @media(min-width:768px){ .action-buttons { grid-template-columns: 1fr 1fr; } }
         
-        /* TOMBOL WA BARU & ANIMASI */
-        .btn-wa { 
-            display: block; 
-            background: linear-gradient(45deg, #25D366, #128C7E); 
-            color: #fff; 
-            padding: 18px; 
-            text-align: center; 
-            font-weight: bold; 
-            font-size: 16px; 
-            border-radius: 15px; 
-            text-decoration: none; 
-            border: none;
-            animation: pulseWA 2s infinite; 
+        .btn-kuis-utama {
+            grid-column: 1 / -1; /* Lebar penuh */
+            background: linear-gradient(135deg, var(--torii), #e91e63);
+            color: #fff; padding: 22px; font-size: 18px; border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(201, 54, 62, 0.3);
+            animation: pulseKuis 2.5s infinite; border: none;
         }
-        .btn-wa:hover {
-            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6) !important;
+        .btn-kuis-utama:hover { background: var(--torii-dk); transform: translateY(-4px); }
+        @keyframes pulseKuis {
+            0% { box-shadow: 0 0 0 0 rgba(201, 54, 62, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(201, 54, 62, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(201, 54, 62, 0); }
         }
 
-        @keyframes pulseWA {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-            50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
-
-        /* TOMBOL DOWNLOAD PDF (BARU) */
-        .btn-download { 
-            display: block; 
-            background: linear-gradient(45deg, #9c27b0, #e91e63); 
-            color: #fff; 
-            padding: 18px; 
-            text-align: center; 
-            font-weight: bold; 
-            font-size: 16px; 
-            border-radius: 15px; 
-            text-decoration: none; 
-            border: none;
-        }
+        .btn-wa { background: #eaf5eb; color: var(--matcha); border: 1.5px solid #a3d4ad; }
+        .btn-wa:hover { background: var(--matcha); color: #fff; border-color: var(--matcha); }
+        
+        .btn-download { background: #f4eef9; color: #8154b5; border: 1.5px solid #d3c4e6; }
+        .btn-download:hover { background: #8154b5; color: #fff; border-color: #8154b5; }
+        
+        .btn-zoom { background: #eef6fc; color: #3a7ab8; border: 1.5px solid #b8d4f0; }
+        .btn-zoom.disabled { background: var(--smoke); color: var(--muted); border-color: var(--smoke); pointer-events: none; }
+        .btn-zoom:not(.disabled):hover { background: #3a7ab8; color: #fff; border-color: #3a7ab8; }
+        
+        .btn-menu-latihan { background: var(--washi); color: var(--ink); border: 1.5px solid var(--smoke); }
+        .btn-menu-latihan:hover { border-color: var(--gold); background: #fdfaf5; box-shadow: 0 6px 15px rgba(200,164,90,0.1); }
     </style>
 </head>
 <body>
 
+<!-- Daun Sakura -->
+<div id="petals"></div>
+
 <!-- DASHBOARD HEADER -->
 <div class="dash-header">
     <div class="dash-header-left">
-        <a href="index.html" class="btn-back-home">⬅ Kembali ke Home</a>
+        <a href="index.html" class="btn-back-home">← Kembali</a>
     </div>
-    <div class="point-badge" id="point-badge">⭐ Poin: <span id="user-points-display">0</span></div>
+    <div class="point-badge" id="point-badge">⭐ <span id="user-points-display">0</span> Poin</div>
 </div>
 
 <div class="container">
     
     <!-- LOGIN & REGISTER -->
     <div id="auth-section">
-        <h1 style="color:var(--primary); font-size: 46px; text-shadow: 0 0 25px var(--primary-glow); margin-bottom: 0;">GoJapanTogether</h1>
-        <p style="color:#ddd; margin-bottom: 30px;">Platform Belajar Bahasa Jepang Interaktif</p>
+        <h1 class="auth-logo">GoJapan<span style="color:var(--ink);">Together</span></h1>
+        <p class="auth-sub">Platform Belajar Bahasa Jepang Interaktif</p>
         
-        <div class="auth-box" id="form-login">
-            <h2 style="margin-top:0;">Masuk (Login)</h2>
+        <div class="card auth-box" id="form-login">
+            <h2>Masuk</h2>
             <input type="email" id="login-email" placeholder="Email Terdaftar">
             <input type="password" id="login-pass" placeholder="Password">
             <button onclick="handleAuth('login')" id="btn-login">Masuk Dashboard</button>
             <span class="toggle-auth" onclick="toggleForm()">Belum punya akun? Daftar di sini</span>
         </div>
 
-        <div class="auth-box" id="form-register" style="display: none;">
-            <h2 style="margin-top:0;">Daftar Akun Baru</h2>
+        <div class="card auth-box" id="form-register" style="display: none;">
+            <h2>Daftar Baru</h2>
             <input type="text" id="reg-name" placeholder="Nama Panggilan">
             <input type="email" id="reg-email" placeholder="Email Aktif">
             <input type="password" id="reg-pass" placeholder="Password">
@@ -224,62 +263,66 @@
 
     <!-- MATERI BELAJAR (DASHBOARD UI) -->
     <div id="main-content">
-        <h1 class="header-title">🌸 Level N5 (Dasar)</h1>
-        <p class="welcome-text">Konnichiwa, <span id="user-name" style="color:var(--primary); font-weight:bold; font-size: 22px;"></span>! Siap *push rank* hari ini?</p>
+        <h1 class="header-title">Level N5 (Dasar)</h1>
+        <p class="welcome-text">Konnichiwa, <span id="user-name" style="color:var(--torii); font-weight:700;"></span>! Siap belajar hari ini?</p>
 
         <div class="dashboard-grid">
             
             <!-- Kiri: Tabel Interaktif -->
-            <div class="section-box">
+            <div class="card section-box">
                 <h3>✍️ Animasi Menulis Kana</h3>
-                <p style="color:#ccc; font-size:14px;">Klik kotak huruf untuk melihat simulasi urutan coretan yang benar.</p>
+                <p style="color:var(--muted); font-size:13px; line-height: 1.5; margin-bottom: 15px;">Klik kotak huruf untuk melihat simulasi urutan coretan yang benar.</p>
                 
-                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                    <button class="btn-toggle" style="margin:0; flex:1; border-radius: 25px; padding: 10px;" onclick="renderKana('hiragana')">Hiragana</button>
-                    <button class="btn-toggle" style="margin:0; flex:1; border-radius: 25px; padding: 10px;" onclick="renderKana('katakana')">Katakana</button>
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <button class="btn-secondary active" id="btn-hiragana" style="flex:1;" onclick="renderKana('hiragana')">Hiragana</button>
+                    <button class="btn-secondary" id="btn-katakana" style="flex:1;" onclick="renderKana('katakana')">Katakana</button>
                 </div>
                 
                 <div id="kana-container" class="kana-grid"></div>
             </div>
 
             <!-- Kanan: Tabel Bunyi -->
-            <div class="section-box">
+            <div class="card section-box">
                 <h3>🗣️ Bunyi Khusus</h3>
-                <p style="font-size: 14px; margin-bottom: 5px;"><strong>Tenten (゛) & Maru (゜)</strong></p>
+                <p style="font-size: 14px; margin-bottom: 8px; color: var(--ink); font-weight: 600;">Tenten (゛) & Maru (゜)</p>
                 <table>
                     <tr><th>Asli</th><th>Tenten</th><th>Maru</th></tr>
-                    <tr><td>か (ka)</td><td>が (ga)</td><td>-</td></tr>
-                    <tr><td>さ (sa)</td><td>ざ (za)</td><td>-</td></tr>
-                    <tr><td>た (ta)</td><td>だ (da)</td><td>-</td></tr>
-                    <tr><td>は (ha)</td><td>ば (ba)</td><td>ぱ (pa)</td></tr>
+                    <tr><td>か <span style="font-size:12px; font-family:'Noto Sans JP', sans-serif;">(ka)</span></td><td>が <span style="font-size:12px; font-family:'Noto Sans JP', sans-serif;">(ga)</span></td><td>-</td></tr>
+                    <tr><td>さ <span style="font-size:12px; font-family:'Noto Sans JP', sans-serif;">(sa)</span></td><td>ざ <span style="font-size:12px; font-family:'Noto Sans JP', sans-serif;">(za)</span></td><td>-</td></tr>
+                    <tr><td>た <span style="font-size:12px; font-family:'Noto Sans JP', sans-serif;">(ta)</span></td><td>だ <span style="font-size:12px; font-family:'Noto Sans JP', sans-serif;">(da)</span></td><td>-</td></tr>
+                    <tr><td>は <span style="font-size:12px; font-family:'Noto Sans JP', sans-serif;">(ha)</span></td><td>ば <span style="font-size:12px; font-family:'Noto Sans JP', sans-serif;">(ba)</span></td><td>ぱ <span style="font-size:12px; font-family:'Noto Sans JP', sans-serif;">(pa)</span></td></tr>
                 </table>
-                <p style="font-size: 14px; margin-top:20px; margin-bottom: 5px;"><strong>Bunyi Yoon & Sokuon (っ)</strong></p>
-                <p style="font-size: 13px; color: #ccc; margin-top:0;">Gabungan huruf 'i' dengan ya/yu/yo kecil (cth: きゃ/kya). Sokuon (っ) digunakan untuk jeda ganda (cth: きって/kitte).</p>
+                <p style="font-size: 14px; margin-top:20px; margin-bottom: 5px; font-weight: 600;">Bunyi Yoon & Sokuon (っ)</p>
+                <p style="font-size: 13px; color: var(--muted); margin-top:0; line-height: 1.6;">Gabungan huruf 'i' dengan ya/yu/yo kecil (cth: <strong>きゃ/kya</strong>). Sokuon (っ) digunakan untuk jeda ganda (cth: <strong>きって/kitte</strong>).</p>
             </div>
 
             <!-- Bawah: Menu Materi Lanjutan (Full Width) -->
-            <div class="section-box full-width">
-                <h3 style="text-align:center;">📚 Menu Latihan & Materi Lanjutan</h3>
-                <p style="text-align: center; color: #ccc; font-size: 14px;">Pilih menu di bawah ini untuk melanjutkan sesi belajar Anda.</p>
+            <div class="card section-box full-width">
+                <h3 style="text-align:center; border:none; margin-bottom:5px;">📚 Menu Latihan & Materi Lanjutan</h3>
+                <p style="text-align: center; color: var(--muted); font-size: 13px; margin-bottom: 20px;">Pilih menu di bawah ini untuk melanjutkan sesi belajar Anda.</p>
                 
-                <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
-                    <!-- Ganti LINK_WEB_... dengan link tujuan Anda -->
-                    <a href="bacahiragana.html" class="btn-toggle">📖 Latihan Membaca Teks (Dokai)</a>
-                    <a href="huruf.html" class="btn-toggle">🎴 Lanjutan hiragana dan katakana</a>
-                    <a href="minna1.html" class="btn-toggle">🗣️ Materi Minna 1</a>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                    <a href="bacahiragana.html" class="btn-link btn-menu-latihan">📖 Latihan Membaca Teks (Dokai)</a>
+                    <a href="huruf.html" class="btn-link btn-menu-latihan">🎴 Lanjutan Hiragana & Katakana</a>
+                    <a href="minna1.html" class="btn-link btn-menu-latihan">🗣️ Materi Minna 1</a>
                 </div>
             </div>
 
             <!-- Bawah: Action Buttons (Full Width) -->
             <div class="full-width action-buttons">
+                
+                <!-- TOMBOL KUIS BARU -->
+                <button class="btn-link btn-kuis-utama" onclick="window.location.href='kana.html'">
+                    ⛩️ KUIS Kana Hiragana dan Katakana - Uji Kemampuanmu! 🔥
+                </button>
+                
                 <!-- Tombol Join Grup WA -->
-                <a href="https://chat.whatsapp.com/LXaLC4gXmRCFLEDYUXjWoQ?s=cl&p=a&mlu=4" target="_blank" class="btn-wa">💬 Join Grup WA N5 Dasar</a>
+                <a href="https://chat.whatsapp.com/LXaLC4gXmRCFLEDYUXjWoQ?s=cl&p=a&mlu=4" target="_blank" class="btn-link btn-wa">💬 Join Grup WA N5 Dasar</a>
                 
-                <!-- Tombol Download PDF Latihan (BARU) -->
-                <a href="menulis.pdf" target="_blank" class="btn-download" download>📥 Download PDF Latihan</a>
+                <!-- Tombol Download PDF Latihan -->
+                <a href="menulis.pdf" target="_blank" class="btn-link btn-download" download>📥 Download PDF Latihan Menulis</a>
                 
-                <a href="#" id="btn-zoom" class="btn-zoom disabled">⏳ Zoom Coming Soon</a>
-                <button class="btn-game" onclick="window.location.href='kuisN5.html'">🎮 KUIS / GAME (latihan) </button>
+                <a href="#" id="btn-zoom" class="btn-link btn-zoom disabled">⏳ Live Zoom (Coming Soon)</a>
             </div>
 
         </div>
@@ -290,19 +333,34 @@
 <div class="modal" id="draw-modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal()">&times;</span>
-        <h3 style="color:var(--primary); margin-top:0; font-size: 26px;">Simulasi Coretan</h3>
-        <p id="modal-kanji-info" style="color: #a8ffb2; margin-bottom: 20px; font-weight: bold; font-size: 18px;"></p>
+        <h3 style="font-family:'Noto Serif JP', serif; color:var(--ink); margin-top:0; font-size: 24px;">Simulasi Coretan</h3>
+        <p id="modal-kanji-info" style="color: var(--muted); margin-bottom: 15px; font-weight: 500; font-size: 16px; letter-spacing: 0.1em;"></p>
         
         <div class="draw-area" id="draw-area">
             <span id="draw-base">あ</span>
             <span class="draw-anim" id="draw-overlay">あ</span>
         </div>
         
-        <button class="btn-replay" onclick="replayAnimation()">🔄 Ulangi Animasi</button>
+        <button class="btn-replay" onclick="replayAnimation()">🔄 Putar Ulang Animasi</button>
     </div>
 </div>
 
 <script>
+    /* Sakura Petals Animation */
+    (function spawnPetals() {
+        const container = document.getElementById('petals');
+        for (let i = 0; i < 14; i++) {
+            const p = document.createElement('div');
+            p.className = 'petal';
+            const leftPct = Math.random() * 100;
+            const delay   = Math.random() * 12;
+            const dur     = 8 + Math.random() * 10;
+            const size    = 7 + Math.random() * 8;
+            p.style.cssText = `left:${leftPct}%;width:${size}px;height:${size*1.2}px;animation-duration:${dur}s;animation-delay:${delay}s;`;
+            container.appendChild(p);
+        }
+    })();
+
     // ⚠️ MASUKKAN LINK APPS SCRIPT ANDA DI SINI
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyHvWyLKbwU5F7UBtG3cESHnzZJHzHMA_ZvsYC3g_p61FMvyB9Pj8g-QLxZUeYei2jq/exec";
 
@@ -324,6 +382,11 @@
     };
 
     function renderKana(type) {
+        // Toggle Button Active State
+        document.getElementById('btn-hiragana').classList.remove('active');
+        document.getElementById('btn-katakana').classList.remove('active');
+        document.getElementById(`btn-${type}`).classList.add('active');
+
         const container = document.getElementById('kana-container');
         container.innerHTML = '';
         kanaData[type].forEach(char => {
@@ -418,9 +481,9 @@
                 method: 'POST',
                 body: JSON.stringify(payload)
             });
-            const result = await response.json(); // Data result baru didapatkan di sini
+            const result = await response.json();
             
-            // 3. Pengecekan sukses dari Google Sheet (Kode baru dimasukkan ke sini)
+            // 3. Pengecekan sukses dari Google Sheet
             if (result.success) {
                 if (action === 'register') {
                     alert(result.message);
@@ -438,7 +501,7 @@
                 alert("Gagal: " + result.message);
             }
         } catch (error) {
-            alert("Terjadi kesalahan jaringan.");
+            alert("Terjadi kesalahan jaringan. Pastikan koneksi internet stabil.");
         }
 
         btn.innerText = originalText;
