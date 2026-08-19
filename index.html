@@ -4,27 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Belajar Bahasa Jepang - GOJAPAN TOGETHER</title>
+    <!-- Font Noto Sans/Serif & Klee One untuk huruf Jepang -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <style>
+        /* ── TOKENS WARNA JEJEPANGAN ── */
+        :root {
+            --sumi:     #1a0a0a;
+            --washi:    #f7f2ec;
+            --torii:    #c9363e;
+            --torii-dk: #9b1f25;
+            --sakura:   #e8b4b8;
+            --sakura-lt:#f9eaeb;
+            --matcha:   #6b8f71;
+            --gold:     #c8a45a;
+            --smoke:    #ede8e0;
+            --ink:      #2d1b1b;
+            --muted:    #7a6a6a;
+
+            --radius-card: 16px;
+            --radius-btn:  8px;
+            --shadow-card: 0 8px 40px rgba(26,10,10,.08), 0 2px 8px rgba(26,10,10,.04);
+            --transition:  .3s cubic-bezier(.4,0,.2,1);
+        }
+
         /* TEMA & ANIMASI DASAR */
         body {
-            background: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff0f5; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--washi);
+            color: var(--ink);
+            font-family: 'Noto Sans JP', sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             text-align: center;
             min-height: 100vh;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            position: relative;
         }
 
-        /* Hujan Sakura */
+        /* Tekstur Kertas Washi */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Hujan Sakura (Diganti gayanya menjadi kelopak elegan) */
         .sakura-petal {
-            position: fixed; top: -10px; background-color: #ffb7c5;
-            border-radius: 15px 0px 15px 0px; width: 12px; height: 16px;
+            position: fixed; top: -20px; 
+            background: radial-gradient(ellipse at 40% 35%, #f0c0c4, #d9858b);
+            border-radius: 100% 0 100% 0; width: 10px; height: 14px;
             opacity: 0.8; pointer-events: none; z-index: 9999;
-            box-shadow: 0 0 5px rgba(255, 183, 197, 0.5);
+            box-shadow: 0 2px 5px rgba(232, 180, 184, 0.4);
             animation: fall linear forwards;
         }
         @keyframes fall {
@@ -35,138 +69,148 @@
         .fade-in { animation: fadeIn 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
-        h1 { color: #ffb7c5; letter-spacing: 2px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 183, 197, 0.5); }
-        h2 { color: #ffb7c5; font-weight: normal; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
-
+        h1, h2, h3 { font-family: 'Noto Serif JP', serif; color: var(--ink); }
+        
         .container {
             max-width: 1100px; margin: 0 auto;
-            background-color: rgba(26, 8, 15, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 183, 197, 0.2); position: relative; z-index: 10;
+            padding: 40px 20px; position: relative; z-index: 10;
         }
 
         /* LOGO BESAR BERANIMASI */
-        .main-logo-container { margin-bottom: 20px; animation: floating 3s ease-in-out infinite; }
+        .main-logo-container { margin-bottom: 10px; animation: floating 4s ease-in-out infinite; padding-top: 40px;}
         .main-logo-img { 
             width: 120px; height: auto; 
-            filter: drop-shadow(0 0 15px rgba(255,183,197,0.8)); 
-            border-radius: 50%; border: 3px solid #ffb7c5; 
+            filter: drop-shadow(0 10px 15px rgba(201, 54, 62, 0.15)); 
+            border-radius: 50%; border: 3px solid var(--sakura); 
         }
-        @keyframes floating { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+        @keyframes floating { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); } 100% { transform: translateY(0px); } }
 
         /* TOMBOL KONTROL MUSIK */
         .btn-floating { 
-            position: absolute; top: 20px; right: 20px;
-            background: rgba(0,0,0,0.5); border: 1px solid #ffb7c5; color: #ffb7c5; 
-            padding: 8px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s; z-index: 15; 
+            position: fixed; top: 20px; right: 20px;
+            background: rgba(255, 252, 248, 0.9); border: 1.5px solid var(--torii); color: var(--torii); 
+            padding: 10px 20px; border-radius: 25px; cursor: pointer; transition: var(--transition); z-index: 100; 
+            font-family: 'Noto Sans JP', sans-serif; font-weight: 600; box-shadow: 0 4px 15px rgba(201,54,62,0.1);
+            backdrop-filter: blur(5px);
         }
-        .btn-floating:hover { background: #ffb7c5; color: #000; }
+        .btn-floating:hover { background: var(--torii); color: #fff; transform: translateY(-2px); }
 
         /* GATEKEEPER / DASHBOARD STYLE */
-        #gatekeeper { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 85vh; max-width: 1200px; padding-top: 40px; }
         .dashboard-header { margin-bottom: 40px; }
+        .dashboard-header h1 { color: var(--torii); font-size: 38px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 2px;}
+        .dashboard-header p { color: var(--muted); font-size: 16px; font-weight: 500; letter-spacing: 0.05em;}
         
-        .menu-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; width: 100%; padding: 0 20px; box-sizing: border-box; }
+        .menu-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; }
+        
         .card {
-            background: rgba(43, 15, 25, 0.6); border: 2px solid #ffb7c5; border-radius: 20px;
-            padding: 35px 25px; cursor: pointer; transition: all 0.4s; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            background: rgba(255, 252, 248, 0.95); border: 1.5px solid var(--smoke); border-radius: var(--radius-card);
+            padding: 35px 25px; cursor: pointer; transition: var(--transition); box-shadow: var(--shadow-card);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-        .card:hover { transform: translateY(-8px) scale(1.03); background: rgba(74, 28, 42, 0.8); box-shadow: 0 15px 30px rgba(255, 183, 197, 0.4); border-color: #fff; }
-        .card-icon { font-size: 60px; margin-bottom: 15px; text-shadow: 0 0 20px rgba(255,255,255,0.5); }
-        .card-title { font-size: 24px; font-weight: bold; color: #ffb7c5; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        .card-desc { font-size: 15px; color: #ddd; line-height: 1.5; }
+        .card:hover { transform: translateY(-5px); border-color: var(--torii); box-shadow: 0 15px 35px rgba(201, 54, 62, 0.12); background: #fff; }
+        
+        .card-icon { font-size: 50px; margin-bottom: 15px; }
+        .card-title { font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .card-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+        .card-desc b { color: var(--ink); font-weight: 600;}
 
         /* CUSTOM WA CARD */
-        .card.wa-card { border-color: #25D366; }
-        .card.wa-card:hover { border-color: #25D366; box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4); background: rgba(18, 40, 25, 0.8); }
-        .wa-card .card-icon { text-shadow: 0 0 20px rgba(37, 211, 102, 0.5); }
-        .wa-card .card-title { color: #25D366; }
+        .card.wa-card:hover { border-color: var(--matcha); box-shadow: 0 15px 35px rgba(107, 143, 113, 0.2); }
+        .wa-card .card-title { color: var(--matcha); }
 
-        /* CUSTOM VIP CARD */
-        @keyframes chromaWave { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .card.vip-card { position: relative; background: rgba(43, 15, 25, 0.9); border: none; overflow: visible; z-index: 1; }
+        /* CUSTOM VIP CARD - Elegan Gold Theme */
+        @keyframes goldWave { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .card.vip-card { position: relative; border: none; overflow: visible; z-index: 1; }
         .card.vip-card::before {
-            content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px;
-            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-            background-size: 400%; z-index: -1; animation: chromaWave 20s linear infinite; border-radius: 22px;
+            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, var(--gold), #f9ea9a, var(--gold), #f9ea9a);
+            background-size: 300%; z-index: -1; animation: goldWave 6s ease-in-out infinite; border-radius: 18px;
         }
-        .card.vip-card::after { content: ''; position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; background: rgba(30, 8, 15, 0.95); border-radius: 20px; z-index: -1; }
-        .card.vip-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 15px 40px rgba(0, 255, 213, 0.5); }
+        .card.vip-card::after { content: ''; position: absolute; inset: 0; background: rgba(255, 252, 248, 0.98); border-radius: var(--radius-card); z-index: -1; }
+        .card.vip-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(200, 164, 90, 0.3); }
         .vip-badge {
-            position: absolute; top: -15px; right: -10px; background: #ffb7c5; color: #12040a;
-            padding: 5px 15px; font-size: 14px; font-weight: bold; border-radius: 20px; box-shadow: 0 0 15px #ffb7c5; animation: pulse-node 2s infinite; z-index: 2;
+            position: absolute; top: -12px; right: -10px; background: var(--torii); color: #fff;
+            padding: 4px 16px; font-size: 12px; font-weight: 700; border-radius: 20px; 
+            box-shadow: 0 4px 10px rgba(201, 54, 62, 0.3); z-index: 2; letter-spacing: 0.1em;
         }
-        .vip-content-desc { font-size: 13px; color: #a8ffb2; margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(255, 183, 197, 0.4); text-align: left; line-height: 1.6; width: 100%; }
+        .vip-content-desc { font-size: 13px; color: var(--torii-dk); margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--gold); text-align: left; line-height: 1.6; width: 100%; font-weight: 500;}
 
         /* ROADMAP STYLES */
-        .roadmap-wrapper { margin-top: 60px; padding: 40px 20px; width: 100%; position: relative; }
-        .roadmap-title { font-size: 36px; color: #fff; margin-bottom: 50px; text-shadow: 0 0 20px rgba(255, 183, 197, 0.8); }
+        .roadmap-wrapper { margin-top: 80px; padding: 40px 0; width: 100%; position: relative; }
+        .roadmap-title { font-size: 32px; color: var(--ink); margin-bottom: 50px; text-align: center; }
+        
         .timeline { position: relative; max-width: 800px; margin: 0 auto; text-align: left; }
         .timeline::after {
-            content: ''; position: absolute; width: 4px; background: rgba(255, 183, 197, 0.4);
-            top: 0; bottom: 0; left: 50%; margin-left: -2px; border-radius: 5px; box-shadow: 0 0 15px rgba(255, 183, 197, 0.5);
+            content: ''; position: absolute; width: 2px; background: var(--gold);
+            top: 0; bottom: 0; left: 50%; margin-left: -1px;
         }
-        .timeline-item { padding: 10px 40px; position: relative; background: inherit; width: 50%; box-sizing: border-box; opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .timeline-item { padding: 10px 40px; position: relative; background: inherit; width: 50%; box-sizing: border-box; opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); }
         .timeline-item.visible { opacity: 1; transform: translateY(0); }
         .timeline-item:nth-child(odd) { left: 0; }
         .timeline-item:nth-child(even) { left: 50%; }
+        
+        /* Titik Sakura di Timeline */
         .timeline-item::after {
-            content: '🌸'; position: absolute; width: 40px; height: 40px; right: -20px;
-            background-color: #2b0f19; border: 4px solid #ffb7c5; top: 15px; border-radius: 50%; z-index: 1;
-            display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 0 15px #ffb7c5; animation: pulse-node 2s infinite;
+            content: '🌸'; position: absolute; width: 36px; height: 36px; right: -18px;
+            background-color: #fff; border: 2px solid var(--sakura); top: 15px; border-radius: 50%; z-index: 1;
+            display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 0 10px rgba(232, 180, 184, 0.5);
         }
-        .timeline-item:nth-child(even):after { left: -20px; }
-        @keyframes pulse-node { 0% { box-shadow: 0 0 0 0 rgba(255, 183, 197, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(255, 183, 197, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 183, 197, 0); } }
-        .timeline-content { padding: 20px 30px; background: rgba(43, 15, 25, 0.8); border: 2px solid #ffb7c5; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: 0.3s; }
-        .timeline-content:hover { transform: scale(1.05); background: rgba(74, 28, 42, 0.9); box-shadow: 0 10px 25px rgba(255, 183, 197, 0.5); }
-        .timeline-content h3 { margin-top: 0; color: #ffb7c5; font-size: 22px; margin-bottom: 10px; }
-        .timeline-content p { color: #ddd; font-size: 15px; line-height: 1.6; margin: 0; }
+        .timeline-item:nth-child(even):after { left: -18px; }
+        
+        .timeline-content { 
+            padding: 25px; background: rgba(255, 252, 248, 0.95); border: 1.5px solid var(--smoke); 
+            border-radius: var(--radius-card); box-shadow: var(--shadow-card); transition: var(--transition); 
+        }
+        .timeline-content:hover { transform: translateY(-3px); border-color: var(--torii); box-shadow: 0 10px 25px rgba(201, 54, 62, 0.1); }
+        .timeline-content h3 { margin-top: 0; color: var(--torii); font-size: 18px; margin-bottom: 10px; }
+        .timeline-content p { color: var(--muted); font-size: 14px; line-height: 1.6; margin: 0; }
+        .timeline-content p b { color: var(--ink); }
 
         /* REVIEW SECTION STYLES */
-        .review-section { margin-top: 60px; padding: 40px 20px; width: 100%; box-sizing: border-box; }
+        .review-section { margin-top: 60px; padding: 40px 0; width: 100%; box-sizing: border-box; }
         .review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; text-align: left; align-items: start; }
         
-        /* Container ulasan dengan scroll jika terlalu banyak */
-        .review-list { max-height: 600px; overflow-y: auto; padding-right: 10px; }
-        .review-list::-webkit-scrollbar { width: 8px; }
-        .review-list::-webkit-scrollbar-track { background: rgba(26, 8, 15, 0.5); border-radius: 5px; }
-        .review-list::-webkit-scrollbar-thumb { background: #6b2d41; border-radius: 5px; }
-        .review-list::-webkit-scrollbar-thumb:hover { background: #ffb7c5; }
+        .review-list { max-height: 600px; overflow-y: auto; padding-right: 15px; }
+        .review-list::-webkit-scrollbar { width: 6px; }
+        .review-list::-webkit-scrollbar-track { background: transparent; }
+        .review-list::-webkit-scrollbar-thumb { background: var(--sakura); border-radius: 4px; }
 
         .review-card {
-            background: rgba(30, 8, 15, 0.8); border: 2px solid #ffb7c5; border-radius: 15px; padding: 20px;
-            box-shadow: 0 5px 20px rgba(255, 183, 197, 0.2); margin-bottom: 20px; transition: 0.3s; position: relative;
+            background: rgba(255, 252, 248, 0.95); border: 1.5px solid var(--smoke); border-radius: var(--radius-card); padding: 25px;
+            box-shadow: var(--shadow-card); margin-bottom: 20px; transition: var(--transition); position: relative;
         }
-        .review-card:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(255, 183, 197, 0.4); border-color: #fff; }
-        .review-header { display: flex; align-items: center; margin-bottom: 10px; }
-        .reviewer-avatar { width: 40px; height: 40px; border-radius: 50%; background: #ffb7c5; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #1a080f; margin-right: 15px; font-size: 18px; }
-        .reviewer-info h4 { margin: 0; color: #fff; font-size: 16px; }
-        .reviewer-info .stars { color: #ffd700; font-size: 14px; margin-top: 2px; }
-        .review-text { color: #ddd; font-size: 14px; line-height: 1.5; margin: 0; }
-        .review-date { position: absolute; top: 20px; right: 20px; color: #aaa; font-size: 12px; }
+        .review-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-color: var(--gold); }
+        .review-header { display: flex; align-items: center; margin-bottom: 12px; }
+        .reviewer-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--sakura-lt); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--torii-dk); margin-right: 15px; font-size: 16px; }
+        .reviewer-info h4 { margin: 0; color: var(--ink); font-size: 15px; font-family: 'Noto Sans JP', sans-serif;}
+        .reviewer-info .stars { color: var(--gold); font-size: 14px; margin-top: 4px; letter-spacing: 2px;}
+        .review-text { color: var(--muted); font-size: 14px; line-height: 1.6; margin: 0; }
+        .review-date { position: absolute; top: 25px; right: 25px; color: #b0b0b0; font-size: 12px; }
 
-        .review-form-box { background: rgba(43, 15, 25, 0.9); border: 2px dashed #ffb7c5; border-radius: 20px; padding: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); text-align: center; position: sticky; top: 20px; }
-        .review-form-box h3 { color: #ffb7c5; margin-top: 0; margin-bottom: 20px; }
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-group label { display: block; color: #fff; margin-bottom: 5px; font-size: 14px; }
-        .form-control { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ffb7c5; background: rgba(0,0,0,0.5); color: #fff; box-sizing: border-box; font-family: inherit; }
-        .form-control:focus { outline: none; border-color: #fff; box-shadow: 0 0 10px rgba(255,183,197,0.5); }
-        .star-rating { direction: rtl; display: inline-flex; font-size: 30px; justify-content: center; width: 100%; }
+        .review-form-box { background: #fff; border: 1.5px solid var(--sakura); border-radius: var(--radius-card); padding: 35px; box-shadow: var(--shadow-card); text-align: center; position: sticky; top: 100px; }
+        .review-form-box h3 { color: var(--torii); margin-top: 0; margin-bottom: 20px; font-size: 22px;}
+        
+        .form-group { margin-bottom: 18px; text-align: left; }
+        .form-group label { display: block; color: var(--ink); font-weight: 600; margin-bottom: 8px; font-size: 13px; }
+        .form-control { width: 100%; padding: 12px 15px; border-radius: var(--radius-btn); border: 2px solid var(--smoke); background: #fafafa; color: var(--ink); box-sizing: border-box; font-family: inherit; font-size: 14px; transition: var(--transition);}
+        .form-control:focus { outline: none; border-color: var(--torii); box-shadow: 0 0 0 3px rgba(201,54,62,0.1); background: #fff;}
+        
+        .star-rating { direction: rtl; display: inline-flex; font-size: 28px; justify-content: center; width: 100%; }
         .star-rating input { display: none; }
-        .star-rating label { color: #555; cursor: pointer; transition: 0.2s; padding: 0 5px; }
-        .star-rating label:hover, .star-rating label:hover ~ label, .star-rating input:checked ~ label { color: #ffd700; text-shadow: 0 0 10px #ffd700; }
-        .btn-submit { background: #ffb7c5; color: #1a080f; border: none; padding: 12px 30px; font-size: 16px; font-weight: bold; border-radius: 25px; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 10px; }
-        .btn-submit:hover { background: #fff; box-shadow: 0 0 15px #fff; }
+        .star-rating label { color: #ddd; cursor: pointer; transition: 0.2s; padding: 0 4px; }
+        .star-rating label:hover, .star-rating label:hover ~ label, .star-rating input:checked ~ label { color: var(--gold); }
+        
+        .btn-submit { background: var(--torii); color: #fff; border: none; padding: 14px 30px; font-size: 15px; font-weight: 600; border-radius: var(--radius-btn); cursor: pointer; transition: var(--transition); width: 100%; margin-top: 10px; font-family: 'Noto Sans JP', sans-serif; letter-spacing: 0.05em;}
+        .btn-submit:hover { background: var(--torii-dk); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(201, 54, 62, 0.2); }
 
         @media screen and (max-width: 768px) {
-            .timeline::after { left: 31px; }
-            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline::after { left: 20px; }
+            .timeline-item { width: 100%; padding-left: 55px; padding-right: 0; }
             .timeline-item:nth-child(even) { left: 0%; }
-            .timeline-item::after { left: 11px; right: auto; }
-            .timeline-item:nth-child(even):after { left: 11px; }
+            .timeline-item::after { left: 2px; right: auto; }
+            .timeline-item:nth-child(even):after { left: 2px; }
             .review-grid { grid-template-columns: 1fr; }
-            .review-form-box { position: static; }
+            .review-form-box { position: static; margin-top: 30px;}
         }
     </style>
 </head>
@@ -176,172 +220,174 @@
 <audio id="bg-music" loop autoplay>
     <source src="dora.mp3" type="audio/mpeg">
 </audio>
-<button class="btn-floating btn-music" id="btn-music" onclick="toggleMusic()">🎵 Play Music</button>
+<button class="btn-floating" id="btn-music" onclick="toggleMusic()">🎵 Play Music</button>
 
-<!-- TAMPILAN DASHBOARD -->
-<div id="gatekeeper" class="container fade-in">
+<div class="container">
     
-   <!-- LOGO DITAMBAHKAN DI SINI -->
-   <div class="main-logo-container">
-        <!-- Ganti src dengan link URL gambar logo Anda -->
-        <img src="logo.png" alt="Logo Nihongo" class="main-logo-img">
-    </div>
-
-    <div class="dashboard-header">
-        <h1 style="font-size: 42px; margin-bottom: 5px;">🌸 GOJAPAN TOGETHER 🌸</h1>
-        <p style="font-size: 18px; color: #ddd;">modul belajar bahasa jepang N5 dan N4 </p>
-    </div>
-    
-    <div class="menu-cards">
+    <!-- TAMPILAN DASHBOARD -->
+    <div id="gatekeeper" class="fade-in">
         
-        <div class="card" onclick="openModule('kanji')">
-            <div class="card-icon">⛩️</div>
-            <div class="card-title">KANJI</div>
-            <div class="card-desc">Pelajari karakter lanjutan:<br><b>JLPT N5 & N4 Lengkap</b></div>
+       <!-- LOGO -->
+       <div class="main-logo-container">
+            <!-- Ganti src dengan link URL gambar logo Anda -->
+            <img src="logo.png" alt="Logo Nihongo" class="main-logo-img">
         </div>
 
-        <div class="card" onclick="openModule('kosakata')">
-            <div class="card-icon">📝</div>
-            <div class="card-title">KOSAKATA</div>
-            <div class="card-desc">Hafalan Kata Baru<br><b>Level N5 - N4</b></div>
-        </div>
-
-        <div class="card" onclick="openModule('minna1')">
-            <div class="card-icon">📚</div>
-            <div class="card-title">DASAR N5</div>
-            <div class="card-desc">KHUSUS UNTUK PEMULA <br><b></b></div>
-        </div>
-
-        <div class="card" onclick="openModule('simulasi')">
-            <div class="card-icon">🎓</div>
-            <div class="card-title">JLPT/JFT N4</div>
-            <div class="card-desc">Latihan Soal Ujian<br><b>Level N4 </b></div>
-        </div>
-
-        <div class="card" onclick="openModule('game')">
-            <div class="card-icon">🎮</div>
-            <div class="card-title">GAME</div>
-            <div class="card-desc">Bermain sambil<br><b>Mengingat Kosakata</b></div>
-        </div>
-
-        <!-- WA GROUP MENU -->
-        <div class="card wa-card" onclick="window.open('https://chat.whatsapp.com/HgZ1Bcsog9XGgvi4OzSmJm?s=cl&p=a&ilr=4')">
-            <div class="card-icon">💬</div>
-            <div class="card-title">GRUP WA</div>
-            <div class="card-desc">Diskusi & Tanya Jawab<br><b>Komunitas Belajar Bersama</b></div>
+        <div class="dashboard-header">
+            <h1>GOJAPAN TOGETHER</h1>
+            <p>Modul Belajar Bahasa Jepang N5 dan N4</p>
         </div>
         
-        <!-- CARD VIP EKSKLUSIF BERBAYAR -->
-        <div class="card vip-card" onclick="openModule('vip')">
-            <div class="vip-badge">💎 FREE </div>
-            <div class="card-icon">👑</div>
-            <div class="card-title">VIP AKSES</div>
-            <div class="card-desc">Modul Premium Lengkap</div>
-            <div class="vip-content-desc">
-                ✔️ Irodori 1-54<br>
-                ✔️ Kanji Full JLPT N4<br>
-                ✔️ Materi N3<br>
-                ✔️ Quiz JLPT Terupdate
-            </div>
-        </div>
-    </div>
-
-    <!-- ROADMAP -->
-    <div class="roadmap-wrapper">
-        <h2 class="roadmap-title">🗺️ Roadmap Belajar: Dari Nol Sampai N4</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>Tahap 1: Penguasaan Kana (Nol) 🎌</h3>
-                    <p>Fondasi utama Anda. Di tahap ini, fokuslah menghafal bentuk dan cara baca <b>Hiragana</b> & <b>Katakana</b>. Jangan melangkah ke tahap selanjutnya sebelum Anda bisa membaca kata tanpa huruf alfabet (Romaji).</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>Tahap 2: Pondasi Tata Bahasa N5 📚</h3>
-                    <p>Mulai pelajari tata bahasa dasar seperti partikel (wa, ga, o, ni) dan pola kalimat sederhana (desu, masu). Gunakan modul <b>DASAR N5</b> untuk memahami struktur kalimat dasar bahasa Jepang.</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>Tahap 3: Kosakata & Kanji N5 📝</h3>
-                    <p>Sambil belajar tata bahasa (Minna1 bab1 - bab25) , mulailah menghafal sekitar 80-100 Kanji dasar dan 800 kosakata yang sering muncul dalam kehidupan sehari-hari. Bermain <b>GAME</b> di dashboard sangat membantu mengingat!</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>Tahap 4: Transisi ke Menengah (N4) ⛩️</h3>
-                    <p>Waktunya naik level! Pelajari (Minna2 bab26 - bab50)  dan tata bahasa yang lebih kompleks seperti memberikan alasan, keharusan, dan kalimat pasif-kausatif pelajari juga buku irodori untuk persiapan JFT/JLPT N4.</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>Tahap 5: Simulasi JLPT / JFT N4 🎓</h3>
-                    <p>Tahap akhir sebelum ujian. Latih kemampuan <i>Choukai</i> (Mendengar) dan <i>Dokkai</i> (Membaca). Kerjakan modul <b>JLPT/JFT N4</b> berulang kali dengan timer untuk membiasakan diri dengan tekanan ujian sesungguhnya.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- REVIEW SECTION (GOOGLE MAPS STYLE) DUA ARAH -->
-    <div class="review-section">
-        <h2 class="roadmap-title">⭐ Ulasan Pengguna</h2>
-        <div class="review-grid">
+        <div class="menu-cards">
             
-            <!-- Daftar Review Dinamis (Akan diisi JS dari Google Sheets) -->
-            <div class="review-list" id="reviewListContainer">
-                <p style="color: #fff; text-align: center;">Memuat ulasan otomatis...</p>
+            <div class="card" onclick="openModule('kanji')">
+                <div class="card-icon">⛩️</div>
+                <div class="card-title">KANJI</div>
+                <div class="card-desc">Pelajari karakter lanjutan:<br><b>JLPT N5 & N4 Lengkap</b></div>
             </div>
 
-            <!-- Form Tambah Review -->
-            <div class="review-form-box">
-                <h3>Tinggalkan Ulasan</h3>
-                <form id="formReview">
-                    <div class="form-group">
-                        <label>Rating Anda</label>
-                        <div class="star-rating">
-                            <input type="radio" id="star5" name="rating" value="5" required><label for="star5" title="5 Bintang">★</label>
-                            <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 Bintang">★</label>
-                            <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 Bintang">★</label>
-                            <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 Bintang">★</label>
-                            <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="1 Bintang">★</label>
+            <div class="card" onclick="openModule('kosakata')">
+                <div class="card-icon">📝</div>
+                <div class="card-title">KOSAKATA</div>
+                <div class="card-desc">Hafalan Kata Baru<br><b>Level N5 - N4</b></div>
+            </div>
+
+            <div class="card" onclick="openModule('minna1')">
+                <div class="card-icon">📚</div>
+                <div class="card-title">DASAR N5</div>
+                <div class="card-desc">KHUSUS UNTUK PEMULA <br><b></b></div>
+            </div>
+
+            <div class="card" onclick="openModule('simulasi')">
+                <div class="card-icon">🎓</div>
+                <div class="card-title">JLPT/JFT N4</div>
+                <div class="card-desc">Latihan Soal Ujian<br><b>Level N4</b></div>
+            </div>
+
+            <div class="card" onclick="openModule('game')">
+                <div class="card-icon">🎮</div>
+                <div class="card-title">GAME</div>
+                <div class="card-desc">Bermain sambil<br><b>Mengingat Kosakata</b></div>
+            </div>
+
+            <!-- WA GROUP MENU -->
+            <div class="card wa-card" onclick="window.open('https://chat.whatsapp.com/HgZ1Bcsog9XGgvi4OzSmJm?s=cl&p=a&ilr=4')">
+                <div class="card-icon">💬</div>
+                <div class="card-title">GRUP WA</div>
+                <div class="card-desc">Diskusi & Tanya Jawab<br><b>Komunitas Belajar Bersama</b></div>
+            </div>
+            
+            <!-- CARD VIP EKSKLUSIF BERBAYAR -->
+            <div class="card vip-card" onclick="openModule('vip')">
+                <div class="vip-badge">💎 FREE</div>
+                <div class="card-icon">👑</div>
+                <div class="card-title">VIP AKSES</div>
+                <div class="card-desc">Modul Premium Lengkap</div>
+                <div class="vip-content-desc">
+                    ✔️ Irodori 1-54<br>
+                    ✔️ Kanji Full JLPT N4<br>
+                    ✔️ Materi N3<br>
+                    ✔️ Quiz JLPT Terupdate
+                </div>
+            </div>
+        </div>
+
+        <!-- ROADMAP -->
+        <div class="roadmap-wrapper">
+            <h2 class="roadmap-title">🗺️ Roadmap Belajar: Dari Nol Sampai N4</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Tahap 1: Penguasaan Kana (Nol) 🎌</h3>
+                        <p>Fondasi utama Anda. Di tahap ini, fokuslah menghafal bentuk dan cara baca <b>Hiragana</b> & <b>Katakana</b>. Jangan melangkah ke tahap selanjutnya sebelum Anda bisa membaca kata tanpa huruf alfabet (Romaji).</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Tahap 2: Pondasi Tata Bahasa N5 📚</h3>
+                        <p>Mulai pelajari tata bahasa dasar seperti partikel (wa, ga, o, ni) dan pola kalimat sederhana (desu, masu). Gunakan modul <b>DASAR N5</b> untuk memahami struktur kalimat dasar bahasa Jepang.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Tahap 3: Kosakata & Kanji N5 📝</h3>
+                        <p>Sambil belajar tata bahasa (Minna1 bab1 - bab25), mulailah menghafal sekitar 80-100 Kanji dasar dan 800 kosakata yang sering muncul dalam kehidupan sehari-hari. Bermain <b>GAME</b> di dashboard sangat membantu mengingat!</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Tahap 4: Transisi ke Menengah (N4) ⛩️</h3>
+                        <p>Waktunya naik level! Pelajari (Minna2 bab26 - bab50) dan tata bahasa yang lebih kompleks seperti memberikan alasan, keharusan, dan kalimat pasif-kausatif. Pelajari juga buku Irodori untuk persiapan JFT/JLPT N4.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Tahap 5: Simulasi JLPT / JFT N4 🎓</h3>
+                        <p>Tahap akhir sebelum ujian. Latih kemampuan <i>Choukai</i> (Mendengar) dan <i>Dokkai</i> (Membaca). Kerjakan modul <b>JLPT/JFT N4</b> berulang kali dengan timer untuk membiasakan diri dengan tekanan ujian sesungguhnya.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REVIEW SECTION -->
+        <div class="review-section">
+            <h2 class="roadmap-title">⭐ Ulasan Pengguna</h2>
+            <div class="review-grid">
+                
+                <!-- Daftar Review Dinamis (Akan diisi JS dari Google Sheets) -->
+                <div class="review-list" id="reviewListContainer">
+                    <p style="color: var(--muted); text-align: center;">Memuat ulasan otomatis...</p>
+                </div>
+
+                <!-- Form Tambah Review -->
+                <div class="review-form-box">
+                    <h3>Tinggalkan Ulasan</h3>
+                    <form id="formReview">
+                        <div class="form-group">
+                            <label>Rating Anda</label>
+                            <div class="star-rating">
+                                <input type="radio" id="star5" name="rating" value="5" required><label for="star5" title="5 Bintang">★</label>
+                                <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 Bintang">★</label>
+                                <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 Bintang">★</label>
+                                <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 Bintang">★</label>
+                                <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="1 Bintang">★</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="reviewerName">Nama Anda</label>
-                        <input type="text" id="reviewerName" name="nama" class="form-control" placeholder="Masukkan nama Anda..." required>
-                    </div>
-                    <div class="form-group">
-                        <label for="reviewerText">Ulasan</label>
-                        <textarea id="reviewerText" name="ulasan" class="form-control" rows="3" placeholder="Ceritakan pengalaman belajar Anda..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn-submit" id="btnSubmitReview">Kirim Ulasan</button>
-                    <p id="submitStatus" style="display:none; color: #a8ffb2; margin-top: 10px; font-size: 14px;"></p>
-                </form>
+                        <div class="form-group">
+                            <label for="reviewerName">Nama Anda</label>
+                            <input type="text" id="reviewerName" name="nama" class="form-control" placeholder="Masukkan nama Anda..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewerText">Ulasan</label>
+                            <textarea id="reviewerText" name="ulasan" class="form-control" rows="3" placeholder="Ceritakan pengalaman belajar Anda..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit" id="btnSubmitReview">Kirim Ulasan</button>
+                        <p id="submitStatus" style="display:none; color: var(--matcha); font-weight: 600; margin-top: 15px; font-size: 14px;"></p>
+                    </form>
+                </div>
+                
             </div>
-            
         </div>
     </div>
-
 </div>
 
 <script>
-    // --- ANIMASI SAKURA ---
+    // --- ANIMASI SAKURA (Diperbarui menyesuaikan CSS) ---
     function createSakura() {
         const petal = document.createElement('div');
         petal.classList.add('sakura-petal');
         petal.style.left = Math.random() * 100 + 'vw';
-        petal.style.animationDuration = Math.random() * 4 + 3 + 's'; 
+        petal.style.animationDuration = Math.random() * 4 + 4 + 's'; // Sedikit diperlambat agar lebih elegan
         petal.style.transform = `scale(${Math.random() * 0.5 + 0.8})`;
         document.body.appendChild(petal);
-        setTimeout(() => { petal.remove(); }, 7000);
+        setTimeout(() => { petal.remove(); }, 8000);
     }
     setInterval(createSakura, 400);
 
     // --- NAVIGASI MODUL ---
     function openModule(moduleName) {
         if (moduleName === 'kana') {
-            window.location.href = 'kana.html'; // Ganti jika file kana terpisah
+            window.location.href = 'kana.html'; 
         } else if (moduleName === 'kanji') {
             window.location.href = 'kanji.html';
         } else if (moduleName === 'kosakata') {
@@ -381,7 +427,6 @@
             isMusicPlaying = true;
             btnMusic.innerText = "⏸️ Pause Music";
         }).catch(error => {
-            // Jika diblokir oleh browser, tombol tetap diset play
             btnMusic.innerText = "🎵 Play Music";
             console.log("Autoplay diblokir oleh browser. Menunggu klik user...");
         });
@@ -394,7 +439,6 @@
             isMusicPlaying = true;
             btnMusic.innerText = "⏸️ Pause Music";
         }
-        // Hapus event listener ini setelah sukses diklik pertama kali
         document.body.removeEventListener('click', playOnFirstClick);
     }, { once: true });
 
@@ -414,7 +458,7 @@
     // SISTEM DUA ARAH: GOOGLE SHEETS FETCH & POST
     // ==========================================
     
-    // ⚠️ GANTI STRING DI BAWAH DENGAN URL WEB APP ANDA YANG BARU!
+    // ⚠️ PASTIKAN URL WEB APP ANDA BENAR!
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxSHvtm2TP1b_PS52U88ghw8tSkWduNQt2Ze46hLaxXIT_wycItzRsroWOJhzPHpxzhLQ/exec'; 
     
     const reviewContainer = document.getElementById('reviewListContainer');
@@ -426,21 +470,22 @@
         fetch(scriptURL)
             .then(res => res.json())
             .then(data => {
-                reviewContainer.innerHTML = ''; // Bersihkan tulisan loading
+                reviewContainer.innerHTML = ''; 
                 
                 if (data.length === 0) {
-                    reviewContainer.innerHTML = '<p style="color: #fff; text-align: center;">Belum ada ulasan, jadilah yang pertama!</p>';
+                    reviewContainer.innerHTML = '<p style="color: var(--muted); text-align: center;">Belum ada ulasan, jadilah yang pertama!</p>';
                     return;
                 }
 
                 // Reverse agar ulasan terbaru tampil paling atas
                 data.reverse().forEach(review => {
                     const ratingInt = parseInt(review.rating) || 5; 
-                    const starsHTML = '⭐'.repeat(ratingInt);
+                    const starsHTML = '★'.repeat(ratingInt);
                     const initial = review.nama ? review.nama.charAt(0).toUpperCase() : 'U';
                     const dateObj = new Date(review.waktu);
                     const dateString = dateObj.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
+                    // Layout Card disesuaikan dengan CSS baru
                     const cardHTML = `
                     <div class="review-card fade-in">
                         <div class="review-date">${dateString}</div>
@@ -457,11 +502,10 @@
                 });
             })
             .catch(err => {
-                reviewContainer.innerHTML = '<p style="color: #ff8da1; text-align: center;">Gagal memuat ulasan.</p>';
+                reviewContainer.innerHTML = '<p style="color: var(--torii); text-align: center;">Gagal memuat ulasan.</p>';
             });
     }
 
-    // Panggil fungsi tarik data langsung!
     loadReviews();
 
     // Fungsi 2: Mengirim Ulasan Baru & Refresh Otomatis
@@ -484,23 +528,21 @@
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
                     submitStatus.style.display = 'block';
-                    submitStatus.style.color = "#a8ffb2";
+                    submitStatus.style.color = "var(--matcha)";
                     submitStatus.innerText = "Terima kasih! Ulasan Anda berhasil dikirim.";
                     
-                    form.reset(); // Bersihkan formulir
+                    form.reset(); 
                     submitBtn.innerText = "Kirim Ulasan";
                     submitBtn.disabled = false;
                     
-                    // Hilangkan status setelah 4 detik
                     setTimeout(() => submitStatus.style.display = 'none', 4000);
                     
-                    // LANGSUNG TARIK DATA ULANG UNTUK MEMUNCULKAN ULASAN BARU
-                    reviewContainer.innerHTML = '<p style="color: #a8ffb2; text-align: center;">Menyegarkan ulasan...</p>';
-                    setTimeout(loadReviews, 1000); // Jeda sedikit sebelum fetch ulang
+                    reviewContainer.innerHTML = '<p style="color: var(--matcha); text-align: center;">Menyegarkan ulasan...</p>';
+                    setTimeout(loadReviews, 1000); 
                 })
                 .catch(error => {
                     submitStatus.style.display = 'block';
-                    submitStatus.style.color = "#ff8da1";
+                    submitStatus.style.color = "var(--torii)";
                     submitStatus.innerText = "Error: Ulasan gagal dikirim.";
                     submitBtn.innerText = "Coba Lagi";
                     submitBtn.disabled = false;
