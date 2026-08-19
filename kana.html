@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>かな Kuis — Tebak Huruf Jepang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  /* ── TOKENS ─────────────────────────────────────────── */
+  :root {
+    --sumi:     #1a0a0a;
+    --washi:    #f7f2ec;
+    --torii:    #c9363e;
+    --torii-dk: #9b1f25;
+    --sakura:   #e8b4b8;
+    --sakura-lt:#f9eaeb;
+    --matcha:   #6b8f71;
+    --gold:     #c8a45a;
+    --smoke:    #ede8e0;
+    --ink:      #2d1b1b;
+    --muted:    #7a6a6a;
+
+    --radius-card: 16px;
+    --radius-btn:  8px;
+    --shadow-card: 0 8px 40px rgba(26,10,10,.12), 0 2px 8px rgba(26,10,10,.08);
+    --transition:  .3s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ── RESET & BASE ────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--washi);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* washi paper grain overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* floating sakura petals */
+  .petal {
+    position: fixed;
+    width: 10px; height: 12px;
+    background: radial-gradient(ellipse at 40% 35%, #f0c0c4, #d9858b);
+    border-radius: 100% 0 100% 0;
+    opacity: 0;
+    animation: fall linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes fall {
+    0%   { transform: translateY(-60px) rotate(0deg); opacity:.7; }
+    100% { transform: translateY(110vh) rotate(540deg); opacity:0; }
+  }
+
+  /* ── LAYOUT WRAPPER ──────────────────────────────────── */
+  #app {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+  }
+
+  /* ── SCREENS ─────────────────────────────────────────── */
+  .screen {
+    display: none;
+    animation: fadeUp .4s var(--transition) both;
+    width: 100%;
+    max-width: 520px;
+  }
+  .screen.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── CARD ────────────────────────────────────────────── */
+  .card {
+    background: rgba(255,252,248,.92);
+    border: 1px solid rgba(200,164,90,.25);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 40px 36px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  @media (max-width: 480px) {
+    .card { padding: 28px 20px; }
+  }
+
+  /* ── MENU SCREEN ─────────────────────────────────────── */
+  .dash-nav {
+    display: flex; 
+    margin-bottom: 12px; 
+    margin-top: -16px;
+  }
+  
+  .menu-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .menu-header .logo-kana {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(52px, 14vw, 80px);
+    color: var(--torii);
+    line-height: 1;
+    letter-spacing: .02em;
+    display: block;
+    text-shadow: 3px 3px 0 rgba(201,54,62,.12);
+  }
+  .menu-header h1 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: clamp(18px, 4vw, 22px);
+    font-weight: 500;
+    color: var(--ink);
+    margin-top: 8px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .menu-header p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 6px;
+    letter-spacing: .04em;
+  }
+
+  .divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 28px 0;
+    color: var(--gold);
+    font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1;
+    height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .mode-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 380px) {
+    .mode-grid { grid-template-columns: 1fr; }
+  }
+
+  .mode-card {
+    border: 1.5px solid var(--smoke);
+    border-radius: var(--radius-card);
+    padding: 24px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    background: var(--washi);
+    position: relative;
+    overflow: hidden;
+  }
+  .mode-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--torii);
+    opacity: 0;
+    transition: opacity .25s;
+  }
+  .mode-card:hover::after  { opacity: .04; }
+  .mode-card:hover { border-color: var(--torii); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(201,54,62,.14); }
+  .mode-card:active { transform: translateY(0); }
+
+  .mode-card .mode-icon { font-size: 34px; display: block; margin-bottom: 10px; }
+  .mode-card .mode-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 15px; font-weight: 700;
+    color: var(--ink);
+    display: block; margin-bottom: 6px;
+  }
+  .mode-card .mode-desc {
+    font-size: 11px; color: var(--muted);
+    line-height: 1.5; letter-spacing: .02em;
+  }
+  .mode-card.expert .mode-icon { color: var(--torii); }
+  .mode-card.pemula .mode-icon { color: var(--matcha); }
+  
+  /* Mode Inferno Styles */
+  .mode-card.inferno {
+    grid-column: 1 / -1; /* Lebar penuh */
+    border-color: rgba(201, 54, 62, 0.4);
+    background: #fdf5f6;
+  }
+  .mode-card.inferno:hover {
+    border-color: var(--torii);
+    background: #fce8e9;
+  }
+  .mode-card.inferno .mode-title { color: var(--torii); }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 500;
+    padding: 2px 8px; border-radius: 20px;
+    margin-top: 8px; letter-spacing: .04em;
+  }
+  .badge-green { background: #e6f4e8; color: var(--matcha); }
+  .badge-red   { background: #fce8e9; color: var(--torii); }
+  .badge-inferno { background: var(--torii); color: #fff; }
+
+  /* ── QUIZ SCREEN ─────────────────────────────────────── */
+  .quiz-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .btn-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 500; color: var(--muted);
+    background: none; border: 1.5px solid var(--smoke);
+    border-radius: var(--radius-btn);
+    padding: 7px 14px; cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .btn-back:hover { border-color: var(--torii); color: var(--torii); background: var(--sakura-lt); }
+
+  .quiz-meta { display: flex; align-items: center; gap: 12px; }
+
+  .score-badge {
+    background: var(--smoke);
+    border-radius: 20px; padding: 5px 14px;
+    font-size: 13px; font-weight: 500; color: var(--ink);
+    border: 1px solid rgba(200,164,90,.2);
+  }
+  .score-badge span { color: var(--torii); font-weight: 700; }
+
+  .timer-badge {
+    background: var(--sumi);
+    color: #fff;
+    border-radius: 20px; padding: 5px 14px;
+    font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums;
+    letter-spacing: .06em;
+    transition: background .3s;
+  }
+  .timer-badge.warning { background: var(--torii); animation: pulse .6s ease-in-out infinite alternate; }
+  @keyframes pulse { from { opacity:1; } to { opacity:.7; } }
+
+  .mode-label {
+    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500;
+    text-align: center; margin-bottom: 4px;
+  }
+
+  /* the big character display */
+  .char-stage {
+    text-align: center;
+    padding: 28px 0 20px;
+    min-height: 160px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .char-display {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(88px, 22vw, 128px);
+    color: var(--sumi);
+    line-height: 1;
+    display: block;
+    cursor: default;
+    will-change: transform, opacity;
+    transition: var(--transition);
+  }
+  .char-display.ink-in {
+    animation: inkIn .4s cubic-bezier(.2,.8,.3,1) both;
+  }
+  @keyframes inkIn {
+    0%   { opacity: 0; transform: scale(.6) rotate(-6deg); filter: blur(8px); }
+    60%  { filter: blur(0); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+  .char-display.ink-out {
+    animation: inkOut .25s ease-in both;
+  }
+  @keyframes inkOut {
+    to { opacity: 0; transform: scale(1.15); filter: blur(6px); }
+  }
+
+  .char-type-pill {
+    display: inline-block;
+    font-size: 11px; letter-spacing: .08em; font-weight: 500;
+    padding: 3px 12px; border-radius: 20px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .pill-hiragana { background: #eaf3fb; color: #3a7ab8; }
+  .pill-katakana { background: #f3eefc; color: #6b45b5; }
+  .pill-inferno  { background: var(--torii); color: #fff; }
+
+  /* answer area */
+  .answer-area { margin-top: 8px; }
+
+  .answer-area label {
+    font-size: 12px; color: var(--muted);
+    letter-spacing: .06em; text-transform: uppercase;
+    display: block; margin-bottom: 8px; text-align: center;
+  }
+
+  .input-row {
+    display: flex; gap: 10px;
+  }
+
+  .romaji-input {
+    flex: 1;
+    padding: 14px 18px;
+    font-size: 18px; font-family: 'Noto Sans JP', sans-serif;
+    border: 2px solid var(--smoke);
+    border-radius: var(--radius-btn);
+    background: #fff;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    text-align: center;
+    letter-spacing: .08em;
+  }
+  .romaji-input:focus { border-color: var(--torii); box-shadow: 0 0 0 3px rgba(201,54,62,.1); }
+  .romaji-input.correct { border-color: var(--matcha); background: #f0faf1; animation: shakePop .3s; }
+  .romaji-input.wrong   { border-color: #e07070; background: #fff5f5; animation: shakeWrong .35s; }
+
+  @keyframes shakePop {
+    0%,100% { transform: scale(1); }
+    50%     { transform: scale(1.04); }
+  }
+  @keyframes shakeWrong {
+    0%,100% { transform: translateX(0); }
+    20%     { transform: translateX(-6px); }
+    40%     { transform: translateX(6px); }
+    60%     { transform: translateX(-4px); }
+    80%     { transform: translateX(4px); }
+  }
+
+  .btn-submit {
+    padding: 14px 22px;
+    background: var(--torii);
+    color: #fff; border: none;
+    border-radius: var(--radius-btn);
+    font-size: 15px; font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Noto Sans JP', sans-serif;
+    letter-spacing: .04em;
+    white-space: nowrap;
+    min-width: 90px;
+  }
+  .btn-submit:hover { background: var(--torii-dk); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,54,62,.3); }
+  .btn-submit:active { transform: translateY(0); }
+  .btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  /* feedback toast */
+  .feedback-line {
+    height: 28px; text-align: center; margin-top: 10px;
+    font-size: 13px; font-weight: 500;
+    transition: opacity .2s;
+  }
+  .feedback-line.ok   { color: var(--matcha); }
+  .feedback-line.fail { color: #c0505a; }
+
+  /* progress strip */
+  .progress-strip {
+    margin-top: 20px;
+    background: var(--smoke);
+    border-radius: 4px; height: 4px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--torii), var(--gold));
+    border-radius: 4px;
+    transition: width .4s ease;
+    width: 0%;
+  }
+
+  /* ── MODAL ───────────────────────────────────────────── */
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(26,10,10,.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 20px;
+    animation: fadeIn .3s ease both;
+  }
+  .modal-backdrop.show { display: flex; }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+  .modal {
+    background: var(--washi);
+    border-radius: var(--radius-card);
+    padding: 44px 36px;
+    max-width: 400px; width: 100%;
+    text-align: center;
+    box-shadow: 0 24px 80px rgba(26,10,10,.3);
+    animation: modalPop .4s cubic-bezier(.2,.8,.3,1) both;
+    position: relative; overflow: hidden;
+  }
+  @keyframes modalPop {
+    from { opacity:0; transform: scale(.85) translateY(20px); }
+    to   { opacity:1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-stamp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 64px; line-height: 1;
+    display: block; margin-bottom: 12px;
+  }
+  .modal.lulus .modal-stamp { color: var(--torii); }
+  .modal.gagal .modal-stamp { color: var(--muted); }
+
+  .modal h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 28px; font-weight: 700; margin-bottom: 6px;
+  }
+  .modal.lulus h2 { color: var(--torii); }
+  .modal.gagal h2 { color: var(--ink); }
+
+  .modal-sub {
+    font-size: 14px; color: var(--muted); margin-bottom: 24px; line-height: 1.6;
+  }
+  .modal-score-big {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 56px; font-weight: 700; color: var(--sumi);
+    line-height: 1; margin-bottom: 4px;
+  }
+  .modal-score-label { font-size: 12px; color: var(--muted); letter-spacing: .08em; margin-bottom: 28px; }
+
+  .modal-confetti {
+    position: absolute; top: 0; left: 0; right: 0;
+    pointer-events: none;
+    height: 8px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--torii) 0, var(--torii) 14%,
+      var(--gold) 14%, var(--gold) 28%,
+      var(--sakura) 28%, var(--sakura) 42%,
+      var(--matcha) 42%, var(--matcha) 56%,
+      var(--torii) 56%, var(--torii) 70%,
+      var(--gold) 70%, var(--gold) 84%,
+      var(--sakura) 84%, var(--sakura) 100%
+    );
+    opacity: 0;
+    transition: opacity .4s .2s;
+  }
+  .modal.lulus .modal-confetti { opacity: 1; }
+
+  .modal-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-primary {
+    padding: 12px 28px;
+    background: var(--torii); color: #fff;
+    border: none; border-radius: var(--radius-btn);
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: var(--transition); font-family: 'Noto Sans JP', sans-serif;
+    letter-spacing: .04em;
+  }
+  .btn-primary:hover { background: var(--torii-dk); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,54,62,.3); }
+
+  .btn-secondary {
+    padding: 12px 28px;
+    background: none; color: var(--ink);
+    border: 1.5px solid var(--smoke); border-radius: var(--radius-btn);
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    transition: var(--transition); font-family: 'Noto Sans JP', sans-serif;
+  }
+  .btn-secondary:hover { border-color: var(--torii); color: var(--torii); background: var(--sakura-lt); }
+
+  /* ── SCROLL BAR ──────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--sakura); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<!-- Petals -->
+<div id="petals"></div>
+
+<div id="app">
+
+  <!-- ══ MENU SCREEN ══════════════════════════════════════ -->
+  <div class="screen active" id="screen-menu">
+    <div class="card">
+      
+      <!-- Tombol Back to Dashboard ditambahkan di sini -->
+      <div class="dash-nav">
+        <button class="btn-back" onclick="window.location.href='dasarN5.html'">← Dashboard</button>
+      </div>
+
+      <div class="menu-header">
+        <span class="logo-kana">かな</span>
+        <h1>Kuis Aksara Jepang</h1>
+        <p>Tebak bacaan romaji dari huruf & kalimat Jepang</p>
+      </div>
+
+      <div class="divider">Pilih Mode</div>
+
+      <div class="mode-grid">
+        <div class="mode-card pemula" onclick="startGame('pemula')">
+          <span class="mode-icon">🌸</span>
+          <span class="mode-title">Mode Pemula</span>
+          <p class="mode-desc">Huruf dasar saja. Tanpa timer. Belajar santai.</p>
+          <span class="badge badge-green">No Timer</span>
+        </div>
+        <div class="mode-card expert" onclick="startGame('expert')">
+          <span class="mode-icon">⛩️</span>
+          <span class="mode-title">Mode Expert</span>
+          <p class="mode-desc">Semua huruf termasuk tenten, maru &amp; yōon.</p>
+          <span class="badge badge-red">2 Menit</span>
+        </div>
+        
+        <!-- Tambahan Mode Inferno 🔥 -->
+        <div class="mode-card inferno" onclick="startGame('inferno')">
+          <span class="mode-icon">🔥</span>
+          <span class="mode-title">Mode Inferno</span>
+          <p class="mode-desc">Tebak kalimat bahasa Jepang pendek. Tantangan kecepatan!</p>
+          <span class="badge badge-inferno">60 Detik</span>
+        </div>
+      </div>
+
+      <div class="divider" style="margin-top:28px;margin-bottom:16px;">Panduan</div>
+      <p style="font-size:12px;color:var(--muted);text-align:center;line-height:1.7;">
+        Ketik romaji yang sesuai &rarr; tekan <strong>Enter</strong> atau klik <strong>Submit</strong>.<br/>
+        Contoh: <strong>あ</strong> = <em>a</em> &nbsp;|&nbsp; <strong>きゃ</strong> = <em>kya</em> &nbsp;|&nbsp; <strong>ありがとう</strong> = <em>arigatou</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ══ QUIZ SCREEN ══════════════════════════════════════ -->
+  <div class="screen" id="screen-quiz">
+    <div class="card">
+      <div class="quiz-top-bar">
+        <button class="btn-back" onclick="confirmBack()">← Kembali</button>
+        <div class="quiz-meta">
+          <div class="score-badge">Benar: <span id="score-display">0</span></div>
+          <div class="timer-badge" id="timer-display" style="display:none;">2:00</div>
+        </div>
+      </div>
+
+      <div class="mode-label" id="mode-label">Mode Pemula</div>
+
+      <div class="char-stage">
+        <div>
+          <div style="text-align:center;">
+            <span class="char-type-pill" id="char-type-pill">Hiragana</span>
+          </div>
+          <span class="char-display" id="char-display">あ</span>
+        </div>
+      </div>
+
+      <div class="answer-area">
+        <label for="romaji-input">Ketik bacaan romaji-nya (tanpa spasi):</label>
+        <div class="input-row">
+          <input type="text" id="romaji-input" class="romaji-input"
+                 placeholder="contoh: a, sha, kawaii…"
+                 autocomplete="off" autocorrect="off" autocapitalize="off"
+                 spellcheck="false"
+                 onkeydown="handleKey(event)" />
+          <button class="btn-submit" id="btn-submit" onclick="checkAnswer()">Submit</button>
+        </div>
+        <div class="feedback-line" id="feedback-line"></div>
+      </div>
+
+      <div class="progress-strip">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- #app -->
+
+<!-- ══ RESULT MODAL ══════════════════════════════════════ -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" id="result-modal">
+    <div class="modal-confetti"></div>
+    <span class="modal-stamp" id="modal-stamp">合格</span>
+    <h2 id="modal-title">LULUS!</h2>
+    <p class="modal-sub" id="modal-sub">Waktu habis. Berikut hasil kuis kamu.</p>
+    <div class="modal-score-big" id="modal-score-big">18</div>
+    <div class="modal-score-label">Jawaban Benar</div>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="restartGame()">Coba Lagi</button>
+      <button class="btn-secondary" onclick="goMenu()">Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   DATABASE KARAKTER
+═══════════════════════════════════════════════════════════ */
+const DB = {
+  /* ─── Hiragana Gojūon (dasar) ─── */
+  hiragana_basic: [
+    {char:'あ',rom:'a'},{char:'い',rom:'i'},{char:'う',rom:'u'},{char:'え',rom:'e'},{char:'お',rom:'o'},
+    {char:'か',rom:'ka'},{char:'き',rom:'ki'},{char:'く',rom:'ku'},{char:'け',rom:'ke'},{char:'こ',rom:'ko'},
+    {char:'さ',rom:'sa'},{char:'し',rom:'shi'},{char:'す',rom:'su'},{char:'せ',rom:'se'},{char:'そ',rom:'so'},
+    {char:'た',rom:'ta'},{char:'ち',rom:'chi'},{char:'つ',rom:'tsu'},{char:'て',rom:'te'},{char:'と',rom:'to'},
+    {char:'な',rom:'na'},{char:'に',rom:'ni'},{char:'ぬ',rom:'nu'},{char:'ね',rom:'ne'},{char:'の',rom:'no'},
+    {char:'は',rom:'ha'},{char:'ひ',rom:'hi'},{char:'ふ',rom:'fu'},{char:'へ',rom:'he'},{char:'ほ',rom:'ho'},
+    {char:'ま',rom:'ma'},{char:'み',rom:'mi'},{char:'む',rom:'mu'},{char:'め',rom:'me'},{char:'も',rom:'mo'},
+    {char:'や',rom:'ya'},{char:'ゆ',rom:'yu'},{char:'よ',rom:'yo'},
+    {char:'ら',rom:'ra'},{char:'り',rom:'ri'},{char:'る',rom:'ru'},{char:'れ',rom:'re'},{char:'ろ',rom:'ro'},
+    {char:'わ',rom:'wa'},{char:'を',rom:'wo'},{char:'ん',rom:'n'},
+  ],
+
+  /* ─── Hiragana Dakuten (Tenten) ─── */
+  hiragana_dakuten: [
+    {char:'が',rom:'ga'},{char:'ぎ',rom:'gi'},{char:'ぐ',rom:'gu'},{char:'げ',rom:'ge'},{char:'ご',rom:'go'},
+    {char:'ざ',rom:'za'},{char:'じ',rom:'ji'},{char:'ず',rom:'zu'},{char:'ぜ',rom:'ze'},{char:'ぞ',rom:'zo'},
+    {char:'だ',rom:'da'},{char:'ぢ',rom:'di'},{char:'づ',rom:'du'},{char:'で',rom:'de'},{char:'ど',rom:'do'},
+    {char:'ば',rom:'ba'},{char:'び',rom:'bi'},{char:'ぶ',rom:'bu'},{char:'べ',rom:'be'},{char:'ぼ',rom:'bo'},
+  ],
+
+  /* ─── Hiragana Handakuten (Maru) ─── */
+  hiragana_handakuten: [
+    {char:'ぱ',rom:'pa'},{char:'ぴ',rom:'pi'},{char:'ぷ',rom:'pu'},{char:'ぺ',rom:'pe'},{char:'ぽ',rom:'po'},
+  ],
+
+  /* ─── Hiragana Yōon (gabungan) ─── */
+  hiragana_yoon: [
+    {char:'きゃ',rom:'kya'},{char:'きゅ',rom:'kyu'},{char:'きょ',rom:'kyo'},
+    {char:'しゃ',rom:'sha'},{char:'しゅ',rom:'shu'},{char:'しょ',rom:'sho'},
+    {char:'ちゃ',rom:'cha'},{char:'ちゅ',rom:'chu'},{char:'ちょ',rom:'cho'},
+    {char:'にゃ',rom:'nya'},{char:'にゅ',rom:'nyu'},{char:'にょ',rom:'nyo'},
+    {char:'ひゃ',rom:'hya'},{char:'ひゅ',rom:'hyu'},{char:'ひょ',rom:'hyo'},
+    {char:'みゃ',rom:'mya'},{char:'みゅ',rom:'myu'},{char:'みょ',rom:'myo'},
+    {char:'りゃ',rom:'rya'},{char:'りゅ',rom:'ryu'},{char:'りょ',rom:'ryo'},
+    {char:'ぎゃ',rom:'gya'},{char:'ぎゅ',rom:'gyu'},{char:'ぎょ',rom:'gyo'},
+    {char:'じゃ',rom:'ja'},{char:'じゅ',rom:'ju'},{char:'じょ',rom:'jo'},
+    {char:'びゃ',rom:'bya'},{char:'びゅ',rom:'byu'},{char:'びょ',rom:'byo'},
+    {char:'ぴゃ',rom:'pya'},{char:'ぴゅ',rom:'pyu'},{char:'ぴょ',rom:'pyo'},
+  ],
+
+  /* ─── Katakana Gojūon (dasar) ─── */
+  katakana_basic: [
+    {char:'ア',rom:'a'},{char:'イ',rom:'i'},{char:'ウ',rom:'u'},{char:'エ',rom:'e'},{char:'オ',rom:'o'},
+    {char:'カ',rom:'ka'},{char:'キ',rom:'ki'},{char:'ク',rom:'ku'},{char:'ケ',rom:'ke'},{char:'コ',rom:'ko'},
+    {char:'サ',rom:'sa'},{char:'シ',rom:'shi'},{char:'ス',rom:'su'},{char:'セ',rom:'se'},{char:'ソ',rom:'so'},
+    {char:'タ',rom:'ta'},{char:'チ',rom:'chi'},{char:'ツ',rom:'tsu'},{char:'テ',rom:'te'},{char:'ト',rom:'to'},
+    {char:'ナ',rom:'na'},{char:'ニ',rom:'ni'},{char:'ヌ',rom:'nu'},{char:'ネ',rom:'ne'},{char:'ノ',rom:'no'},
+    {char:'ハ',rom:'ha'},{char:'ヒ',rom:'hi'},{char:'フ',rom:'fu'},{char:'ヘ',rom:'he'},{char:'ホ',rom:'ho'},
+    {char:'マ',rom:'ma'},{char:'ミ',rom:'mi'},{char:'ム',rom:'mu'},{char:'メ',rom:'me'},{char:'モ',rom:'mo'},
+    {char:'ヤ',rom:'ya'},{char:'ユ',rom:'yu'},{char:'ヨ',rom:'yo'},
+    {char:'ラ',rom:'ra'},{char:'リ',rom:'ri'},{char:'ル',rom:'ru'},{char:'レ',rom:'re'},{char:'ロ',rom:'ro'},
+    {char:'ワ',rom:'wa'},{char:'ヲ',rom:'wo'},{char:'ン',rom:'n'},
+  ],
+
+  /* ─── Katakana Dakuten ─── */
+  katakana_dakuten: [
+    {char:'ガ',rom:'ga'},{char:'ギ',rom:'gi'},{char:'グ',rom:'gu'},{char:'ゲ',rom:'ge'},{char:'ゴ',rom:'go'},
+    {char:'ザ',rom:'za'},{char:'ジ',rom:'ji'},{char:'ズ',rom:'zu'},{char:'ゼ',rom:'ze'},{char:'ゾ',rom:'zo'},
+    {char:'ダ',rom:'da'},{char:'ヂ',rom:'di'},{char:'ヅ',rom:'du'},{char:'デ',rom:'de'},{char:'ド',rom:'do'},
+    {char:'バ',rom:'ba'},{char:'ビ',rom:'bi'},{char:'ブ',rom:'bu'},{char:'ベ',rom:'be'},{char:'ボ',rom:'bo'},
+  ],
+
+  /* ─── Katakana Handakuten ─── */
+  katakana_handakuten: [
+    {char:'パ',rom:'pa'},{char:'ピ',rom:'pi'},{char:'プ',rom:'pu'},{char:'ペ',rom:'pe'},{char:'ポ',rom:'po'},
+  ],
+
+  /* ─── Katakana Yōon ─── */
+  katakana_yoon: [
+    {char:'キャ',rom:'kya'},{char:'キュ',rom:'kyu'},{char:'キョ',rom:'kyo'},
+    {char:'シャ',rom:'sha'},{char:'シュ',rom:'shu'},{char:'ショ',rom:'sho'},
+    {char:'チャ',rom:'cha'},{char:'チュ',rom:'chu'},{char:'チョ',rom:'cho'},
+    {char:'ニャ',rom:'nya'},{char:'ニュ',rom:'nyu'},{char:'ニョ',rom:'nyo'},
+    {char:'ヒャ',rom:'hya'},{char:'ヒュ',rom:'hyu'},{char:'ヒョ',rom:'hyo'},
+    {char:'ミャ',rom:'mya'},{char:'ミュ',rom:'myu'},{char:'ミョ',rom:'myo'},
+    {char:'リャ',rom:'rya'},{char:'リュ',rom:'ryu'},{char:'リョ',rom:'ryo'},
+    {char:'ギャ',rom:'gya'},{char:'ギュ',rom:'gyu'},{char:'ギョ',rom:'gyo'},
+    {char:'ジャ',rom:'ja'},{char:'ジュ',rom:'ju'},{char:'ジョ',rom:'jo'},
+    {char:'ビャ',rom:'bya'},{char:'ビュ',rom:'byu'},{char:'ビョ',rom:'byo'},
+    {char:'ピャ',rom:'pya'},{char:'ピュ',rom:'pyu'},{char:'ピョ',rom:'pyo'},
+  ],
+
+  /* ─── Inferno Phrases (Kata/Kalimat Pendek) ─── */
+  inferno_phrases: [
+    {char:'こんにちは',rom:'konnichiwa'},{char:'ありがとう',rom:'arigatou'},
+    {char:'おはよう',rom:'ohayou'},{char:'さようなら',rom:'sayounara'},
+    {char:'すみません',rom:'sumimasen'},{char:'いただきます',rom:'itadakimasu'},
+    {char:'ごちそうさま',rom:'gochisousama'},{char:'おやすみ',rom:'oyasumi'},
+    {char:'かわいい',rom:'kawaii'},{char:'おいしい',rom:'oishii'},
+    {char:'すごい',rom:'sugoi'},{char:'がんばって',rom:'ganbatte'},
+    {char:'だいすき',rom:'daisuki'},{char:'はじめまして',rom:'hajimemashite'},
+    {char:'よろしく',rom:'yoroshiku'},{char:'いらっしゃいませ',rom:'irasshaimase'},
+    {char:'どういたしまして',rom:'douitashimashite'},{char:'ありがとうございます',rom:'arigatougozaimasu'}
+  ]
+};
+
+/* Sets per mode */
+const SETS = {
+  pemula: [...DB.hiragana_basic, ...DB.katakana_basic],
+  expert: [
+    ...DB.hiragana_basic, ...DB.hiragana_dakuten, ...DB.hiragana_handakuten, ...DB.hiragana_yoon,
+    ...DB.katakana_basic, ...DB.katakana_dakuten, ...DB.katakana_handakuten, ...DB.katakana_yoon,
+  ],
+  inferno: [...DB.inferno_phrases]
+};
+
+/* ═══════════════════════════════════════════════════════════
+   GAME STATE
+═══════════════════════════════════════════════════════════ */
+let state = {
+  mode: 'pemula',
+  pool: [],
+  current: null,
+  score: 0,
+  answered: 0,
+  timerSec: 120,
+  timerHandle: null,
+  running: false,
+};
+
+/* ═══════════════════════════════════════════════════════════
+   SAKURA PETALS
+═══════════════════════════════════════════════════════════ */
+(function spawnPetals() {
+  const container = document.getElementById('petals');
+  for (let i = 0; i < 14; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const leftPct = Math.random() * 100;
+    const delay   = Math.random() * 12;
+    const dur     = 8 + Math.random() * 10;
+    const size    = 7 + Math.random() * 8;
+    p.style.cssText =
+      `left:${leftPct}%;width:${size}px;height:${size*1.2}px;` +
+      `animation-duration:${dur}s;animation-delay:${delay}s;`;
+    container.appendChild(p);
+  }
+})();
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN ROUTER
+═══════════════════════════════════════════════════════════ */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  el.classList.add('active');
+  el.style.animation = 'none';
+  void el.offsetWidth; // reflow
+  el.style.animation = '';
+}
+
+/* ═══════════════════════════════════════════════════════════
+   START GAME
+═══════════════════════════════════════════════════════════ */
+function startGame(mode) {
+  state.mode    = mode;
+  state.score   = 0;
+  state.answered = 0;
+  state.timerSec = (mode === 'inferno') ? 60 : 120; // 60 detik untuk inferno, 120 untuk expert
+  state.running  = true;
+  state.pool     = shuffle([...SETS[mode]]);
+
+  let modeLabelText = '';
+  if (mode === 'pemula') modeLabelText = '✿ Mode Pemula';
+  else if (mode === 'expert') modeLabelText = '⛩ Mode Expert';
+  else modeLabelText = '🔥 Mode Inferno';
+  
+  document.getElementById('mode-label').textContent = modeLabelText;
+
+  const timerEl = document.getElementById('timer-display');
+  if (mode === 'expert' || mode === 'inferno') {
+    timerEl.style.display = 'block';
+    updateTimerDisplay();
+    state.timerHandle = setInterval(tickTimer, 1000);
+  } else {
+    timerEl.style.display = 'none';
+  }
+
+  updateScoreDisplay();
+  showScreen('screen-quiz');
+  nextChar(true);
+  document.getElementById('romaji-input').focus();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TIMER
+═══════════════════════════════════════════════════════════ */
+function tickTimer() {
+  state.timerSec--;
+  updateTimerDisplay();
+  if (state.timerSec <= 0) {
+    clearInterval(state.timerHandle);
+    state.running = false;
+    document.getElementById('btn-submit').disabled = true;
+    document.getElementById('romaji-input').disabled = true;
+    setTimeout(showResult, 400);
+  }
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(state.timerSec / 60);
+  const s = state.timerSec % 60;
+  const el = document.getElementById('timer-display');
+  el.textContent = `${m}:${String(s).padStart(2,'0')}`;
+  
+  // Warning berkedip jika waktu kurang dari 30s (expert) atau 15s (inferno)
+  const warningLimit = state.mode === 'inferno' ? 15 : 30;
+  el.classList.toggle('warning', state.timerSec <= warningLimit);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHARACTER MANAGEMENT
+═══════════════════════════════════════════════════════════ */
+function nextChar(first = false) {
+  if (state.pool.length === 0) state.pool = shuffle([...SETS[state.mode]]);
+  state.current = state.pool.pop();
+
+  const el = document.getElementById('char-display');
+  const pill = document.getElementById('char-type-pill');
+
+  const isInferno = state.mode === 'inferno';
+  const isHiragana = /[\u3040-\u309F]/.test(state.current.char);
+  
+  // Atur Label (Pill)
+  if (isInferno) {
+    pill.textContent = 'Kata / Kalimat';
+    pill.className   = 'char-type-pill pill-inferno';
+  } else {
+    pill.textContent = isHiragana ? 'Hiragana' : 'Katakana';
+    pill.className   = 'char-type-pill ' + (isHiragana ? 'pill-hiragana' : 'pill-katakana');
+  }
+
+  // Atur ukuran font jika kalimatnya panjang (Khusus Inferno)
+  if (isInferno) {
+      let charLength = state.current.char.length;
+      if (charLength >= 8) {
+          el.style.fontSize = 'clamp(32px, 8vw, 48px)';
+      } else if (charLength >= 4) {
+          el.style.fontSize = 'clamp(48px, 12vw, 64px)';
+      } else {
+          el.style.fontSize = 'clamp(64px, 16vw, 88px)';
+      }
+  } else {
+      el.style.fontSize = ''; // Kembali ke ukuran default CSS
+  }
+
+  if (first) {
+    el.textContent = state.current.char;
+    el.classList.add('ink-in');
+    el.addEventListener('animationend', () => el.classList.remove('ink-in'), {once:true});
+  } else {
+    el.classList.add('ink-out');
+    el.addEventListener('animationend', () => {
+      el.classList.remove('ink-out');
+      el.textContent = state.current.char;
+      el.classList.add('ink-in');
+      el.addEventListener('animationend', () => el.classList.remove('ink-in'), {once:true});
+    }, {once:true});
+  }
+
+  const input = document.getElementById('romaji-input');
+  input.value = '';
+  input.className = 'romaji-input';
+  clearFeedback();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHECK ANSWER
+═══════════════════════════════════════════════════════════ */
+function checkAnswer() {
+  if (!state.running && (state.mode === 'expert' || state.mode === 'inferno')) return;
+
+  const input = document.getElementById('romaji-input');
+  const typed = input.value.trim().toLowerCase();
+  if (!typed) return;
+
+  const correct = state.current.rom;
+
+  /* accept alternate romaji spellings */
+  const alts = getAlternatives(correct);
+  const isCorrect = (typed === correct) || alts.includes(typed);
+
+  state.answered++;
+  if (isCorrect) {
+    state.score++;
+    input.classList.add('correct');
+    showFeedback('✓ Benar! — ' + correct, 'ok');
+  } else {
+    input.classList.add('wrong');
+    showFeedback(`✗ Salah — Jawaban: ${correct}`, 'fail');
+  }
+
+  updateScoreDisplay();
+  updateProgress();
+
+  setTimeout(() => {
+    if (state.mode === 'pemula' || state.running) nextChar();
+  }, 750);
+}
+
+function getAlternatives(rom) {
+  const map = {
+    'shi':['si'],'chi':['ti'],'tsu':['tu'],'fu':['hu'],
+    'ji':['zi'],'ja':['zya','jya'],'ju':['zyu','jyu'],'jo':['zyo','jyo'],
+    'sha':['sya'],'shi':['si','shi'],'shu':['syu'],'sho':['syo'],
+    'cha':['tya'],'chu':['tyu'],'cho':['tyo'],
+    'n':['nn','m'],
+  };
+  return map[rom] || [];
+}
+
+/* ═══════════════════════════════════════════════════════════
+   UI HELPERS
+═══════════════════════════════════════════════════════════ */
+function updateScoreDisplay() {
+  document.getElementById('score-display').textContent = state.score;
+}
+
+function updateProgress() {
+  let target = state.mode === 'inferno' ? 10 : (state.mode === 'expert' ? 15 : 20);
+  let pct = Math.min(100, (state.score / target) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+
+function showFeedback(msg, type) {
+  const el = document.getElementById('feedback-line');
+  el.textContent = msg;
+  el.className = 'feedback-line ' + type;
+}
+function clearFeedback() {
+  const el = document.getElementById('feedback-line');
+  el.textContent = '';
+  el.className = 'feedback-line';
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter') checkAnswer();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESULT MODAL
+═══════════════════════════════════════════════════════════ */
+function showResult() {
+  const target = state.mode === 'inferno' ? 10 : 15;
+  const lulus = state.score >= target;
+  
+  const modal  = document.getElementById('result-modal');
+  const stamp  = document.getElementById('modal-stamp');
+  const title  = document.getElementById('modal-title');
+  const sub    = document.getElementById('modal-sub');
+  const big    = document.getElementById('modal-score-big');
+
+  const modeName = state.mode.charAt(0).toUpperCase() + state.mode.slice(1);
+
+  modal.className = 'modal ' + (lulus ? 'lulus' : 'gagal');
+  stamp.textContent  = lulus ? '合格' : '不合格';
+  title.textContent  = lulus ? '🎉 LULUS!' : '残念… GAGAL!';
+  sub.textContent    = lulus
+    ? `Keren! Kamu menjawab ${state.score} dari ${state.answered} soal dengan benar. Pertahankan!`
+    : `Kamu menjawab benar ${state.score} soal. Perlu minimal ${target} untuk lulus mode ${modeName}. Jangan menyerah!`;
+  big.textContent    = state.score;
+
+  document.getElementById('modal-backdrop').classList.add('show');
+}
+
+function restartGame() {
+  document.getElementById('modal-backdrop').classList.remove('show');
+  document.getElementById('btn-submit').disabled = false;
+  document.getElementById('romaji-input').disabled = false;
+  clearInterval(state.timerHandle);
+  startGame(state.mode);
+}
+
+function goMenu() {
+  document.getElementById('modal-backdrop').classList.remove('show');
+  clearInterval(state.timerHandle);
+  showScreen('screen-menu');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BACK / CONFIRM
+═══════════════════════════════════════════════════════════ */
+function confirmBack() {
+  const ok = confirm('Kembali ke Menu Utama? Progress kuis akan hilang.');
+  if (ok) {
+    clearInterval(state.timerHandle);
+    state.running = false;
+    document.getElementById('btn-submit').disabled = false;
+    document.getElementById('romaji-input').disabled = false;
+    showScreen('screen-menu');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════════════════════ */
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+</script>
+</body>
+</html>
