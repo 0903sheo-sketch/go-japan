@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mesin Pengubah Kata (Doushi & Keiyoushi Converter)</title>
+
+<!-- Font Noto Sans/Serif & Klee One untuk huruf Jepang -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+<style>
+    /* ── TOKENS WARNA JEJEPANGAN ── */
+    :root {
+        --sumi:     #1a0a0a;
+        --washi:    #f7f2ec;
+        --torii:    #c9363e;
+        --torii-dk: #9b1f25;
+        --sakura:   #e8b4b8;
+        --sakura-lt:#f9eaeb;
+        --matcha:   #6b8f71;
+        --gold:     #c8a45a;
+        --smoke:    #ede8e0;
+        --ink:      #2d1b1b;
+        --muted:    #7a6a6a;
+
+        --radius-card: 16px;
+        --radius-btn:  8px;
+        --shadow-card: 0 8px 40px rgba(26,10,10,.08), 0 2px 8px rgba(26,10,10,.04);
+        --transition:  .3s cubic-bezier(.4,0,.2,1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: 'Noto Sans JP', sans-serif;
+        background-color: var(--washi);
+        color: var(--ink);
+        overflow-x: hidden;
+        position: relative;
+        min-height: 100vh;
+    }
+
+    /* Tekstur Kertas Washi */
+    body::before {
+        content: ''; position: fixed; inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+        pointer-events: none; z-index: -1;
+    }
+
+    /* Sakura Jatuh */
+    .sakura-petal {
+        position: fixed; width: 10px; height: 14px;
+        background: radial-gradient(ellipse at 40% 35%, #f0c0c4, #d9858b);
+        border-radius: 100% 0 100% 0; opacity: 0.8;
+        animation: fall linear forwards; pointer-events: none; z-index: 0;
+        box-shadow: 0 2px 5px rgba(232, 180, 184, 0.4);
+    }
+    @keyframes fall {
+        0%   { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 1; }
+        100% { transform: translateY(110vh) rotate(540deg) translateX(50px); opacity: 0; }
+    }
+
+    /* Navigation / Back Button */
+    .nav-bar {
+        position: fixed; top: 0; left: 0; width: 100%;
+        padding: 15px 30px; z-index: 100; display: flex; align-items: center;
+        background: rgba(255, 252, 248, 0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        border-bottom: 1.5px solid var(--smoke); transition: top 0.3s;
+        box-shadow: 0 4px 15px rgba(26, 10, 10, 0.05);
+    }
+    .btn-back {
+        display: inline-flex; align-items: center; gap: 8px;
+        color: var(--muted); text-decoration: none; font-weight: 500; font-size: 14px;
+        padding: 8px 16px; border-radius: 20px; background: transparent; border: 1.5px solid var(--smoke);
+        transition: var(--transition); cursor: pointer;
+    }
+    .btn-back:hover { background: var(--sakura-lt); border-color: var(--torii); color: var(--torii); }
+
+    /* Layout */
+    .container { max-width: 750px; margin: 100px auto 50px; padding: 0 20px; position: relative; z-index: 10; }
+
+    /* Header */
+    .header { text-align: center; margin-bottom: 40px; animation: fadeInDown 1s ease forwards; }
+    .header-badge {
+        display: inline-block; padding: 6px 14px; background: var(--sakura-lt);
+        color: var(--torii-dk); border-radius: 20px; font-size: 12px; font-weight: 700;
+        letter-spacing: 1px; margin-bottom: 15px; border: 1px solid rgba(201, 54, 62, 0.2);
+    }
+    .header h1 { font-family: 'Noto Serif JP', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 15px; color: var(--ink); line-height: 1.2; }
+    .header p { font-size: 15px; color: var(--muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+    /* Main Converter Card */
+    .converter-card {
+        background: rgba(255, 252, 248, 0.95); backdrop-filter: blur(10px);
+        border: 1px solid rgba(200, 164, 90, 0.25); border-radius: var(--radius-card);
+        padding: 40px; box-shadow: var(--shadow-card); animation: fadeInDown 1.2s ease forwards;
+    }
+
+    /* Tab Switcher Baru */
+    .tabs { display: flex; gap: 10px; margin-bottom: 25px; }
+    .tab-btn {
+        flex: 1; padding: 12px; background: transparent; border: 2px solid var(--smoke);
+        color: var(--muted); border-radius: var(--radius-btn); font-weight: 700; cursor: pointer;
+        transition: var(--transition); font-family: 'Noto Sans JP', sans-serif; font-size: 14px;
+    }
+    .tab-btn.active { background: var(--sakura-lt); border-color: var(--torii); color: var(--torii); }
+    .tab-btn:hover:not(.active) { border-color: var(--torii); color: var(--torii); }
+
+    .form-group { margin-bottom: 25px; text-align: left; }
+    .form-label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--ink); font-size: 14px; }
+    
+    .form-control {
+        width: 100%; padding: 15px 20px; background: #fff; border: 2px solid var(--smoke);
+        border-radius: var(--radius-btn); color: var(--ink); font-size: 1.1rem;
+        transition: all 0.3s; font-family: 'Noto Sans JP', sans-serif;
+    }
+    .form-control:focus { outline: none; border-color: var(--torii); box-shadow: 0 0 0 3px rgba(201, 54, 62, 0.1); }
+    
+    select.form-control {
+        appearance: none; cursor: pointer;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c9363e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat; background-position: right 20px center; background-size: 20px;
+    }
+
+    .btn-convert {
+        width: 100%; padding: 16px; background: var(--torii); color: white; border: none;
+        border-radius: var(--radius-btn); font-size: 1.1rem; font-weight: 600; letter-spacing: 1px;
+        cursor: pointer; transition: var(--transition); margin-top: 10px; font-family: 'Noto Sans JP', sans-serif;
+    }
+    .btn-convert:hover { background: var(--torii-dk); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(201, 54, 62, 0.3); }
+
+    /* Result Area */
+    .result-area {
+        margin-top: 35px; background: var(--sakura-lt); border: 1px solid rgba(201, 54, 62, 0.2);
+        border-radius: var(--radius-btn); padding: 30px; text-align: center; display: none; 
+        opacity: 0; transform: translateY(20px); transition: all 0.5s ease;
+    }
+    .result-area.visible { display: block; opacity: 1; transform: translateY(0); animation: popIn 0.5s ease forwards; }
+    @keyframes popIn { 0% { opacity: 0; transform: scale(0.95) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+
+    .result-word { font-family: 'Klee One', serif; font-size: 3.5rem; font-weight: 700; color: var(--torii-dk); margin-bottom: 15px; line-height: 1.2; }
+    .result-explanation {
+        background: #fff; padding: 20px; border-radius: 10px; color: var(--muted); font-size: 14px;
+        line-height: 1.6; border-left: 4px solid var(--torii); text-align: left;
+        border-right: 1px solid var(--smoke); border-top: 1px solid var(--smoke); border-bottom: 1px solid var(--smoke);
+    }
+    .result-explanation strong { color: var(--ink); }
+
+    /* Error Message */
+    .error-msg { color: var(--torii); font-size: 13px; font-weight: 600; margin-top: 8px; display: none; }
+
+    /* Virtual Keyboard Styles */
+    .vk-toggle { display: inline-block; margin-top: 10px; color: var(--muted); font-size: 13px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
+    .vk-toggle:hover { color: var(--torii); }
+
+    .virtual-keyboard {
+        display: none; background: #fff; border: 1.5px solid var(--smoke);
+        border-radius: 12px; padding: 15px; margin-top: 15px; animation: fadeInDown 0.3s ease forwards;
+    }
+    .vk-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .vk-btn {
+        background: var(--washi); border: 1px solid var(--smoke); color: var(--ink);
+        padding: 10px 0; border-radius: 8px; font-size: 1.2rem; font-family: 'Klee One', serif; cursor: pointer; transition: var(--transition);
+    }
+    .vk-btn:hover, .vk-btn:active { background: var(--sakura-lt); color: var(--torii); border-color: var(--torii); }
+    
+    .vk-action-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; margin-top: 6px; }
+    .vk-btn.action-btn { background: #f4f4f4; font-weight: bold; font-family: 'Noto Sans JP', sans-serif; font-size: 0.9rem; }
+
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 768px) {
+        .header h1 { font-size: 2rem; }
+        .converter-card { padding: 25px; }
+        .result-word { font-size: 2.5rem; }
+        .nav-bar { padding: 15px 20px; }
+        .vk-btn { padding: 8px 0; font-size: 1.1rem; }
+        .vk-action-grid { grid-template-columns: 1fr 1fr; }
+    }
+</style>
+</head>
+<body>
+
+<!-- Daun Sakura Animasi -->
+<div id="petals"></div>
+
+<!-- Navigation -->
+<nav class="nav-bar" id="navbar">
+    <a href="javascript:history.back()" class="btn-back">← KEMBALI</a>
+</nav>
+
+<div class="container">
+    <header class="header">
+        <div class="header-badge">INTERAKTIF N5 - N4</div>
+        <h1>Mesin Pengubah Tata Bahasa</h1>
+        <p>Pilih mode di bawah ini untuk mengubah bentuk Kata Kerja (Doushi) maupun Kata Sifat (Keiyoushi) ke dalam bentuk lampau, negatif, dan lain-lain!</p>
+    </header>
+
+    <main class="converter-card">
+        
+        <!-- Tab Selector -->
+        <div class="tabs">
+            <button class="tab-btn active" id="tab-verb" onclick="switchTab('verb')">⛩️ Kata Kerja (Doushi)</button>
+            <button class="tab-btn" id="tab-adj" onclick="switchTab('adj')">🌸 Kata Sifat (Keiyoushi)</button>
+        </div>
+
+        <!-- AREA KATA KERJA (DOUSHI) -->
+        <div id="verbSection">
+            <div class="form-group">
+                <label class="form-label" for="verbInput">Masukkan Bentuk MASU (Contoh: のみます / 飲みます)</label>
+                <input type="text" id="verbInput" class="form-control" placeholder="Akhiri dengan ます..." autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="verbGroup">Pilih Golongan Kata Kerja</label>
+                <select id="verbGroup" class="form-control">
+                    <option value="1">Golongan 1 (Godan)</option>
+                    <option value="2">Golongan 2 (Ichidan)</option>
+                    <option value="3">Golongan 3 (Irregular)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="verbTargetForm">Ubah ke Bentuk</label>
+                <select id="verbTargetForm" class="form-control">
+                    <optgroup label="Level N5 (Dasar)">
+                        <option value="jisho">Bentuk Kamus (Jisho-kei)</option>
+                        <option value="nai">Bentuk Negatif (Nai-kei)</option>
+                        <option value="te">Bentuk Sambung (Te-kei)</option>
+                        <option value="ta">Bentuk Lampau (Ta-kei)</option>
+                    </optgroup>
+                    <optgroup label="Level N4 (Lanjutan)">
+                        <option value="kanou">Bentuk Potensial (Bisa / Mampu)</option>
+                        <option value="ikou">Bentuk Ajakan / Niat (Ikou-kei)</option>
+                        <option value="ba">Bentuk Pengandaian (Ba-kei)</option>
+                        <option value="tara">Bentuk Pengandaian Lampau (Tara-kei)</option>
+                        <option value="meirei">Bentuk Perintah Kasar (Meirei-kei)</option>
+                        <option value="kinshi">Bentuk Larangan Kasar (Kinshi-kei)</option>
+                        <option value="ukemi">Bentuk Pasif (Di-...)</option>
+                        <option value="shieki">Bentuk Kausatif (Menyuruh / Membiarkan)</option>
+                        <option value="shiekiukemi">Bentuk Kausatif-Pasif (Dipaksa ...)</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <!-- AREA KATA SIFAT (KEIYOUSHI) BARU -->
+        <div id="adjSection" style="display: none;">
+            <div class="form-group">
+                <label class="form-label" for="adjInput">Masukkan Kata Sifat Dasar (Contoh: たかい / きれい)</label>
+                <input type="text" id="adjInput" class="form-control" placeholder="Ketik kata sifat..." autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="adjGroup">Pilih Tipe Kata Sifat</label>
+                <select id="adjGroup" class="form-control">
+                    <option value="i">I-Keiyoushi (Kata Sifat - i)</option>
+                    <option value="na">Na-Keiyoushi (Kata Sifat - na)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="adjTargetForm">Ubah ke Bentuk</label>
+                <select id="adjTargetForm" class="form-control">
+                    <option value="positif">Bentuk Positif (Sekarang)</option>
+                    <option value="negatif">Bentuk Negatif (Tidak ...)</option>
+                    <option value="positif_lampau">Bentuk Positif Lampau (Dulu ...)</option>
+                    <option value="negatif_lampau">Bentuk Negatif Lampau (Dulu Tidak ...)</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="errorMsg" class="error-msg">Silakan cek kembali input Anda.</div>
+
+        <!-- Virtual Keyboard Toggle & Container -->
+        <div class="vk-toggle" onclick="toggleKeyboard()">⌨️ Tampilkan Keyboard Hiragana</div>
+        <div id="virtualKeyboard" class="virtual-keyboard">
+            <div class="vk-grid">
+                <!-- Baris 1-10 (Hiragana Utama) -->
+                <button class="vk-btn" onclick="typeChar('あ')">あ</button><button class="vk-btn" onclick="typeChar('い')">い</button><button class="vk-btn" onclick="typeChar('う')">う</button><button class="vk-btn" onclick="typeChar('え')">え</button><button class="vk-btn" onclick="typeChar('お')">お</button>
+                <button class="vk-btn" onclick="typeChar('か')">か</button><button class="vk-btn" onclick="typeChar('き')">き</button><button class="vk-btn" onclick="typeChar('く')">く</button><button class="vk-btn" onclick="typeChar('け')">け</button><button class="vk-btn" onclick="typeChar('こ')">こ</button>
+                <button class="vk-btn" onclick="typeChar('さ')">さ</button><button class="vk-btn" onclick="typeChar('し')">し</button><button class="vk-btn" onclick="typeChar('す')">す</button><button class="vk-btn" onclick="typeChar('せ')">せ</button><button class="vk-btn" onclick="typeChar('そ')">そ</button>
+                <button class="vk-btn" onclick="typeChar('た')">た</button><button class="vk-btn" onclick="typeChar('ち')">ち</button><button class="vk-btn" onclick="typeChar('つ')">つ</button><button class="vk-btn" onclick="typeChar('て')">て</button><button class="vk-btn" onclick="typeChar('と')">と</button>
+                <button class="vk-btn" onclick="typeChar('な')">な</button><button class="vk-btn" onclick="typeChar('に')">に</button><button class="vk-btn" onclick="typeChar('ぬ')">ぬ</button><button class="vk-btn" onclick="typeChar('ね')">ね</button><button class="vk-btn" onclick="typeChar('の')">の</button>
+                <button class="vk-btn" onclick="typeChar('は')">は</button><button class="vk-btn" onclick="typeChar('ひ')">ひ</button><button class="vk-btn" onclick="typeChar('ふ')">ふ</button><button class="vk-btn" onclick="typeChar('へ')">へ</button><button class="vk-btn" onclick="typeChar('ほ')">ほ</button>
+                <button class="vk-btn" onclick="typeChar('ま')">ま</button><button class="vk-btn" onclick="typeChar('み')">み</button><button class="vk-btn" onclick="typeChar('む')">む</button><button class="vk-btn" onclick="typeChar('め')">め</button><button class="vk-btn" onclick="typeChar('も')">も</button>
+                <button class="vk-btn" onclick="typeChar('や')">や</button><button class="vk-btn" onclick="typeChar('ゆ')">ゆ</button><button class="vk-btn" onclick="typeChar('よ')">よ</button><button class="vk-btn" onclick="typeChar('ら')">ら</button><button class="vk-btn" onclick="typeChar('り')">り</button>
+                <button class="vk-btn" onclick="typeChar('る')">る</button><button class="vk-btn" onclick="typeChar('れ')">れ</button><button class="vk-btn" onclick="typeChar('ろ')">ろ</button><button class="vk-btn" onclick="typeChar('わ')">わ</button><button class="vk-btn" onclick="typeChar('を')">を</button>
+                <!-- Tambahan Dakuten -->
+                <button class="vk-btn" onclick="typeChar('ん')">ん</button><button class="vk-btn" onclick="typeChar('が')">が</button><button class="vk-btn" onclick="typeChar('ぎ')">ぎ</button><button class="vk-btn" onclick="typeChar('ぐ')">ぐ</button><button class="vk-btn" onclick="typeChar('げ')">げ</button>
+                <button class="vk-btn" onclick="typeChar('ご')">ご</button><button class="vk-btn" onclick="typeChar('ざ')">ざ</button><button class="vk-btn" onclick="typeChar('じ')">じ</button><button class="vk-btn" onclick="typeChar('ず')">ず</button><button class="vk-btn" onclick="typeChar('ぜ')">ぜ</button>
+                <button class="vk-btn" onclick="typeChar('ぞ')">ぞ</button><button class="vk-btn" onclick="typeChar('だ')">だ</button><button class="vk-btn" onclick="typeChar('ぢ')">ぢ</button><button class="vk-btn" onclick="typeChar('づ')">づ</button><button class="vk-btn" onclick="typeChar('で')">で</button>
+                <button class="vk-btn" onclick="typeChar('ど')">ど</button><button class="vk-btn" onclick="typeChar('ば')">ば</button><button class="vk-btn" onclick="typeChar('び')">び</button><button class="vk-btn" onclick="typeChar('ぶ')">ぶ</button><button class="vk-btn" onclick="typeChar('べ')">べ</button>
+                <button class="vk-btn" onclick="typeChar('ぼ')">ぼ</button><button class="vk-btn" onclick="typeChar('ぱ')">ぱ</button><button class="vk-btn" onclick="typeChar('ぴ')">ぴ</button><button class="vk-btn" onclick="typeChar('ぷ')">ぷ</button><button class="vk-btn" onclick="typeChar('ぺ')">ぺ</button>
+                <button class="vk-btn" onclick="typeChar('ぽ')">ぽ</button>
+            </div>
+            <div class="vk-action-grid">
+                <button class="vk-btn action-btn" onclick="typeChar('ます')">+ ます</button>
+                <button class="vk-btn action-btn" onclick="typeChar('い')">+ い</button>
+                <button class="vk-btn action-btn" onclick="typeChar('な')">+ な</button>
+                <button class="vk-btn action-btn" onclick="backspace()" style="background:#ffeaef; color:#c9363e;">⌫ Hapus</button>
+            </div>
+        </div>
+
+        <button class="btn-convert" onclick="processConversion()">Ubah Bentuk</button>
+
+        <!-- Result Section -->
+        <div id="resultArea" class="result-area">
+            <div class="result-word" id="resultWord">--</div>
+            <div class="result-explanation" id="resultExplanation">--</div>
+        </div>
+    </main>
+</div>
+
+<!-- Converter Logic -->
+<script>
+    /* Sakura Petals Animation */
+    (function spawnPetals() {
+        const container = document.getElementById('petals');
+        for (let i = 0; i < 12; i++) {
+            const p = document.createElement('div');
+            p.className = 'sakura-petal';
+            const leftPct = Math.random() * 100;
+            const delay   = Math.random() * 12;
+            const dur     = 6 + Math.random() * 8;
+            p.style.cssText = `left:${leftPct}%;animation-duration:${dur}s;animation-delay:${delay}s;`;
+            container.appendChild(p);
+        }
+    })();
+
+    // Hide navbar on scroll
+    let prevScrollpos = window.pageYOffset;
+    window.onscroll = function() {
+        let currentScrollPos = window.pageYOffset;
+        if (prevScrollpos > currentScrollPos) {
+            document.getElementById("navbar").style.top = "0";
+        } else {
+            document.getElementById("navbar").style.top = "-80px";
+        }
+        prevScrollpos = currentScrollPos;
+    }
+
+    // --- LOGIKA TAB (KATA KERJA VS KATA SIFAT) ---
+    let activeMode = 'verb'; // default
+
+    function switchTab(tab) {
+        activeMode = tab;
+        document.getElementById('verbSection').style.display = (tab === 'verb') ? 'block' : 'none';
+        document.getElementById('adjSection').style.display = (tab === 'adj') ? 'block' : 'none';
+        
+        document.getElementById('tab-verb').classList.toggle('active', tab === 'verb');
+        document.getElementById('tab-adj').classList.toggle('active', tab === 'adj');
+
+        document.getElementById('resultArea').classList.remove('visible');
+        document.getElementById('errorMsg').style.display = 'none';
+    }
+
+    // --- LOGIKA VIRTUAL KEYBOARD ---
+    function toggleKeyboard() {
+        const vk = document.getElementById('virtualKeyboard');
+        vk.style.display = (vk.style.display === 'none' || vk.style.display === '') ? 'block' : 'none';
+    }
+
+    function typeChar(char) {
+        const inputId = (activeMode === 'verb') ? 'verbInput' : 'adjInput';
+        const input = document.getElementById(inputId);
+        input.value += char;
+        input.focus();
+    }
+
+    function backspace() {
+        const inputId = (activeMode === 'verb') ? 'verbInput' : 'adjInput';
+        const input = document.getElementById(inputId);
+        input.value = input.value.slice(0, -1);
+        input.focus();
+    }
+
+    function showError(msg) {
+        const err = document.getElementById('errorMsg');
+        err.innerText = msg;
+        err.style.display = 'block';
+        document.getElementById('resultArea').classList.remove('visible');
+        setTimeout(() => { err.style.display = 'none'; }, 4000);
+    }
+
+    function displayResult(word, explanation) {
+        const resultArea = document.getElementById('resultArea');
+        document.getElementById('resultWord').innerText = word;
+        document.getElementById('resultExplanation').innerHTML = explanation;
+        
+        // Trigger Animation
+        resultArea.classList.remove('visible');
+        void resultArea.offsetWidth; 
+        resultArea.classList.add('visible');
+    }
+
+    // --- PUSAT KONVERSI ---
+    function processConversion() {
+        if (activeMode === 'verb') {
+            processVerb();
+        } else {
+            processAdjective();
+        }
+    }
+
+    // 1. LOGIKA KATA KERJA (DOUSHI)
+    const g1_dict = {
+        'い': {a:'わ', u:'う', e:'え', o:'お', te:'って', ta:'った'},
+        'き': {a:'か', u:'く', e:'け', o:'こ', te:'いて', ta:'いた'},
+        'ぎ': {a:'が', u:'ぐ', e:'げ', o:'ご', te:'いで', ta:'いだ'},
+        'し': {a:'さ', u:'す', e:'せ', o:'そ', te:'して', ta:'した'},
+        'ち': {a:'た', u:'つ', e:'て', o:'と', te:'って', ta:'った'},
+        'に': {a:'な', u:'ぬ', e:'ね', o:'の', te:'んで', ta:'んだ'},
+        'び': {a:'ば', u:'ぶ', e:'べ', o:'ぼ', te:'んで', ta:'んだ'},
+        'み': {a:'ま', u:'む', e:'め', o:'も', te:'んで', ta:'んだ'},
+        'り': {a:'ら', u:'る', e:'れ', o:'ろ', te:'って', ta:'った'}
+    };
+
+    const verbExplanations = {
+        jisho: "<strong>Bentuk Kamus (Jisho-kei) [N5]</strong><br>Bentuk asli/kasual dari kata kerja. Digunakan dalam percakapan informal.",
+        nai: "<strong>Bentuk Negatif Kasual (Nai-kei) [N5]</strong><br>Berarti 'Tidak melakukan'. Digunakan dalam percakapan kasual bersama teman.",
+        te: "<strong>Bentuk Sambung (Te-kei) [N5]</strong><br>Digunakan untuk menyambung kalimat, meminta tolong (~te kudasai), atau aktivitas berlangsung.",
+        ta: "<strong>Bentuk Lampau Kasual (Ta-kei) [N5]</strong><br>Berarti 'Sudah melakukan'. Digunakan untuk menceritakan kejadian masa lampau.",
+        kanou: "<strong>Bentuk Potensial (Kanou-kei) [N4]</strong><br>Menyatakan kemampuan. Berarti 'Bisa...' atau 'Mampu melakukan...'.",
+        ikou: "<strong>Bentuk Ajakan / Maksud (Ikou-kei) [N4]</strong><br>Digunakan untuk mengajak ('Ayo...') atau menyatakan niat ('Saya bermaksud...').",
+        ba: "<strong>Bentuk Pengandaian (Ba-kei) [N4]</strong><br>Berarti 'Kalau...' atau 'Jika...'. Merupakan syarat mutlak.",
+        tara: "<strong>Bentuk Pengandaian Lampau (Tara-kei) [N4]</strong><br>Berarti 'Apabila (sudah)...' atau 'Kalau...'. Penggunaannya lebih fleksibel.",
+        meirei: "<strong>Bentuk Perintah Kasar (Meirei-kei) [N4]</strong><br>Kalimat perintah yang tegas/kasar. Berarti 'Lakukanlah!'.",
+        kinshi: "<strong>Bentuk Larangan Kasar (Kinshi-kei) [N4]</strong><br>Kalimat larangan yang tegas/kasar. Berarti 'Jangan lakukan!'.",
+        ukemi: "<strong>Bentuk Pasif (Ukemi-kei) [N4]</strong><br>Menyatakan subjek dikenai pekerjaan pihak lain. Berarti 'Di-...'.",
+        shieki: "<strong>Bentuk Kausatif (Shieki-kei) [N4]</strong><br>Menyatakan paksaan/izin. Berarti 'Menyuruh...' atau 'Membiarkan...'.",
+        shiekiukemi: "<strong>Bentuk Kausatif-Pasif (Shieki-Ukemi) [N4]</strong><br>Kombinasi menyuruh dan pasif. Berarti 'Dipaksa untuk...'."
+    };
+
+    function processVerb() {
+        let input = document.getElementById('verbInput').value.trim();
+        let group = document.getElementById('verbGroup').value;
+        let form = document.getElementById('verbTargetForm').value;
+
+        if (!input) { showError("Kolom kata kerja tidak boleh kosong."); return; }
+        if (!input.endsWith("ます")) { showError("Harap masukkan kata kerja yang berakhiran 'ます'."); return; }
+
+        let result = "";
+
+        if (group === "3") {
+            if (input === "きます" || input === "来ます") {
+                const kimasu_map = {
+                    jisho: "くる", nai: "こない", te: "きて", ta: "きた", kanou: "こられる",
+                    ikou: "こよう", ba: "くれば", tara: "きたら", meirei: "こい",
+                    kinshi: "くるな", ukemi: "こられる", shieki: "こさせる", shiekiukemi: "こさせられる"
+                };
+                result = kimasu_map[form];
+                if(input === "来ます") result = result.replace(/^く/, "来").replace(/^こ/, "来").replace(/^き/, "来");
+            } else if (input.endsWith("します")) {
+                let prefix = input.replace(/します$/, "");
+                const shimasu_map = {
+                    jisho: "する", nai: "しない", te: "して", ta: "した", kanou: "できる",
+                    ikou: "しよう", ba: "すれば", tara: "したら", meirei: "しろ",
+                    kinshi: "するな", ukemi: "される", shieki: "させる", shiekiukemi: "させられる"
+                };
+                result = prefix + shimasu_map[form];
+            } else {
+                showError("Golongan 3 hanya berakhiran 'します' atau 'きます'."); return;
+            }
+        } 
+        else if (group === "2") {
+            let stem = input.replace(/ます$/, "");
+            const g2_map = {
+                jisho: "る", nai: "ない", te: "て", ta: "た", kanou: "られる",
+                ikou: "よう", ba: "れば", tara: "たら", meirei: "ろ",
+                kinshi: "るな", ukemi: "られる", shieki: "させる", shiekiukemi: "させられる"
+            };
+            result = stem + g2_map[form];
+        } 
+        else if (group === "1") {
+            let match = input.match(/(.*)(.)ます$/);
+            if (!match) { showError("Format tidak valid."); return; }
+            let base = match[1], lastChar = match[2];
+
+            if (!g1_dict[lastChar]) { showError(`Huruf sebelum 'ます' ('${lastChar}') tidak lazim untuk Golongan 1.`); return; }
+
+            let chars = g1_dict[lastChar];
+            let isIkimasu = (input === "いきます" || input === "行きます");
+
+            switch(form) {
+                case "jisho": result = base + chars.u; break;
+                case "nai": result = base + chars.a + "ない"; break;
+                case "te": result = base + (isIkimasu ? "って" : chars.te); break;
+                case "ta": result = base + (isIkimasu ? "った" : chars.ta); break;
+                case "kanou": result = base + chars.e + "る"; break;
+                case "ikou": result = base + chars.o + "う"; break;
+                case "ba": result = base + chars.e + "ば"; break;
+                case "tara": result = base + (isIkimasu ? "った" : chars.ta) + "ら"; break;
+                case "meirei": result = base + chars.e; break;
+                case "kinshi": result = base + chars.u + "な"; break;
+                case "ukemi": result = base + chars.a + "れる"; break;
+                case "shieki": result = base + chars.a + "せる"; break;
+                case "shiekiukemi": result = base + chars.a + "せられる"; break;
+            }
+        }
+        displayResult(result, verbExplanations[form]);
+    }
+
+    // 2. LOGIKA KATA SIFAT (KEIYOUSHI) BARU
+    function processAdjective() {
+        let input = document.getElementById('adjInput').value.trim();
+        let group = document.getElementById('adjGroup').value; // 'i' or 'na'
+        let form = document.getElementById('adjTargetForm').value;
+
+        if (!input) { showError("Kolom kata sifat tidak boleh kosong."); return; }
+
+        let result = "";
+        let explanation = "";
+
+        if (group === 'i') {
+            // I-Keiyoushi
+            // Pengecualian untuk いい (ii) / yoi
+            let isYoi = (input === "いい" || input === "良い" || input === "よい");
+            let stem = input.replace(/い$/, "");
+            
+            if (isYoi && (form !== 'positif')) {
+                stem = input.replace(/いい$/, "よ").replace(/良い$/, "良").replace(/よい$/, "よ");
+                if (input === "いい") stem = "よ";
+            }
+
+            switch(form) {
+                case "positif":
+                    result = input;
+                    explanation = "<strong>Positif (Sekarang)</strong><br>Bentuk standar kata sifat-i. Tambahkan 'です' (desu) untuk kalimat sopan.";
+                    break;
+                case "negatif":
+                    result = stem + "くない";
+                    explanation = "<strong>Negatif (Non-Lampau)</strong><br>Berarti 'Tidak ...'. Akhiran 'い' (i) dihilangkan dan diganti dengan 'くない' (kunai).";
+                    break;
+                case "positif_lampau":
+                    result = stem + "かった";
+                    explanation = "<strong>Positif Lampau (Past Tense)</strong><br>Berarti '(Dulu) ...'. Akhiran 'い' (i) dihilangkan dan diganti dengan 'かった' (katta).";
+                    break;
+                case "negatif_lampau":
+                    result = stem + "くなかった";
+                    explanation = "<strong>Negatif Lampau (Past Negative)</strong><br>Berarti '(Dulu) Tidak ...'. Akhiran 'い' (i) dihilangkan dan diganti dengan 'くなかった' (kunakatta).";
+                    break;
+            }
+        } else {
+            // Na-Keiyoushi
+            // Hilangkan 'な' (na) jika pengguna terlanjur mengetiknya
+            let stem = input.replace(/な$/, "");
+
+            switch(form) {
+                case "positif":
+                    result = stem + "だ";
+                    explanation = "<strong>Positif (Sekarang/Kasual)</strong><br>Ditambahkan 'だ' (da) untuk kalimat kasual, atau 'です' (desu) untuk sopan.";
+                    break;
+                case "negatif":
+                    result = stem + "じゃない";
+                    explanation = "<strong>Negatif (Non-Lampau)</strong><br>Berarti 'Tidak ...'. Kata dasar ditambah 'じゃない' (janai) atau 'ではない' (dewa nai).";
+                    break;
+                case "positif_lampau":
+                    result = stem + "だった";
+                    explanation = "<strong>Positif Lampau (Past Tense)</strong><br>Berarti '(Dulu) ...'. Kata dasar ditambah 'だった' (datta) untuk bentuk kasual.";
+                    break;
+                case "negatif_lampau":
+                    result = stem + "じゃなかった";
+                    explanation = "<strong>Negatif Lampau (Past Negative)</strong><br>Berarti '(Dulu) Tidak ...'. Kata dasar ditambah 'じゃなかった' (janakatta).";
+                    break;
+            }
+        }
+        
+        displayResult(result, explanation);
+    }
+
+    // Trigger on Enter key
+    document.getElementById('verbInput').addEventListener('keypress', function (e) { if (e.key === 'Enter') processConversion(); });
+    document.getElementById('adjInput').addEventListener('keypress', function (e) { if (e.key === 'Enter') processConversion(); });
+</script>
+
+</body>
+</html>
