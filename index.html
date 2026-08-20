@@ -292,6 +292,13 @@
                 <div class="card-desc">Bermain sambil<br><b>Mengingat Kosakata</b></div>
             </div>
 
+            
+            <div class="card" onclick="openModule('tool')">
+                <div class="card-icon">⚙️</div>
+                <div class="card-title">TOOL</div>
+                <div class="card-desc">alat  converter <br><b>Dan berbagai tool untuk membantu proses belajar </b></div>
+            </div>
+
             <!-- WA GROUP MENU -->
             <div class="card wa-card" onclick="window.open('https://chat.whatsapp.com/HgZ1Bcsog9XGgvi4OzSmJm?s=cl&p=a&ilr=4')">
                 <div class="card-icon">💬</div>
@@ -422,7 +429,9 @@
             window.location.href = 'dasboardkuis.html';
         } else if (moduleName === 'vip') {
             window.location.href = 'dasboardvip.html';
-        }
+        } else if (moduleName === 'tool') {
+            window.location.href = 'tool.html';
+        } 
     }
 
     // --- ANIMASI SCROLL ROADMAP ---
