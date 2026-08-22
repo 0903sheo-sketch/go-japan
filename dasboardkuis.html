@@ -1,123 +1,1945 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sedang Dalam Perbaikan - Pusat Pembelajaran</title>
-    <style>
-        /* TEMA & ANIMASI DASAR */
-        body {
-            background: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff0f5; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulasi Ujian SSW – Pengolahan Makanan</title>
 
-        /* Hujan Sakura */
-        .sakura-petal {
-            position: fixed; top: -10px; background-color: #ffb7c5;
-            border-radius: 15px 0px 15px 0px; width: 12px; height: 16px;
-            opacity: 0.8; pointer-events: none; z-index: 9999;
-            box-shadow: 0 0 5px rgba(255, 183, 197, 0.5);
-            animation: fall linear forwards;
-        }
-        @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(720deg) translateX(50px); opacity: 0; }
-        }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-        /* Animasi Muncul */
-        .fade-in { animation: fadeIn 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  <!-- html2canvas for certificate download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-        /* Wadah Utama (Dibuat lebih kecil & terpusat) */
-        .container {
-            max-width: 600px; width: 100%;
-            background-color: rgba(26, 8, 15, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            padding: 50px 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 183, 197, 0.2); position: relative; z-index: 10;
-            text-align: center;
-        }
+  <style>
+    /* ─────────────────────────────────────────
+       CSS CUSTOM PROPERTIES
+    ───────────────────────────────────────── */
+    :root {
+      --bg:          #FFFDF9;
+      --surface:     #FFFFFF;
+      --navy:        #1A1A2E;
+      --red:         #C0392B;
+      --red-light:   #E74C3C;
+      --gold:        #C9A84C;
+      --gold-light:  #F5D485;
+      --wood-dark:   #5C3317;
+      --wood-mid:    #8B5E3C;
+      --wood-light:  #C4956A;
+      --muted:       #6B7280;
+      --border:      #E5E7EB;
+      --radius:      12px;
+      --shadow:      0 4px 24px rgba(26,26,46,.08);
+      --shadow-lg:   0 12px 48px rgba(26,26,46,.14);
+    }
 
-        /* Icon Maintenance */
-        .icon {
-            font-size: 70px;
-            margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
-            display: inline-block;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
+    /* ─────────────────────────────────────────
+       RESET & BASE
+    ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--navy);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        /* Tipografi Judul */
-        h1 { color: #ffb7c5; letter-spacing: 2px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8); font-size: 32px; margin-bottom: 15px; margin-top: 0; }
-        p.message { color: #ddd; font-size: 17px; line-height: 1.8; margin-bottom: 40px; }
-        p.jp-message { color: #ffb7c5; font-size: 14px; font-style: italic; margin-bottom: 30px; letter-spacing: 1px; }
+    /* ─────────────────────────────────────────
+       SAKURA ANIMATION
+    ───────────────────────────────────────── */
+    #sakura-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
 
-        /* Tombol Kembali */
-        .btn-back {
-            background: rgba(43, 15, 25, 0.8); border: 2px solid #ffb7c5; color: #ffb7c5;
-            padding: 12px 30px; border-radius: 30px; cursor: pointer; font-size: 16px; font-weight: bold;
-            transition: all 0.3s ease; box-shadow: 0 0 15px rgba(255, 183, 197, 0.3);
-            display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
-        }
-        .btn-back:hover { 
-            background: #ffb7c5; color: #12040a; 
-            box-shadow: 0 0 20px rgba(255, 183, 197, 0.8); 
-            transform: translateY(-3px); 
-        }
+    .petal {
+      position: absolute;
+      top: -40px;
+      width: 18px;
+      height: 18px;
+      opacity: 0;
+      animation: fall linear infinite;
+      will-change: transform, opacity;
+    }
 
-        /* Responsif */
-        @media (max-width: 768px) {
-            .container { padding: 40px 20px; }
-            h1 { font-size: 26px; }
-        }
-    </style>
+    .petal svg { width: 100%; height: 100%; }
+
+    @keyframes fall {
+      0%   { transform: translateY(0) rotate(0deg) scale(1);   opacity: 0;   }
+      5%   { opacity: .7; }
+      85%  { opacity: .5; }
+      100% { transform: translateY(110vh) rotate(720deg) scale(.6); opacity: 0; }
+    }
+
+    /* ─────────────────────────────────────────
+       LAYOUT
+    ───────────────────────────────────────── */
+    .page {
+      display: none;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+    }
+    .page.active { display: flex; flex-direction: column; align-items: center; }
+
+    .container {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 24px 16px 60px;
+    }
+
+    /* ─────────────────────────────────────────
+       HEADER BADGE
+    ───────────────────────────────────────── */
+    .header-badge {
+      text-align: center;
+      padding: 40px 0 0;
+    }
+    .header-badge .mon {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(48px, 10vw, 72px);
+      color: var(--red);
+      line-height: 1;
+      display: block;
+      filter: drop-shadow(0 2px 8px rgba(192,57,43,.25));
+    }
+    .header-badge h1 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(18px, 4vw, 26px);
+      font-weight: 700;
+      color: var(--navy);
+      margin-top: 8px;
+      letter-spacing: .02em;
+    }
+    .header-badge p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+      letter-spacing: .04em;
+    }
+
+    /* ─────────────────────────────────────────
+       CARD
+    ───────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 36px 32px;
+      margin-top: 32px;
+      border: 1px solid var(--border);
+    }
+    @media (max-width: 480px) {
+      .card { padding: 24px 18px; }
+    }
+
+    .card-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .card-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    /* ─────────────────────────────────────────
+       FORM
+    ───────────────────────────────────────── */
+    .form-group { margin-bottom: 20px; }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+      letter-spacing: .02em;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      color: var(--navy);
+      background: var(--bg);
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+    }
+    input[type="text"]:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(192,57,43,.1);
+    }
+    input[type="text"]::placeholder { color: #B0B7C3; }
+
+    /* ─────────────────────────────────────────
+       BUTTONS
+    ───────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      border: none;
+      transition: transform .15s, box-shadow .15s, background .2s;
+      letter-spacing: .01em;
+      text-decoration: none;
+    }
+    .btn:active { transform: scale(.97); }
+
+    .btn-primary {
+      background: var(--red);
+      color: #fff;
+      width: 100%;
+      box-shadow: 0 4px 16px rgba(192,57,43,.3);
+    }
+    .btn-primary:hover { background: var(--red-light); box-shadow: 0 6px 20px rgba(192,57,43,.35); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--navy);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--navy); background: #F9F9FB; }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(201,168,76,.35);
+    }
+    .btn-gold:hover { background: #B8922F; }
+
+    .btn-ghost {
+      background: var(--bg);
+      color: var(--navy);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 24px;
+    }
+    .btn-group .btn { flex: 1 1 160px; min-width: 140px; }
+
+    /* Info list on login page */
+    .info-list {
+      list-style: none;
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .info-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .info-list .icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #FFF0EE;
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 16px;
+    }
+    @media (max-width: 420px) {
+      .info-list { grid-template-columns: 1fr; }
+    }
+
+    /* ─────────────────────────────────────────
+       EXAM PAGE
+    ───────────────────────────────────────── */
+    .exam-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255,253,249,.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .exam-progress-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+    .exam-title-small {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .progress-bar-track {
+      height: 5px;
+      background: var(--border);
+      border-radius: 999px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--red);
+      border-radius: 999px;
+      transition: width .4s ease;
+    }
+
+    .timer-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--navy);
+      color: #fff;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 15px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: .03em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .timer-chip.warning { background: #E67E22; }
+    .timer-chip.danger  { background: var(--red); animation: pulse .8s infinite; }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.04); }
+    }
+
+    /* Question card */
+    .question-card {
+      animation: slideIn .3s ease;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .question-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .question-num {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--red);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .question-category {
+      font-size: 11px;
+      color: var(--muted);
+      background: #F3F4F6;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .question-text {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(15px, 3.5vw, 18px);
+      font-weight: 600;
+      line-height: 1.65;
+      color: var(--navy);
+      margin-bottom: 24px;
+    }
+
+    /* Options */
+    .options-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .option-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color .15s, background .15s, transform .1s;
+      user-select: none;
+    }
+    .option-item:hover { border-color: var(--red); background: #FFF7F6; }
+    .option-item.selected {
+      border-color: var(--red);
+      background: #FFF0EE;
+    }
+    .option-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #F3F4F6;
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background .15s, color .15s;
+    }
+    .option-item.selected .option-letter {
+      background: var(--red);
+      color: #fff;
+    }
+    .option-text {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--navy);
+      padding-top: 4px;
+    }
+
+    /* Nav */
+    .exam-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .exam-nav .btn { flex: 1; }
+
+    /* Question grid / overview */
+    .question-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+      gap: 6px;
+      margin-top: 20px;
+    }
+    .q-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      background: #F3F4F6;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+      border: 1.5px solid transparent;
+    }
+    .q-dot.answered { background: #E8F5E9; color: #2E7D32; border-color: #A5D6A7; }
+    .q-dot.current  { background: var(--red); color: #fff; border-color: var(--red); }
+
+    /* ─────────────────────────────────────────
+       RESULT PAGE
+    ───────────────────────────────────────── */
+    .result-hero {
+      text-align: center;
+      padding: 40px 0 0;
+    }
+    .score-ring {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 8px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      position: relative;
+      background: var(--surface);
+    }
+    .score-ring.pass  { border-color: #27AE60; box-shadow: 0 0 0 4px rgba(39,174,96,.15); }
+    .score-ring.fail  { border-color: var(--red); box-shadow: 0 0 0 4px rgba(192,57,43,.15); }
+    .score-number {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .score-ring.pass .score-number { color: #27AE60; }
+    .score-ring.fail .score-number { color: var(--red); }
+    .score-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .status-badge.pass { background: #D4EDDA; color: #155724; }
+    .status-badge.fail { background: #F8D7DA; color: #721C24; }
+
+    .result-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .stat-box {
+      background: #F9FAFB;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 10px;
+      text-align: center;
+    }
+    .stat-box .val {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .stat-box .key {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* ─────────────────────────────────────────
+       CERTIFICATE
+    ───────────────────────────────────────── */
+    .cert-wrapper {
+      padding: 6px;
+      background: linear-gradient(135deg, var(--wood-dark), var(--wood-mid), var(--wood-light), var(--wood-mid), var(--wood-dark));
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.2);
+      margin-top: 28px;
+      position: relative;
+    }
+
+    /* Wood grain texture via SVG filter */
+    .cert-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background-image:
+        repeating-linear-gradient(
+          92deg,
+          transparent 0px, transparent 3px,
+          rgba(0,0,0,.04) 3px, rgba(0,0,0,.04) 4px
+        ),
+        repeating-linear-gradient(
+          180deg,
+          transparent 0px, transparent 8px,
+          rgba(255,255,255,.03) 8px, rgba(255,255,255,.03) 9px
+        );
+      pointer-events: none;
+    }
+
+    #certificate {
+      background: #FFFEF8;
+      border-radius: 12px;
+      padding: 40px 36px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    @media (max-width: 480px) {
+      #certificate { padding: 28px 20px 24px; }
+    }
+
+    /* Corner ornaments */
+    #certificate::before,
+    #certificate::after {
+      content: '❀';
+      position: absolute;
+      font-size: 28px;
+      color: rgba(192,57,43,.12);
+      line-height: 1;
+    }
+    #certificate::before { top: 12px; left: 16px; }
+    #certificate::after  { bottom: 12px; right: 16px; }
+
+    /* Sakura watermark */
+    .cert-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 280px;
+      height: 280px;
+      opacity: .04;
+      pointer-events: none;
+    }
+
+    .cert-header {
+      text-align: center;
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .cert-mon {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 42px;
+      color: var(--red);
+      display: block;
+      line-height: 1;
+      filter: drop-shadow(0 2px 4px rgba(192,57,43,.2));
+    }
+    .cert-main-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(15px, 4vw, 19px);
+      font-weight: 700;
+      color: var(--navy);
+      margin-top: 8px;
+      letter-spacing: .04em;
+    }
+    .cert-subtitle {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .cert-body { text-align: center; position: relative; }
+    .cert-presented {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .cert-name {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(20px, 5vw, 28px);
+      font-weight: 700;
+      color: var(--navy);
+      border-bottom: 1.5px solid var(--gold);
+      display: inline-block;
+      padding-bottom: 4px;
+      margin-bottom: 20px;
+    }
+    .cert-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 420px;
+      margin: 0 auto 24px;
+    }
+
+    .cert-score-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .cert-score-box {
+      text-align: center;
+    }
+    .cert-score-box .val {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .cert-score-box .key {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .cert-divider {
+      width: 1px;
+      height: 50px;
+      background: var(--border);
+    }
+
+    .cert-status-badge {
+      display: inline-block;
+      padding: 8px 28px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .cert-status-badge.pass { background: #D4EDDA; color: #155724; border: 1.5px solid #C3E6CB; }
+    .cert-status-badge.fail { background: #F8D7DA; color: #721C24; border: 1.5px solid #F5C6CB; }
+
+    .cert-footer {
+      border-top: 2px solid var(--gold);
+      padding-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .cert-seal {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-align: center;
+      line-height: 1.3;
+      box-shadow: 0 2px 8px rgba(192,57,43,.4);
+    }
+    .cert-seal .seal-mon { font-size: 18px; margin-bottom: 2px; }
+    .cert-date-block { text-align: right; }
+    .cert-date-block .date-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .cert-date-block .date-val {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-top: 2px;
+    }
+    .cert-issuer {
+      flex: 1;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Gold border accents on cert */
+    .cert-border-top,
+    .cert-border-bottom {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .cert-border-bottom { margin-top: 20px; margin-bottom: 0; }
+    .cert-border-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-light), var(--gold), var(--gold-light), transparent);
+    }
+    .cert-border-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    /* ─────────────────────────────────────────
+       TOAST
+    ───────────────────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--navy);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 9999;
+      transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(26,26,46,.5);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+    .modal-icon { font-size: 48px; margin-bottom: 12px; }
+    .modal-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .modal-text { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+    .modal-actions { display: flex; gap: 10px; }
+    .modal-actions .btn { flex: 1; }
+  </style>
 </head>
 <body>
 
-<div class="container fade-in">
-    <!-- Icon Animasi -->
-    <div class="icon">🚧🌸</div>
+<!-- ─── SAKURA CANVAS ─── -->
+<div id="sakura-canvas"></div>
 
-    <!-- Teks Utama -->
-    <h1>Sedang Dalam Perbaikan</h1>
-    
-    <p class="jp-message">ただいまメンテナンス中です<br>(Tadaima mentenansu-chuu desu)</p>
-    
-    <p class="message">
-        Gomen nasai! 🙏<br>
-        Halaman materi ini sedang dalam tahap pembuatan. Kami sedang menyiapkan materi lanjutan agar pengalaman belajar bahasa Jepang kamu semakin seru.<br><br>
-        Silakan cek kembali beberapa saat lagi, ya!
-    </p>
+<!-- ─── TOAST ─── -->
+<div id="toast"></div>
 
-    <!-- Tombol Kembali ke Dashboard Irodori -->
-    <!-- Pastikan href mengarah ke halaman daftar modulmu -->
-    <a href="index.html" class="btn-back"><span>🏠</span> Kembali ke Daftar Modul</a>
+<!-- ─── CONFIRM MODAL ─── -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal-box">
+    <div class="modal-icon">📋</div>
+    <div class="modal-title">Kirim Jawaban?</div>
+    <div class="modal-text" id="submitModalText">Pastikan semua soal telah dijawab sebelum mengirimkan ujian.</div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal()">Periksa Lagi</button>
+      <button class="btn btn-primary" onclick="submitExam()">Ya, Kirim</button>
+    </div>
+  </div>
 </div>
 
+<!-- ══════════════════════════════════════
+     PAGE 1: LOGIN
+══════════════════════════════════════ -->
+<div class="page active" id="page-login">
+  <div class="container">
+    <div class="header-badge">
+      <span class="mon">🌸</span>
+      <h1>Simulasi Ujian SSW</h1>
+      <p>Specified Skilled Worker — 食品産業 / Pengolahan Makanan</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Selamat Datang</div>
+      <div class="card-subtitle">Masukkan nama lengkap Anda untuk memulai simulasi ujian. Pastikan nama Anda benar karena akan tercantum pada sertifikat.</div>
+
+      <div class="form-group">
+        <label for="userName">Nama Lengkap <span style="color:var(--red)">*</span></label>
+        <input type="text" id="userName" placeholder="Contoh: Budi Santoso" maxlength="60" autocomplete="name" />
+      </div>
+
+      <button class="btn btn-primary" onclick="startExam()">
+        <span>始める</span> — Mulai Ujian
+      </button>
+
+      <ul class="info-list">
+        <li>
+          <span class="icon">📝</span>
+          <span><strong>40 Soal</strong><br>Pilihan Ganda</span>
+        </li>
+        <li>
+          <span class="icon">⏱️</span>
+          <span><strong>40 Menit</strong><br>Waktu Ujian</span>
+        </li>
+        <li>
+          <span class="icon">✅</span>
+          <span><strong>Nilai ≥ 65</strong><br>Syarat Lulus</span>
+        </li>
+        <li>
+          <span class="icon">🎓</span>
+          <span><strong>Sertifikat</strong><br>Digital</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 2: EXAM
+══════════════════════════════════════ -->
+<div class="page" id="page-exam">
+  <!-- Sticky Header -->
+  <div class="exam-header">
+    <div class="exam-progress-wrap">
+      <div class="exam-title-small" id="progressLabel">Soal 1 dari 40</div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="timer-chip" id="timerChip">
+      <span>⏱</span><span id="timerDisplay">40:00</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Question Card -->
+    <div class="card question-card" id="questionCard">
+      <div class="question-meta">
+        <span class="question-num" id="questionNum">Soal 1</span>
+        <span class="question-category" id="questionCategory">Kategori</span>
+      </div>
+      <p class="question-text" id="questionText"></p>
+      <ul class="options-list" id="optionsList"></ul>
+      <div class="exam-nav">
+        <button class="btn btn-ghost" id="prevBtn" onclick="navigate(-1)">← Sebelumnya</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="navigate(1)">Selanjutnya →</button>
+      </div>
+    </div>
+
+    <!-- Overview Grid -->
+    <div class="card" style="margin-top:20px">
+      <div class="card-title" style="font-size:15px;margin-bottom:4px">Navigasi Soal</div>
+      <div class="card-subtitle" style="margin-bottom:12px">Klik nomor untuk berpindah soal. <span style="color:#2E7D32">Hijau</span> = sudah dijawab.</div>
+      <div class="question-grid" id="questionGrid"></div>
+      <button class="btn btn-primary" style="margin-top:20px;width:100%" onclick="openModal()">Selesai & Kirim Jawaban</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 3: RESULT
+══════════════════════════════════════ -->
+<div class="page" id="page-result">
+  <div class="container">
+    <div class="result-hero">
+      <div class="score-ring" id="scoreRing">
+        <div class="score-number" id="scoreNumber">0</div>
+        <div class="score-label">Nilai</div>
+      </div>
+      <div class="status-badge" id="statusBadge"></div>
+      <p style="margin-top:12px;font-size:14px;color:var(--muted)" id="resultName"></p>
+    </div>
+
+    <div class="card" style="margin-top:20px">
+      <div class="result-stats">
+        <div class="stat-box">
+          <div class="val" id="correctCount">0</div>
+          <div class="key">Benar</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" id="wrongCount">0</div>
+          <div class="key">Salah</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" id="unansweredCount">0</div>
+          <div class="key">Tidak Dijawab</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATE -->
+    <div class="cert-wrapper" id="certWrapper">
+      <div id="certificate">
+        <!-- Watermark -->
+        <svg class="cert-watermark" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(100,100)">
+            <g id="sakura-wm">
+              <ellipse rx="18" ry="30" fill="#C0392B" transform="rotate(0) translate(0,-20)"/>
+              <ellipse rx="18" ry="30" fill="#C0392B" transform="rotate(72) translate(0,-20)"/>
+              <ellipse rx="18" ry="30" fill="#C0392B" transform="rotate(144) translate(0,-20)"/>
+              <ellipse rx="18" ry="30" fill="#C0392B" transform="rotate(216) translate(0,-20)"/>
+              <ellipse rx="18" ry="30" fill="#C0392B" transform="rotate(288) translate(0,-20)"/>
+              <circle r="12" fill="#C0392B"/>
+            </g>
+          </g>
+        </svg>
+
+        <div class="cert-border-top">
+          <div class="cert-border-dot"></div>
+          <div class="cert-border-line"></div>
+          <span style="color:var(--gold);font-size:14px">❀</span>
+          <div class="cert-border-line"></div>
+          <div class="cert-border-dot"></div>
+        </div>
+
+        <div class="cert-header">
+          <span class="cert-mon">🌸</span>
+          <div class="cert-main-title">SERTIFIKAT SIMULASI UJIAN SSW</div>
+          <div class="cert-subtitle">Specified Skilled Worker – 食品産業 Pengolahan Makanan</div>
+        </div>
+
+        <div class="cert-body">
+          <div class="cert-presented">Diberikan kepada</div>
+          <div class="cert-name" id="certName">–</div>
+
+          <div class="cert-desc">
+            Telah menyelesaikan Simulasi Ujian Kompetensi SSW bidang<br>
+            <strong>Pengolahan Makanan (Food Service/Manufacturing)</strong><br>
+            dan dinyatakan:
+          </div>
+
+          <div class="cert-status-badge" id="certStatusBadge"></div>
+
+          <div class="cert-score-row">
+            <div class="cert-score-box">
+              <div class="val" id="certScore">0</div>
+              <div class="key">Nilai</div>
+            </div>
+            <div class="cert-divider"></div>
+            <div class="cert-score-box">
+              <div class="val">65</div>
+              <div class="key">Min. Lulus</div>
+            </div>
+            <div class="cert-divider"></div>
+            <div class="cert-score-box">
+              <div class="val">40</div>
+              <div class="key">Total Soal</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cert-border-bottom">
+          <div class="cert-border-dot"></div>
+          <div class="cert-border-line"></div>
+          <span style="color:var(--gold);font-size:14px">❀</span>
+          <div class="cert-border-line"></div>
+          <div class="cert-border-dot"></div>
+        </div>
+
+        <div class="cert-footer">
+          <div class="cert-seal">
+            <span class="seal-mon">🌸</span>
+            <span>SSW<br>EXAM</span>
+          </div>
+          <div class="cert-issuer">
+            Simulasi Resmi<br>
+            Ujian SSW Pengolahan Makanan
+          </div>
+          <div class="cert-date-block">
+            <div class="date-label">Tanggal</div>
+            <div class="date-val" id="certDate">–</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="btn-group">
+      <button class="btn btn-gold" onclick="downloadCertificate()">
+        ⬇ Download Sertifikat
+      </button>
+      <button class="btn btn-outline" onclick="shareCertificate()">
+        ↗ Share
+      </button>
+      <button class="btn btn-ghost" onclick="restartExam()">
+        ↺ Ulangi
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
 <script>
-    // EFEK HUJAN SAKURA
-    function createSakura() {
-        const petal = document.createElement('div');
-        petal.classList.add('sakura-petal');
-        petal.style.left = Math.random() * 100 + 'vw';
-        petal.style.animationDuration = Math.random() * 4 + 3 + 's'; 
-        petal.style.transform = `scale(${Math.random() * 0.5 + 0.8})`;
-        document.body.appendChild(petal);
-        setTimeout(() => { petal.remove(); }, 7000);
+/* ─────────────────────────────────────────
+   QUESTIONS BANK
+   Format: { id, category, question, options: [{letter, text}], answer }
+   answer = letter of correct option ('A'|'B'|'C'|'D')
+   
+   ⚠️ Hanya 5 soal dummy. Tambahkan soal Anda di bawahnya hingga 40 soal.
+───────────────────────────────────────── */
+const QUESTIONS =[
+  // ── SOAL 1 ──
+  {
+    "id": 1,
+    "category": "食品安全（しょくひんあんぜん）",
+    "question": "鶏肉（とりにく）を安全（あんぜん）に食（た）べるための中心温度（ちゅうしんおんど）と時間（じかん）の基準（きじゅん）はどれですか。",
+    "options": [
+      { "letter": "A", "text": "60℃（ど）で1分間（いっぷんかん）" },
+      { "letter": "B", "text": "75℃（ど）で1分間（いっぷんかん）" },
+      { "letter": "C", "text": "80℃（ど）で30秒（びょう）" },
+      { "letter": "D", "text": "85℃（ど）で10秒（びょう）" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 2 ──
+  {
+    "id": 2,
+    "category": "衛生管理（えいせいかんり）",
+    "question": "効果的（こうかてき）な手洗（てあら）いのため、石（いし）けんと流水（りゅうすい）で何秒以上（なんびょういじょう）洗（あら）う必要（ひつよう）がありますか。",
+    "options": [
+      { "letter": "A", "text": "10秒（びょう）" },
+      { "letter": "B", "text": "15秒（びょう）" },
+      { "letter": "C", "text": "30秒（びょう）" },
+      { "letter": "D", "text": "60秒（びょう）" }
+    ],
+    "answer": "C"
+  },
+  // ── SOAL 3 ──
+  {
+    "id": 3,
+    "category": "HACCP",
+    "question": "HACCP（ハサップ）の日本語（にほんご）の意味（いみ）はどれですか。",
+    "options": [
+      { "letter": "A", "text": "危害要因分析重要管理点（きがいよういんぶんせきじゅうようかんりてん）" },
+      { "letter": "B", "text": "健康食品管理点（けんこうしょくひんかんりてん）" },
+      { "letter": "C", "text": "衛生管理基準（えいせいかんりきじゅん）" },
+      { "letter": "D", "text": "安全食品製造（あんぜんしょくひんせいぞう）" }
+    ],
+    "answer": "A"
+  },
+  // ── SOAL 4 ──
+  {
+    "id": 4,
+    "category": "食品保存（しょくひんほぞん）",
+    "question": "細菌（さいきん）が最も（もっとも）増殖（ぞうしょく）しやすい「危険温度帯（きけんおんどたい）」はどれですか。",
+    "options": [
+      { "letter": "A", "text": "0℃ 〜 5℃" },
+      { "letter": "B", "text": "10℃ 〜 60℃" },
+      { "letter": "C", "text": "60℃ 〜 74℃" },
+      { "letter": "D", "text": "74℃ 〜 100℃" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 5 ──
+  {
+    "id": 5,
+    "category": "日本の制度（にほんのせいど）",
+    "question": "特定技能（とくていぎのう）制度（せいど）が日本（にほん）で始（はじ）まったのは何年（なんねん）ですか。",
+    "options": [
+      { "letter": "A", "text": "2015年（ねん）" },
+      { "letter": "B", "text": "2017年（ねん）" },
+      { "letter": "C", "text": "2019年（ねん）" },
+      { "letter": "D", "text": "2021年（ねん）" }
+    ],
+    "answer": "C"
+  },
+  // ── SOAL 6 ──
+  {
+    "id": 6,
+    "category": "5S活動（ごえすかつどう）",
+    "question": "5Sの「整理（せいり）」の意味（いみ）はどれですか。",
+    "options": [
+      { "letter": "A", "text": "必要（ひつよう）なものと不要（ふよう）なものを分（わ）け、不要なものを捨（す）てること。" },
+      { "letter": "B", "text": "使（つか）いやすいように置（お）き場所（ばしょ）を決（き）めること。" },
+      { "letter": "C", "text": "掃除（そうじ）をしてきれいにすること。" },
+      { "letter": "D", "text": "ルールを守（まも）ること。" }
+    ],
+    "answer": "A"
+  },
+  // ── SOAL 7 ──
+  {
+    "id": 7,
+    "category": "5S活動（ごえすかつどう）",
+    "question": "5Sの「整頓（せいとん）」の意味（いみ）はどれですか。",
+    "options": [
+      { "letter": "A", "text": "ゴミを捨（す）てること。" },
+      { "letter": "B", "text": "必要（ひつよう）なものをすぐ使（つか）えるように配置（はいち）すること。" },
+      { "letter": "C", "text": "常（つね）に清潔（せいけつ）を保（たも）つこと。" },
+      { "letter": "D", "text": "服装（ふくそう）を整（ととの）えること。" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 8 ──
+  {
+    "id": 8,
+    "category": "食中毒（しょくちゅうどく）",
+    "question": "ノロウイルスによる食中毒（しょくちゅうどく）を防（ふせ）ぐために最（もっと）も効果的（こうかてき）なのはどれですか。",
+    "options": [
+      { "letter": "A", "text": "冷凍（れいとう）する。" },
+      { "letter": "B", "text": "アルコール消毒（しょうどく）だけをする。" },
+      { "letter": "C", "text": "しっかり手洗（てあら）いをし、十分（じゅうぶん）に加熱（かねつ）する。" },
+      { "letter": "D", "text": "水（みず）で洗（あら）う。" }
+    ],
+    "answer": "C"
+  },
+  // ── SOAL 9 ──
+  {
+    "id": 9,
+    "category": "労働安全（ろうどうあんぜん）",
+    "question": "重（おも）い物（もの）を持（も）ち上（あ）げるとき、正（ただ）しい姿勢（しせい）はどれですか。",
+    "options": [
+      { "letter": "A", "text": "膝（ひざ）を曲（ま）げず、腰（こし）だけを曲（ま）げる。" },
+      { "letter": "B", "text": "荷物（にもつ）に近（ちか）づき、膝（ひざ）を曲（ま）げて持（も）ち上（あ）げる。" },
+      { "letter": "C", "text": "背中（せなか）を丸（まる）めて持（も）ち上（あ）げる。" },
+      { "letter": "D", "text": "片手（かたて）で持（も）ち上（あ）げる。" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 10 ──
+  {
+    "id": 10,
+    "category": "アレルゲン",
+    "question": "特定原材料（とくていげんざいりょう）として表示（ひょうじ）が義務付（ぎむづ）けられているものはどれですか。",
+    "options": [
+      { "letter": "A", "text": "牛肉（ぎゅうにく）" },
+      { "letter": "B", "text": "卵（たまご）" },
+      { "letter": "C", "text": "大豆（だいず）" },
+      { "letter": "D", "text": "豚肉（ぶたにく）" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 11 ──
+  {
+    "id": 11,
+    "category": "異物混入（いぶつこんにゅう）",
+    "question": "工場内（こうじょうない）への毛髪（もうはつ）の混入（こんにゅう）を防（ふせ）ぐため、何（なに）をするべきですか。",
+    "options": [
+      { "letter": "A", "text": "粘着（ねんちゃく）ローラー（コロコロ）を全身（ぜんしん）にかける。" },
+      { "letter": "B", "text": "香水（こうすい）をつける。" },
+      { "letter": "C", "text": "帽子（ぼうし）をかぶらない。" },
+      { "letter": "D", "text": "作業服（さぎょうふく）のポケットにクシを入（い）れておく。" }
+    ],
+    "answer": "A"
+  },
+  // ── SOAL 12 ──
+  {
+    "id": 12,
+    "category": "食中毒予防（しょくちゅうどくよぼう）",
+    "question": "食中毒（しょくちゅうどく）予防（よぼう）の3原則（さんげんそく）は「つけない」「増（ふ）やさない」と、もう一つは何（なん）ですか。",
+    "options": [
+      { "letter": "A", "text": "冷（ひ）やす" },
+      { "letter": "B", "text": "やっつける（殺菌する）" },
+      { "letter": "C", "text": "捨（す）てる" },
+      { "letter": "D", "text": "乾（かわ）かす" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 13 ──
+  {
+    "id": 13,
+    "category": "労働安全（ろうどうあんぜん）",
+    "question": "機械（きかい）の掃除（そうじ）や点検（てんけん）を行（おこな）うとき、最初（さいしょ）にしなければならないことは何（なん）ですか。",
+    "options": [
+      { "letter": "A", "text": "水（みず）をかける。" },
+      { "letter": "B", "text": "電源（でんげん）を切（き）る。" },
+      { "letter": "C", "text": "油（あぶら）をさす。" },
+      { "letter": "D", "text": "そのまま掃除（そうじ）する。" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 14 ──
+  {
+    "id": 14,
+    "category": "衛生管理（えいせいかんり）",
+    "question": "下痢（げり）や発熱（はつねつ）などの体調不良（たいちょうふりょう）のとき、どうするべきですか。",
+    "options": [
+      { "letter": "A", "text": "薬（くすり）を飲（の）んで仕事（しごと）をする。" },
+      { "letter": "B", "text": "黙（だま）って働（はたら）く。" },
+      { "letter": "C", "text": "責任者（せきにんしゃ）に報告（ほうこく）し、指示（しじ）に従（したが）う。" },
+      { "letter": "D", "text": "休（やす）み時間（じかん）に寝（ね）る。" }
+    ],
+    "answer": "C"
+  },
+  // ── SOAL 15 ──
+  {
+    "id": 15,
+    "category": "交差汚染（こうさおせん）",
+    "question": "生肉（なまにく）を切（き）ったまな板（いた）で、すぐに野菜（やさい）を切（き）ってはいけない理由（りゆう）は何（なん）ですか。",
+    "options": [
+      { "letter": "A", "text": "野菜（やさい）の色（いろ）が悪（わる）くなるから。" },
+      { "letter": "B", "text": "交差汚染（こうさおせん）が起（お）こるから。" },
+      { "letter": "C", "text": "野菜（やさい）が硬（かた）くなるから。" },
+      { "letter": "D", "text": "包丁（ほうちょう）が傷（いた）むから。" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 16 ──
+  {
+    "id": 16,
+    "category": "食品保存（しょくひんほぞん）",
+    "question": "冷蔵庫（れいぞうこ）の温度（おんど）は通常（つうじょう）、何度以下（なんどいか）に保（たも）つ必要（ひつよう）がありますか。",
+    "options": [
+      { "letter": "A", "text": "10℃（ど）以下（いか）" },
+      { "letter": "B", "text": "15℃（ど）以下（いか）" },
+      { "letter": "C", "text": "20℃（ど）以下（いか）" },
+      { "letter": "D", "text": "25℃（ど）以下（いか）" }
+    ],
+    "answer": "A"
+  },
+  // ── SOAL 17 ──
+  {
+    "id": 17,
+    "category": "労働安全（ろうどうあんぜん）",
+    "question": "工場内（こうじょうない）を歩（ある）くときのルールとして正（ただ）しいものはどれですか。",
+    "options": [
+      { "letter": "A", "text": "走（はし）って移動（いどう）する。" },
+      { "letter": "B", "text": "指定（してい）された通路（つうろ）を歩（ある）く。" },
+      { "letter": "C", "text": "スマートフォンを見（み）ながら歩（ある）く。" },
+      { "letter": "D", "text": "荷物（にもつ）の上（うえ）をまたぐ。" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 18 ──
+  {
+    "id": 18,
+    "category": "衛生管理（えいせいかんり）",
+    "question": "トイレに入（はい）るとき、作業着（さぎょうぎ）はどうするべきですか。",
+    "options": [
+      { "letter": "A", "text": "そのまま入（はい）る。" },
+      { "letter": "B", "text": "指定（してい）の場所（ばしょ）で脱（ぬ）ぐ。" },
+      { "letter": "C", "text": "エプロンだけ外（はず）す。" },
+      { "letter": "D", "text": "帽子（ぼうし）だけ外（はず）す。" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 19 ──
+  {
+    "id": 19,
+    "category": "品質管理（ひんしつかんり）",
+    "question": "食品（しょくひん）の賞味期限（しょうみきげん）の意味（いみ）はどれですか。",
+    "options": [
+      { "letter": "A", "text": "おいしく食（た）べることができる期限（きげん）。" },
+      { "letter": "B", "text": "安全（あんぜん）に食（た）べられる期限（きげん）。" },
+      { "letter": "C", "text": "販売（はんばい）できる期限（きげん）。" },
+      { "letter": "D", "text": "冷凍（れいとう）しなければならない期限（きげん）。" }
+    ],
+    "answer": "A"
+  },
+  // ── SOAL 20 ──
+  {
+    "id": 20,
+    "category": "HACCP",
+    "question": "CCP（重要管理点）において、限界基準（げんかいきじゅん）を超（こ）えた場合（ばあい）、何（なに）をしますか。",
+    "options": [
+      { "letter": "A", "text": "そのまま出荷（しゅっか）する。" },
+      { "letter": "B", "text": "是正措置（ぜせいそち）を行（おこな）う。" },
+      { "letter": "C", "text": "誰（だれ）にも報告（ほうこく）しない。" },
+      { "letter": "D", "text": "記録（きろく）を消（け）す。" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 21 ──
+  {
+    "id": 21,
+    "category": "5S活動（ごえすかつどう）",
+    "question": "5Sの「清潔（せいけつ）」の意味（いみ）はどれですか。",
+    "options": [
+      { "letter": "A", "text": "整理・整頓・清掃（せいり・せいとん・せいそう）の3Sを維持（いじ）すること。" },
+      { "letter": "B", "text": "ゴミを捨（す）てること。" },
+      { "letter": "C", "text": "挨拶（あいさつ）をすること。" },
+      { "letter": "D", "text": "手洗（てあら）いをすること。" }
+    ],
+    "answer": "A"
+  },
+  // ── SOAL 22 ──
+  {
+    "id": 22,
+    "category": "細菌（さいきん）",
+    "question": "黄色（おうしょく）ブドウ球菌（きゅうきん）が特（とく）に多（おお）く存在（そんざい）する場所（ばしょ）はどこですか。",
+    "options": [
+      { "letter": "A", "text": "手（て）の傷（きず）や鼻（はな）の中（なか）" },
+      { "letter": "B", "text": "鶏肉（とりにく）" },
+      { "letter": "C", "text": "卵（たまご）" },
+      { "letter": "D", "text": "水の中（みずのなか）" }
+    ],
+    "answer": "A"
+  },
+  // ── SOAL 23 ──
+  {
+    "id": 23,
+    "category": "労働安全（ろうどうあんぜん）",
+    "question": "回転（かいてん）する機械（きかい）を操作（そうさ）するとき、着用（ちゃくよう）してはいけないものはどれですか。",
+    "options": [
+      { "letter": "A", "text": "安全靴（あんぜんぐつ）" },
+      { "letter": "B", "text": "軍手（ぐんて）などの手袋（てぶくろ）" },
+      { "letter": "C", "text": "帽子（ぼうし）" },
+      { "letter": "D", "text": "マスク" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 24 ──
+  {
+    "id": 24,
+    "category": "食品保存（しょくひんほぞん）",
+    "question": "冷凍庫（れいとうこ）の温度（おんど）は通常（つうじょう）、何度以下（なんどいか）に保（たも）ちますか。",
+    "options": [
+      { "letter": "A", "text": "0℃（ど）以下（いか）" },
+      { "letter": "B", "text": "-5℃（ど）以下（いか）" },
+      { "letter": "C", "text": "-15℃（ど）以下（いか）" },
+      { "letter": "D", "text": "-30℃（ど）以下（いか）" }
+    ],
+    "answer": "C"
+  },
+  // ── SOAL 25 ──
+  {
+    "id": 25,
+    "category": "衛生管理（えいせいかんり）",
+    "question": "作業服（さぎょうふく）に付（つ）いたゴミや髪の毛（かみのけ）を取（と）るための道具（どうぐ）はどれですか。",
+    "options": [
+      { "letter": "A", "text": "粘着（ねんちゃく）ローラー" },
+      { "letter": "B", "text": "モップ" },
+      { "letter": "C", "text": "ほうき" },
+      { "letter": "D", "text": "ぞうきん" }
+    ],
+    "answer": "A"
+  },
+  // ── SOAL 26 ──
+  {
+    "id": 26,
+    "category": "異物混入（いぶつこんにゅう）",
+    "question": "硬質異物（こうしついぶつ）の例（れい）として正（ただ）しいものはどれですか。",
+    "options": [
+      { "letter": "A", "text": "髪の毛（かみのけ）" },
+      { "letter": "B", "text": "糸（いと）" },
+      { "letter": "C", "text": "ガラスや金属（きんぞく）の破片（はへん）" },
+      { "letter": "D", "text": "紙（かみ）" }
+    ],
+    "answer": "C"
+  },
+  // ── SOAL 27 ──
+  {
+    "id": 27,
+    "category": "労働安全（ろうどうあんぜん）",
+    "question": "床（ゆか）に水（みず）や油（あぶら）がこぼれているのを見（み）つけた場合（ばあい）、最初（さいしょ）に何（なに）をしますか。",
+    "options": [
+      { "letter": "A", "text": "そのままにしておく。" },
+      { "letter": "B", "text": "またいで通（とお）る。" },
+      { "letter": "C", "text": "すぐに拭（ふ）き取（と）り、転倒（てんとう）を防（ふせ）ぐ。" },
+      { "letter": "D", "text": "明日（あした）掃除（そうじ）する。" }
+    ],
+    "answer": "C"
+  },
+  // ── SOAL 28 ──
+  {
+    "id": 28,
+    "category": "アレルゲン",
+    "question": "特定原材料（とくていげんざいりょう）に指定（してい）されているものはどれですか。",
+    "options": [
+      { "letter": "A", "text": "小麦（こむぎ）" },
+      { "letter": "B", "text": "米（こめ）" },
+      { "letter": "C", "text": "トマト" },
+      { "letter": "D", "text": "にんじん" }
+    ],
+    "answer": "A"
+  },
+  // ── SOAL 29 ──
+  {
+    "id": 29,
+    "category": "食中毒予防（しょくちゅうどくよぼう）",
+    "question": "カンピロバクター食中毒（しょくちゅうどく）の原因（げんいん）になりやすい食品（しょくひん）はどれですか。",
+    "options": [
+      { "letter": "A", "text": "牛肉（ぎゅうにく）" },
+      { "letter": "B", "text": "鶏肉（とりにく）" },
+      { "letter": "C", "text": "魚（さかな）" },
+      { "letter": "D", "text": "野菜（やさい）" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 30 ──
+  {
+    "id": 30,
+    "category": "衛生管理（えいせいかんり）",
+    "question": "作業靴（さぎょうぐつ）を洗（あら）う頻度（ひんど）として適切（てきせつ）なのはどれですか。",
+    "options": [
+      { "letter": "A", "text": "定期的（ていきてき）に洗（あら）い、清潔（せいけつ）を保（たも）つ。" },
+      { "letter": "B", "text": "1年（ねん）に1回（かい）洗（あら）う。" },
+      { "letter": "C", "text": "汚（よご）れるまで洗（あら）わない。" },
+      { "letter": "D", "text": "絶対（ぜったい）に洗（あら）わない。" }
+    ],
+    "answer": "A"
+  },
+  // ── SOAL 31 ──
+  {
+    "id": 31,
+    "category": "品質管理（ひんしつかんり）",
+    "question": "消費期限（しょうひきげん）の意味（いみ）はどれですか。",
+    "options": [
+      { "letter": "A", "text": "安全（あんぜん）に食（た）べられる期限（きげん）。" },
+      { "letter": "B", "text": "おいしく食（た）べられる期限（きげん）。" },
+      { "letter": "C", "text": "販売（はんばい）できる期限（きげん）。" },
+      { "letter": "D", "text": "捨（す）てる日（ひ）。" }
+    ],
+    "answer": "A"
+  },
+  // ── SOAL 32 ──
+  {
+    "id": 32,
+    "category": "5S活動（ごえすかつどう）",
+    "question": "5Sの「しつけ（習慣）」の意味（いみ）はどれですか。",
+    "options": [
+      { "letter": "A", "text": "きれいに掃除（そうじ）すること。" },
+      { "letter": "B", "text": "決（き）められたルールを習慣（しゅうかん）として守（まも）ること。" },
+      { "letter": "C", "text": "物（もの）を捨（す）てること。" },
+      { "letter": "D", "text": "道具（どうぐ）を並（なら）べること。" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 33 ──
+  {
+    "id": 33,
+    "category": "異物混入（いぶつこんにゅう）",
+    "question": "金属探知機（きんぞくたんちき）は、何（なに）を防（ふせ）ぐための機械（きかい）ですか。",
+    "options": [
+      { "letter": "A", "text": "髪の毛（かみのけ）の混入（こんにゅう）" },
+      { "letter": "B", "text": "虫（むし）の混入（こんにゅう）" },
+      { "letter": "C", "text": "金属片（きんぞくへん）の混入（こんにゅう）" },
+      { "letter": "D", "text": "ほこりの混入（こんにゅう）" }
+    ],
+    "answer": "C"
+  },
+  // ── SOAL 34 ──
+  {
+    "id": 34,
+    "category": "食中毒（しょくちゅうどく）",
+    "question": "アニサキスはどこに寄生（きせい）していますか。",
+    "options": [
+      { "letter": "A", "text": "豚肉（ぶたにく）" },
+      { "letter": "B", "text": "魚介類（ぎょかいるい）" },
+      { "letter": "C", "text": "野菜（やさい）" },
+      { "letter": "D", "text": "牛肉（ぎゅうにく）" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 35 ──
+  {
+    "id": 35,
+    "category": "労働安全（ろうどうあんぜん）",
+    "question": "ヒヤリ・ハットの意味（いみ）はどれですか。",
+    "options": [
+      { "letter": "A", "text": "事故（じこ）にはならなかったが、ヒヤッとしたりハッとしたりした出来事（できごと）。" },
+      { "letter": "B", "text": "大（おお）きなケガをした事故（じこ）。" },
+      { "letter": "C", "text": "機械（きかい）が壊（こわ）れること。" },
+      { "letter": "D", "text": "帽子（ぼうし）をかぶること。" }
+    ],
+    "answer": "A"
+  },
+  // ── SOAL 36 ──
+  {
+    "id": 36,
+    "category": "衛生管理（えいせいかんり）",
+    "question": "爪（つめ）の長（なが）さとして適切（てきせつ）なのはどれですか。",
+    "options": [
+      { "letter": "A", "text": "長（なが）く伸（の）ばす。" },
+      { "letter": "B", "text": "マニキュアを塗（ぬ）る。" },
+      { "letter": "C", "text": "短（みじか）く切（き）る。" },
+      { "letter": "D", "text": "とがらせる。" }
+    ],
+    "answer": "C"
+  },
+  // ── SOAL 37 ──
+  {
+    "id": 37,
+    "category": "食品保存（しょくひんほぞん）",
+    "question": "先入先出（さきいれさきだし）の原則（げんそく）とは何（なん）ですか。",
+    "options": [
+      { "letter": "A", "text": "新（あたら）しいものから使（つか）う。" },
+      { "letter": "B", "text": "古（ふる）いものから順番（じゅんばん）に使（つか）う。" },
+      { "letter": "C", "text": "賞味期限（しょうみきげん）を見（み）ないで使（つか）う。" },
+      { "letter": "D", "text": "大（おお）きいものから使（つか）う。" }
+    ],
+    "answer": "B"
+  },
+  // ── SOAL 38 ──
+  {
+    "id": 38,
+    "category": "アレルゲン",
+    "question": "特定原材料（とくていげんざいりょう）に含（ふく）まれないものはどれですか。",
+    "options": [
+      { "letter": "A", "text": "そば" },
+      { "letter": "B", "text": "落花生（らっかせい / ピーナッツ）" },
+      { "letter": "C", "text": "えび" },
+      { "letter": "D", "text": "ほうれん草（そう）" }
+    ],
+    "answer": "D"
+  },
+  // ── SOAL 39 ──
+  {
+    "id": 39,
+    "category": "労働安全（ろうどうあんぜん）",
+    "question": "火災（かさい）が発生（はっせい）した場合（ばあい）、最初（さいしょ）にするべきことは何（なん）ですか。",
+    "options": [
+      { "letter": "A", "text": "大（おお）きな声（こえ）で周（まわ）りに知（し）らせる。" },
+      { "letter": "B", "text": "一人（ひとり）で逃（に）げる。" },
+      { "letter": "C", "text": "荷物（にもつ）を取（と）りに戻（もど）る。" },
+      { "letter": "D", "text": "隠（かく）れる。" }
+    ],
+    "answer": "A"
+  },
+  // ── SOAL 40 ──
+  {
+    "id": 40,
+    "category": "衛生管理（えいせいかんり）",
+    "question": "手袋（てぶくろ）を着用（ちゃくよう）しているときの手洗（てあら）いについて正（ただ）しいのはどれですか。",
+    "options": [
+      { "letter": "A", "text": "手袋（てぶくろ）をしているので手洗（てあら）いは必要（ひつよう）ない。" },
+      { "letter": "B", "text": "手袋（てぶくろ）を着用（ちゃくよう）する前（まえ）に手（て）を洗（あら）う。" },
+      { "letter": "C", "text": "手袋（てぶくろ）のまま水（みず）で洗（あら）う。" },
+      { "letter": "D", "text": "手袋（てぶくろ）を毎日（まいにち）同（おな）じものを使（つか）う。" }
+    ],
+    "answer": "B"
+  }
+]
+
+/* ─── Pad remaining questions ─── */
+const TOTAL_QUESTIONS = 40;
+const PASSING_SCORE   = 65; // persen
+const EXAM_DURATION   = 70 * 60; // detik
+
+/* ─────────────────────────────────────────
+   STATE
+───────────────────────────────────────── */
+let userName       = '';
+let currentIndex   = 0;
+let userAnswers    = {};  // { questionIndex: 'A'|'B'|'C'|'D' }
+let timerInterval  = null;
+let timeLeft       = EXAM_DURATION;
+let examQuestions  = [];
+
+/* ─────────────────────────────────────────
+   SAKURA PETALS
+───────────────────────────────────────── */
+(function initSakura() {
+  const canvas = document.getElementById('sakura-canvas');
+  const petalSVG = `<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="10" cy="5" rx="5" ry="7" fill="currentColor" transform-origin="10 10"/>
+    <ellipse cx="10" cy="5" rx="5" ry="7" fill="currentColor" transform="rotate(72,10,10)" transform-origin="10 10"/>
+    <ellipse cx="10" cy="5" rx="5" ry="7" fill="currentColor" transform="rotate(144,10,10)" transform-origin="10 10"/>
+    <ellipse cx="10" cy="5" rx="5" ry="7" fill="currentColor" transform="rotate(216,10,10)" transform-origin="10 10"/>
+    <ellipse cx="10" cy="5" rx="5" ry="7" fill="currentColor" transform="rotate(288,10,10)" transform-origin="10 10"/>
+    <circle cx="10" cy="10" r="3" fill="currentColor"/>
+  </svg>`;
+
+  const colors = ['#FFADB5','#FFB7C5','#F48FB1','#FFD1DC','#FFC0CB'];
+  const count  = 18;
+
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    el.className = 'petal';
+    el.innerHTML = petalSVG;
+    el.style.color       = colors[Math.floor(Math.random() * colors.length)];
+    el.style.left        = Math.random() * 100 + 'vw';
+    el.style.width       = (12 + Math.random() * 14) + 'px';
+    el.style.animationDuration  = (8 + Math.random() * 14) + 's';
+    el.style.animationDelay     = -(Math.random() * 20)    + 's';
+    el.style.animationTimingFunction = 'linear';
+    canvas.appendChild(el);
+  }
+})();
+
+/* ─────────────────────────────────────────
+   PAGE NAVIGATION
+───────────────────────────────────────── */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ─────────────────────────────────────────
+   TOAST
+───────────────────────────────────────── */
+function showToast(msg, duration = 2800) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+/* ─────────────────────────────────────────
+   LOGIN
+───────────────────────────────────────── */
+function startExam() {
+  const input = document.getElementById('userName').value.trim();
+  if (!input) {
+    showToast('⚠️ Masukkan nama lengkap Anda terlebih dahulu.');
+    document.getElementById('userName').focus();
+    return;
+  }
+  if (input.length < 2) {
+    showToast('⚠️ Nama terlalu pendek.');
+    return;
+  }
+
+  userName      = input;
+  userAnswers   = {};
+  currentIndex  = 0;
+  timeLeft      = EXAM_DURATION;
+  examQuestions = buildQuestions();
+
+  buildGrid();
+  renderQuestion();
+  startTimer();
+  showPage('page-exam');
+}
+
+/* Build & pad questions array */
+function buildQuestions() {
+  const base = [...QUESTIONS];
+  // Pad with placeholder soal if < TOTAL_QUESTIONS
+  for (let i = base.length + 1; i <= TOTAL_QUESTIONS; i++) {
+    base.push({
+      id: i,
+      category: "Soal Dummy",
+      question: `[Soal ${i} belum diisi] Tambahkan soal Anda di array QUESTIONS dalam kode JavaScript.`,
+      options: [
+        { letter: "A", text: "Pilihan A" },
+        { letter: "B", text: "Pilihan B" },
+        { letter: "C", text: "Pilihan C" },
+        { letter: "D", text: "Pilihan D" },
+      ],
+      answer: "A"
+    });
+  }
+  return base.slice(0, TOTAL_QUESTIONS);
+}
+
+/* ─────────────────────────────────────────
+   TIMER
+───────────────────────────────────────── */
+function startTimer() {
+  clearInterval(timerInterval);
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      showToast('⏰ Waktu habis! Ujian diselesaikan otomatis.');
+      setTimeout(finishExam, 800);
     }
-    setInterval(createSakura, 400);
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+  const s = (timeLeft % 60).toString().padStart(2, '0');
+  const chip = document.getElementById('timerChip');
+  document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+  chip.classList.remove('warning','danger');
+  if (timeLeft <= 300) chip.classList.add('danger');
+  else if (timeLeft <= 600) chip.classList.add('warning');
+}
+
+/* ─────────────────────────────────────────
+   RENDER QUESTION
+───────────────────────────────────────── */
+function renderQuestion() {
+  const q = examQuestions[currentIndex];
+
+  document.getElementById('questionNum').textContent      = `Soal ${currentIndex + 1}`;
+  document.getElementById('questionCategory').textContent = q.category;
+  document.getElementById('questionText').textContent     = q.question;
+  document.getElementById('progressLabel').textContent    = `Soal ${currentIndex + 1} dari ${TOTAL_QUESTIONS}`;
+  document.getElementById('progressBar').style.width      = `${((currentIndex + 1) / TOTAL_QUESTIONS) * 100}%`;
+
+  // Options
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  q.options.forEach(opt => {
+    const li = document.createElement('li');
+    li.className = 'option-item' + (userAnswers[currentIndex] === opt.letter ? ' selected' : '');
+    li.innerHTML = `<span class="option-letter">${opt.letter}</span><span class="option-text">${opt.text}</span>`;
+    li.addEventListener('click', () => selectAnswer(opt.letter));
+    list.appendChild(li);
+  });
+
+  // Animate
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = 'slideIn .3s ease';
+
+  // Nav buttons
+  document.getElementById('prevBtn').disabled = currentIndex === 0;
+  document.getElementById('nextBtn').textContent = currentIndex === TOTAL_QUESTIONS - 1 ? 'Selesai' : 'Selanjutnya →';
+  document.getElementById('nextBtn').onclick = currentIndex === TOTAL_QUESTIONS - 1
+    ? openModal
+    : () => navigate(1);
+
+  updateGrid();
+}
+
+function selectAnswer(letter) {
+  userAnswers[currentIndex] = letter;
+  renderQuestion();
+}
+
+function navigate(dir) {
+  const next = currentIndex + dir;
+  if (next < 0 || next >= TOTAL_QUESTIONS) return;
+  currentIndex = next;
+  renderQuestion();
+}
+
+/* ─────────────────────────────────────────
+   QUESTION GRID
+───────────────────────────────────────── */
+function buildGrid() {
+  const grid = document.getElementById('questionGrid');
+  grid.innerHTML = '';
+  for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'q-dot';
+    dot.textContent = i + 1;
+    dot.id = `dot-${i}`;
+    dot.addEventListener('click', () => { currentIndex = i; renderQuestion(); });
+    grid.appendChild(dot);
+  }
+}
+
+function updateGrid() {
+  for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    if (!dot) continue;
+    dot.classList.remove('answered','current');
+    if (i === currentIndex)          dot.classList.add('current');
+    else if (userAnswers[i] != null) dot.classList.add('answered');
+  }
+}
+
+/* ─────────────────────────────────────────
+   MODAL
+───────────────────────────────────────── */
+function openModal() {
+  const answered   = Object.keys(userAnswers).length;
+  const unanswered = TOTAL_QUESTIONS - answered;
+  document.getElementById('submitModalText').textContent =
+    unanswered > 0
+      ? `Masih ada ${unanswered} soal yang belum dijawab. Yakin ingin mengirimkan sekarang?`
+      : `Semua ${TOTAL_QUESTIONS} soal telah dijawab. Siap mengirimkan ujian?`;
+  document.getElementById('submitModal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('submitModal').classList.remove('active');
+}
+
+function submitExam() {
+  closeModal();
+  finishExam();
+}
+
+/* ─────────────────────────────────────────
+   FINISH & RESULT
+───────────────────────────────────────── */
+function finishExam() {
+  clearInterval(timerInterval);
+
+  let correct = 0;
+  examQuestions.forEach((q, i) => {
+    if (userAnswers[i] === q.answer) correct++;
+  });
+
+  const total      = TOTAL_QUESTIONS;
+  const wrong      = Object.keys(userAnswers).filter(i => userAnswers[i] !== examQuestions[i].answer).length;
+  const unanswered = total - Object.keys(userAnswers).length;
+  const score      = Math.round((correct / total) * 100);
+  const pass       = score >= PASSING_SCORE;
+
+  // Result page
+  const ring   = document.getElementById('scoreRing');
+  ring.className = 'score-ring ' + (pass ? 'pass' : 'fail');
+  document.getElementById('scoreNumber').textContent      = score;
+  document.getElementById('statusBadge').textContent      = pass ? '✅ LULUS' : '❌ TIDAK LULUS';
+  document.getElementById('statusBadge').className        = 'status-badge ' + (pass ? 'pass' : 'fail');
+  document.getElementById('resultName').textContent       = userName;
+  document.getElementById('correctCount').textContent     = correct;
+  document.getElementById('wrongCount').textContent       = wrong;
+  document.getElementById('unansweredCount').textContent  = unanswered;
+
+  // Certificate
+  document.getElementById('certName').textContent   = userName;
+  document.getElementById('certScore').textContent  = score;
+  const cb = document.getElementById('certStatusBadge');
+  cb.textContent  = pass ? '✅ LULUS' : '❌ TIDAK LULUS';
+  cb.className    = 'cert-status-badge ' + (pass ? 'pass' : 'fail');
+  document.getElementById('certDate').textContent   = new Date().toLocaleDateString('id-ID', {
+    day: 'numeric', month: 'long', year: 'numeric'
+  });
+
+  showPage('page-result');
+}
+
+/* ─────────────────────────────────────────
+   DOWNLOAD CERTIFICATE
+───────────────────────────────────────── */
+async function downloadCertificate() {
+  showToast('📸 Memproses sertifikat…', 4000);
+  try {
+    const certEl = document.getElementById('certWrapper');
+    const canvas = await html2canvas(certEl, {
+      scale: 2.5,
+      useCORS: true,
+      backgroundColor: null,
+      logging: false,
+    });
+    const link    = document.createElement('a');
+    link.download = `Sertifikat_SSW_${userName.replace(/\s+/g,'_')}.png`;
+    link.href     = canvas.toDataURL('image/png', 1.0);
+    link.click();
+    showToast('✅ Sertifikat berhasil diunduh!');
+  } catch (e) {
+    showToast('⚠️ Gagal mengunduh. Coba lagi.');
+    console.error(e);
+  }
+}
+
+/* ─────────────────────────────────────────
+   SHARE CERTIFICATE
+───────────────────────────────────────── */
+async function shareCertificate() {
+  const score  = document.getElementById('certScore').textContent;
+  const status = document.getElementById('certStatusBadge').textContent;
+  const text   = `🌸 Saya telah menyelesaikan Simulasi Ujian SSW Pengolahan Makanan!\n\n👤 Nama  : ${userName}\n📊 Nilai : ${score}/100\n🏅 Status: ${status}\n\n頑張ってください！ — Ganbatte kudasai!`;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: 'Simulasi Ujian SSW – Pengolahan Makanan', text });
+      showToast('✅ Berhasil dibagikan!');
+    } catch {
+      copyToClipboard(text);
+    }
+  } else {
+    copyToClipboard(text);
+  }
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text)
+    .then(() => showToast('📋 Teks hasil disalin ke clipboard!'))
+    .catch(() => showToast('⚠️ Browser tidak mendukung share/copy.'));
+}
+
+/* ─────────────────────────────────────────
+   RESTART
+───────────────────────────────────────── */
+function restartExam() {
+  clearInterval(timerInterval);
+  document.getElementById('userName').value = '';
+  showPage('page-login');
+}
+
+/* ─────────────────────────────────────────
+   ENTER KEY on login
+───────────────────────────────────────── */
+document.getElementById('userName').addEventListener('keydown', e => {
+  if (e.key === 'Enter') startExam();
+});
 </script>
+
 </body>
 </html>
