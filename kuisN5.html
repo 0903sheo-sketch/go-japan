@@ -1,599 +1,883 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JLPT N5 Premium Grammar Test</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Poppins:wght@300;400;600&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evaluasi Minna no Nihongo Bab 1-3</title>
 
-        :root {
-            --bg-body: #f4f7f6;
-            --bg-card: #ffffff;
-            --text-main: #2d3436;
-            --text-muted: #636e72;
-            --border-color: #dfe6e9;
-            --primary: #0984e3;
-            --primary-hover: #74b9ff;
-            --success: #00b894;
-            --danger: #d63031;
-            --furigana-color: #0984e3;
-        }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+  <!-- html2canvas for certificate download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-            padding: 20px;
-        }
+  <style>
+    /* ─────────────────────────────────────────
+       CSS CUSTOM PROPERTIES
+    ───────────────────────────────────────── */
+    :root {
+      --bg:          #FFFDF9;
+      --surface:     #FFFFFF;
+      --navy:        #1A1A2E;
+      --red:         #C0392B;
+      --red-light:   #E74C3C;
+      --gold:        #C9A84C;
+      --gold-light:  #F5D485;
+      --wood-dark:   #5C3317;
+      --wood-mid:    #8B5E3C;
+      --wood-light:  #C4956A;
+      --muted:       #6B7280;
+      --border:      #E5E7EB;
+      --radius:      12px;
+      --shadow:      0 4px 24px rgba(26,26,46,.08);
+      --shadow-lg:   0 12px 48px rgba(26,26,46,.14);
+    }
 
-        /* Tombol Back Floating */
-        .btn-back-floating {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: var(--bg-card);
-            color: var(--text-main);
-            border: 2px solid var(--border-color);
-            padding: 10px 20px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 15px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--navy);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        .btn-back-floating:hover {
-            background-color: var(--danger);
-            border-color: var(--danger);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(214, 48, 49, 0.2);
-        }
+    /* ─────────────────────────────────────────
+       SAKURA ANIMATION
+    ───────────────────────────────────────── */
+    #sakura-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      top: -40px;
+      width: 18px;
+      height: 18px;
+      opacity: 0;
+      animation: fall linear infinite;
+      will-change: transform, opacity;
+    }
+    .petal svg { width: 100%; height: 100%; }
+    @keyframes fall {
+      0%   { transform: translateY(0) rotate(0deg) scale(1);   opacity: 0;   }
+      5%   { opacity: .7; }
+      85%  { opacity: .5; }
+      100% { transform: translateY(110vh) rotate(720deg) scale(.6); opacity: 0; }
+    }
 
-        /* Container & Cards */
-        .container {
-            width: 100%;
-            max-width: 750px;
-            position: relative;
-        }
+    /* ─────────────────────────────────────────
+       LAYOUT
+    ───────────────────────────────────────── */
+    .page {
+      display: none;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+    }
+    .page.active { display: flex; flex-direction: column; align-items: center; }
+    .container {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 24px 16px 60px;
+    }
 
-        .card {
-            background: var(--bg-card);
-            border-radius: 24px;
-            padding: 40px 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.05);
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
+    .header-badge { text-align: center; padding: 40px 0 0; }
+    .header-badge .mon {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(48px, 10vw, 72px);
+      color: var(--red);
+      line-height: 1;
+      display: block;
+      filter: drop-shadow(0 2px 8px rgba(192,57,43,.25));
+    }
+    .header-badge h1 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(18px, 4vw, 26px);
+      font-weight: 700;
+      color: var(--navy);
+      margin-top: 8px;
+    }
+    .header-badge p { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
-        .hidden { display: none !important; }
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 36px 32px;
+      margin-top: 32px;
+      border: 1px solid var(--border);
+    }
+    @media (max-width: 480px) { .card { padding: 24px 18px; } }
+    .card-title { font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .card-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
 
-        /* Typography */
-        h1 { font-weight: 700; font-size: 28px; text-align: center; margin-bottom: 10px; color: var(--text-main); }
-        h2, h3 { text-align: center; color: var(--text-main); margin-bottom: 20px; }
-        p { text-align: center; color: var(--text-muted); margin-bottom: 30px; font-size: 15px; }
-        
-        /* Japanese Text Styling */
-        .jp-text {
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 24px;
-            font-weight: 500;
-            line-height: 2;
-            text-align: center;
-            margin-bottom: 30px;
-        }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+    input[type="text"] {
+      width: 100%; padding: 13px 16px; border: 1.5px solid var(--border);
+      border-radius: 8px; font-size: 15px; background: var(--bg); outline: none;
+    }
+    input[type="text"]:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(192,57,43,.1); }
 
-        ruby { ruby-align: center; }
-        rt { font-size: 11px; color: var(--furigana-color); font-weight: 400; transform: translateY(-3px); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 13px 28px; border-radius: 8px; font-size: 15px; font-weight: 600;
+      cursor: pointer; border: none; transition: .2s; text-decoration: none;
+    }
+    .btn:active { transform: scale(.97); }
+    .btn-primary { background: var(--red); color: #fff; width: 100%; box-shadow: 0 4px 16px rgba(192,57,43,.3); }
+    .btn-primary:hover { background: var(--red-light); }
+    .btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--border); }
+    .btn-outline:hover { background: #F9F9FB; }
+    .btn-gold { background: var(--gold); color: #fff; }
+    .btn-gold:hover { background: #B8922F; }
+    .btn-ghost { background: var(--bg); color: var(--navy); border: 1.5px solid var(--border); }
 
-        /* Mode Pro menyembunyikan furigana */
-        .pro-mode rt { opacity: 0; visibility: hidden; display: none; }
+    .btn-group { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 24px; }
+    .btn-group .btn { flex: 1 1 160px; min-width: 140px; }
 
-        /* Inputs */
-        input[type="text"] {
-            width: 100%;
-            padding: 16px;
-            border: 2px solid var(--border-color);
-            border-radius: 14px;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.3s;
-            margin-bottom: 20px;
-            text-align: center;
-            background: #fdfdfd;
-        }
-        input[type="text"]:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(9, 132, 227, 0.1);
-            background: #fff;
-        }
+    .info-list {
+      list-style: none; margin-top: 24px; border-top: 1px solid var(--border);
+      padding-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .info-list li { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
+    .info-list .icon { width: 32px; height: 32px; border-radius: 8px; background: #FFF0EE; color: var(--red); display: flex; align-items: center; justify-content: center; font-size: 16px; }
 
-        /* Buttons & Hover Animations */
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            background-color: var(--bg-card);
-            color: var(--text-main);
-            border: 2px solid var(--border-color);
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            margin-bottom: 15px;
-            position: relative;
-            overflow: hidden;
-            font-family: 'Noto Sans JP', 'Poppins', sans-serif;
-        }
+    /* EXAM PAGE */
+    .exam-header {
+      position: sticky; top: 0; z-index: 10; background: rgba(255,253,249,.92); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border); padding: 12px 16px; display: flex; justify-content: space-between; gap: 12px; width: 100%;
+    }
+    .exam-progress-wrap { flex: 1; }
+    .exam-title-small { font-size: 12px; color: var(--muted); font-weight: 500; }
+    .progress-bar-track { height: 5px; background: var(--border); border-radius: 999px; margin-top: 5px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: var(--red); transition: width .4s ease; }
+    
+    .timer-chip {
+      display: flex; align-items: center; gap: 6px; background: var(--navy); color: #fff;
+      border-radius: 999px; padding: 6px 14px; font-size: 15px; font-weight: 700; flex-shrink: 0;
+    }
+    .timer-chip.warning { background: #E67E22; }
+    .timer-chip.danger  { background: var(--red); animation: pulse .8s infinite; }
 
-        /* Hover efek desktop */
-        @media (hover: hover) {
-            .btn:hover {
-                border-color: var(--primary);
-                color: var(--primary);
-                transform: translateY(-4px);
-                box-shadow: 0 10px 20px rgba(9, 132, 227, 0.1);
-            }
-            .btn-primary:hover, .btn-mode:hover {
-                background-color: var(--primary-hover);
-                border-color: var(--primary-hover);
-                color: white;
-                box-shadow: 0 10px 20px rgba(9, 132, 227, 0.3);
-            }
-        }
+    ruby { ruby-align: center; }
+    rt { font-size: 0.6em; color: #6B7280; }
 
-        /* Sentuhan mobile (Tap/Active) */
-        .btn:active {
-            transform: translateY(2px) scale(0.98);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+    .question-card { animation: slideIn .3s ease; }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .question-meta { display: flex; justify-content: space-between; margin-bottom: 16px; }
+    .question-num { font-size: 12px; font-weight: 600; color: var(--red); text-transform: uppercase; }
+    .question-category { font-size: 11px; color: var(--muted); background: #F3F4F6; padding: 3px 10px; border-radius: 999px; }
+    .question-text { font-family: 'Noto Serif JP', serif; font-size: clamp(15px, 3.5vw, 18px); font-weight: 600; line-height: 1.65; margin-bottom: 24px; }
 
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            margin-top: 10px;
-        }
+    .options-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .option-item {
+      display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px;
+      border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; transition: .15s;
+    }
+    .option-item:hover { border-color: var(--red); background: #FFF7F6; }
+    .option-item.selected { border-color: var(--red); background: #FFF0EE; }
+    .option-letter {
+      width: 28px; height: 28px; border-radius: 50%; background: #F3F4F6; font-weight: 700; font-size: 13px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .option-item.selected .option-letter { background: var(--red); color: #fff; }
+    .option-text { font-size: 14px; line-height: 1.55; padding-top: 4px; }
 
-        .mode-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .btn-mode {
-            flex: 1;
-            background: #fdfdfd;
-            border-color: var(--border-color);
-            color: var(--text-muted);
-            padding: 20px 10px;
-        }
-        .btn-mode i { display: block; font-size: 24px; margin-bottom: 8px; color: var(--primary); }
+    .exam-nav { display: flex; gap: 12px; margin-top: 28px; }
+    .exam-nav .btn { flex: 1; }
 
-        /* Timer UI */
-        #timer-container {
-            position: absolute;
-            top: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--bg-card);
-            padding: 10px 25px;
-            border-radius: 30px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            font-weight: 700;
-            font-size: 18px;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 10;
-            transition: color 0.3s;
-        }
-        .timer-danger {
-            color: var(--danger) !important;
-            animation: pulse 1s infinite;
-        }
+    .question-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(36px, 1fr)); gap: 6px; margin-top: 20px; }
+    .q-dot {
+      width: 36px; height: 36px; border-radius: 6px; background: #F3F4F6; font-size: 12px; font-weight: 600;
+      display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1.5px solid transparent;
+    }
+    .q-dot.answered { background: #E8F5E9; color: #2E7D32; border-color: #A5D6A7; }
+    .q-dot.current  { background: var(--red); color: #fff; border-color: var(--red); }
 
-        /* Quiz Layout */
-        #progress-container {
-            width: 100%;
-            height: 6px;
-            background: var(--border-color);
-            border-radius: 10px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-        #progress-bar {
-            height: 100%;
-            background: var(--primary);
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 10px;
-        }
+    /* RESULT PAGE */
+    .result-hero { text-align: center; padding: 40px 0 0; }
+    .score-ring {
+      width: 140px; height: 140px; border-radius: 50%; border: 8px solid var(--border);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 20px; background: var(--surface);
+    }
+    .score-ring.pass  { border-color: #27AE60; box-shadow: 0 0 0 4px rgba(39,174,96,.15); }
+    .score-ring.fail  { border-color: var(--red); box-shadow: 0 0 0 4px rgba(192,57,43,.15); }
+    .score-number { font-family: 'Noto Serif JP', serif; font-size: 40px; font-weight: 700; line-height: 1; }
+    .score-ring.pass .score-number { color: #27AE60; }
+    .score-ring.fail .score-number { color: var(--red); }
+    .score-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-        .question-number {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: block;
-            text-align: center;
-            margin-bottom: 10px;
-        }
+    .status-badge { display: inline-block; padding: 6px 20px; border-radius: 999px; font-weight: 700; font-size: 14px; }
+    .status-badge.pass { background: #D4EDDA; color: #155724; }
+    .status-badge.fail { background: #F8D7DA; color: #721C24; }
 
-        /* Result Layout */
-        .status-badge {
-            display: inline-block;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 20px;
-            color: white;
-            margin: 20px auto;
-            letter-spacing: 1px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .status-pass { background-color: var(--success); }
-        .status-fail { background-color: var(--danger); }
+    .result-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
+    .stat-box { background: #F9FAFB; border: 1px solid var(--border); border-radius: 10px; padding: 14px 10px; text-align: center; }
+    .stat-box .val { font-size: 22px; font-weight: 700; }
+    .stat-box .key { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-        .mistake-list {
-            text-align: left;
-            margin-top: 30px;
-            max-height: 450px;
-            overflow-y: auto;
-            padding-right: 15px;
-        }
-        .mistake-item {
-            background: #fff;
-            border-left: 5px solid var(--danger);
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid var(--border-color);
-        }
-        .mistake-q { font-size: 18px; margin-bottom: 10px; }
-        .mistake-ans { color: var(--danger); font-size: 14px; margin-bottom: 5px; font-weight: 500;}
-        .mistake-corr { color: var(--success); font-weight: bold; font-size: 14px; margin-bottom: 10px;}
-        .mistake-ex { font-size: 13px; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 10px;}
+    /* KOREKSI / EVALUASI JAWABAN */
+    .corrections-section { margin-top: 30px; text-align: left; }
+    .corrections-title { font-family: 'Noto Serif JP', serif; font-size: 18px; font-weight: 700; color: var(--navy); border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 16px; }
+    .correction-item { background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--red); border-radius: 8px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    .correction-item.unanswered { border-left-color: #F39C12; }
+    .c-q-text { font-size: 15px; color: var(--navy); margin-bottom: 12px; font-weight: 600; line-height: 1.5; font-family: 'Noto Serif JP', serif; }
+    .c-ans-wrong { color: var(--red); font-size: 13px; margin-bottom: 6px; display: flex; align-items: flex-start; gap: 6px;}
+    .c-ans-wrong.warning { color: #D68910; }
+    .c-ans-correct { color: #27AE60; font-size: 13px; font-weight: 600; display: flex; align-items: flex-start; gap: 6px;}
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #ced6e0; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #a4b0be; }
+    /* CERTIFICATE */
+    .cert-wrapper {
+      padding: 6px; background: linear-gradient(135deg, var(--wood-dark), var(--wood-mid), var(--wood-light), var(--wood-mid), var(--wood-dark));
+      border-radius: 16px; margin-top: 28px; position: relative;
+    }
+    #certificate { background: #FFFEF8; border-radius: 12px; padding: 40px 36px 36px; position: relative; overflow: hidden; }
+    .cert-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 280px; height: 280px; opacity: .04; }
+    .cert-header { text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 20px; margin-bottom: 24px; }
+    .cert-mon { font-size: 42px; color: var(--red); }
+    .cert-main-title { font-family: 'Noto Serif JP', serif; font-size: 18px; font-weight: 700; margin-top: 8px; }
+    .cert-subtitle { font-size: 11px; color: var(--muted); letter-spacing: .1em; }
+    .cert-body { text-align: center; }
+    .cert-presented { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .cert-name { font-family: 'Noto Serif JP', serif; font-size: 24px; font-weight: 700; border-bottom: 1.5px solid var(--gold); padding-bottom: 4px; margin-bottom: 20px; display: inline-block;}
+    .cert-desc { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+    .cert-score-row { display: flex; justify-content: center; gap: 20px; margin: 20px 0; }
+    .cert-score-box { text-align: center; }
+    .cert-score-box .val { font-size: 36px; font-weight: 700; color: var(--gold); }
+    .cert-score-box .key { font-size: 11px; color: var(--muted); }
+    .cert-divider { width: 1px; height: 50px; background: var(--border); }
+    .cert-status-badge { display: inline-block; padding: 8px 28px; border-radius: 999px; font-size: 14px; font-weight: 700; margin-bottom: 24px; }
+    .cert-status-badge.pass { background: #D4EDDA; color: #155724; border: 1.5px solid #C3E6CB; }
+    .cert-status-badge.fail { background: #F8D7DA; color: #721C24; border: 1.5px solid #F5C6CB; }
+    .cert-footer { border-top: 2px solid var(--gold); padding-top: 16px; display: flex; justify-content: space-between; align-items: center;}
+    .cert-seal { width: 60px; height: 60px; border-radius: 50%; background: var(--red); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; }
+    .cert-issuer { font-size: 11px; color: var(--muted); text-align: center; }
+    .cert-date-block { text-align: right; }
+    .cert-date-block .date-label { font-size: 10px; color: var(--muted); }
+    .cert-date-block .date-val { font-size: 14px; font-weight: 600; }
 
-        /* Animations */
-        .fade-in { animation: fadeIn 0.5s forwards; }
-        .slide-up { animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
-        
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse { 0% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.05); } 100% { transform: translateX(-50%) scale(1); } }
+    #toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--navy); color: #fff; padding: 12px 24px; border-radius: 999px;
+      font-size: 14px; z-index: 9999; transition: transform .35s; pointer-events: none;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
 
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .btn-back-floating {
-                top: 15px;
-                left: 15px;
-                padding: 8px 15px;
-                font-size: 13px;
-            }
-        }
-        @media (max-width: 600px) {
-            .card { padding: 30px 20px; border-radius: 20px; }
-            .jp-text { font-size: 20px; }
-            .btn { font-size: 15px; padding: 14px; }
-            #timer-container { top: -50px; font-size: 16px; padding: 8px 20px; }
-        }
-    </style>
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(26,26,46,.5); backdrop-filter: blur(4px); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
+    .modal-overlay.active { display: flex; }
+    .modal-box { background: var(--surface); border-radius: var(--radius); padding: 32px 28px; max-width: 360px; width: 100%; text-align: center; }
+    .modal-icon { font-size: 48px; margin-bottom: 12px; }
+    .modal-title { font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .modal-text { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+    .modal-actions { display: flex; gap: 10px; }
+    .modal-actions .btn { flex: 1; }
+  </style>
 </head>
 <body>
 
-    <!-- Tombol Back Global -->
-    <button class="btn-back-floating" onclick="goBack()">
-        <i class="fa-solid fa-arrow-left"></i> Kembali
-    </button>
+<div id="sakura-canvas"></div>
+<div id="toast"></div>
 
-    <div class="container">
-        
-        <!-- Timer (Hidden initially) -->
-        <div id="timer-container" class="hidden">
-            <i class="fa-regular fa-clock"></i> <span id="time-display">20:00</span>
-        </div>
+<!-- MODAL -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal-box">
+    <div class="modal-icon">📋</div>
+    <div class="modal-title">Kirim Jawaban?</div>
+    <div class="modal-text" id="submitModalText">Pastikan semua soal telah dijawab sebelum mengirimkan ujian.</div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal()">Periksa Lagi</button>
+      <button class="btn btn-primary" onclick="submitExam()">Ya, Kirim</button>
+    </div>
+  </div>
+</div>
 
-        <!-- Start Screen -->
-        <div id="start-screen" class="card fade-in">
-            <h1>JLPT N5 模擬試験</h1>
-            <p>Latihan Grammar Premium • 40 Soal • Waktu 20 Menit</p>
-            
-            <input type="text" id="username" placeholder="Masukkan nama Anda..." autocomplete="off">
-            
-            <div class="mode-container">
-                <button class="btn btn-mode" onclick="startQuiz('pemula')">
-                    <i class="fa-solid fa-seedling" style="color: #00b894;"></i>
-                    Mode Pemula<br><small style="font-size:11px; font-weight:400;">(Dengan Furigana)</small>
-                </button>
-                <button class="btn btn-mode" onclick="startQuiz('pro')">
-                    <i class="fa-solid fa-fire" style="color: #d63031;"></i>
-                    Mode Pro<br><small style="font-size:11px; font-weight:400;">(Tanpa Furigana)</small>
-                </button>
-            </div>
-        </div>
+<!-- PAGE 1: LOGIN -->
+<div class="page active" id="page-login">
+  <div class="container">
+    <div class="header-badge">
+      <span class="mon">🌸</span>
+      <h1>PR / Evaluasi</h1>
+      <p>Minna no Nihongo (みんなの日本語) — Bab 1-3</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Selamat Datang</div>
+      <div class="card-subtitle">Masukkan nama lengkap Anda untuk memulai evaluasi (Sukudai).</div>
+      <div class="form-group">
+        <label for="userName">Nama Lengkap <span style="color:var(--red)">*</span></label>
+        <input type="text" id="userName" placeholder="Contoh: Budi Santoso" maxlength="60" autocomplete="name" />
+      </div>
+      <button class="btn btn-primary" onclick="startExam()"><span>始める</span> — Mulai Evaluasi</button>
+      <ul class="info-list">
+        <li><span class="icon">📝</span><span><strong>30 Soal</strong><br>Pilihan Ganda</span></li>
+        <li><span class="icon">⏱️</span><span><strong>45 Menit</strong><br>Batas Waktu</span></li>
+        <li><span class="icon">✅</span><span><strong>Nilai ≥ 65</strong><br>Syarat Lulus</span></li>
+        <li><span class="icon">💡</span><span><strong>Koreksi</strong><br>Di akhir ujian</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
 
-        <!-- Quiz Screen -->
-        <div id="quiz-screen" class="card hidden">
-            <div id="progress-container">
-                <div id="progress-bar"></div>
-            </div>
-            <span class="question-number" id="question-indicator">Soal 1 / 40</span>
-            <div id="question-text" class="jp-text slide-up"></div>
-            <div id="options-container" class="slide-up" style="animation-delay: 0.1s;">
-                <!-- Options JS -->
-            </div>
-        </div>
+<!-- PAGE 2: EXAM -->
+<div class="page" id="page-exam">
+  <div class="exam-header">
+    <div class="exam-progress-wrap">
+      <div class="exam-title-small" id="progressLabel">Soal 1 dari 30</div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="progressBar" style="width:0%"></div></div>
+    </div>
+    <div class="timer-chip" id="timerChip"><span>⏱</span><span id="timerDisplay">45:00</span></div>
+  </div>
+  <div class="container">
+    <div class="card question-card" id="questionCard">
+      <div class="question-meta">
+        <span class="question-num" id="questionNum">Soal 1</span>
+        <span class="question-category" id="questionCategory">Bab</span>
+      </div>
+      <p class="question-text" id="questionText"></p>
+      <ul class="options-list" id="optionsList"></ul>
+      <div class="exam-nav">
+        <button class="btn btn-ghost" id="prevBtn" onclick="navigate(-1)">← Sebelumnya</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="navigate(1)">Selanjutnya →</button>
+      </div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <div class="card-title" style="font-size:15px;margin-bottom:4px">Navigasi Soal</div>
+      <div class="card-subtitle" style="margin-bottom:12px">Klik nomor untuk berpindah soal. <span style="color:#2E7D32">Hijau</span> = dijawab.</div>
+      <div class="question-grid" id="questionGrid"></div>
+      <button class="btn btn-primary" style="margin-top:20px;width:100%" onclick="openModal()">Selesai & Kirim Jawaban</button>
+    </div>
+  </div>
+</div>
 
-        <!-- Result Screen -->
-        <div id="result-screen" class="card hidden">
-            <h2 id="result-name" style="margin-bottom: 5px;">Nama</h2>
-            <p id="result-mode" style="margin-bottom: 20px; font-weight: 600;"></p>
-            
-            <h1 id="result-score" style="font-size: 56px; color: var(--primary);">0/40</h1>
-            <p>Total Skor Anda</p>
-            
-            <div style="text-align: center;">
-                <div id="result-status" class="status-badge">LULUS</div>
-            </div>
-
-            <button class="btn btn-primary" onclick="location.reload()" style="margin-top: 10px;">
-                <i class="fa-solid fa-rotate-right"></i> Coba Lagi
-            </button>
-
-            <div id="review-section" class="hidden">
-                <h3 style="margin-top: 40px; text-align: left; font-size: 18px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">
-                    <i class="fa-solid fa-book-open"></i> Evaluasi Kesalahan:
-                </h3>
-                <div id="mistake-container" class="mistake-list">
-                    <!-- Mistakes JS -->
-                </div>
-            </div>
-        </div>
-
+<!-- PAGE 3: RESULT -->
+<div class="page" id="page-result">
+  <div class="container">
+    <div class="result-hero">
+      <div class="score-ring" id="scoreRing">
+        <div class="score-number" id="scoreNumber">0</div>
+        <div class="score-label">Nilai</div>
+      </div>
+      <div class="status-badge" id="statusBadge"></div>
+      <p style="margin-top:12px;font-size:14px;color:var(--muted)" id="resultName"></p>
     </div>
 
-    <script>
-        // Logika Tombol Back
-        function goBack() {
-            const startScreen = document.getElementById('start-screen');
-            const quizScreen = document.getElementById('quiz-screen');
-            const resultScreen = document.getElementById('result-screen');
-            
-            // Jika sedang mengerjakan kuis
-            if (!quizScreen.classList.contains('hidden')) {
-                const confirmBatal = confirm("Ujian sedang berjalan. Yakin ingin membatalkan dan keluar?");
-                if (confirmBatal) {
-                    clearInterval(timerInterval);
-                    location.reload(); // Reset kembali ke halaman awal
-                }
-            } 
-            // Jika sedang melihat hasil ujian
-            else if (!resultScreen.classList.contains('hidden')) {
-                location.reload(); // Kembali ke halaman awal
-            } 
-            // Jika berada di halaman awal
-            else {
-                window.history.back(); // Kembali ke dashboard menu sebelumnya
-            }
-        }
+    <div class="card" style="margin-top:20px">
+      <div class="result-stats">
+        <div class="stat-box"><div class="val" id="correctCount">0</div><div class="key">Benar</div></div>
+        <div class="stat-box"><div class="val" id="wrongCount">0</div><div class="key">Salah</div></div>
+        <div class="stat-box"><div class="val" id="unansweredCount">0</div><div class="key">Kosong</div></div>
+      </div>
+    </div>
 
-        // Database 40 Soal Grammar N5 dengan Ruby (Furigana)
-        const quizData = [
-            { q: "<ruby>私<rt>わたし</rt></ruby> ___ <ruby>学生<rt>がくせい</rt></ruby>です。", o: ["が", "は", "を", "に"], a: 1, ex: "Partikel 'は' (wa) digunakan untuk menandai subjek topik." },
-            { q: "<ruby>机<rt>つくえ</rt></ruby>の <ruby>上<rt>うえ</rt></ruby> ___ ペンが あります。", o: ["に", "で", "へ", "を"], a: 0, ex: "Partikel 'に' menunjukkan letak keberadaan suatu benda." },
-            { q: "<ruby>昨日<rt>きのう</rt></ruby>、デパート ___ <ruby>買<rt>か</rt></ruby>いものを しました。", o: ["に", "で", "へ", "と"], a: 1, ex: "Partikel 'で' menunjukkan tempat terjadinya suatu aksi." },
-            { q: "<ruby>毎日<rt>まいにち</rt></ruby> ８<ruby>時<rt>じ</rt></ruby> ___ ねます。", o: ["から", "まで", "に", "で"], a: 2, ex: "Partikel 'に' digunakan untuk menunjukkan waktu yang spesifik." },
-            { q: "これは <ruby>私<rt>わたし</rt></ruby> ___ <ruby>本<rt>ほん</rt></ruby>です。", o: ["の", "が", "は", "も"], a: 0, ex: "Partikel 'の' menunjukkan kepemilikan (Buku milik saya)." },
-            { q: "<ruby>今日<rt>きょう</rt></ruby>は <ruby>雨<rt>あめ</rt></ruby> ___ ふって います。", o: ["を", "に", "が", "で"], a: 2, ex: "Fenomena alam selalu menggunakan partikel 'が' (あめがふります)." },
-            { q: "<ruby>明日<rt>あした</rt></ruby>、<ruby>東京<rt>とうきょう</rt></ruby> ___ <ruby>行<rt>い</rt></ruby>きます。", o: ["を", "が", "で", "へ"], a: 3, ex: "Partikel 'へ' (e) atau 'に' menunjukkan arah/tujuan perpindahan." },
-            { q: "りんご ___ みかんを <ruby>買<rt>か</rt></ruby>いました。", o: ["と", "や", "から", "まで"], a: 0, ex: "Partikel 'と' digunakan untuk menggabungkan kata benda spesifik (dan)." },
-            { q: "パン ___ <ruby>食<rt>た</rt></ruby>べません。", o: ["が", "を", "は", "も"], a: 2, ex: "Dalam kalimat negatif, partikel 'を' sering diganti menjadi 'は' untuk penekanan." },
-            { q: "この カメラは だれ ___ ですか。", o: ["の", "に", "が", "で"], a: 0, ex: "だれの berarti 'milik siapa'." },
-            { q: "いっしょに おちゃを ___。", o: ["<ruby>飲<rt>の</rt></ruby>みます", "<ruby>飲<rt>の</rt></ruby>みませんか", "<ruby>飲<rt>の</rt></ruby>みました", "<ruby>飲<rt>の</rt></ruby>んで"], a: 1, ex: "～ませんか digunakan untuk mengajak dengan sopan (Maukah minum...?)." },
-            { q: "ここに なまえを ___ ください。", o: ["<ruby>書<rt>か</rt></ruby>く", "<ruby>書<rt>か</rt></ruby>いて", "<ruby>書<rt>か</rt></ruby>き", "<ruby>書<rt>か</rt></ruby>かない"], a: 1, ex: "Pola meminta tolong (～てください) menggunakan kata kerja bentuk-Te." },
-            { q: "<ruby>明日<rt>あした</rt></ruby>は <ruby>休<rt>やす</rt></ruby>み ___。", o: ["です", "でした", "ではありません", "ではありませんでした"], a: 0, ex: "Membicarakan masa depan (besok) menggunakan bentuk masa kini/positif (です)." },
-            { q: "<ruby>昨日<rt>きのう</rt></ruby>の テストは ___。", o: ["むずかしいです", "むずかしいでした", "むずかしくないです", "むずかしかったです"], a: 3, ex: "Bentuk lampau (kemarin) dari kata sifat-i (むずかしい) adalah ～かったです." },
-            { q: "この <ruby>町<rt>まち</rt></ruby>は ___ です。", o: ["しずか", "しずかな", "しずかに", "しずかだ"], a: 0, ex: "Di akhir kalimat bersanding dengan です, kata sifat-na membuang akhiran 'な'." },
-            { q: "えいがを ___ たいです。", o: ["<ruby>見<rt>み</rt></ruby>る", "<ruby>見<rt>み</rt></ruby>て", "<ruby>見<rt>み</rt></ruby>", "<ruby>見<rt>み</rt></ruby>ます"], a: 2, ex: "Pola ～たい (ingin) menggabungkan bentuk Masu (masu dibuang) + たい." },
-            { q: "あの <ruby>人<rt>ひと</rt></ruby>は ___ ないです。", o: ["<ruby>元気<rt>げんき</rt></ruby>", "<ruby>元気<rt>げんき</rt></ruby>な", "<ruby>元気<rt>げんき</rt></ruby>では", "<ruby>元気<rt>げんき</rt></ruby>だ"], a: 2, ex: "Bentuk negatif dari kata sifat-na adalah ～ではありません atau ～ではないです." },
-            { q: "<ruby>車<rt>くるま</rt></ruby>の <ruby>中<rt>なか</rt></ruby>に だれか ___ か。", o: ["あります", "います", "します", "なります"], a: 1, ex: "Untuk keberadaan manusia/hewan (benda hidup), gunakan います." },
-            { q: "<ruby>本<rt>ほん</rt></ruby>を ___ ながら ごはんを <ruby>食<rt>た</rt></ruby>べます。", o: ["<ruby>読<rt>よ</rt></ruby>む", "<ruby>読<rt>よ</rt></ruby>み", "<ruby>読<rt>よ</rt></ruby>んで", "<ruby>読<rt>よ</rt></ruby>まない"], a: 1, ex: "Pola ～ながら (sambil) menggunakan bentuk Masu (masu dibuang) + ながら." },
-            { q: "もう しゅくだいを ___ か。", o: ["します", "しました", "して", "しません"], a: 1, ex: "'もう' (sudah) jika bermakna penyelesaian, diikuti kata kerja bentuk lampau (ました)." },
-            { q: "としょかんで <ruby>本<rt>ほん</rt></ruby>を ___ は いけません。", o: ["<ruby>読<rt>よ</rt></ruby>む", "<ruby>読<rt>よ</rt></ruby>んで", "<ruby>読<rt>よ</rt></ruby>んでは", "<ruby>読<rt>よ</rt></ruby>まなくて"], a: 2, ex: "Pola melarang melakukan sesuatu adalah kata kerja bentuk-Te + はいけません." },
-            { q: "<ruby>明日<rt>あした</rt></ruby>は ___ いいです。", o: ["はれると", "はれた", "はれる", "はれるから"], a: 0, ex: "Pola ～といいです menyatakan harapan (Semoga besok cerah)." },
-            { q: "くつを ___ まま、へやに <ruby>入<rt>はい</rt></ruby>りました。", o: ["はく", "はいた", "はいて", "はかない"], a: 1, ex: "Pola ～まま (membiarkan dalam keadaan) menggunakan kata kerja bentuk-Ta." },
-            { q: "<ruby>私<rt>わたし</rt></ruby>は ギターを ___ ことが できます。", o: ["ひく", "ひきます", "ひいて", "ひいた"], a: 0, ex: "Pola bisa melakukan sesuatu: Kata kerja bentuk Kamus (ひく) + ことができます." },
-            { q: "えきまで バスで ３０<ruby>分<rt>ぷん</rt></ruby> ___ かかります。", o: ["ごろ", "ぐらい", "しか", "だけ"], a: 1, ex: "'ぐらい' digunakan untuk perkiraan durasi/jumlah (sekitar 30 menit). 'ごろ' untuk waktu yang ditunjuk." },
-            { q: "スミスさんは <ruby>日本語<rt>にほんご</rt></ruby>が ___ なりました。", o: ["じょうず", "じょうずな", "じょうずに", "じょうずく"], a: 2, ex: "Perubahan keadaan dengan kata sifat-na menggunakan 'に' + なります." },
-            { q: "さむいから、まどを ___ ください。", o: ["あけないで", "あけなくて", "あけない", "あける"], a: 0, ex: "Pola tolong JANGAN lakukan: Kata kerja bentuk-Nai + でください." },
-            { q: "かぜを ___ から、がっこうを <ruby>休<rt>やす</rt></ruby>みます。", o: ["ひく", "ひいた", "ひいて", "ひきます"], a: 1, ex: "Menyatakan alasan atas hal yang sudah terjadi (sudah masuk angin), gunakan bentuk Ta." },
-            { q: "この カレーは ___ すぎます。", o: ["からい", "から", "からく", "からかった"], a: 1, ex: "Pola ～すぎます (terlalu): kata sifat-i membuang akhiran 'い'." },
-            { q: "ラジオを ___ ながら べんきょうします。", o: ["きく", "きき", "きいて", "きかない"], a: 1, ex: "Sama seperti no.19, bentuk Masu (tanpa masu) + ながら." },
-            { q: "<ruby>日曜日<rt>にちようび</rt></ruby>、どこへ ___ <ruby>行<rt>い</rt></ruby>きませんでした。", o: ["も", "か", "は", "が"], a: 0, ex: "Kata tanya (どこ) + も + kata kerja negatif berarti 'tidak ke mana-mana'." },
-            { q: "コーヒー ___ こうちゃ、どちらが いいですか。", o: ["と", "や", "から", "より"], a: 0, ex: "Menanyakan pilihan dari dua benda menggunakan pola A と B と." },
-            { q: "<ruby>私<rt>わたし</rt></ruby>は いぬ ___ ねこが すきです。", o: ["より", "から", "ほど", "まで"], a: 0, ex: "Menyatakan perbandingan 'A lebih disukai dari B' menggunakan B より A がすきです." },
-            { q: "あの かばんは ___ ないです。", o: ["たかい", "たかく", "たかくて", "たか"], a: 1, ex: "Bentuk negatif kata sifat-i: akhiran 'い' diubah menjadi 'くない'." },
-            { q: "へやを ___ しましょう。", o: ["きれいに", "きれいな", "きれいく", "きれいだ"], a: 0, ex: "Membuat menjadi suatu keadaan (kata sifat-na): ～に します." },
-            { q: "じしょは かばんの <ruby>中<rt>なか</rt></ruby>に ___。", o: ["あります", "います", "します", "なります"], a: 0, ex: "Untuk benda mati/tidak bernyawa, gunakan あります." },
-            { q: "<ruby>昨日<rt>きのう</rt></ruby>、ともだち ___ えいがを <ruby>見<rt>み</rt></ruby>ました。", o: ["と", "に", "を", "へ"], a: 0, ex: "Melakukan aksi 'bersama' seseorang menggunakan partikel 'と'." },
-            { q: "あの ケーキは ___ そうです。", o: ["おいしい", "おいし", "おいしく", "おいしかった"], a: 1, ex: "Pola 'kelihatannya' (～そうです): pada kata sifat-i membuang huruf terakhir 'い'." },
-            { q: "<ruby>電車<rt>でんしゃ</rt></ruby>が ___ います。", o: ["くる", "き", "きて", "こない"], a: 2, ex: "Keadaan yang sedang berlangsung menggunakan kata kerja bentuk-Te + います." },
-            { q: "もう すこし ___ はなして ください。", o: ["ゆっくり", "ゆっくりと", "ゆっくりに", "ゆっくりな"], a: 0, ex: "'ゆっくり' (perlahan) adalah adverbia yang bisa langsung diletakkan sebelum kata kerja." }
-        ];
+    <!-- KOREKSI JAWABAN -->
+    <div class="card corrections-section" id="correctionsSection">
+      <div class="corrections-title">📋 Evaluasi & Koreksi Jawaban</div>
+      <p style="font-size:13px; color:var(--muted); margin-bottom: 20px;">Berikut adalah daftar soal yang Anda jawab salah atau tidak dijawab.</p>
+      <div id="correctionList"></div>
+    </div>
 
-        let currentQuestion = 0;
-        let score = 0;
-        let userName = "";
-        let userMistakes = [];
-        let timeRemaining = 20 * 60; // 20 Menit dalam detik
-        let timerInterval;
+    <!-- CERTIFICATE -->
+    <div class="cert-wrapper" id="certWrapper">
+      <div id="certificate">
+        <svg class="cert-watermark" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(100,100)"><ellipse rx="18" ry="30" fill="#C0392B" transform="translate(0,-20)"/><ellipse rx="18" ry="30" fill="#C0392B" transform="rotate(72) translate(0,-20)"/><ellipse rx="18" ry="30" fill="#C0392B" transform="rotate(144) translate(0,-20)"/><ellipse rx="18" ry="30" fill="#C0392B" transform="rotate(216) translate(0,-20)"/><ellipse rx="18" ry="30" fill="#C0392B" transform="rotate(288) translate(0,-20)"/><circle r="12" fill="#C0392B"/></g>
+        </svg>
+        <div class="cert-header">
+          <span class="cert-mon">🌸</span>
+          <div class="cert-main-title">HASIL EVALUASI (SUKUDAI)</div>
+          <div class="cert-subtitle">Minna no Nihongo (Bab 1-3)</div>
+        </div>
+        <div class="cert-body">
+          <div class="cert-presented">Diberikan kepada</div>
+          <div class="cert-name" id="certName">–</div>
+          <div class="cert-desc">Telah menyelesaikan evaluasi pembelajaran bahasa Jepang<br><strong>Minna no Nihongo Bab 1-3</strong><br>dan dinyatakan:</div>
+          <div class="cert-status-badge" id="certStatusBadge"></div>
+          <div class="cert-score-row">
+            <div class="cert-score-box"><div class="val" id="certScore">0</div><div class="key">Nilai</div></div>
+            <div class="cert-divider"></div>
+            <div class="cert-score-box"><div class="val">65</div><div class="key">Min. Lulus</div></div>
+            <div class="cert-divider"></div>
+            <div class="cert-score-box"><div class="val">30</div><div class="key">Total Soal</div></div>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <div class="cert-seal"><span class="seal-mon">🌸</span><span>MNN<br>EXAM</span></div>
+          <div class="cert-issuer">Evaluasi Tata Bahasa<br>MNN 1-3</div>
+          <div class="cert-date-block"><div class="date-label">Tanggal</div><div class="date-val" id="certDate">–</div></div>
+        </div>
+      </div>
+    </div>
 
-        const startScreen = document.getElementById('start-screen');
-        const quizScreen = document.getElementById('quiz-screen');
-        const resultScreen = document.getElementById('result-screen');
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const progressBar = document.getElementById('progress-bar');
-        const questionIndicator = document.getElementById('question-indicator');
-        const timerContainer = document.getElementById('timer-container');
-        const timeDisplay = document.getElementById('time-display');
+    <div class="btn-group">
+      <button class="btn btn-gold" onclick="downloadCertificate()">⬇ Download Sertifikat</button>
+      <button class="btn btn-ghost" onclick="restartExam()">↺ Ulangi Evaluasi</button>
+    </div>
+  </div>
+</div>
 
-        function startQuiz(mode) {
-            const nameInput = document.getElementById('username').value.trim();
-            userName = nameInput === "" ? "Peserta Anonim" : nameInput;
-            
-            // Atur Mode Furigana
-            if(mode === 'pro') {
-                document.body.classList.add('pro-mode');
-                document.getElementById('result-mode').innerText = "Mode Pro (Tanpa Furigana)";
-            } else {
-                document.body.classList.remove('pro-mode');
-                document.getElementById('result-mode').innerText = "Mode Pemula (Dengan Furigana)";
-            }
+<script>
+/* ─────────────────────────────────────────
+   QUESTIONS BANK: MINNA NO NIHONGO BAB 1-3
+   (Total 30 Soal)
+───────────────────────────────────────── */
+const QUESTIONS = [
+  // ================= BAB 1 =================
+  {
+    "id": 1, "category": "Bab 1",
+    "question": "わたし（ ）マイク・ミラーです。",
+    "options": [ { "letter": "A", "text": "が" }, { "letter": "B", "text": "の" }, { "letter": "C", "text": "は" }, { "letter": "D", "text": "も" } ],
+    "answer": "C"
+  },
+  {
+    "id": 2, "category": "Bab 1",
+    "question": "サントスさんは <ruby>学生<rt>がくせい</rt></ruby>じゃ（  ）。",
+    "options": [ { "letter": "A", "text": "ありません" }, { "letter": "B", "text": "あります" }, { "letter": "C", "text": "です" }, { "letter": "D", "text": "でした" } ],
+    "answer": "A"
+  },
+  {
+    "id": 3, "category": "Bab 1",
+    "question": "あの<ruby>人<rt>ひと</rt></ruby>は （  ）ですか。",
+    "options": [ { "letter": "A", "text": "どこ" }, { "letter": "B", "text": "<ruby>誰<rt>だれ</rt></ruby>" }, { "letter": "C", "text": "どれ" }, { "letter": "D", "text": "なん" } ],
+    "answer": "B"
+  },
+  {
+    "id": 4, "category": "Bab 1",
+    "question": "グプタさんは IMCの <ruby>社員<rt>しゃいん</rt></ruby>（  ）。",
+    "options": [ { "letter": "A", "text": "か" }, { "letter": "B", "text": "です" }, { "letter": "C", "text": "は" }, { "letter": "D", "text": "も" } ],
+    "answer": "B"
+  },
+  {
+    "id": 5, "category": "Bab 1",
+    "question": "わたしは <ruby>会社員<rt>かいしゃいん</rt></ruby>です。 カリナさん（ ） <ruby>会社員<rt>かいしゃいん</rt></ruby>です。",
+    "options": [ { "letter": "A", "text": "の" }, { "letter": "B", "text": "は" }, { "letter": "C", "text": "も" }, { "letter": "D", "text": "が" } ],
+    "answer": "C"
+  },
+  {
+    "id": 6, "category": "Bab 1",
+    "question": "あのかたは どなた（  ）。",
+    "options": [ { "letter": "A", "text": "ですか" }, { "letter": "B", "text": "です" }, { "letter": "C", "text": "じゃありません" }, { "letter": "D", "text": "の" } ],
+    "answer": "A"
+  },
+  {
+    "id": 7, "category": "Bab 1",
+    "question": "「あなたは <ruby>学生<rt>がくせい</rt></ruby>ですか。」<br>「いいえ、（  ）。」",
+    "options": [ { "letter": "A", "text": "<ruby>学生<rt>がくせい</rt></ruby>です" }, { "letter": "B", "text": "<ruby>学生<rt>がくせい</rt></ruby>じゃありません" }, { "letter": "C", "text": "はい、そうです" }, { "letter": "D", "text": "わたしです" } ],
+    "answer": "B"
+  },
+  {
+    "id": 8, "category": "Bab 1",
+    "question": "ワンさんは <ruby>医者<rt>いしゃ</rt></ruby>です。 シュミットさんも <ruby>医者<rt>いしゃ</rt></ruby>です（ ）。",
+    "options": [ { "letter": "A", "text": "か" }, { "letter": "B", "text": "の" }, { "letter": "C", "text": "は" }, { "letter": "D", "text": "も" } ],
+    "answer": "A"
+  },
+  {
+    "id": 9, "category": "Bab 1",
+    "question": "テレーザちゃんは 9（  ）です。",
+    "options": [ { "letter": "A", "text": "ばん" }, { "letter": "B", "text": "さい" }, { "letter": "C", "text": "じん" }, { "letter": "D", "text": "にち" } ],
+    "answer": "B"
+  },
+  {
+    "id": 10, "category": "Bab 1",
+    "question": "はじめまして。どうぞ （  ）。",
+    "options": [ { "letter": "A", "text": "ありがとうございます" }, { "letter": "B", "text": "すみません" }, { "letter": "C", "text": "よろしく おねがいします" }, { "letter": "D", "text": "しつれいします" } ],
+    "answer": "C"
+  },
+  
+  // ================= BAB 2 =================
+  {
+    "id": 11, "category": "Bab 2",
+    "question": "（  ）は じしょです。",
+    "options": [ { "letter": "A", "text": "これ" }, { "letter": "B", "text": "この" }, { "letter": "C", "text": "ここ" }, { "letter": "D", "text": "こちら" } ],
+    "answer": "A"
+  },
+  {
+    "id": 12, "category": "Bab 2",
+    "question": "（  ）かさは わたしのです。",
+    "options": [ { "letter": "A", "text": "それ" }, { "letter": "B", "text": "その" }, { "letter": "C", "text": "どれ" }, { "letter": "D", "text": "そこ" } ],
+    "answer": "B"
+  },
+  {
+    "id": 13, "category": "Bab 2",
+    "question": "「それは （  ）の ざっしですか。」<br>「くるまの ざっしです。」",
+    "options": [ { "letter": "A", "text": "だれ" }, { "letter": "B", "text": "どこ" }, { "letter": "C", "text": "なん" }, { "letter": "D", "text": "いつ" } ],
+    "answer": "C"
+  },
+  {
+    "id": 14, "category": "Bab 2",
+    "question": "「この かばんは （  ）のですか。」<br>「サントスさんのです。」",
+    "options": [ { "letter": "A", "text": "だれ" }, { "letter": "B", "text": "なん" }, { "letter": "C", "text": "どの" }, { "letter": "D", "text": "どれ" } ],
+    "answer": "A"
+  },
+  {
+    "id": 15, "category": "Bab 2",
+    "question": "これは シャープペンシルですか、ボールペンです（ ）。",
+    "options": [ { "letter": "A", "text": "の" }, { "letter": "B", "text": "は" }, { "letter": "C", "text": "か" }, { "letter": "D", "text": "も" } ],
+    "answer": "C"
+  },
+  {
+    "id": 16, "category": "Bab 2",
+    "question": "「これは ミラーさんの ですか。」<br>「はい、（  ）。」",
+    "options": [ { "letter": "A", "text": "ちがいます" }, { "letter": "B", "text": "そうです" }, { "letter": "C", "text": "ミラーさんです" }, { "letter": "D", "text": "ありません" } ],
+    "answer": "B"
+  },
+  {
+    "id": 17, "category": "Bab 2",
+    "question": "「あれは だれの （  ）ですか。」<br>「わたしの じどうしゃです。」",
+    "options": [ { "letter": "A", "text": "ざっし" }, { "letter": "B", "text": "かばん" }, { "letter": "C", "text": "くるま" }, { "letter": "D", "text": "ほん" } ],
+    "answer": "C"
+  },
+  {
+    "id": 18, "category": "Bab 2",
+    "question": "あの ノート（ ） わたしのです。",
+    "options": [ { "letter": "A", "text": "は" }, { "letter": "B", "text": "の" }, { "letter": "C", "text": "か" }, { "letter": "D", "text": "が" } ],
+    "answer": "A"
+  },
+  {
+    "id": 19, "category": "Bab 2",
+    "question": "「ミラーさんの かさは （  ）ですか。」<br>「あの あおいかさです。」",
+    "options": [ { "letter": "A", "text": "この" }, { "letter": "B", "text": "どれ" }, { "letter": "C", "text": "どこ" }, { "letter": "D", "text": "なん" } ],
+    "answer": "B"
+  },
+ {
+    "id": 20, "category": "Bab 2",
+    "question": "「（  ）かばんは だれのですか。」<br>「サントスさんのです。」",
+    "options": [ { "letter": "A", "text": "これ" }, { "letter": "B", "text": "その" }, { "letter": "C", "text": "どれ" }, { "letter": "D", "text": "それ" } ],
+    "answer": "B"
+  },
 
-            startScreen.classList.add('hidden');
-            quizScreen.classList.remove('hidden');
-            timerContainer.classList.remove('hidden');
-            
-            startTimer();
-            loadQuestion();
-        }
+  // ================= BAB 3 =================
+  {
+    "id": 21, "category": "Bab 3",
+    "question": "（  ）は しょくどうです。",
+    "options": [ { "letter": "A", "text": "これ" }, { "letter": "B", "text": "ここ" }, { "letter": "C", "text": "この" }, { "letter": "D", "text": "どれ" } ],
+    "answer": "B"
+  },
+  {
+    "id": 22, "category": "Bab 3",
+    "question": "トイレは （  ）ですか。",
+    "options": [ { "letter": "A", "text": "どこ" }, { "letter": "B", "text": "だれ" }, { "letter": "C", "text": "なん" }, { "letter": "D", "text": "いくら" } ],
+    "answer": "A"
+  },
+  {
+    "id": 23, "category": "Bab 3",
+    "question": "「お<ruby>国<rt>くに</rt></ruby>は （  ）ですか。」<br>「インドネシアです。」",
+    "options": [ { "letter": "A", "text": "どちら" }, { "letter": "B", "text": "どこの" }, { "letter": "C", "text": "だれ" }, { "letter": "D", "text": "いくら" } ],
+    "answer": "A"
+  },
+  {
+    "id": 24, "category": "Bab 3",
+    "question": "「（  ）の コンピューターですか。」<br>「IMCの コンピューターです。」",
+    "options": [ { "letter": "A", "text": "だれ" }, { "letter": "B", "text": "どこ" }, { "letter": "C", "text": "なん" }, { "letter": "D", "text": "いつ" } ],
+    "answer": "B"
+  },
+  {
+    "id": 25, "category": "Bab 3",
+    "question": "「この とけいは （  ）ですか。」<br>「15,000えんです。」",
+    "options": [ { "letter": "A", "text": "どこ" }, { "letter": "B", "text": "だれ" }, { "letter": "C", "text": "なん" }, { "letter": "D", "text": "いくら" } ],
+    "answer": "D"
+  },
+  {
+    "id": 26, "category": "Bab 3",
+    "question": "エレベーターは あちら（ ）。",
+    "options": [ { "letter": "A", "text": "です" }, { "letter": "B", "text": "は" }, { "letter": "C", "text": "の" }, { "letter": "D", "text": "も" } ],
+    "answer": "A"
+  },
+  {
+    "id": 27, "category": "Bab 3",
+    "question": "ここは <ruby>受付<rt>うけつけ</rt></ruby>です。（  ）は じむしょです。",
+    "options": [ { "letter": "A", "text": "これ" }, { "letter": "B", "text": "そこ" }, { "letter": "C", "text": "その" }, { "letter": "D", "text": "だれ" } ],
+    "answer": "B"
+  },
+  {
+    "id": 28, "category": "Bab 3",
+    "question": "「かいだんは どちらですか。」<br>「（  ）です。」",
+    "options": [ { "letter": "A", "text": "あそこ" }, { "letter": "B", "text": "あれ" }, { "letter": "C", "text": "あちら" }, { "letter": "D", "text": "あの" } ],
+    "answer": "C"
+  },
+  {
+    "id": 29, "category": "Bab 3",
+    "question": "「これは （  ）の ワインですか。」<br>「フランスの ワインです。」",
+    "options": [ { "letter": "A", "text": "だれ" }, { "letter": "B", "text": "どこ" }, { "letter": "C", "text": "なん" }, { "letter": "D", "text": "いくら" } ],
+    "answer": "B"
+  },
+  {
+    "id": 30, "category": "Bab 3",
+    "question": "「すみません、<ruby>食堂<rt>しょくどう</rt></ruby>は どこですか。」<br>「（  ）です。」",
+    "options": [ { "letter": "A", "text": "3かい" }, { "letter": "B", "text": "3えん" }, { "letter": "C", "text": "3さい" }, { "letter": "D", "text": "3ばん" } ],
+    "answer": "A"
+  }
+];
 
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                timeRemaining--;
-                let m = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
-                let s = (timeRemaining % 60).toString().padStart(2, '0');
-                timeDisplay.innerText = `${m}:${s}`;
+const TOTAL_QUESTIONS = 30;
+const PASSING_SCORE   = 65; // persen
+const EXAM_DURATION   = 45 * 60; // 45 menit dalam detik
 
-                if(timeRemaining <= 180) { // Sisa 3 Menit
-                    timerContainer.classList.add('timer-danger');
-                }
+let userName       = '';
+let currentIndex   = 0;
+let userAnswers    = {}; 
+let timerInterval  = null;
+let timeLeft       = EXAM_DURATION;
+let examQuestions  = [];
 
-                if(timeRemaining <= 0) {
-                    clearInterval(timerInterval);
-                    showResults();
-                }
-            }, 1000);
-        }
+(function initSakura() {
+  const canvas = document.getElementById('sakura-canvas');
+  const petalSVG = `<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="10" cy="5" rx="5" ry="7" fill="currentColor" transform-origin="10 10"/>
+    <ellipse cx="10" cy="5" rx="5" ry="7" fill="currentColor" transform="rotate(72,10,10)" transform-origin="10 10"/>
+    <ellipse cx="10" cy="5" rx="5" ry="7" fill="currentColor" transform="rotate(144,10,10)" transform-origin="10 10"/>
+    <ellipse cx="10" cy="5" rx="5" ry="7" fill="currentColor" transform="rotate(216,10,10)" transform-origin="10 10"/>
+    <ellipse cx="10" cy="5" rx="5" ry="7" fill="currentColor" transform="rotate(288,10,10)" transform-origin="10 10"/>
+    <circle cx="10" cy="10" r="3" fill="currentColor"/>
+  </svg>`;
+  const colors = ['#FFADB5','#FFB7C5','#F48FB1','#FFD1DC','#FFC0CB'];
+  for (let i = 0; i < 18; i++) {
+    const el = document.createElement('div');
+    el.className = 'petal';
+    el.innerHTML = petalSVG;
+    el.style.color = colors[Math.floor(Math.random() * colors.length)];
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.width = (12 + Math.random() * 14) + 'px';
+    el.style.animationDuration = (8 + Math.random() * 14) + 's';
+    el.style.animationDelay = -(Math.random() * 20) + 's';
+    el.style.animationTimingFunction = 'linear';
+    canvas.appendChild(el);
+  }
+})();
 
-        function loadQuestion() {
-            // Reset Animasi
-            questionText.classList.remove('slide-up');
-            optionsContainer.classList.remove('slide-up');
-            void questionText.offsetWidth; 
-            questionText.classList.add('slide-up');
-            optionsContainer.classList.add('slide-up');
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
 
-            const current = quizData[currentQuestion];
-            questionIndicator.innerText = `Soal ${currentQuestion + 1} / ${quizData.length}`;
-            questionText.innerHTML = current.q; // Menggunakan innerHTML agar tag <ruby> terbaca
-            optionsContainer.innerHTML = "";
+function showToast(msg, duration = 2800) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
 
-            current.o.forEach((option, index) => {
-                const button = document.createElement('button');
-                button.classList.add('btn');
-                button.innerHTML = option;
-                button.onclick = () => selectAnswer(index);
-                optionsContainer.appendChild(button);
-            });
+function startExam() {
+  const input = document.getElementById('userName').value.trim();
+  if (!input) {
+    showToast('⚠️ Masukkan nama lengkap Anda terlebih dahulu.');
+    document.getElementById('userName').focus();
+    return;
+  }
+  if (input.length < 2) {
+    showToast('⚠️ Nama terlalu pendek.');
+    return;
+  }
+  userName      = input;
+  userAnswers   = {};
+  currentIndex  = 0;
+  timeLeft      = EXAM_DURATION;
+  examQuestions = [...QUESTIONS]; 
 
-            const progress = ((currentQuestion) / quizData.length) * 100;
-            progressBar.style.width = progress + '%';
-        }
+  buildGrid();
+  renderQuestion();
+  startTimer();
+  showPage('page-exam');
+}
 
-        function selectAnswer(selectedIndex) {
-            const current = quizData[currentQuestion];
-            
-            if (selectedIndex === current.a) {
-                score++;
-            } else {
-                userMistakes.push({
-                    q: current.q,
-                    wrong: current.o[selectedIndex],
-                    correct: current.o[current.a],
-                    explanation: current.ex
-                });
-            }
+function startTimer() {
+  clearInterval(timerInterval);
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      showToast('⏰ Waktu habis! Evaluasi diselesaikan otomatis.');
+      setTimeout(finishExam, 800);
+    }
+  }, 1000);
+}
 
-            currentQuestion++;
+function updateTimerDisplay() {
+  const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+  const s = (timeLeft % 60).toString().padStart(2, '0');
+  const chip = document.getElementById('timerChip');
+  document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+  chip.classList.remove('warning','danger');
+  if (timeLeft <= 300) chip.classList.add('danger');
+  else if (timeLeft <= 600) chip.classList.add('warning');
+}
 
-            if (currentQuestion < quizData.length) {
-                loadQuestion();
-            } else {
-                showResults();
-            }
-        }
+function renderQuestion() {
+  const q = examQuestions[currentIndex];
+  document.getElementById('questionNum').textContent      = `Soal ${currentIndex + 1}`;
+  document.getElementById('questionCategory').innerHTML   = q.category; 
+  document.getElementById('questionText').innerHTML       = q.question;
+  document.getElementById('progressLabel').textContent    = `Soal ${currentIndex + 1} dari ${TOTAL_QUESTIONS}`;
+  document.getElementById('progressBar').style.width      = `${((currentIndex + 1) / TOTAL_QUESTIONS) * 100}%`;
 
-        function showResults() {
-            clearInterval(timerInterval);
-            timerContainer.classList.add('hidden');
-            quizScreen.classList.add('hidden');
-            resultScreen.classList.remove('hidden');
-            
-            // Animasi Fade-in hasil
-            resultScreen.classList.add('fade-in');
-            progressBar.style.width = '100%';
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  q.options.forEach(opt => {
+    const li = document.createElement('li');
+    li.className = 'option-item' + (userAnswers[currentIndex] === opt.letter ? ' selected' : '');
+    li.innerHTML = `<span class="option-letter">${opt.letter}</span><span class="option-text">${opt.text}</span>`;
+    li.addEventListener('click', () => selectAnswer(opt.letter));
+    list.appendChild(li);
+  });
 
-            document.getElementById('result-name').innerText = userName;
-            document.getElementById('result-score').innerText = `${score}/${quizData.length}`;
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = 'slideIn .3s ease';
 
-            const statusBadge = document.getElementById('result-status');
-            // Sistem Lulus >= 50% (20 soal benar)
-            if (score >= 20) {
-                statusBadge.innerHTML = '<i class="fa-solid fa-check"></i> LULUS (合格)';
-                statusBadge.className = "status-badge status-pass";
-            } else {
-                statusBadge.innerHTML = '<i class="fa-solid fa-xmark"></i> TIDAK LULUS (不合格)';
-                statusBadge.className = "status-badge status-fail";
-            }
+  document.getElementById('prevBtn').disabled = currentIndex === 0;
+  document.getElementById('nextBtn').textContent = currentIndex === TOTAL_QUESTIONS - 1 ? 'Selesai' : 'Selanjutnya →';
+  document.getElementById('nextBtn').onclick = currentIndex === TOTAL_QUESTIONS - 1 ? openModal : () => navigate(1);
+  updateGrid();
+}
 
-            if (userMistakes.length > 0) {
-                document.getElementById('review-section').classList.remove('hidden');
-                const mistakeContainer = document.getElementById('mistake-container');
-                
-                userMistakes.forEach(mistake => {
-                    const div = document.createElement('div');
-                    div.className = 'mistake-item';
-                    div.innerHTML = `
-                        <div class="mistake-q jp-text" style="font-size:20px; text-align:left; margin-bottom: 15px;">${mistake.q}</div>
-                        <div class="mistake-ans"><i class="fa-solid fa-xmark"></i> Jawaban Anda: ${mistake.wrong}</div>
-                        <div class="mistake-corr"><i class="fa-solid fa-check"></i> Jawaban Benar: ${mistake.correct}</div>
-                        <div class="mistake-ex">💡 <b>Penjelasan:</b> ${mistake.explanation}</div>
-                    `;
-                    mistakeContainer.appendChild(div);
-                });
-            }
-        }
-    </script>
+function selectAnswer(letter) {
+  userAnswers[currentIndex] = letter;
+  renderQuestion();
+}
+
+function navigate(dir) {
+  const next = currentIndex + dir;
+  if (next < 0 || next >= TOTAL_QUESTIONS) return;
+  currentIndex = next;
+  renderQuestion();
+}
+
+function buildGrid() {
+  const grid = document.getElementById('questionGrid');
+  grid.innerHTML = '';
+  for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'q-dot';
+    dot.textContent = i + 1;
+    dot.id = `dot-${i}`;
+    dot.addEventListener('click', () => { currentIndex = i; renderQuestion(); });
+    grid.appendChild(dot);
+  }
+}
+
+function updateGrid() {
+  for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    if (!dot) continue;
+    dot.classList.remove('answered','current');
+    if (i === currentIndex)          dot.classList.add('current');
+    else if (userAnswers[i] != null) dot.classList.add('answered');
+  }
+}
+
+function openModal() {
+  const answered   = Object.keys(userAnswers).length;
+  const unanswered = TOTAL_QUESTIONS - answered;
+  document.getElementById('submitModalText').textContent =
+    unanswered > 0
+      ? `Masih ada ${unanswered} soal yang belum dijawab. Yakin ingin mengirimkan sekarang?`
+      : `Semua ${TOTAL_QUESTIONS} soal telah dijawab. Siap mengirimkan evaluasi?`;
+  document.getElementById('submitModal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('submitModal').classList.remove('active');
+}
+
+function submitExam() {
+  closeModal();
+  finishExam();
+}
+
+function finishExam() {
+  clearInterval(timerInterval);
+
+  let correct = 0;
+  let correctionsHTML = '';
+
+  examQuestions.forEach((q, i) => {
+    const uAns = userAnswers[i];
+    if (uAns === q.answer) {
+      correct++;
+    } else {
+      // Generate Koreksi (Hanya untuk jawaban salah/kosong)
+      const correctOpt = q.options.find(o => o.letter === q.answer);
+      const userOpt = uAns ? q.options.find(o => o.letter === uAns) : null;
+      
+      correctionsHTML += `
+        <div class="correction-item ${!uAns ? 'unanswered' : ''}">
+          <div class="c-q-text"><strong>Soal ${i + 1} (${q.category}):</strong><br>${q.question}</div>
+          <div class="c-ans-wrong ${!uAns ? 'warning' : ''}">
+            ${uAns ? '❌ Jawaban Anda: ' + userOpt.text : '⚠️ Tidak dijawab'}
+          </div>
+          <div class="c-ans-correct">✅ Jawaban Benar: ${correctOpt.text}</div>
+        </div>
+      `;
+    }
+  });
+
+  const total      = TOTAL_QUESTIONS;
+  const wrong      = Object.keys(userAnswers).filter(i => userAnswers[i] !== examQuestions[i].answer).length;
+  const unanswered = total - Object.keys(userAnswers).length;
+  const score      = Math.round((correct / total) * 100);
+  const pass       = score >= PASSING_SCORE;
+
+  const ring   = document.getElementById('scoreRing');
+  ring.className = 'score-ring ' + (pass ? 'pass' : 'fail');
+  document.getElementById('scoreNumber').textContent      = score;
+  document.getElementById('statusBadge').textContent      = pass ? '✅ LULUS' : '❌ TIDAK LULUS';
+  document.getElementById('statusBadge').className        = 'status-badge ' + (pass ? 'pass' : 'fail');
+  document.getElementById('resultName').textContent       = userName;
+  document.getElementById('correctCount').textContent     = correct;
+  document.getElementById('wrongCount').textContent       = wrong;
+  document.getElementById('unansweredCount').textContent  = unanswered;
+
+  // Insert Koreksi
+  const correctionContainer = document.getElementById('correctionList');
+  if (correctionsHTML === '') {
+    correctionContainer.innerHTML = '<div class="correction-item" style="border-left-color: #27AE60;"><div class="c-ans-correct" style="font-size:15px">🎉 Sempurna! Anda menjawab semua soal dengan benar.</div></div>';
+  } else {
+    correctionContainer.innerHTML = correctionsHTML;
+  }
+
+  // Certificate
+  document.getElementById('certName').textContent   = userName;
+  document.getElementById('certScore').textContent  = score;
+  const cb = document.getElementById('certStatusBadge');
+  cb.textContent  = pass ? '✅ LULUS' : '❌ TIDAK LULUS';
+  cb.className    = 'cert-status-badge ' + (pass ? 'pass' : 'fail');
+  document.getElementById('certDate').textContent   = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  showPage('page-result');
+}
+
+async function downloadCertificate() {
+  showToast('📸 Memproses sertifikat…', 4000);
+  try {
+    const certEl = document.getElementById('certWrapper');
+    const canvas = await html2canvas(certEl, { scale: 2.5, useCORS: true, backgroundColor: null, logging: false });
+    const link    = document.createElement('a');
+    link.download = `Sertifikat_MNN_${userName.replace(/\s+/g,'_')}.png`;
+    link.href     = canvas.toDataURL('image/png', 1.0);
+    link.click();
+    showToast('✅ Sertifikat berhasil diunduh!');
+  } catch (e) { showToast('⚠️ Gagal mengunduh. Coba lagi.'); }
+}
+
+function restartExam() {
+  clearInterval(timerInterval);
+  document.getElementById('userName').value = '';
+  showPage('page-login');
+}
+
+document.getElementById('userName').addEventListener('keydown', e => { if (e.key === 'Enter') startExam(); });
+</script>
 </body>
 </html>
