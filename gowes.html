@@ -1,163 +1,727 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gowes Blitar Route Maker</title>
-    
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
-    
-    <style>
-        body { 
-            margin: 0; 
-            padding: 0; 
-            font-family: Arial, sans-serif;
-        }
-        #map { 
-            height: 100vh; 
-            width: 100%; 
-        }
-        .header {
-            position: absolute;
-            top: 15px;
-            left: 50px;
-            z-index: 1000;
-            background: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            border-top: 4px solid #ff69b4; 
-        }
-        .header h3 { margin: 0 0 10px 0; }
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        input {
-            padding: 8px;
-            width: 100px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            outline: none;
-        }
-        input:focus {
-            border-color: #ff69b4;
-        }
-        button {
-            padding: 8px 15px;
-            background-color: #ff69b4; 
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #ff1493;
-        }
-        /* Tombol Google Maps (Awalnya disembunyikan) */
-        #btnGoogleMaps {
-            display: none; 
-            background-color: #4285F4; /* Warna biru khas Google */
-            width: 100%;
-        }
-        #btnGoogleMaps:hover {
-            background-color: #3367d6;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>出席 | Sistem Absensi & Belajar Bahasa Jepang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     TOKENS
+  ============================================================ */
+  :root{
+    --bg-deep:#120d0e;
+    --bg-panel:#1c1517;
+    --bg-panel-raised:#241b1d;
+    --crimson:#b3122c;
+    --crimson-light:#e0405a;
+    --gold:#c9a227;
+    --gold-soft:#e2c665;
+    --sakura:#f3b6c4;
+    --text-primary:#f5ede8;
+    --text-muted:#b0a19c;
+    --border-subtle:rgba(245,237,232,0.08);
+    --radius-lg:20px;
+    --radius-md:14px;
+    --ease:cubic-bezier(.22,.9,.32,1);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--bg-deep);
+    color:var(--text-primary);
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  h1,h2,h3,.font-display{font-family:'Poppins',sans-serif;}
+
+  button{font-family:inherit;}
+  a{color:inherit;}
+
+  :focus-visible{
+    outline:2px solid var(--gold-soft);
+    outline-offset:3px;
+  }
+
+  ::selection{background:var(--crimson-light);color:#fff;}
+
+  /* ============================================================
+     BACKGROUND ORNAMENTS
+  ============================================================ */
+  .bg-fuji{
+    position:fixed;
+    left:0; right:0; bottom:0;
+    width:100%;
+    height:min(38vh,320px);
+    pointer-events:none;
+    z-index:0;
+    opacity:.55;
+  }
+  .bg-fuji svg{width:100%;height:100%;display:block;}
+
+  .bg-glow{
+    position:fixed;
+    top:-20%;
+    left:50%;
+    transform:translateX(-50%);
+    width:900px;
+    height:900px;
+    background:radial-gradient(circle,rgba(179,18,44,.18) 0%,rgba(179,18,44,0) 65%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .petals{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+  .petal{
+    position:absolute;
+    top:-5%;
+    width:10px;height:8px;
+    background:linear-gradient(135deg,var(--sakura),#d67e93);
+    border-radius:0 100% 0 100%;
+    opacity:.55;
+    animation:fall linear infinite;
+  }
+  .petal:nth-child(1){left:6%; width:9px;height:7px; animation-duration:14s; animation-delay:0s;}
+  .petal:nth-child(2){left:18%; width:12px;height:10px; animation-duration:18s; animation-delay:2s;}
+  .petal:nth-child(3){left:32%; width:7px;height:6px; animation-duration:12s; animation-delay:5s;}
+  .petal:nth-child(4){left:47%; width:11px;height:9px; animation-duration:20s; animation-delay:1s;}
+  .petal:nth-child(5){left:61%; width:8px;height:7px; animation-duration:15s; animation-delay:7s;}
+  .petal:nth-child(6){left:74%; width:10px;height:8px; animation-duration:17s; animation-delay:3s;}
+  .petal:nth-child(7){left:86%; width:9px;height:8px; animation-duration:13s; animation-delay:6s;}
+  .petal:nth-child(8){left:94%; width:7px;height:6px; animation-duration:19s; animation-delay:4s;}
+
+  @keyframes fall{
+    0%{transform:translateY(-10vh) rotate(0deg);opacity:0;}
+    10%{opacity:.55;}
+    90%{opacity:.4;}
+    100%{transform:translateY(110vh) rotate(260deg);opacity:0;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .petal{animation:none;display:none;}
+  }
+
+  /* ============================================================
+     LAYOUT SHELLS
+  ============================================================ */
+  .view{position:relative;z-index:2;min-height:100vh;}
+  .hidden{display:none !important;}
+
+  /* ---------- LOGIN ---------- */
+  #loginView{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+
+  .login-card{
+    width:100%;
+    max-width:400px;
+    background:rgba(28,21,23,.55);
+    border:1px solid var(--border-subtle);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border-radius:var(--radius-lg);
+    padding:40px 32px 32px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.6), 0 0 0 1px rgba(201,162,39,.04);
+    animation:cardIn .7s var(--ease) both;
+  }
+
+  @keyframes cardIn{
+    from{opacity:0; transform:translateY(18px) scale(.98);}
+    to{opacity:1; transform:translateY(0) scale(1);}
+  }
+
+  .brand-mark{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    margin-bottom:28px;
+    text-align:center;
+  }
+  .brand-mark svg{width:52px;height:auto;}
+  .brand-mark h1{font-size:20px;margin:0;letter-spacing:.2px;}
+  .brand-mark p{margin:0;font-size:13px;color:var(--text-muted);}
+
+  .field{margin-bottom:18px;}
+  .field label{
+    display:block;
+    font-size:13px;
+    color:var(--text-muted);
+    margin-bottom:6px;
+  }
+  .field input{
+    width:100%;
+    padding:12px 14px;
+    background:rgba(0,0,0,.25);
+    border:1px solid var(--border-subtle);
+    border-radius:10px;
+    color:var(--text-primary);
+    font-size:14.5px;
+    transition:border-color .25s var(--ease), box-shadow .25s var(--ease);
+  }
+  .field input:focus{
+    border-color:var(--crimson-light);
+    box-shadow:0 0 0 3px rgba(224,64,90,.15);
+  }
+  .field input::placeholder{color:#6e6260;}
+
+  .btn-primary{
+    width:100%;
+    padding:13px 18px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg,var(--crimson) 0%,#8a0f24 100%);
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    transition:transform .2s var(--ease), box-shadow .2s var(--ease), filter .2s var(--ease);
+    box-shadow:0 12px 24px -10px rgba(179,18,44,.55);
+  }
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-primary:active{transform:scale(.98);}
+  .btn-primary:disabled{opacity:.7;cursor:not-allowed;}
+
+  .spinner{
+    width:16px;height:16px;
+    border:2px solid rgba(255,255,255,.35);
+    border-top-color:#fff;
+    border-radius:50%;
+    animation:spin .7s linear infinite;
+    display:none;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .form-msg{
+    min-height:18px;
+    font-size:13px;
+    text-align:center;
+    margin-top:14px;
+    color:var(--crimson-light);
+  }
+
+  /* ---------- DASHBOARD ---------- */
+  #dashboardView{padding:20px 20px 60px;}
+
+  .topbar{
+    max-width:880px;
+    margin:0 auto 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+
+  .topbar-brand{display:flex;align-items:center;gap:10px;}
+  .topbar-brand svg{width:30px;height:auto;}
+  .topbar-brand span{font-family:'Poppins',sans-serif;font-weight:600;font-size:15px;}
+
+  .topbar-right{display:flex;align-items:center;gap:10px;}
+
+  .point-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--bg-panel-raised);
+    border:1px solid var(--border-subtle);
+    padding:7px 14px 7px 8px;
+    border-radius:999px;
+  }
+  .point-badge .coin{
+    width:26px;height:26px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,var(--gold-soft),var(--gold) 60%,#8a6d13 100%);
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:700;color:#3a2c05;
+    font-family:'Poppins',sans-serif;
+  }
+  .point-badge .val{font-weight:600;font-size:14.5px;}
+  .point-badge .lbl{font-size:11px;color:var(--text-muted);}
+
+  .icon-btn{
+    width:38px;height:38px;
+    border-radius:50%;
+    background:var(--bg-panel-raised);
+    border:1px solid var(--border-subtle);
+    color:var(--text-muted);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    transition:color .2s, border-color .2s;
+  }
+  .icon-btn:hover{color:var(--crimson-light);border-color:var(--crimson-light);}
+
+  .content{max-width:880px;margin:0 auto;}
+
+  .greeting{margin-bottom:26px;}
+  .greeting p.kana{margin:0 0 4px;color:var(--gold-soft);font-size:13px;letter-spacing:.3px;}
+  .greeting h2{margin:0;font-size:clamp(20px,3vw,26px);}
+  .greeting h2 span{color:var(--crimson-light);}
+
+  /* Attendance hero */
+  .attend-card{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(160deg,var(--bg-panel) 0%,var(--bg-panel-raised) 100%);
+    border:1px solid var(--border-subtle);
+    border-radius:var(--radius-lg);
+    padding:34px 28px;
+    margin-bottom:34px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .attend-card::before{
+    content:"出席";
+    position:absolute;
+    right:-10px; top:50%;
+    transform:translateY(-50%);
+    font-family:'Poppins',sans-serif;
+    font-size:150px;
+    font-weight:700;
+    color:rgba(245,237,232,.03);
+    line-height:1;
+    pointer-events:none;
+  }
+  .attend-info{position:relative;z-index:1;max-width:320px;}
+  .attend-info h3{margin:0 0 6px;font-size:18px;}
+  .attend-info p{margin:0;color:var(--text-muted);font-size:13.5px;line-height:1.5;}
+
+  .attend-btn{
+    position:relative;z-index:1;
+    padding:16px 30px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--crimson) 0%,#8a0f24 100%);
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:2px;
+    min-width:220px;
+    box-shadow:0 16px 30px -12px rgba(179,18,44,.55);
+    transition:transform .2s var(--ease), filter .2s var(--ease), box-shadow .3s var(--ease);
+  }
+  .attend-btn:hover:not(:disabled){filter:brightness(1.08); transform:translateY(-2px);}
+  .attend-btn:active:not(:disabled){transform:scale(.97);}
+  .attend-btn small{font-weight:500;font-size:11.5px;opacity:.85;}
+
+  .attend-btn:disabled{
+    background:var(--bg-panel-raised);
+    color:var(--text-muted);
+    border:1px solid var(--border-subtle);
+    box-shadow:none;
+    cursor:not-allowed;
+  }
+  .attend-btn:disabled small{opacity:.6;}
+
+  /* Section header */
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:16px;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .section-head h3{margin:0;font-size:18px;}
+  .section-head p{margin:2px 0 0;font-size:13px;color:var(--text-muted);}
+
+  .quest-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+  @media (max-width:640px){
+    .quest-grid{grid-template-columns:1fr;}
+    .attend-card{padding:26px 20px;}
+    .attend-btn{width:100%;}
+  }
+
+  .quest-card{
+    position:relative;
+    overflow:hidden;
+    background:var(--bg-panel);
+    border:1px solid var(--border-subtle);
+    border-radius:var(--radius-md);
+    padding:22px 20px;
+    opacity:.82;
+  }
+  .quest-card h4{margin:0 0 6px;font-size:15.5px;}
+  .quest-card p{margin:0 0 18px;font-size:13px;color:var(--text-muted);line-height:1.5;min-height:38px;}
+
+  .ribbon{
+    position:absolute;
+    top:14px; right:-34px;
+    transform:rotate(38deg);
+    background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+    color:#3a2c05;
+    font-size:11px;
+    font-weight:600;
+    padding:4px 40px;
+    box-shadow:0 4px 10px rgba(0,0,0,.35);
+  }
+
+  .quest-btn{
+    width:100%;
+    padding:10px 16px;
+    border-radius:9px;
+    border:1px solid var(--border-subtle);
+    background:rgba(245,237,232,.04);
+    color:var(--text-muted);
+    font-size:13.5px;
+    font-weight:500;
+    cursor:not-allowed;
+  }
+
+  footer.credit{
+    text-align:center;
+    margin-top:44px;
+    font-size:12px;
+    color:#6e6260;
+  }
+
+  /* Toast */
+  #toast{
+    position:fixed;
+    left:50%;
+    bottom:26px;
+    transform:translateX(-50%) translateY(20px);
+    background:var(--bg-panel-raised);
+    border:1px solid var(--border-subtle);
+    color:var(--text-primary);
+    padding:12px 20px;
+    border-radius:12px;
+    font-size:13.5px;
+    box-shadow:0 20px 40px -15px rgba(0,0,0,.6);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s var(--ease), transform .3s var(--ease);
+    z-index:50;
+    max-width:90vw;
+  }
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  #toast.error{border-color:rgba(224,64,90,.4);}
+  #toast.success{border-color:rgba(201,162,39,.4);}
+</style>
 </head>
 <body>
 
-    <div class="header">
-        <h3>Rute Gowes Blitar</h3>
-        <div class="input-group">
-            <input type="number" id="jarakKm" placeholder="Jarak (Km)" min="1">
-            <button onclick="buatRuteGowes()">Buat Rute GPS</button>
-        </div>
-        <!-- Tombol ini akan muncul setelah rute berhasil dibuat -->
-        <button id="btnGoogleMaps">Buka di Aplikasi Maps HP</button>
+<div class="bg-glow"></div>
+<div class="bg-fuji" aria-hidden="true">
+  <svg viewBox="0 0 800 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="fujiGradient" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#5a1420"/>
+        <stop offset="100%" stop-color="#120d0e"/>
+      </linearGradient>
+    </defs>
+    <path d="M0,300 L230,95 L300,160 L400,55 L500,160 L570,95 L800,300 Z" fill="url(#fujiGradient)"/>
+    <path d="M372,100 L400,55 L428,100 L414,90 L400,68 L386,90 Z" fill="#f5ede8" opacity="0.75"/>
+  </svg>
+</div>
+<div class="petals" aria-hidden="true">
+  <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
+  <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
+</div>
+
+<!-- ============================================================
+     LOGIN VIEW
+============================================================ -->
+<div id="loginView" class="view">
+  <div class="login-card">
+    <div class="brand-mark">
+      <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="20" width="180" height="12" rx="2" fill="#c9a227"/>
+        <rect x="25" y="38" width="150" height="8" rx="2" fill="#c9a227"/>
+        <rect x="35" y="46" width="14" height="90" fill="#c9a227"/>
+        <rect x="151" y="46" width="14" height="90" fill="#c9a227"/>
+        <rect x="20" y="70" width="160" height="8" fill="#c9a227"/>
+      </svg>
+      <h1>Absensi &amp; Belajar Bahasa Jepang</h1>
+      <p>Masuk untuk mencatat kehadiran harianmu</p>
     </div>
 
-    <div id="map"></div>
+    <form id="loginForm" autocomplete="off">
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Masukkan username" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Masukkan password" required>
+      </div>
+      <button type="submit" class="btn-primary" id="loginBtn">
+        <span class="spinner" id="loginSpinner"></span>
+        <span id="loginBtnText">Masuk</span>
+      </button>
+      <div class="form-msg" id="loginMsg"></div>
+    </form>
+  </div>
+</div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+<!-- ============================================================
+     DASHBOARD VIEW
+============================================================ -->
+<div id="dashboardView" class="view hidden">
+  <div class="topbar">
+    <div class="topbar-brand">
+      <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="20" width="180" height="12" rx="2" fill="#c9a227"/>
+        <rect x="25" y="38" width="150" height="8" rx="2" fill="#c9a227"/>
+        <rect x="35" y="46" width="14" height="90" fill="#c9a227"/>
+        <rect x="151" y="46" width="14" height="90" fill="#c9a227"/>
+        <rect x="20" y="70" width="160" height="8" fill="#c9a227"/>
+      </svg>
+      <span>Absensi Jepang</span>
+    </div>
+    <div class="topbar-right">
+      <div class="point-badge">
+        <span class="coin">点</span>
+        <span>
+          <span class="val" id="poinValue">0</span><br>
+          <span class="lbl">Total Poin</span>
+        </span>
+      </div>
+      <button class="icon-btn" id="logoutBtn" title="Keluar" aria-label="Keluar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
 
-    <script>
-        var map = L.map('map').setView([-8.0954, 112.1609], 14);
+  <div class="content">
+    <div class="greeting">
+      <p class="kana">おかえりなさい</p>
+      <h2>Selamat datang, <span id="namaUser">-</span></h2>
+    </div>
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+    <div class="attend-card">
+      <div class="attend-info">
+        <h3>Absen Harian</h3>
+        <p>Catat kehadiranmu hari ini dan kumpulkan poin untuk membuka pencapaian belajar bahasa Jepang.</p>
+      </div>
+      <button class="attend-btn" id="attendBtn">
+        <span id="attendBtnText">Absen Sekarang</span>
+        <small id="attendBtnSub">+10 poin hari ini</small>
+      </button>
+    </div>
 
-        var routingControl = L.Routing.control({
-            waypoints: [],
-            routeWhileDragging: true,
-            show: false 
-        }).addTo(map);
+    <div class="section-head">
+      <div>
+        <h3>Quest Mendatang</h3>
+        <p>Fitur belajar tambahan yang sedang kami siapkan</p>
+      </div>
+    </div>
 
-        routingControl.on('routingerror', function(e) {
-            alert("Gagal menemukan rute raya! Titik mungkin berada di area tanpa jalan. Silakan klik tombol 'Buat Rute GPS' lagi.");
-            console.error("Detail Error:", e);
-        });
+    <div class="quest-grid">
+      <div class="quest-card">
+        <div class="ribbon">Segera Hadir</div>
+        <h4>Kuis Bahasa Jepang</h4>
+        <p>Uji pemahaman kosakata, hiragana, dan tata bahasa Jepangmu lewat kuis singkat.</p>
+        <button class="quest-btn" disabled>Mulai Kuis</button>
+      </div>
+      <div class="quest-card">
+        <div class="ribbon">Segera Hadir</div>
+        <h4>Misi Harian</h4>
+        <p>Selesaikan tantangan kecil setiap hari untuk mendapatkan poin bonus tambahan.</p>
+        <button class="quest-btn" disabled>Lihat Misi</button>
+      </div>
+    </div>
 
-        function buatRuteGowes() {
-            var targetKm = document.getElementById('jarakKm').value;
-            
-            if (!targetKm || targetKm <= 0) {
-                alert("Masukkan angka jarak yang valid!");
-                return;
-            }
+    <footer class="credit">Sistem Absensi &amp; Belajar Bahasa Jepang</footer>
+  </div>
+</div>
 
-            // Meminta akses GPS (Geolocation) dari browser HP/Laptop
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    
-                    // Mengambil titik lokasi kamu saat ini
-                    var startLat = position.coords.latitude;
-                    var startLng = position.coords.longitude;
-                    
-                    // Pusatkan peta ke lokasi kamu
-                    map.setView([startLat, startLng], 14);
+<div id="toast" role="status"></div>
 
-                    var radiusKm = targetKm / 3.5; 
-                    var radiusDeg = radiusKm / 111;
+<script>
+/* ============================================================
+   KONFIGURASI
+   Ganti URL di bawah ini dengan URL deployment Web App
+   Google Apps Script Anda (harus diakhiri dengan /exec)
+============================================================ */
+const API_URL = "https://script.google.com/macros/s/AKfycbzOAbDIXXAnL4gTIloNe2DrjbsFA8KrLocxexFQd8MRwlLDfgcg4myCFt6aCROE9CAq/exec";
 
-                    var angle1 = Math.random() * 2 * Math.PI;
-                    var angle2 = angle1 + (Math.PI / 2.5); 
+/* ============================================================
+   STATE
+============================================================ */
+let session = {
+  username: null,
+  nama: null,
+  poin: 0,
+  sudahAbsenHariIni: false
+};
 
-                    var wp1Lat = startLat + (radiusDeg * Math.cos(angle1));
-                    var wp1Lng = startLng + (radiusDeg * Math.sin(angle1));
+/* ============================================================
+   REFERENSI DOM
+============================================================ */
+const loginView      = document.getElementById('loginView');
+const dashboardView   = document.getElementById('dashboardView');
+const loginForm       = document.getElementById('loginForm');
+const usernameInput   = document.getElementById('username');
+const passwordInput   = document.getElementById('password');
+const loginBtn        = document.getElementById('loginBtn');
+const loginSpinner    = document.getElementById('loginSpinner');
+const loginBtnText    = document.getElementById('loginBtnText');
+const loginMsg        = document.getElementById('loginMsg');
 
-                    var wp2Lat = startLat + (radiusDeg * Math.cos(angle2));
-                    var wp2Lng = startLng + (radiusDeg * Math.sin(angle2));
+const namaUserEl      = document.getElementById('namaUser');
+const poinValueEl     = document.getElementById('poinValue');
+const attendBtn       = document.getElementById('attendBtn');
+const attendBtnText   = document.getElementById('attendBtnText');
+const attendBtnSub    = document.getElementById('attendBtnSub');
+const logoutBtn       = document.getElementById('logoutBtn');
+const toastEl         = document.getElementById('toast');
 
-                    routingControl.setWaypoints([
-                        L.latLng(startLat, startLng),
-                        L.latLng(wp1Lat, wp1Lng),
-                        L.latLng(wp2Lat, wp2Lng),
-                        L.latLng(startLat, startLng)
-                    ]);
+/* ============================================================
+   HELPER: PANGGIL API GOOGLE APPS SCRIPT
+============================================================ */
+async function callApi(action, payload) {
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action, ...payload })
+  });
+  if (!res.ok) {
+    throw new Error('Gagal menghubungi server (status ' + res.status + ')');
+  }
+  return res.json();
+}
 
-                    // Membuat URL untuk dilempar ke aplikasi Google Maps
-                    var gmapsUrl = `https://www.google.com/maps/dir/${startLat},${startLng}/${wp1Lat},${wp1Lng}/${wp2Lat},${wp2Lng}/${startLat},${startLng}`;
-                    
-                    // Menampilkan tombol Buka di Maps
-                    var btnMaps = document.getElementById('btnGoogleMaps');
-                    btnMaps.style.display = 'block';
-                    btnMaps.onclick = function() {
-                        window.open(gmapsUrl, '_blank');
-                    };
+function showToast(message, type) {
+  toastEl.textContent = message;
+  toastEl.className = 'show ' + (type || '');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => { toastEl.className = ''; }, 3200);
+}
 
-                }, function(error) {
-                    alert("Gagal mendapatkan lokasi. Pastikan GPS di HP aktif dan browser diizinkan mengakses lokasi.");
-                });
-            } else {
-                alert("Browser ini tidak mendukung fitur lokasi (GPS).");
-            }
-        }
-    </script>
+/* ============================================================
+   LOGIN
+============================================================ */
+loginForm.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  loginMsg.textContent = '';
+
+  const username = usernameInput.value.trim();
+  const password = passwordInput.value;
+  if (!username || !password) return;
+
+  setLoginLoading(true);
+
+  try {
+    const result = await callApi('login', { username, password });
+
+    if (result.success) {
+      session.username = result.data.username;
+      session.nama = result.data.nama;
+      session.poin = Number(result.data.poin) || 0;
+      session.sudahAbsenHariIni = !!result.data.sudahAbsenHariIni;
+      enterDashboard();
+    } else {
+      loginMsg.textContent = result.message || 'Username atau password salah.';
+    }
+  } catch (err) {
+    loginMsg.textContent = 'Tidak dapat terhubung ke server. Coba lagi.';
+  } finally {
+    setLoginLoading(false);
+  }
+});
+
+function setLoginLoading(isLoading) {
+  loginBtn.disabled = isLoading;
+  loginSpinner.style.display = isLoading ? 'inline-block' : 'none';
+  loginBtnText.textContent = isLoading ? 'Memverifikasi...' : 'Masuk';
+}
+
+/* ============================================================
+   DASHBOARD
+============================================================ */
+function enterDashboard() {
+  loginView.classList.add('hidden');
+  dashboardView.classList.remove('hidden');
+
+  namaUserEl.textContent = session.nama;
+  poinValueEl.textContent = session.poin;
+  renderAttendButton();
+
+  usernameInput.value = '';
+  passwordInput.value = '';
+}
+
+function renderAttendButton() {
+  if (session.sudahAbsenHariIni) {
+    attendBtn.disabled = true;
+    attendBtnText.textContent = 'Sudah Absen Hari Ini';
+    attendBtnSub.textContent = 'Kembali lagi besok!';
+  } else {
+    attendBtn.disabled = false;
+    attendBtnText.textContent = 'Absen Sekarang';
+    attendBtnSub.textContent = '+10 poin hari ini';
+  }
+}
+
+attendBtn.addEventListener('click', async function() {
+  if (attendBtn.disabled) return;
+
+  attendBtn.disabled = true;
+  const originalText = attendBtnText.textContent;
+  attendBtnText.textContent = 'Memproses...';
+  attendBtnSub.textContent = '';
+
+  try {
+    const result = await callApi('checkin', { username: session.username });
+
+    if (result.success) {
+      session.poin = Number(result.poin);
+      session.sudahAbsenHariIni = true;
+      poinValueEl.textContent = session.poin;
+      renderAttendButton();
+      showToast(result.message || 'Absen berhasil!', 'success');
+    } else {
+      session.sudahAbsenHariIni = true;
+      renderAttendButton();
+      showToast(result.message || 'Anda sudah absen hari ini.', 'error');
+    }
+  } catch (err) {
+    attendBtn.disabled = false;
+    attendBtnText.textContent = originalText;
+    attendBtnSub.textContent = '+10 poin hari ini';
+    showToast('Gagal menghubungi server. Coba lagi.', 'error');
+  }
+});
+
+/* ============================================================
+   LOGOUT
+============================================================ */
+logoutBtn.addEventListener('click', function() {
+  session = { username: null, nama: null, poin: 0, sudahAbsenHariIni: false };
+  dashboardView.classList.add('hidden');
+  loginView.classList.remove('hidden');
+  loginMsg.textContent = '';
+});
+</script>
 </body>
 </html>
