@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penukaran Poin | Sistem Absensi</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* =========================================
+     TOKENS & VARIABLES (Modern Minimalist)
+  ========================================= */
+  :root {
+    --bg-deep: #0a0708;
+    --bg-panel: rgba(24, 18, 20, 0.6);
+    --bg-panel-raised: rgba(36, 27, 29, 0.85);
+    --crimson: #b3122c; 
+    --crimson-light: #e0405a;
+    --gold: #d4af37; 
+    --gold-soft: #ebd373; 
+    --sakura: #f3b6c4;
+    --text-primary: #fdfbf9; 
+    --text-muted: #a39692;
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --border-highlight: rgba(243, 182, 196, 0.2);
+    --radius-xl: 24px;
+    --radius-lg: 18px; 
+    --radius-md: 12px; 
+    --ease: cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif; 
+    background: var(--bg-deep);
+    color: var(--text-primary); 
+    min-height: 100vh; 
+    margin: 0; 
+    position: relative;
+    overflow-x: hidden;
+    line-height: 1.5;
+  }
+  
+  h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; margin: 0; letter-spacing: 0.3px; }
+  
+  /* =========================================
+     BACKGROUND (Fuji & Glow)
+  ========================================= */
+  .bg-fuji { 
+    position: fixed; bottom: 0; width: 100%; height: 350px; 
+    opacity: 0.4; z-index: 0; pointer-events: none; 
+  }
+  .bg-fuji svg { width: 100%; height: 100%; }
+  
+  .bg-glow {
+    position: fixed; top: -20%; left: 50%; transform: translateX(-50%);
+    width: 80vw; height: 80vw; max-width: 800px; max-height: 800px;
+    background: radial-gradient(circle, rgba(224, 64, 90, 0.05) 0%, rgba(0,0,0,0) 70%);
+    z-index: 0; pointer-events: none;
+  }
+
+  .container { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+
+  /* =========================================
+     TOP SECTION (User Check & Points)
+  ========================================= */
+  .top-section {
+    background: var(--bg-panel); 
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-subtle); 
+    padding: 24px;
+    border-radius: var(--radius-xl); 
+    margin-bottom: 40px;
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+  
+  .input-group { flex: 1; min-width: 220px; position: relative; }
+  .input-group input {
+    width: 100%; padding: 14px 20px; 
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--border-subtle); 
+    border-radius: var(--radius-md);
+    color: #fff; font-size: 14.5px;
+    transition: all 0.3s var(--ease);
+  }
+  .input-group input:focus { 
+    border-color: var(--sakura); outline: none; 
+    box-shadow: 0 0 0 3px rgba(243, 182, 196, 0.15);
+  }
+  .input-group input::placeholder { color: #6b625f; }
+
+  .btn-check {
+    padding: 14px 28px; border: none; border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.05); color: var(--gold-soft);
+    border: 1px solid rgba(235, 211, 115, 0.3); 
+    font-weight: 600; font-size: 14.5px; cursor: pointer;
+    transition: all 0.3s var(--ease);
+  }
+  .btn-check:hover {
+    background: rgba(235, 211, 115, 0.1);
+    border-color: var(--gold-soft);
+    transform: translateY(-2px);
+  }
+
+  .poin-display {
+    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    color: #2a2003; padding: 12px 24px; border-radius: var(--radius-md); 
+    font-weight: 700; font-size: 15px;
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .poin-display span { font-size: 18px; }
+
+  /* =========================================
+     CATALOG GRID & CARDS
+  ========================================= */
+  .section-title { 
+    margin-bottom: 24px; font-size: 22px; font-weight: 600; 
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-title::before {
+    content: ""; display: block; width: 6px; height: 24px;
+    background: var(--crimson-light); border-radius: 4px;
+  }
+
+  .catalog-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px;
+  }
+  
+  .item-card {
+    background: var(--bg-panel); backdrop-filter: blur(10px);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg); overflow: hidden;
+    display: flex; flex-direction: column; position: relative;
+    transition: all 0.4s var(--ease);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+  .item-card:hover { 
+    transform: translateY(-8px); 
+    border-color: var(--border-highlight); 
+    box-shadow: 0 15px 40px rgba(224, 64, 90, 0.15);
+  }
+  
+  .stock-badge {
+    position: absolute; top: 16px; right: 16px;
+    background: rgba(10, 7, 8, 0.85); backdrop-filter: blur(8px);
+    padding: 6px 14px; border-radius: 20px; font-size: 11.5px; font-weight: 700;
+    border: 1px solid var(--gold-soft); color: var(--gold-soft);
+    z-index: 10; letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .stock-badge.sold-out {
+    border-color: var(--crimson-light); color: var(--crimson-light);
+    background: rgba(179, 18, 44, 0.1);
+  }
+
+  .item-img {
+    width: 100%; height: 180px; object-fit: cover;
+    border-bottom: 1px solid var(--border-subtle); background: #111;
+    transition: transform 0.5s var(--ease);
+  }
+  .item-card:hover .item-img { transform: scale(1.03); }
+
+  .item-info { padding: 22px; display: flex; flex-direction: column; flex: 1; z-index: 2; background: var(--bg-panel); }
+  .item-info h4 { font-size: 16px; margin-bottom: 6px; line-height: 1.4; font-weight: 600; }
+  .item-info .cost { color: var(--gold-soft); font-size: 15px; font-weight: 600; margin-bottom: 20px; }
+  
+  .btn-redeem {
+    margin-top: auto; width: 100%; padding: 14px; border: none; border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--crimson) 0%, var(--sakura) 100%);
+    color: #fff; font-weight: 600; font-size: 14.5px; cursor: pointer;
+    box-shadow: 0 6px 20px rgba(224, 64, 90, 0.25);
+    transition: all 0.3s var(--ease);
+  }
+  .btn-redeem:hover:not(:disabled) { 
+    filter: brightness(1.15); transform: translateY(-2px); 
+    box-shadow: 0 8px 25px rgba(224, 64, 90, 0.4);
+  }
+  .btn-redeem:active:not(:disabled) { transform: translateY(0); }
+  
+  .btn-redeem:disabled {
+    background: rgba(255,255,255,0.05); color: #554e4c;
+    box-shadow: none; cursor: not-allowed; border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* =========================================
+     TOAST NOTIFICATION
+  ========================================= */
+  #toast {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--bg-panel-raised); backdrop-filter: blur(10px);
+    padding: 14px 28px; border-radius: 30px;
+    border: 1px solid var(--border-highlight); opacity: 0; pointer-events: none;
+    transition: all 0.4s var(--ease); z-index: 100; font-size: 14.5px; font-weight: 500;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* =========================================
+     MODAL POP-UP (Elegant Glassmorphism)
+  ========================================= */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(5, 3, 4, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 999; opacity: 0; pointer-events: none;
+    transition: opacity 0.4s var(--ease);
+  }
+  .modal-overlay.active { opacity: 1; pointer-events: all; }
+  
+  .custom-modal {
+    background: linear-gradient(180deg, var(--bg-panel-raised) 0%, var(--bg-panel) 100%);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl); width: 90%; max-width: 380px;
+    padding: 40px 24px; text-align: center;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.4s var(--ease);
+  }
+  .modal-overlay.active .custom-modal { transform: scale(1) translateY(0); }
+  
+  .modal-icon {
+    width: 64px; height: 64px; margin: 0 auto 20px;
+    background: rgba(255,255,255,0.03); border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 28px; border: 2px solid transparent;
+  }
+  .custom-modal h3 { font-size: 22px; margin-bottom: 12px; color: #fff; }
+  .custom-modal p { font-size: 14.5px; color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; }
+  
+  #modalButtons {
+    display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+  }
+  
+  .btn-modal-close {
+    padding: 12px 24px; border-radius: var(--radius-md); cursor: pointer;
+    font-weight: 600; font-size: 14px; font-family: 'Inter', sans-serif;
+    transition: all 0.3s var(--ease);
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-fuji" aria-hidden="true">
+  <svg viewBox="0 0 800 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="fuji" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#5a1420"/>
+        <stop offset="100%" stop-color="#0a0708"/>
+      </linearGradient>
+    </defs>
+    <path d="M0,300 L230,95 L300,160 L400,55 L500,160 L570,95 L800,300 Z" fill="url(#fuji)"/>
+  </svg>
+</div>
+
+<div class="container">
+  <div class="top-section">
+    <div class="input-group">
+      <input type="text" id="usernameInput" placeholder="Masukkan Username Anda..." autocomplete="off">
+    </div>
+    <button class="btn-check" onclick="cekPoin()">Muat Data</button>
+    <div class="poin-display">
+      <span id="userPoints">0</span> Poin
+    </div>
+  </div>
+
+  <h3 class="section-title">Katalog Eksklusif</h3>
+  
+  <div class="catalog-grid" id="catalogGrid">
+    <p style="color: var(--text-muted);">Menghubungkan ke server...</p>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<div class="modal-overlay" id="customModal">
+  <div class="custom-modal">
+    <div class="modal-icon" id="modalIcon">⚠️</div>
+    <h3 id="modalTitle">Peringatan</h3>
+    <p id="modalDesc">Pesan error di sini.</p>
+    
+    <div id="modalButtons">
+      <!-- Tombol akan di-render melalui JavaScript -->
+    </div>
+  </div>
+</div>
+
+<script>
+  // GANTI DENGAN URL DEPLOYMENT GOOGLE APPS SCRIPT ANDA
+  const API_URL = "https://script.google.com/macros/s/AKfycbzOAbDIXXAnL4gTIloNe2DrjbsFA8KrLocxexFQd8MRwlLDfgcg4myCFt6aCROE9CAq/exec"; 
+  
+  let currentUser = "";
+  let currentPoin = 0;
+  let dataKatalogGlobal = [];
+
+  // ==========================================
+  // UI HANDLERS (Toast & Modal)
+  // ==========================================
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3200);
+  }
+
+  function showModal(title, desc, type = 'error', linkTujuan = null) {
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalDesc').innerHTML = desc;
+    
+    const icon = document.getElementById('modalIcon');
+    const modalContent = document.querySelector('.custom-modal');
+    const modalButtons = document.getElementById('modalButtons'); 
+
+    if (type === 'error') {
+      icon.innerHTML = '⚠️';
+      icon.style.borderColor = 'rgba(224, 64, 90, 0.4)';
+      icon.style.color = 'var(--crimson-light)';
+      icon.style.background = 'rgba(224, 64, 90, 0.1)';
+      icon.style.boxShadow = '0 0 20px rgba(224, 64, 90, 0.2)';
+      modalContent.style.borderColor = 'rgba(224, 64, 90, 0.3)';
+      
+      modalButtons.innerHTML = `<button class="btn-modal-close" onclick="closeModal()" style="background: rgba(255,255,255,0.08); border: 1px solid var(--border-subtle); color: #fff;">Mengerti</button>`;
+    } 
+    else if (type === 'success') {
+      icon.innerHTML = '✨';
+      icon.style.borderColor = 'rgba(235, 211, 115, 0.4)';
+      icon.style.color = 'var(--gold-soft)';
+      icon.style.background = 'rgba(235, 211, 115, 0.08)';
+      icon.style.boxShadow = '0 0 25px rgba(235, 211, 115, 0.2)';
+      modalContent.style.borderColor = 'rgba(235, 211, 115, 0.3)';
+      
+      let htmlTombol = `<button class="btn-modal-close" onclick="closeModal()" style="background: transparent; border: 1px solid rgba(235, 211, 115, 0.4); color: var(--gold-soft);">Tutup</button>`;
+      
+      if (linkTujuan) {
+        htmlTombol += `<a href="${linkTujuan}" class="btn-modal-close" style="background: linear-gradient(135deg, var(--gold-soft), var(--gold)); color: #2a2003; text-decoration: none; display: inline-flex; align-items: center; border: none; box-shadow: 0 6px 15px rgba(212, 175, 55, 0.25);">Lihat Tiket</a>`;
+      }
+      
+      modalButtons.innerHTML = htmlTombol;
+    }
+
+    document.getElementById('customModal').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('customModal').classList.remove('active');
+  }
+
+  // ==========================================
+  // DATA FETCHING & RENDERING
+  // ==========================================
+  window.onload = async function() {
+    await fetchKatalog();
+  };
+
+  async function fetchKatalog() {
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'getKatalog' })
+      });
+      const result = await res.json();
+      
+      if (result.success) {
+        dataKatalogGlobal = result.data;
+        renderKatalog(dataKatalogGlobal);
+      }
+    } catch (error) {
+      document.getElementById('catalogGrid').innerHTML = '<p style="color: var(--crimson-light);">Gagal memuat katalog. Pastikan URL API benar.</p>';
+    }
+  }
+
+  function renderKatalog(items) {
+    const grid = document.getElementById('catalogGrid');
+    grid.innerHTML = ''; 
+
+    items.forEach(item => {
+      const isSoldOut = item.stok <= 0;
+      const stockBadgeClass = isSoldOut ? 'stock-badge sold-out' : 'stock-badge';
+      const stockText = isSoldOut ? 'SOLD OUT' : `Stok: ${item.stok}`;
+      
+      const card = document.createElement('div');
+      card.className = 'item-card';
+      if (isSoldOut) card.style.opacity = '0.65'; 
+      
+      card.innerHTML = `
+        <div class="${stockBadgeClass}">${stockText}</div>
+        <div style="overflow: hidden;">
+          <img src="${item.gambar}" alt="${item.nama}" class="item-img" onerror="this.src='https://via.placeholder.com/300x160?text=No+Image'">
+        </div>
+        <div class="item-info">
+          <h4>${item.nama}</h4>
+          <div class="cost">${item.harga} Poin</div>
+          <button class="btn-redeem" onclick="tukarItem('${item.nama}', ${item.harga})" ${isSoldOut ? 'disabled' : ''}>
+            ${isSoldOut ? 'Habis Terjual' : 'Tukar Poin'}
+          </button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  // ==========================================
+  // USER & REDEEM LOGIC
+  // ==========================================
+  async function cekPoin() {
+    const user = document.getElementById('usernameInput').value.trim();
+    if (!user) {
+      showModal("Akses Ditolak", "Harap masukkan username Anda terlebih dahulu.");
+      return;
+    }
+
+    document.getElementById('userPoints').textContent = "...";
+    
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'cekPoin', username: user }) 
+      });
+      const data = await res.json();
+      
+      if (data.success) {
+        currentUser = user;
+        currentPoin = Number(data.poin);
+        document.getElementById('userPoints').textContent = currentPoin;
+        showToast("Data Poin Berhasil Dimuat!");
+      } else {
+        document.getElementById('userPoints').textContent = "0";
+        showModal("Gagal Menemukan Akun", `Username <strong style="color:#fff;">${user}</strong> tidak ditemukan di database.`);
+        currentUser = "";
+      }
+    } catch (err) {
+      showToast("Gagal terhubung ke server.");
+    }
+  }
+
+  async function tukarItem(namaItem, harga) {
+    if (!currentUser) {
+      return showModal("Akses Ditolak", "Silakan masukkan username dan klik <strong style='color:#fff;'>Muat Data</strong> terlebih dahulu.");
+    }
+    
+    if (currentPoin < harga) {
+      const selisih = harga - currentPoin;
+      return showModal(
+        "Poin Tidak Cukup!", 
+        `Poin Anda saat ini adalah <strong style="color:#fff;">${currentPoin}</strong>.<br>Anda butuh <strong style="color:var(--crimson-light);">${selisih} poin lagi</strong> untuk menukar <em>${namaItem}</em>.`
+      );
+    }
+    
+    const passwordKonfirmasi = prompt(`Masukkan Password untuk akun "${currentUser}" guna mengonfirmasi penukaran ${namaItem}:`);
+    if (!passwordKonfirmasi) return showToast("Penukaran dibatalkan.");
+
+    showToast("Memproses transaksi...");
+    
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ 
+          action: 'tukarPoin', 
+          username: currentUser, 
+          password: passwordKonfirmasi,
+          itemName: namaItem, 
+          cost: harga 
+        })
+      });
+      const data = await res.json();
+      
+      if (data.success) {
+        showModal(
+          "Penukaran Sukses!", 
+          `Selamat! Anda berhasil menukar poin dengan <strong style="color:#fff;">${namaItem}</strong>.`, 
+          'success',
+          'tiket.html' // Link tujuan saat berhasil
+        );
+        
+        currentPoin = Number(data.sisaPoin);
+        document.getElementById('userPoints').textContent = currentPoin;
+        
+        await fetchKatalog();
+      } else {
+        showModal("Penukaran Gagal", data.message || "Terjadi kesalahan saat memproses data.");
+      }
+    } catch (err) {
+      showModal("Koneksi Error", "Gagal terhubung ke server. Silakan coba lagi nanti.");
+    }
+  }
+</script>
+</body>
+</html>
