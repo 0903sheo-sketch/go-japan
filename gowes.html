@@ -233,6 +233,28 @@
 
   .topbar-right{display:flex;align-items:center;gap:10px;}
 
+  /* TOMBOL REDEEM DI TOPBAR (BARU) */
+  .btn-redeem-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--crimson) 0%, var(--sakura) 100%);
+    color: #fff;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(224, 64, 90, 0.3);
+    transition: transform .2s, filter .2s;
+  }
+  .btn-redeem-top:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+
   .point-badge{
     display:flex;
     align-items:center;
@@ -381,6 +403,7 @@
     box-shadow:0 4px 10px rgba(0,0,0,.35);
   }
 
+  /* KONDISI DEFAULT TOMBOL KUIS */
   .quest-btn{
     width:100%;
     padding:10px 16px;
@@ -391,6 +414,19 @@
     font-size:13.5px;
     font-weight:500;
     cursor:not-allowed;
+  }
+
+  /* KONDISI AKTIF TOMBOL KUIS (BARU) */
+  .quest-btn.active {
+    background: linear-gradient(135deg, var(--crimson) 0%, var(--sakura) 100%);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px -5px rgba(243, 182, 196, 0.4);
+    transition: filter 0.2s;
+  }
+  .quest-btn.active:hover {
+    filter: brightness(1.1);
   }
 
   footer.credit{
@@ -494,7 +530,13 @@
       </svg>
       <span>Absensi Jepang</span>
     </div>
+    
     <div class="topbar-right">
+      <!-- TOMBOL REDEEM POIN (BARU) -->
+      <button class="btn-redeem-top" onclick="goToRedeem()">
+        🎁 Tukar Poin
+      </button>
+
       <div class="point-badge">
         <span class="coin">点</span>
         <span>
@@ -537,12 +579,14 @@
     </div>
 
     <div class="quest-grid">
+      <!-- KARTU KUIS -->
       <div class="quest-card">
-        <div class="ribbon">Segera Hadir</div>
+        <div class="ribbon" id="ribbonKuis">Segera Hadir</div>
         <h4>Kuis Bahasa Jepang</h4>
         <p>Uji pemahaman kosakata, hiragana, dan tata bahasa Jepangmu lewat kuis singkat.</p>
-        <button class="quest-btn" disabled>Mulai Kuis</button>
+        <button class="quest-btn" id="btnKuis" disabled>Mulai Kuis</button>
       </div>
+      
       <div class="quest-card">
         <div class="ribbon">Segera Hadir</div>
         <h4>Misi Harian</h4>
@@ -669,6 +713,14 @@ function enterDashboard() {
 
   usernameInput.value = '';
   passwordInput.value = '';
+
+  // ---------------------------------------------------------
+  // CONTOH: Mengaktifkan Kuis setelah Login berhasil
+  // Anda bisa mengganti parameter di bawah ini
+  // parameter 1: true (aktif) / false (nonaktif)
+  // parameter 2: 'https://link-soal-anda.com'
+  // ---------------------------------------------------------
+  toggleKuis(true, 'https://www.google.com'); 
 }
 
 function renderAttendButton() {
@@ -714,6 +766,46 @@ attendBtn.addEventListener('click', async function() {
 });
 
 /* ============================================================
+   FITUR BARU: MENUJU WEB PENUKARAN (REDEEM)
+============================================================ */
+function goToRedeem() {
+  // Ganti 'redem.html' dengan nama file/URL halaman redeem Anda
+  // Kita lempar username agar fitur auto-login di web redeem berfungsi
+  window.location.href = 'redem.html?user=' + session.username;
+}
+
+/* ============================================================
+   FITUR BARU: KONTROL FLEKSIBEL KUIS
+============================================================ */
+function toggleKuis(isEnable, targetUrl = "") {
+  const btnKuis = document.getElementById('btnKuis');
+  const ribbonKuis = document.getElementById('ribbonKuis');
+  
+  if (!btnKuis) return; // Mencegah error jika elemen tidak ditemukan
+
+  if (isEnable) {
+    // Aktifkan tombol & beri gaya pink
+    btnKuis.disabled = false;
+    btnKuis.classList.add('active');
+    
+    // Sembunyikan tulisan "Segera Hadir"
+    if(ribbonKuis) ribbonKuis.style.display = 'none'; 
+    
+    // Pasang aksi klik untuk pindah ke web kuis
+    btnKuis.onclick = function() {
+      window.location.href = targetUrl;
+    };
+  } else {
+    // Nonaktifkan kembali seperti semula
+    btnKuis.disabled = true;
+    btnKuis.classList.remove('active');
+    
+    if(ribbonKuis) ribbonKuis.style.display = 'block';
+    btnKuis.onclick = null;
+  }
+}
+
+/* ============================================================
    LOGOUT
 ============================================================ */
 logoutBtn.addEventListener('click', function() {
@@ -721,6 +813,9 @@ logoutBtn.addEventListener('click', function() {
   dashboardView.classList.add('hidden');
   loginView.classList.remove('hidden');
   loginMsg.textContent = '';
+  
+  // Nonaktifkan kuis saat logout agar kembali ke mode "Segera Hadir"
+  toggleKuis(false);
 });
 </script>
 </body>
