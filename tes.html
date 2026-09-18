@@ -1,397 +1,351 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nihongo Master | Evaluasi N5 (Bab 1-7)</title>
-    <style>
-        /* Desain Utama & Dark Theme */
-        :root {
-            --bg-solid: #000000;
-            --panel-bg: rgba(15, 15, 15, 0.9); 
-            --border-color: #333333;
-            --text-main: #ffffff;
-            --text-muted: #aaaaaa;
-            --accent-japan: #c91f37;
-            --accent-success: #2e7d32;
-            --accent-blue: #1e88e5;
-            --card-bg: rgba(25, 25, 25, 0.9);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiket Roadtrip Malang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  /* =========================================
+     TOKENS & VARIABLES (Professional Night-Ride)
+  ========================================= */
+  :root {
+    --bg-dark: #050914;
+    --ticket-bg: #0a1128;
+    --ticket-bg-raised: #121d3f;
+    --cyan: #00e5ff;
+    --neon-pink: #ff2a7a;
+    --crimson: #b3122c;
+    --text-main: #f0f4f8;
+    --text-muted: #8b9bb4;
+    --border-subtle: rgba(255, 255, 255, 0.1);
+  }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        
-        body { 
-            background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop'); 
-            background-size: cover; background-position: center; background-attachment: fixed;
-            background-color: var(--bg-solid); color: var(--text-main); 
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; padding: 40px 20px; overflow-x: hidden;
-        }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  body {
+    background-color: var(--bg-dark);
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(0, 229, 255, 0.05), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(255, 42, 122, 0.05), transparent 25%);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 20px;
+    overflow-x: hidden;
+  }
 
-        /* Tombol Back */
-        .btn-back-pojok {
-            position: fixed; top: 20px; left: 20px; background: rgba(0, 0, 0, 0.8);
-            border: 1px solid var(--border-color); color: var(--text-muted);
-            padding: 10px 20px; border-radius: 30px; cursor: pointer;
-            font-size: 14px; font-weight: bold; transition: 0.3s; z-index: 9999; backdrop-filter: blur(5px);
-        }
-        .btn-back-pojok:hover { border-color: var(--text-main); color: var(--text-main); background: #111; }
+  .main-container {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
 
-        /* Panel Utama */
-        .panel {
-            background-color: var(--panel-bg); border: 1px solid var(--border-color);
-            padding: 40px; width: 100%; max-width: 800px; border-top: 4px solid var(--accent-japan);
-            border-radius: 6px; backdrop-filter: blur(10px); box-shadow: 0 15px 35px rgba(0,0,0,0.8);
-        }
+  /* =========================================
+     TICKET WRAPPER (Boarding Pass Style)
+  ========================================= */
+  .ticket-wrapper {
+    position: relative;
+    width: 100%;
+    background: var(--ticket-bg);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 229, 255, 0.1);
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
 
-        .header-dash { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
-        .jp-title { color: var(--accent-japan); font-size: 1rem; font-weight: bold; letter-spacing: 2px;}
-        .timer-box { font-size: 1.6rem; font-family: monospace; font-weight: bold; background: rgba(0,0,0,0.6); padding: 5px 15px; border-radius: 4px; border: 1px solid #444; }
-        .timer-box.warning { color: var(--accent-japan); border-color: var(--accent-japan); animation: pulse 1s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+  .ticket-wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 229, 255, 0.15);
+  }
 
-        .points-badge { border: 1px solid var(--accent-blue); color: var(--accent-blue); padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem;}
+  /* Garis gradasi di atas tiket */
+  .ticket-wrapper::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+    background: linear-gradient(90deg, var(--cyan), var(--neon-pink));
+    z-index: 10;
+  }
 
-        /* Question Area */
-        .story-context { background: #111; border-left: 4px solid var(--accent-blue); padding: 20px; margin-bottom: 20px; font-size: 1.15rem; line-height: 1.8; color: #ddd; border-radius: 0 4px 4px 0;}
-        .story-context u { color: var(--accent-japan); text-decoration: none; border-bottom: 2px dashed var(--accent-japan); padding: 0 5px; font-weight: bold;}
-        
-        .q-text { font-size: 1.3rem; margin-bottom: 20px; line-height: 1.6; }
-        
-        /* Audio Controls */
-        .audio-controls { display: none; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        .audio-btn { background: var(--accent-blue); color: #fff; border: none; padding: 12px 20px; border-radius: 30px; font-size: 1rem; cursor: pointer; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s;}
-        .audio-btn:hover { filter: brightness(1.2); transform: scale(1.05); }
-        .audio-btn:disabled { background: #555; cursor: not-allowed; filter: brightness(1); transform: none; color: #888; }
-        .btn-pause { background: #f57c00; }
-        .btn-stop { background: var(--accent-japan); }
+  /* =========================================
+     LEFT SECTION (Main Info)
+  ========================================= */
+  .ticket-left {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
 
-        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .btn-opt { background: rgba(0,0,0,0.6); color: #fff; border: 1px solid var(--border-color); padding: 18px; border-radius: 4px; cursor: pointer; font-size: 1.1rem; text-align: left; transition: 0.2s; }
-        .btn-opt:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
-        .btn-opt.correct { background: rgba(46, 125, 50, 0.4); border-color: var(--accent-success); }
-        .btn-opt.wrong { background: rgba(201, 31, 55, 0.4); border-color: var(--accent-japan); }
-        
-        .btn-next { background: var(--accent-japan); color: #fff; border: none; padding: 15px; font-size: 1.1rem; border-radius: 4px; cursor: pointer; margin-top: 25px; font-weight: bold; display: none; transition: 0.3s; width: 100%; text-transform: uppercase; letter-spacing: 1px;}
-        .btn-next:hover { background: #a0172b; }
+  .header-info {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 30px;
+  }
 
-        /* ================= POPUP MODALS ================= */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 10000; backdrop-filter: blur(10px); }
-        .modal-card { background: #1a1a1a; padding: 40px; border-radius: 12px; text-align: center; max-width: 500px; width: 90%; border: 2px solid var(--border-color); animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;}
-        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+  .ticket-class {
+    font-size: 12px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 2px; color: var(--cyan);
+    background: rgba(0, 229, 255, 0.1);
+    padding: 6px 12px; border-radius: 6px;
+  }
 
-        /* Ticket Design */
-        .ticket { background: linear-gradient(135deg, #1e88e5, #c91f37); padding: 20px; border-radius: 10px; color: white; margin: 25px 0; border: 2px dashed #fff; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,0.5);}
-        .ticket h2 { margin-bottom: 5px; font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);}
-        .ticket p { font-size: 1.1rem; opacity: 0.9; }
-        .ticket::before, .ticket::after { content: ''; position: absolute; top: 50%; width: 20px; height: 20px; background: #1a1a1a; border-radius: 50%; transform: translateY(-50%); }
-        .ticket::before { left: -12px; border-right: 2px dashed #fff; }
-        .ticket::after { right: -12px; border-left: 2px dashed #fff; }
+  .ticket-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--text-muted);
+  }
 
-        .btn-modal { background: #fff; color: #000; border: none; padding: 12px 30px; font-size: 1.1rem; border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .btn-modal:hover { transform: scale(1.05); }
+  .title {
+    font-size: 36px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.1;
+  }
 
-        /* Sad Modal Design */
-        #modal-fail1 { border-color: #555; }
-        #modal-fail1 h2 { color: #888; margin-bottom: 10px; }
+  .route-container {
+    display: flex; align-items: center; gap: 15px; margin-bottom: 35px;
+  }
+  .route-dot {
+    width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--neon-pink);
+    background: var(--bg-dark);
+  }
+  .route-line { flex: 1; height: 2px; background: repeating-linear-gradient(90deg, var(--text-muted) 0, var(--text-muted) 4px, transparent 4px, transparent 8px); opacity: 0.3; }
+  .route-icon svg { width: 24px; fill: var(--text-muted); }
 
-        /* Prank Modal Design */
-        #modal-fail2 { border-color: var(--accent-japan); background: #220505; }
-        #modal-fail2 h2 { color: #ffeb3b; font-size: 2rem; margin-bottom: 15px; animation: tada 1s infinite;}
-        @keyframes tada { 0% {transform: scale(1);} 10%, 20% {transform: scale(0.9) rotate(-3deg);} 30%, 50%, 70%, 90% {transform: scale(1.1) rotate(3deg);} 40%, 60%, 80% {transform: scale(1.1) rotate(-3deg);} 100% {transform: scale(1) rotate(0);} }
-    </style>
+  .details-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    background: var(--ticket-bg-raised); padding: 20px; border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+  }
+  .detail-box { display: flex; flex-direction: column; gap: 4px; }
+  .detail-box span { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+  .detail-box strong { font-size: 14px; color: var(--text-main); font-weight: 600; }
+
+  /* =========================================
+     DIVIDER (Tear-off effect)
+  ========================================= */
+  .ticket-divider {
+    width: 2px; background: repeating-linear-gradient(180deg, var(--border-subtle) 0, var(--border-subtle) 6px, transparent 6px, transparent 12px);
+    position: relative;
+  }
+  .cutout {
+    position: absolute; left: -14px; width: 28px; height: 28px;
+    background-color: var(--bg-dark); border-radius: 50%; z-index: 2;
+  }
+  .cutout.top { top: -14px; }
+  .cutout.bottom { bottom: -14px; }
+
+  /* =========================================
+     RIGHT SECTION (Barcode & Action)
+  ========================================= */
+  .ticket-right {
+    width: 260px; padding: 40px 30px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .barcode {
+    width: 100%; height: 60px; margin-bottom: 10px;
+    background: repeating-linear-gradient(90deg, 
+      var(--text-main) 0, var(--text-main) 2px, 
+      transparent 2px, transparent 5px, 
+      var(--text-main) 5px, var(--text-main) 9px, 
+      transparent 9px, transparent 11px,
+      var(--text-main) 11px, var(--text-main) 14px,
+      transparent 14px, transparent 18px);
+    opacity: 0.8;
+  }
+  
+  .barcode-text {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 4px; color: var(--text-muted); margin-bottom: 30px;
+  }
+
+  /* Sentuhan Pink pada Tombol */
+  .btn-claim {
+    width: 100%; padding: 16px; border: none; border-radius: 10px;
+    background: linear-gradient(135deg, var(--neon-pink) 0%, var(--crimson) 100%);
+    color: #fff; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+    cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+    box-shadow: 0 4px 20px rgba(255, 42, 122, 0.3);
+    transition: all 0.3s ease;
+  }
+  .btn-claim:hover:not(:disabled) {
+    filter: brightness(1.15); transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 42, 122, 0.5);
+  }
+  .btn-claim:disabled { background: var(--ticket-bg-raised); color: var(--text-muted); box-shadow: none; cursor: not-allowed; }
+
+  /* =========================================
+     SOP SECTION (Clean & Professional)
+  ========================================= */
+  .sop-container {
+    background: transparent; border: 1px solid var(--border-subtle);
+    border-radius: 12px; padding: 30px;
+  }
+  .sop-container h3 {
+    font-size: 16px; color: var(--cyan); margin-bottom: 20px;
+    text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 10px;
+  }
+  .sop-list { list-style: none; }
+  .sop-list li {
+    position: relative; padding-left: 20px; margin-bottom: 12px;
+    font-size: 13px; color: var(--text-muted); line-height: 1.6;
+  }
+  .sop-list li::before {
+    content: "■"; position: absolute; left: 0; top: 1px;
+    font-size: 10px; color: var(--neon-pink);
+  }
+  .sop-list li strong { color: var(--text-main); }
+
+  /* =========================================
+     POP-UP MODAL
+  ========================================= */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(5, 9, 20, 0.85); backdrop-filter: blur(10px);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  }
+  .modal-overlay.active { opacity: 1; pointer-events: auto; }
+  
+  .modal-box {
+    background: var(--ticket-bg); border: 1px solid var(--cyan);
+    border-radius: 16px; padding: 40px 30px; width: 90%; max-width: 400px;
+    text-align: center; box-shadow: 0 20px 50px rgba(0, 229, 255, 0.2);
+    transform: translateY(20px); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .modal-overlay.active .modal-box { transform: translateY(0); }
+
+  .modal-icon {
+    width: 70px; height: 70px; margin: 0 auto 20px;
+    background: rgba(0, 229, 255, 0.1); border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 30px; border: 2px solid var(--cyan); box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+  }
+  .modal-box h2 { color: #fff; margin-bottom: 12px; font-size: 22px; }
+  .modal-box p { font-size: 14px; color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; }
+  
+  .btn-modal {
+    background: var(--cyan); color: var(--bg-dark); border: none;
+    padding: 12px 30px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: filter 0.2s;
+  }
+  .btn-modal:hover { filter: brightness(1.2); }
+
+  /* =========================================
+     RESPONSIVE
+  ========================================= */
+  @media (max-width: 700px) {
+    .ticket-wrapper { flex-direction: column; }
+    .ticket-right { width: 100%; border-top: 1px dashed var(--border-subtle); padding: 30px; }
+    .ticket-divider { display: none; }
+    .details-grid { grid-template-columns: 1fr; gap: 15px; }
+  }
+</style>
 </head>
 <body>
 
-    <button class="btn-back-pojok" onclick="window.history.back()">⬅ Kembali</button>
-
-    <div class="panel fade-in" id="quiz-container">
-        <div class="header-dash">
-            <div>
-                <span class="jp-title">そうごう テスト (Evaluasi Bab 1-7)</span>
-                <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Mendengarkan, Kosakata, Tata Bahasa & Cerita</div>
-            </div>
-            <div class="timer-box" id="timer-display">45:00</div>
-            <div class="points-badge">SOAL: <span id="progress-text">1/20</span></div>
+  <div class="main-container">
+    
+    <!-- TIKET -->
+    <div class="ticket-wrapper">
+      <!-- Bagian Kiri -->
+      <div class="ticket-left">
+        <div class="header-info">
+          <span class="ticket-class">VIP Touring</span>
+          <span class="ticket-id">MLG-8X99-ID</span>
         </div>
 
-        <div id="quiz-screen">
-            <div id="story-box" class="story-context" style="display: none;"></div>
-            
-            <!-- Kontrol Audio Baru -->
-            <div id="audio-controls" class="audio-controls">
-                <button id="btn-play" class="audio-btn" onclick="playAudio()">▶️ Putar</button>
-                <button id="btn-pause" class="audio-btn btn-pause" onclick="pauseAudio()" disabled>⏸️ Jeda</button>
-                <button id="btn-stop" class="audio-btn btn-stop" onclick="stopAudio()" disabled>⏹️ Reset</button>
-            </div>
-
-            <div class="q-text" id="q-text">Memuat soal...</div>
-            
-            <div class="options" id="q-options"></div>
-            <button class="btn-next" id="btn-next" onclick="nextQuestion()">Soal Berikutnya ➔</button>
-        </div>
-    </div>
-
-    <!-- MODAL 1: LULUS (Di Atas 75) -->
-    <div class="modal-overlay" id="modal-success">
-        <div class="modal-card">
-            <h2>🎉 SELAMAT! 🎉</h2>
-            <p>Skor Anda: <strong id="score-success" style="font-size: 1.5rem; color: #4fc3f7;">100</strong></p>
-            <div class="ticket">
-                <h2>TICKET TO JOGJA</h2>
-                <p>✈️ Kelas VIP - Nihongo Master 🏖️</p>
-            </div>
-            <p style="margin-bottom: 20px; color: #aaa;">Anda telah menguasai Bab 1 sampai 7 dengan sangat baik!</p>
-            <button class="btn-modal" onclick="location.reload()">Selesai & Ulangi</button>
-        </div>
-    </div>
-
-    <!-- MODAL 2: GAGAL SEDIH (Di Bawah 75) -->
-    <div class="modal-overlay" id="modal-fail1">
-        <div class="modal-card" id="fail1-content">
-            <h2 style="font-size: 3rem;">😢</h2>
-            <h2>Yahh gagaal ke Jogja...</h2>
-            <p>Skor Anda: <strong id="score-fail" style="font-size: 1.2rem; color: #ff5252;">60</strong></p>
-            <p style="margin: 20px 0; color: #888;">Nilai kamu di bawah 75. Belajar lagii sana.. Jangan malas-malasan.</p>
-            <button class="btn-modal" style="background: #444; color: #fff;" onclick="triggerPrank()">Yaah, oke deh...</button>
-        </div>
-    </div>
-
-    <!-- MODAL 3: SURPRISE PRANK JOGJA -->
-    <div class="modal-overlay" id="modal-fail2">
-        <div class="modal-card">
-            <h2>EH TAPI BOOONG!!!</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 10px;">GAS KE JOGJA MANG EEAAA!!! 🚀</p>
-            <div class="ticket" style="background: linear-gradient(135deg, #f57c00, #ff1493);">
-                <h2>TICKET TO JOGJA</h2>
-                <p>🚌 Kelas Hore-Hore - Liburan Dadakan 🏖️</p>
-            </div>
-            <p style="margin-bottom: 20px; color: #ccc;">Tetap semangat belajarnya ya, hadiah hiburan buat kamu!</p>
-            <button class="btn-modal" onclick="location.reload()">Asiiaapp! ➔</button>
-        </div>
-    </div>
-
-    <script>
-        // Database Soal (20 Soal FULL HIRAGANA & KATAKANA)
-        const quizData = [
-            // --- BAGIAN 1: MENDENGARKAN (1-5) ---
-            { type: "audio", text: "すみません、トイレはどこですか。。。。あそこです。", q: "トイレは どこですか。", options: ["ここ", "そこ", "あそこ", "どこ"], ans: 2 },
-            { type: "audio", text: "いま なんじですか。。。。くじはんです。", q: "いま なんじですか。", options: ["8:30", "9:00", "9:30", "10:30"], ans: 2 },
-            { type: "audio", text: "きのう、どこへ いきましたか。。。。どこへも いきませんでした。", q: "おとこのひとは どこへ いきましたか。", options: ["デパート", "かいしゃ", "がっこう", "どこへも いきませんでした"], ans: 3 },
-            { type: "audio", text: "まいにち、なんで がっこうへ いきますか。。。。じてんしゃで いきます。", q: "なんで がっこうへ いきますか。", options: ["バス", "でんしゃ", "じてんしゃ", "あるいて"], ans: 2 },
-            { type: "audio", text: "あした、いっしょに きょうとへ いきませんか。。。。いいですね。いきましょう。", q: "あした どこへ いきますか。", options: ["とうきょう", "きょうと", "おおさか", "びょういん"], ans: 1 },
-            
-            // --- BAGIAN 2: KOSAKATA (6-10) -> Diubah menjadi logika kosakata N5 dasar ---
-            { type: "text", q: "スーパーで りんごを <u>  __  </u> かいました。", options: ["みっつ", "さんまい", "さんにん", "さんほん"], ans: 0 },
-            { type: "text", q: "にほんの なつは とても <u> __   </u> です。", options: ["さむい", "あつい", "ひろい", "たかい"], ans: 1 },
-            { type: "text", q: "きのう、こうえんで しゃしんを <u> __   </u>。", options: ["かきました", "とりました", "きました", "しました"], ans: 1 },
-            { type: "text", q: "わたしには <u> __   </u> が ふたり います。あにと いもうと です。", options: ["かぞく", "きょうだい", "りょうしん", "ともだち"], ans: 1 },
-            { type: "text", q: "つくえの <u>  __  </u> に ねこが います。", options: ["した", "だれ", "どこ", "いつ"], ans: 0 },
-            
-            // --- BAGIAN 3: BUNPOU / TATA BAHASA (11-15) ---
-            { type: "text", q: "マリアさん（  ）アメリカじんです。", options: ["は", "が", "を", "に"], ans: 0 },
-            { type: "text", q: "けさ、ろくじ（  ）おきました。", options: ["は", "に", "で", "へ"], ans: 1 },
-            { type: "text", q: "わたしは じてんしゃ（  ）スーパーへ いきます。", options: ["に", "で", "と", "を"], ans: 1 },
-            { type: "text", q: "きのう、テレビを（  ）。", options: ["みます", "みました", "みません", "みましょう"], ans: 1 },
-            { type: "text", q: "ミラーさん（  ）いっしょに ごはんを たべます。", options: ["に", "を", "と", "で"], ans: 2 },
-
-            // --- BAGIAN 4: CERITA PANJANG / DOKKAI BLANKS (16-20) ---
-            { type: "story", story: "わたしは アリです。インドネシアから <u>( 16 )</u>。<br>まいにち、あさ しちじ<u>( 17 )</u> おきます。<br>あさごはんを たべてから、バス<u>( 18 )</u> かいしゃへ いきます。<br>かいしゃは くじから ごじ<u>( 19 )</u> です。<br>きのうは にちようび でした。わたしは どこ<u>( 20 )</u> いきませんでした。", q: "( 16 ) に なにが はいりますか。", options: ["きます", "きました", "きません", "きましょう"], ans: 1 },
-            { type: "story", story: "わたしは アリです。インドネシアから きました。<br>まいにち、あさ しちじ<u>( 17 )</u> おきます。<br>あさごはんを たべてから、バス<u>( 18 )</u> かいしゃへ いきます。<br>かいしゃは くじから ごじ<u>( 19 )</u> です。<br>きのうは にちようび でした。わたしは どこ<u>( 20 )</u> いきませんでした。", q: "( 17 ) に なにが はいりますか。", options: ["は", "を", "に", "で"], ans: 2 },
-            { type: "story", story: "わたしは アリです。インドネシアから きました。<br>まいにち、あさ しちじに おきます。<br>あさごはんを たべてから、バス<u>( 18 )</u> かいしゃへ いきます。<br>かいしゃは くじから ごじ<u>( 19 )</u> です。<br>きのうは にちようび でした。わたしは どこ<u>( 20 )</u> いきませんでした。", q: "( 18 ) に なにが はいりますか。", options: ["で", "に", "を", "と"], ans: 0 },
-            { type: "story", story: "わたしは アリです。インドネシアから きました。<br>まいにち、あさ しちじに おきます。<br>あさごはんを たべてから、バスで かいしゃへ いきます。<br>かいしゃは くじから ごじ<u>( 19 )</u> です。<br>きのうは にちようび でした。わたしは どこ<u>( 20 )</u> いきませんでした。", q: "( 19 ) に なにが はいりますか。", options: ["から", "まで", "ぐらい", "ごろ"], ans: 1 },
-            { type: "story", story: "わたしは アリです。インドネシアから きました。<br>まいにち、あさ しちじに おきます。<br>あさごはんを たべてから、バスで かいしゃへ いきます。<br>かいしゃは くじから ごじまで です。<br>きのうは にちようび でした。わたしは どこ<u>( 20 )</u> いきませんでした。", q: "( 20 ) に なにが はいりますか。", options: ["へも", "にも", "をも", "がも"], ans: 0 }
-        ];
-
-        let currentQ = 0;
-        let score = 0;
-        let answered = false;
-        let currentUtterance = null;
+        <h1 class="title">Roadtrip Malang</h1>
         
-        // Timer (45 minutes = 2700 seconds)
-        let timeLeft = 45 * 60; 
-        let timerInterval;
+        <div class="route-container">
+          <div class="route-dot" style="border-color: var(--cyan);"></div>
+          <div class="route-line"></div>
+          <div class="route-icon">
+            <svg viewBox="0 0 640 512"><path d="M400 64c-26.5 0-48 21.5-48 48v17.4c0 14.6-7.8 28-20.4 35.2l-45.3 25.9c-24.3 13.9-54 10.9-75.1-7.6L195.4 169c-6.8-6-15.6-9-24.6-9H144c-17.7 0-32 14.3-32 32s14.3 32 32 32h11l-36.9 83c-14.8-10.7-32.9-17-52.1-17C29.5 290 0 319.5 0 356s29.5 66 66 66c30.2 0 55.7-20.3 63.5-48h58.8c12.2 0 23.3-6.8 29-17.7l17-32.3h109.9c25 0 49-11.4 65-30.8l40.3-48.4c3.2-3.8 5.7-8 7.3-12.5l25.8-70.9c2-5.4 5.3-10.2 9.6-13.9l22.6-19.4c17.5-15 42-16.1 60.7-2.7l16 11.4c9.1 6.5 21.6 7.6 31.8 2.8l20.4-9.5c10.7-5 24.3-.4 29.3 10.3 5 10.7.4 24.3-10.3 29.3l-20.4 9.5c-29.2 13.6-63 11-89-6.5l-16-11.4c-4.9-3.5-11.4-3.2-16 .1l-22.6 19.4c-12.2 10.5-21.7 24-27.4 39.2L428.2 249l-30.2 36.2h94c34.7 0 64.9 22.8 75.3 56H574c36.5 0 66-29.5 66-66s-29.5-66-66-66h-17.4c-5-18.7-21.8-32-41.6-32h-40c14.2-17.2 22.8-39.3 22.8-63.2V112c0-26.5-21.5-48-48-48h-50zM66 386c-16.5 0-30-13.5-30-30s13.5-30 30-30 30 13.5 30 30-13.5 30-30 30z"/></svg>
+          </div>
+          <div class="route-line"></div>
+          <div class="route-dot"></div>
+        </div>
 
-        const qText = document.getElementById('q-text');
-        const qOptions = document.getElementById('q-options');
-        const btnNext = document.getElementById('btn-next');
-        const progText = document.getElementById('progress-text');
-        const audioControls = document.getElementById('audio-controls');
-        const storyBox = document.getElementById('story-box');
-        const timerDisplay = document.getElementById('timer-display');
-        
-        const btnPlay = document.getElementById('btn-play');
-        const btnPause = document.getElementById('btn-pause');
-        const btnStop = document.getElementById('btn-stop');
+        <div class="details-grid">
+          <div class="detail-box">
+            <span>Destinasi</span>
+            <strong>Batu & Bromo</strong>
+          </div>
+          <div class="detail-box">
+            <span>Misi Utama</span>
+            <strong>Morning Ride</strong>
+          </div>
+          <div class="detail-box">
+            <span>Berlaku</span>
+            <strong>Open Date</strong>
+          </div>
+        </div>
+      </div>
 
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    timerDisplay.textContent = "00:00";
-                    alert("Waktu Habis!");
-                    showFinalResult();
-                } else {
-                    timeLeft--;
-                    let m = Math.floor(timeLeft / 60);
-                    let s = timeLeft % 60;
-                    timerDisplay.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-                    if(timeLeft < 300) timerDisplay.classList.add('warning'); // sisa 5 menit merah
-                }
-            }, 1000);
-        }
+      <!-- Pemisah Kertas -->
+      <div class="ticket-divider">
+        <div class="cutout top"></div>
+        <div class="cutout bottom"></div>
+      </div>
 
-        function loadQuestion() {
-            answered = false;
-            btnNext.style.display = "none";
-            progText.textContent = `${currentQ + 1}/${quizData.length}`;
-            
-            const data = quizData[currentQ];
-            qText.innerHTML = data.q;
-            qOptions.innerHTML = "";
-            
-            // Stop Audio sepenuhnya tiap pindah soal
-            if(window.speechSynthesis) window.speechSynthesis.cancel();
-            resetAudioButtons();
+      <!-- Bagian Kanan -->
+      <div class="ticket-right">
+        <div class="barcode"></div>
+        <div class="barcode-text">9823 4511 002</div>
+        <button class="btn-claim" id="btnClaim" onclick="klaimVoucher()">Validasi Tiket</button>
+      </div>
+    </div>
 
-            // Cek Tipe Soal
-            if (data.type === "audio") {
-                audioControls.style.display = "flex";
-                storyBox.style.display = "none";
-            } else if (data.type === "story") {
-                audioControls.style.display = "none";
-                storyBox.style.display = "block";
-                storyBox.innerHTML = data.story;
-            } else {
-                audioControls.style.display = "none";
-                storyBox.style.display = "none";
-            }
+    <!-- SOP PENUKARAN -->
+    <div class="sop-container">
+      <h3>Validasi & Operasional Prosedur</h3>
+      <ul class="sop-list">
+        <li>Status tiket harus terverifikasi <strong>AKTIF</strong> pada sistem sebelum keberangkatan dimulai.</li>
+        <li>Tunjukkan halaman tiket digital ini kepada partner touring Anda sebagai bukti penukaran poin yang sah.</li>
+        <li>Rute mencakup kawasan pegunungan Malang Raya (Batu - Bromo). Persiapkan jaket tebal dan jas hujan.</li>
+        <li>Akomodasi bahan bakar dan konsumsi dasar telah ter-cover sepenuhnya oleh sistem.</li>
+        <li>Jaga kondisi fisik kendaraan dan patuhi standar keamanan berkendara <em>(Safety Riding)</em>.</li>
+      </ul>
+    </div>
 
-            data.options.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.className = "btn-opt";
-                btn.innerText = opt;
-                btn.onclick = () => checkAnswer(idx, btn);
-                qOptions.appendChild(btn);
-            });
-        }
+  </div>
 
-        // --- SISTEM AUDIO PLAY/PAUSE/STOP ---
-        function resetAudioButtons() {
-            btnPlay.disabled = false;
-            btnPause.disabled = true;
-            btnStop.disabled = true;
-        }
+  <!-- POP UP MODAL -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-box">
+      <div class="modal-icon">🏔️</div>
+      <h2>Tiket Divalidasi!</h2>
+      <p>Akses VIP Roadtrip Malang Anda resmi aktif. Siapkan perlengkapan riding Anda untuk menembus dinginnya udara pegunungan!</p>
+      <button class="btn-modal" onclick="closeModal()">Siap Berangkat</button>
+    </div>
+  </div>
 
-        function playAudio() {
-            if (!window.speechSynthesis) return alert("Browser tidak mendukung Text-to-Speech.");
+  <script>
+    function klaimVoucher() {
+      const btn = document.getElementById('btnClaim');
+      btn.innerHTML = "TIKET AKTIF ✔️";
+      btn.style.background = "var(--ticket-bg-raised)";
+      btn.style.color = "var(--cyan)";
+      btn.style.border = "1px solid var(--cyan)";
+      btn.style.boxShadow = "0 0 15px rgba(0, 229, 255, 0.2)";
+      btn.disabled = true; 
+      
+      document.getElementById('successModal').classList.add('active');
+    }
 
-            // Jika dalam keadaan di-pause, lanjutkan (resume)
-            if (window.speechSynthesis.paused) {
-                window.speechSynthesis.resume();
-                return;
-            }
-
-            // Mencegah klik play berulang saat masih berjalan
-            if (window.speechSynthesis.speaking) return;
-
-            window.speechSynthesis.cancel();
-            const text = quizData[currentQ].text;
-            currentUtterance = new SpeechSynthesisUtterance(text);
-            currentUtterance.lang = 'ja-JP';
-            currentUtterance.rate = 0.85; // Kecepatan lambat untuk pemula
-            
-            currentUtterance.onstart = () => {
-                btnPlay.disabled = true;
-                btnPause.disabled = false;
-                btnStop.disabled = false;
-            };
-            currentUtterance.onresume = () => {
-                btnPlay.disabled = true;
-                btnPause.disabled = false;
-            };
-            currentUtterance.onpause = () => {
-                btnPlay.disabled = false;
-                btnPause.disabled = true;
-            };
-            currentUtterance.onend = () => {
-                resetAudioButtons();
-            };
-            currentUtterance.onerror = () => {
-                resetAudioButtons();
-            };
-
-            window.speechSynthesis.speak(currentUtterance);
-        }
-
-        function pauseAudio() {
-            if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
-                window.speechSynthesis.pause();
-            }
-        }
-
-        function stopAudio() {
-            window.speechSynthesis.cancel();
-            resetAudioButtons();
-        }
-
-        function checkAnswer(selected, btn) {
-            if (answered) return; 
-            answered = true;
-            if(window.speechSynthesis) window.speechSynthesis.cancel();
-
-            const correct = quizData[currentQ].ans;
-            const allBtns = qOptions.querySelectorAll('.btn-opt');
-
-            if (selected === correct) {
-                btn.classList.add('correct');
-                score += 5; // 20 soal * 5 poin = 100
-            } else {
-                btn.classList.add('wrong');
-                allBtns[correct].classList.add('correct');
-            }
-
-            allBtns.forEach(b => b.style.cursor = "default");
-            btnNext.style.display = "block";
-        }
-
-        function nextQuestion() {
-            currentQ++;
-            if (currentQ < quizData.length) {
-                loadQuestion();
-            } else {
-                showFinalResult();
-            }
-        }
-
-        function showFinalResult() {
-            clearInterval(timerInterval);
-            if(window.speechSynthesis) window.speechSynthesis.cancel();
-            
-            if (score >= 75) {
-                // LULUS (Dapat Tiket)
-                document.getElementById('score-success').innerText = score;
-                document.getElementById('modal-success').style.display = "flex";
-            } else {
-                // GAGAL (Kena Prank)
-                document.getElementById('score-fail').innerText = score;
-                document.getElementById('modal-fail1').style.display = "flex";
-            }
-        }
-
-        function triggerPrank() {
-            // Sembunyikan modal sedih, tampilkan modal prank
-            document.getElementById('modal-fail1').style.display = "none";
-            document.getElementById('modal-fail2').style.display = "flex";
-        }
-
-        window.onload = () => {
-            loadQuestion();
-            startTimer();
-        };
-    </script>
+    function closeModal() {
+      document.getElementById('successModal').classList.remove('active');
+    }
+  </script>
 </body>
 </html>
