@@ -371,7 +371,7 @@
   let currentUser = "";
   let currentPoin = 0;
   let dataKatalogGlobal = [];
-  let passwordResolve = null; // Menyimpan fungsi resolve untuk Custom Prompt
+  let passwordResolve = null;
 
   // ==========================================
   // UI HANDLERS (Toast & Modal)
@@ -411,8 +411,21 @@
       
       let htmlTombol = `<button class="btn-modal-close" onclick="closeModal()" style="background: transparent; border: 1px solid rgba(235, 211, 115, 0.4); color: var(--gold-soft);">Tutup</button>`;
       
+      // ===== PENGAMAN LINK (AUTO-FIX) =====
       if (linkTujuan) {
-        htmlTombol += `<a href="${linkTujuan}" class="btn-modal-close" style="background: linear-gradient(135deg, var(--gold-soft), var(--gold)); color: #2a2003; text-decoration: none; display: inline-flex; align-items: center; border: none; box-shadow: 0 6px 15px rgba(212, 175, 55, 0.25);">Lihat Tiket</a>`;
+        let finalLink = linkTujuan.toString().trim();
+        
+        // Perbaiki typo '/html' menjadi '.html' di ujung link
+        if (finalLink.endsWith('/html')) {
+          finalLink = finalLink.slice(0, -5) + '.html';
+        }
+        
+        // Jika user mengetik web.id / com tapi lupa https://
+        if ((finalLink.includes('.web.id') || finalLink.includes('.com') || finalLink.includes('.id')) && !finalLink.startsWith('http')) {
+          finalLink = 'https://' + finalLink;
+        }
+
+        htmlTombol += `<a href="${finalLink}" target="_blank" class="btn-modal-close" style="background: linear-gradient(135deg, var(--gold-soft), var(--gold)); color: #2a2003; text-decoration: none; display: inline-flex; align-items: center; border: none; box-shadow: 0 6px 15px rgba(212, 175, 55, 0.25);">Lihat Tiket</a>`;
       }
       
       modalButtons.innerHTML = htmlTombol;
@@ -435,12 +448,11 @@
       const desc = document.getElementById('passwordModalDesc');
       
       desc.innerHTML = `Masukkan password akun <strong>${currentUser}</strong> untuk menukar <em>${namaItem}</em>.`;
-      input.value = ''; // Kosongkan input
+      input.value = '';
       
       modal.classList.add('active');
       input.focus();
       
-      // Simpan resolve function agar bisa dipanggil saat tombol di-klik
       passwordResolve = resolve;
     });
   }
@@ -448,7 +460,7 @@
   function cancelPassword() {
     document.getElementById('passwordModal').classList.remove('active');
     if (passwordResolve) {
-      passwordResolve(null); // Mengembalikan null karena dibatalkan
+      passwordResolve(null);
       passwordResolve = null;
     }
   }
@@ -458,12 +470,11 @@
     const pass = input.value;
     document.getElementById('passwordModal').classList.remove('active');
     if (passwordResolve) {
-      passwordResolve(pass); // Mengembalikan isi password
+      passwordResolve(pass);
       passwordResolve = null;
     }
   }
 
-  // Tekan Enter untuk submit password
   document.getElementById('modalPasswordInput').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') submitPassword();
   });
@@ -474,7 +485,6 @@
   window.onload = async function() {
     await fetchKatalog();
     
-    // Auto-Login dari URL Parameter
     const urlParams = new URLSearchParams(window.location.search);
     const userDariUrl = urlParams.get('user');
     if (userDariUrl) {
@@ -577,7 +587,6 @@
       );
     }
     
-    // Menggunakan Custom Modal Password (pengganti prompt)
     const passwordKonfirmasi = await askPassword(namaItem);
     
     if (!passwordKonfirmasi) {
