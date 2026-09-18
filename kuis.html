@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ujian Bahasa Jepang | Bab 1-5</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0708; --bg-panel: rgba(24, 18, 20, 0.7);
+    --crimson: #b3122c; --crimson-light: #e0405a;
+    --gold: #d4af37; --gold-soft: #ebd373; --sakura: #f3b6c4;
+    --text-primary: #fdfbf9; --text-muted: #a39692;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+  }
+
+  body {
+    font-family: 'Inter', sans-serif; background: var(--bg-deep); color: var(--text-primary);
+    margin: 0; padding: 0; overflow-x: hidden;
+  }
+  h1, h2, h3 { font-family: 'Poppins', sans-serif; margin: 0; }
+  
+  /* Background */
+  .bg-glow {
+    position: fixed; top: -10%; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 800px; background: radial-gradient(circle, rgba(224, 64, 90, 0.08) 0%, transparent 70%);
+    z-index: 0; pointer-events: none;
+  }
+
+  .container { max-width: 800px; margin: 0 auto; padding: 30px 20px; position: relative; z-index: 2; }
+
+  /* Header & Timer */
+  .header {
+    background: var(--bg-panel); border: 1px solid var(--border-subtle);
+    padding: 20px; border-radius: 16px; margin-bottom: 30px;
+    display: flex; justify-content: space-between; align-items: center;
+    backdrop-filter: blur(10px); position: sticky; top: 20px; z-index: 100;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  .user-info { font-size: 14px; color: var(--text-muted); }
+  .user-info strong { color: var(--sakura); font-size: 16px; }
+  .timer {
+    background: rgba(224, 64, 90, 0.15); border: 1px solid var(--crimson-light);
+    color: var(--text-primary); padding: 8px 16px; border-radius: 30px;
+    font-weight: 700; font-family: monospace; font-size: 18px; letter-spacing: 2px;
+  }
+  .timer.warning { background: rgba(224, 64, 90, 0.5); animation: blink 1s infinite; }
+  @keyframes blink { 50% { opacity: 0.5; } }
+
+  /* Quiz Card */
+  .q-card {
+    background: var(--bg-panel); border: 1px solid var(--border-subtle);
+    padding: 24px; border-radius: 16px; margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+  .q-text { font-size: 18px; margin-bottom: 16px; line-height: 2; }
+  ruby { font-size: 20px; }
+  rt { font-size: 10px; color: var(--sakura); }
+  
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .opt-label {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle);
+    padding: 12px 16px; border-radius: 10px; cursor: pointer; transition: 0.2s;
+    display: flex; align-items: center; gap: 10px; font-size: 16px;
+  }
+  .opt-label:hover { background: rgba(255,255,255,0.1); border-color: var(--sakura); }
+  input[type="radio"] { display: none; }
+  input[type="radio"]:checked + .opt-label {
+    background: rgba(243, 182, 196, 0.15); border-color: var(--sakura); color: #fff;
+  }
+
+  .btn-submit {
+    width: 100%; padding: 16px; border: none; border-radius: 12px;
+    background: linear-gradient(135deg, var(--crimson) 0%, var(--sakura) 100%);
+    color: #fff; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 600;
+    cursor: pointer; margin-top: 20px; box-shadow: 0 10px 20px rgba(224, 64, 90, 0.3);
+  }
+  .btn-submit:hover { filter: brightness(1.1); transform: translateY(-2px); }
+  
+  /* Result Modal */
+  .modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 999; opacity: 0; pointer-events: none; transition: 0.3s;
+  }
+  .modal.active { opacity: 1; pointer-events: all; }
+  .modal-content {
+    background: var(--bg-panel); border: 1px solid var(--border-subtle);
+    padding: 40px; border-radius: 20px; text-align: center; max-width: 400px;
+  }
+  .score-circle {
+    width: 100px; height: 100px; margin: 0 auto 20px; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center; font-size: 32px; font-weight: 700;
+  }
+  .pass .score-circle { border: 4px solid var(--gold-soft); color: var(--gold-soft); }
+  .fail .score-circle { border: 4px solid var(--crimson-light); color: var(--crimson-light); }
+  .modal-btn {
+    display: inline-block; margin-top: 20px; padding: 10px 20px; text-decoration: none;
+    background: rgba(255,255,255,0.1); border-radius: 8px; color: #fff;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="container">
+  
+  <div class="header">
+    <div class="user-info">
+      Peserta: <br><strong id="displayUser">Memuat...</strong>
+    </div>
+    <div class="timer" id="timerDisplay">45:00</div>
+  </div>
+
+  <form id="quizForm">
+    <div id="questionsContainer"></div>
+    <button type="button" class="btn-submit" onclick="submitQuiz()">Selesai & Kumpulkan</button>
+  </form>
+
+</div>
+
+<!-- Modal Hasil -->
+<div class="modal" id="resultModal">
+  <div class="modal-content" id="resultCard">
+    <div class="score-circle" id="finalScore">0</div>
+    <h3 id="resultTitle">Hasil Ujian</h3>
+    <p id="resultDesc">Memproses hasil...</p>
+    <a href="index.html" class="modal-btn">Kembali ke Dashboard</a>
+  </div>
+</div>
+
+<script>
+  // URL GOOGLE APPS SCRIPT ANDA
+  const API_URL = "https://script.google.com/macros/s/AKfycbzOAbDIXXAnL4gTIloNe2DrjbsFA8KrLocxexFQd8MRwlLDfgcg4myCFt6aCROE9CAq/exec";
+  
+  let currentUser = new URLSearchParams(window.location.search).get('user') || "Guest";
+  document.getElementById('displayUser').textContent = currentUser;
+
+  // Waktu 45 Menit dalam detik
+  let timeLeft = 45 * 60; 
+  let timerInterval;
+
+  // Database 35 Soal (Bab 1 - 5 Minna no Nihongo)
+  const quizData = [
+    // BAB 1 (1-7)
+    { q: "わたし ( ) マイク・ミラーです。", options: ["は", "が", "を", "に"], ans: 0 },
+    { q: "サントスさん ( ) がくせいですか。", options: ["が", "は", "も", "で"], ans: 1 },
+    { q: "いいえ、がくせい ( ) ありません。", options: ["で", "じゃ", "は", "が"], ans: 1 },
+    { q: "あのかたは ( ) ですか。", options: ["なん", "だれ", "どなた", "どこ"], ans: 2 },
+    { q: "グプタさんは IMC ( ) しゃいんです。", options: ["の", "に", "が", "へ"], ans: 0 },
+    { q: "ミラーさんは かいしゃいんです。スミスさん ( ) かいしゃいんです。", options: ["は", "も", "の", "が"], ans: 1 },
+    { q: "テレサちゃんは ( ) ですか。", options: ["おいくつ", "なんさい", "だれ", "どなた"], ans: 1 },
+    
+    // BAB 2 (8-14)
+    { q: "( ) は じしょです。", options: ["これ", "この", "ここ", "こちら"], ans: 0 },
+    { q: "それは ( ) の かさですか。", options: ["なん", "だれ", "どこ", "いつ"], ans: 1 },
+    { q: "この ほんは ( ) ですか。", options: ["だれ", "だれが", "だれの", "どれ"], ans: 2 },
+    { q: "あれは ( ) の ざっしですか。", options: ["なん", "だれ", "どれ", "どの"], ans: 0 },
+    { q: "「これは シャープペンシルですか。」「いいえ、( )。」", options: ["ちがいます", "そうです", "ありません", "ペンです"], ans: 0 },
+    { q: "それは 「あ」ですか、( ) 「お」ですか。", options: ["それから", "それとも", "そして", "そうして"], ans: 1 },
+    { q: "( ) カメラは わたしのです。", options: ["あれ", "あの", "あそこ", "あちら"], ans: 1 },
+
+    // BAB 3 (15-21)
+    { q: "しょくどうは ( ) ですか。", options: ["どこ", "だれ", "なん", "いつ"], ans: 0 },
+    { q: "でんわは ( ) です。", options: ["あそこ", "あの", "あれ", "あちら"], ans: 0 },
+    { q: "トイレは ( ) ですか。", options: ["どちら", "どれ", "どの", "だれ"], ans: 0 },
+    { q: "ここは きょうしつ ( )。", options: ["です", "ですか", "あります", "います"], ans: 0 },
+    { q: "ミラーさんは ( ) に います。", options: ["かいぎしつ", "かいぎ", "かいしゃ", "ここ"], ans: 0 },
+    { q: "この とけいは ( ) ですか。", options: ["いくら", "いくつ", "なん", "どこ"], ans: 0 },
+    { q: "それは ( ) の ワインですか。", options: ["どこ", "だれ", "なん", "いつ"], ans: 0 },
+
+    // BAB 4 (22-28)
+    { q: "いま 4じ ( ) です。", options: ["はん", "ふん", "ぷん", "ごふん"], ans: 0 },
+    { q: "やすみは どようび ( ) にちようびです。", options: ["と", "や", "から", "まで"], ans: 0 },
+    { q: "ぎんこうは 9じ ( ) 3じまでです。", options: ["から", "に", "へ", "と"], ans: 0 },
+    { q: "まいあさ 6じに ( )。", options: ["ねます", "おきます", "やすみます", "はたらきます"], ans: 1 },
+    { q: "きのう ( )。", options: ["べんきょうします", "べんきょうしました", "べんきょうしません", "べんきょうしますか"], ans: 1 },
+    { q: "あした はたらき( )。", options: ["ます", "ました", "ません", "ませんでした"], ans: 0 },
+    { q: "デパートは ( ) からですか。", options: ["なんじ", "どこ", "だれ", "なん"], ans: 0 },
+
+    // BAB 5 (29-35)
+    { q: "にちようび スーパー ( ) いきます。", options: ["に", "へ", "で", "を"], ans: 1 },
+    { q: "タクシー ( ) うちへ かえります。", options: ["で", "に", "へ", "と"], ans: 0 },
+    { q: "だれ ( ) とうきょうへ いきますか。", options: ["に", "と", "で", "も"], ans: 1 },
+    { q: "あした どこ( ) いきません。", options: ["は", "が", "も", "を"], ans: 2 },
+    { q: "( ) にほんへ きましたか。", options: ["なん", "だれ", "いつ", "どこ"], ans: 2 },
+    { q: "たんじょうびは 5がつ 5( ) です。", options: ["にち", "か", "ようび", "じ"], ans: 0 }, 
+    { q: "ひとりで びょういん ( ) いきます。", options: ["へ", "で", "と", "から"], ans: 0 }
+  ];
+
+  // Render Soal
+  const container = document.getElementById('questionsContainer');
+  quizData.forEach((item, index) => {
+    let optsHTML = '';
+    item.options.forEach((opt, optIdx) => {
+      optsHTML += `
+        <div>
+          <input type="radio" name="q${index}" id="q${index}_o${optIdx}" value="${optIdx}">
+          <label class="opt-label" for="q${index}_o${optIdx}">${opt}</label>
+        </div>
+      `;
+    });
+    
+    container.innerHTML += `
+      <div class="q-card">
+        <div class="q-text"><strong>${index + 1}.</strong> ${item.q}</div>
+        <div class="options">${optsHTML}</div>
+      </div>
+    `;
+  });
+
+  // Timer Logic
+  function updateTimer() {
+    let m = Math.floor(timeLeft / 60);
+    let s = timeLeft % 60;
+    document.getElementById('timerDisplay').textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    
+    if (timeLeft <= 300) { document.getElementById('timerDisplay').classList.add('warning'); } // 5 menit sisa
+    
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      submitQuiz(true); // Paksa submit
+    }
+    timeLeft--;
+  }
+  timerInterval = setInterval(updateTimer, 1000);
+
+  // Submit Logic
+  async function submitQuiz(autoSubmit = false) {
+    if (!autoSubmit && !confirm("Yakin ingin menyelesaikan ujian sekarang?")) return;
+    
+    clearInterval(timerInterval);
+    document.querySelector('.btn-submit').disabled = true;
+    document.querySelector('.btn-submit').textContent = "Memproses Nilai...";
+
+    let correctAnswers = 0;
+    quizData.forEach((item, index) => {
+      const selected = document.querySelector(`input[name="q${index}"]:checked`);
+      if (selected && parseInt(selected.value) === item.ans) {
+        correctAnswers++;
+      }
+    });
+
+    // Kalkulasi Skor (Maks 100)
+    let finalScore = Math.round((correctAnswers / quizData.length) * 100);
+    
+    showResult(finalScore);
+
+    // Kirim Poin ke DB jika skor >= 80
+    if (finalScore >= 80 && currentUser !== "Guest") {
+      document.getElementById('resultDesc').innerHTML = `Luar biasa! Skor Anda ${finalScore}.<br><span style='color:var(--gold-soft)'>Mentransfer 150.000 Poin ke akun Anda...</span>`;
+      
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify({ 
+            action: 'addBonusPoin', 
+            username: currentUser, 
+            bonus: 150000 
+          })
+        });
+        const data = await res.json();
+        
+        if(data.success) {
+          document.getElementById('resultDesc').innerHTML = `Luar biasa! Skor Anda ${finalScore}.<br><strong style='color:var(--gold-soft)'>+150.000 Poin Berhasil Ditambahkan!</strong><br>Total Poin: ${data.newPoin}`;
+        } else {
+          document.getElementById('resultDesc').innerHTML += `<br><span style='color:var(--crimson-light)'>Gagal mengirim poin: ${data.message}</span>`;
+        }
+      } catch(e) {
+        document.getElementById('resultDesc').innerHTML += `<br><span style='color:var(--crimson-light)'>Error koneksi ke database.</span>`;
+      }
+    } else if (finalScore < 80) {
+      document.getElementById('resultDesc').innerHTML = `Skor Anda ${finalScore}.<br>Maaf, Anda butuh skor minimal 80 untuk mendapatkan poin. Jangan menyerah, pelajari lagi materinya!`;
+    }
+  }
+
+  function showResult(score) {
+    const modal = document.getElementById('resultModal');
+    const card = document.getElementById('resultCard');
+    
+    document.getElementById('finalScore').textContent = score;
+    
+    if(score >= 80) {
+      card.className = "modal-content pass";
+      document.getElementById('resultTitle').textContent = "合格 (Gōkaku) - LULUS!";
+    } else {
+      card.className = "modal-content fail";
+      document.getElementById('resultTitle').textContent = "不合格 (Fugōkaku) - BELUM LULUS";
+    }
+    
+    modal.classList.add('active');
+  }
+</script>
+</body>
+</html>
